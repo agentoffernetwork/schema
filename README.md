@@ -1,117 +1,39 @@
 # AgentOffer Schema
 
-## v0.3 adopted assets
+Machine-readable schemas, TypeScript projections, validation vectors, and
+semantic validators for the public AgentOffer Protocol.
 
-Versioned `*-v0.3.json`, TypeScript, fixture, and validator files are the
-adopted v0.3 contract assets. They are not a runtime availability signal and do
-not change the stable v0.2 files. The v0.3 public surface intentionally
-excludes `decision_factors`, `watch_status`, and generic `next_actions`.
+## Current contract
 
-JSON Schema, TypeScript types, semantic-validation inputs, and executable
-contract vectors for AgentOffer Protocol.
+Start with the schema for your role. The `v0.3/` directory carries the release
+boundary while current leaf filenames remain stable and unversioned. These
+artifacts define structural and semantic contract rules; they do not claim
+deployment or runtime availability.
 
-**Current normative contract: Protocol v0.3**
+## Start here
 
-The v0.3 source package is adopted. Runtime support is tracked independently by
-each deployment owner; these artifacts define what conforming implementations
-must accept and emit without claiming that a particular service is live.
+- [Offer schema](v0.3/json-schema/offer-schema.json)
+- [Query request schema](v0.3/json-schema/offer-query-schema.json)
+- [Provider request schema](v0.3/json-schema/offer-provider-request.json)
+- [Provider Postback schema](v0.3/json-schema/postback-partner-payload.json)
+- [Agent Postback schema](v0.3/json-schema/postback-agent-payload.json)
+- [Postback TypeScript types](v0.3/types/postback.types.ts)
+- [Postback semantic validator](v0.3/validators/postback-semantics.mjs)
+- [Postback signing, retry, and idempotency vectors](v0.3/fixtures/postback-agent-webhook.json)
+- [Contract vectors](v0.3/fixtures/protocol-contract-vectors.json)
+- [TypeScript Offer projection](v0.3/types/offer.types.ts)
+- [AON Taxonomy](v0.3/taxonomy/aon-taxonomy.json)
+- [AON Location Registry](v0.3/locations/aon-location-registry.json)
 
-## Canonical v0.2 files
+Read the integration guides in the
+[protocol repository](https://github.com/agentoffernetwork/protocol).
+Canonical payloads are published in the
+[examples repository](https://github.com/agentoffernetwork/examples).
 
-| File | Role |
-|---|---|
-| `json-schema/goal-event-name-v0.2.json` | Shared Goal/Postback event-name grammar |
-| `json-schema/offer-schema-v0.2.json` | Canonical Offer |
-| `json-schema/offer-query-schema-v0.2.json` | Shared Query request business core |
-| `json-schema/offer-query-response-v0.2.json` | `{request_id, offers[]}` protocol success payload |
-| `json-schema/offer-provider-request-v0.2.json` | Shared core plus required `request_id` |
-| `json-schema/offer-provider-response-v0.2.json` | Raw Provider success or Provider error |
-| `json-schema/postback-partner-payload-v0.2.json` | Partner-to-AON conversion payload |
-| `json-schema/postback-agent-payload-v0.2.json` | AON-to-Agent conversion payload |
-| `types/offer-v0.2.types.ts` | TypeScript structural projection |
-| `fixtures/protocol-v0.2-contract-vectors.json` | Canonical structural and downstream-contract vectors (S1) |
-| `fixtures/protocol-v0.2-semantic-vectors.json` | BL-035 semantic vectors, executed after an Ajv schema gate |
+## Historical contracts
 
-JSON Schema is the machine-readable structural source. The human-readable
-specification owns normative semantics that cannot be expressed structurally.
-TypeScript types and examples project these sources and must not introduce
-additional fields.
-
-## Integration quickstarts
-
-For a new integration, start with the canonical
-[Agent quickstart](https://github.com/agentoffernetwork/protocol/blob/main/AGENT-QUICKSTART.md)
-or
-[Partner quickstart](https://github.com/agentoffernetwork/protocol/blob/main/PARTNER-QUICKSTART.md).
-This repository provides the executable schemas and vectors referenced there;
-it does not duplicate the integration workflow.
-
-## Validation layers
-
-- **Structural** validation runs JSON Schema against one payload's shape,
-  required fields, closed objects, lexical patterns, and numeric bounds.
-- **Semantic** validation runs only after the structural gate and checks
-  cross-field Goal identity, CPA positivity, taxonomy registry/branch rules,
-  and test-only declared-goal postback context.
-- **Runtime** enforcement remains owned by downstream services. These local
-  validators do not provide routing, tracking lookup, HMAC, retries,
-  idempotency, settlement, or hosted error envelopes; `runtime_support`
-  remains `not_available` until those owners deliver it.
-
-## Validate locally
-
-From this directory:
-
-```bash
-npm ci --ignore-scripts
-npm run test:v0.2-baseline
-npm run test:v0.2-semantic
-npm test
-```
-
-`test:v0.2-baseline` validates S1 structural/downstream contracts. The semantic
-runner validates only BL-035-owned vectors and fails closed on incompatible
-manifest fields, payload sources, validators, schemas, taxonomy versions, and
-postback context rules. `npm test` runs both runners, the taxonomy audit,
-TypeScript checks, and the Postback reference suite.
-
-The full gate:
-
-- registers every required v0.2 schema and rejects missing references;
-- validates structural cases and semantic-vector payloads with Ajv 2020;
-- audits the taxonomy source tree, migration mappings, and example references;
-- checks that Provider schemas reuse the Query and Offer definitions;
-- compiles the TypeScript contract and negative type assertions;
-- verifies Postback payload examples, HMAC vectors, retry, and idempotency;
-- fails if required coverage, fixtures, navigation, or the known-bad canary is
-  missing.
-
-Semantic rejection is not a runtime result or hosted HTTP response. CPS
-fraction-to-percent conversion and targeting evaluation remain downstream
-runtime contracts rather than BL-035 semantic rules.
-
-## Important v0.2 rules
-
-- Required properties must be present and non-null unless their schema
-  explicitly permits `null`; optional does not imply nullable.
-- Closed protocol objects reject unknown fields.
-- Offer `goals[]` is non-empty. Every Goal requires `event` and exactly one
-  closed pricing branch: CPA amount/currency or CPS percentage rate.
-- CPS `rate` is a decimal string in `0..100`, with at most four decimal places.
-- Offer `bid`, `conversion_rule.accepted_types`, Postback `conversion_type`,
-  and Postback `bid_amount` are not v0.2 fields.
-- Offer geo targeting uses only `{location_id}` entries. Offer OS targeting is
-  `ios`, `android`, `windows`, or `macos`; `linux` is not a valid Offer value.
-
-## Registry data
-
-AON Taxonomy v1 and AON Location Registry v1 remain shared registries used by
-v0.2. Schema patterns validate shape; registry membership and hierarchy are
-semantic checks.
-
-## Historical material
-
-Files carrying v0.1 in their names are historical references. They are not
-loaded by `test:v0.2-baseline` and are not the current integration path.
+Historical v0.1 and v0.2 material is retained outside `main` on
+`legacy/v0.1` and `legacy/v0.2`. Use the immutable `v0.1.0-legacy` and
+`v0.2.0-legacy` tags for durable references.
 
 Licensed under [Apache License 2.0](LICENSE).
