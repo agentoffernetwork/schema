@@ -32,10 +32,16 @@ This repository owns the machine-readable contracts for AgentOffer Protocol: JSO
 git clone https://github.com/agentoffernetwork/schema.git
 cd schema
 
-# Validate an offer against the schema (requires ajv-cli)
-npm install -g ajv-cli
-ajv validate -s json-schema/offer-schema-v0.1.json -d ../examples/http/notion-offer.json --spec=draft2020
+# Run the checked-in Protocol v0.2 contract suite
+npm ci --ignore-scripts
+npm run test:contract-ci
 ```
+
+For a new integration, use the canonical
+[Agent quickstart](https://github.com/agentoffernetwork/protocol/blob/main/v0.3/quickstarts/agent.md)
+or
+[Partner quickstart](https://github.com/agentoffernetwork/protocol/blob/main/v0.3/quickstarts/partner.md).
+This document governs schema contributions.
 
 ## Code of Conduct
 

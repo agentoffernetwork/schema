@@ -1,0 +1,41 @@
+{
+  "version": "postback-agent-webhook-v0.3",
+  "request": {
+    "method": "POST",
+    "request_target": "/webhook/aon/conversion?source=aon&delivery=conversion",
+    "raw_body": "{\"event_id\":\"evt_01J0AONCONVERSION000001\",\"event_type\":\"conversion\",\"aon_tracking_id\":\"trk_01_click_abc\",\"offer_id\":\"ao_01HX2B3C4D5E6F7G8H9J0KABCD\",\"agent_id\":\"agt_assistant_123\",\"event_name\":\"subscription\",\"amount\":120,\"currency\":\"USD\",\"sub_id\":\"homepage_widget\",\"sub_id_2\":\"cohort_a\",\"timestamp\":\"2026-03-21T03:10:00Z\"}",
+    "now_epoch": 1776450600,
+    "current_key_id": "aon_cb_v2",
+    "grace_key_id": "aon_cb_v1",
+    "unknown_key_id": "aon_cb_unknown",
+    "keys": {
+      "aon_cb_v2": "aon-postback-secret-demo-current",
+      "aon_cb_v1": "aon-postback-secret-demo-previous"
+    }
+  },
+  "fixed_signatures": {
+    "current": "8b0d7aa29c9717dc0fdcb278237050d6a5c1ca816ad0b6560b8240722304a5b8",
+    "grace": "4205100409775f6e849996127258d4e4e98446ee827fe633ed621df94c1df807",
+    "tampered": "0000000000000000000000000000000000000000000000000000000000000000"
+  },
+  "timestamp_cases": [
+    {"name": "exactly-300-seconds-older", "timestamp": "1776450300", "expected": "accepted"},
+    {"name": "exactly-300-seconds-newer", "timestamp": "1776450900", "expected": "accepted"},
+    {"name": "301-seconds-older", "timestamp": "1776450299", "expected": "timestamp_outside_allowed_skew"},
+    {"name": "301-seconds-newer", "timestamp": "1776450901", "expected": "timestamp_outside_allowed_skew"}
+  ],
+  "retry_vectors": [
+    {"attempt": 1, "timestamp": "1776450600", "signature": "8b0d7aa29c9717dc0fdcb278237050d6a5c1ca816ad0b6560b8240722304a5b8"},
+    {"attempt": 2, "timestamp": "1776450660", "signature": "58472d51cda98f5e1581c802d8431da4b52c7e3a790868c7f2e4a9e375619f71"},
+    {"attempt": 3, "timestamp": "1776450960", "signature": "952b81e39c64ddedbc6d3ad31282886d828b19ac985131536519ba0ac20dce13"},
+    {"attempt": 4, "timestamp": "1776452760", "signature": "a1ece7e2542441d506957a578a97f155893f7bb8a03d0f5db8b5c5ca144c5973"},
+    {"attempt": 5, "timestamp": "1776459960", "signature": "97ad856154e3519499879147994a52e8649f8976dec9b083f1897ce252ed1ea0"}
+  ],
+  "idempotency": {
+    "agent_id": "agt_assistant_123",
+    "event_id": "evt_01J0AONCONVERSION000001",
+    "same_body_statuses": [200, 204],
+    "different_body_status": 409,
+    "minimum_retention_hours": 24
+  }
+}
