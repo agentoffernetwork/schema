@@ -1,8 +1,0 @@
-{
-  "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://agentoffernetwork.org/schema/goal-event-name/v0.2",
-  "title": "AgentOffer Goal Event Name v0.2",
-  "description": "Shared semantic identity used by Offer goals and conversion postbacks.",
-  "type": "string",
-  "pattern": "^[a-z0-9][a-z0-9_.-]{0,63}$"
-}
