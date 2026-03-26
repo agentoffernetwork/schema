@@ -1,0 +1,421 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://agentoffernetwork.org/schema/offer/v0.1",
+  "title": "AgentOffer Offer Schema v0.1",
+  "description": "Standardized protocol schema for AgentOffer objects. Uses RFC 2119 requirement levels: REQUIRED fields MUST be present with valid values, RECOMMENDED fields SHOULD be present and follow the standard structure but values MAY be empty, OPTIONAL fields MAY be omitted entirely.",
+  "type": "object",
+  "required": [
+    "uuid",
+    "version",
+    "offer_info",
+    "entity",
+    "action",
+    "material"
+  ],
+  "properties": {
+    "uuid": {
+      "type": "string",
+      "description": "Globally unique identifier for the offer. UUIDv7 format is recommended.",
+      "format": "uuid"
+    },
+    "version": {
+      "type": "string",
+      "description": "Offer document version indicating which schema revision the instance conforms to.",
+      "default": "1.0"
+    },
+    "offer_info": {
+      "type": "object",
+      "description": "Core descriptive, categorical, and commercial information for the offer.",
+      "required": [
+        "title",
+        "offer_type",
+        "category",
+        "description"
+      ],
+      "properties": {
+        "title": {
+          "type": "string",
+          "description": "Display-ready offer title.",
+          "minLength": 1,
+          "maxLength": 200
+        },
+        "offer_type": {
+          "type": "string",
+          "enum": [
+            "physical_product",
+            "content",
+            "online_service",
+            "offline_service"
+          ],
+          "description": "Offer delivery form classification (how the offer is fulfilled)."
+        },
+        "category": {
+          "type": "object",
+          "description": "Industry vertical classification, vertical-specific attributes, and commercial context.",
+          "required": [
+            "type",
+            "attributes",
+            "commercial"
+          ],
+          "properties": {
+            "type": {
+              "type": "string",
+              "enum": [
+                "software_saas",
+                "travel_hospitality",
+                "education",
+                "financial_service",
+                "electronics",
+                "entertainment"
+              ],
+              "description": "Industry vertical identifier. All types use attributes.sub_type for finer classification."
+            },
+            "attributes": {
+              "type": "object",
+              "description": "Vertical-specific attributes. Structure varies by category.type and attributes.sub_type. The sub_type field is REQUIRED within attributes for all category types.",
+              "required": ["sub_type"],
+              "properties": {
+                "sub_type": {
+                  "type": "string",
+                  "description": "Industry sub-category discriminator. Valid values depend on the parent category.type."
+                }
+              },
+              "additionalProperties": true
+            },
+            "commercial": {
+              "type": "object",
+              "description": "Pricing, availability, and inventory information.",
+              "properties": {
+                "price": {
+                  "type": "object",
+                  "properties": {
+                    "amount": {
+                      "type": "string",
+                      "description": "Decimal string representing the consumer-facing price amount."
+                    },
+                    "currency": {
+                      "type": "string",
+                      "description": "ISO 4217 currency code."
+                    }
+                  },
+                  "additionalProperties": false
+                },
+                "availability": {
+                  "type": "string",
+                  "enum": [
+                    "available",
+                    "limited",
+                    "sold_out",
+                    "pre_order"
+                  ],
+                  "description": "Inventory availability status."
+                },
+                "stock": {
+                  "type": "integer",
+                  "minimum": 0,
+                  "description": "Available inventory count. Omit for unlimited inventory."
+                }
+              },
+              "additionalProperties": false
+            }
+          },
+          "additionalProperties": false
+        },
+        "description": {
+          "type": "string",
+          "description": "Core semantic description for agent understanding and end-user display.",
+          "minLength": 1,
+          "maxLength": 5000
+        },
+        "source_offer_id": {
+          "type": "string",
+          "description": "Upstream source-side offer or inventory identifier."
+        },
+        "start_at": {
+          "type": "string",
+          "format": "date-time",
+          "description": "RFC 3339 timestamp for when the offer becomes active."
+        },
+        "expire_at": {
+          "type": "string",
+          "format": "date-time",
+          "description": "RFC 3339 timestamp for when the offer expires."
+        },
+        "status": {
+          "type": "string",
+          "enum": [
+            "active",
+            "paused",
+            "pending",
+            "rejected",
+            "expired"
+          ],
+          "description": "Lifecycle status of the offer.",
+          "default": "pending"
+        },
+        "audit_status": {
+          "type": "string",
+          "enum": [
+            "waiting",
+            "pass",
+            "reject"
+          ],
+          "description": "Compliance audit status.",
+          "default": "waiting"
+        },
+        "priority": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 100,
+          "description": "Exposure priority. Higher values take precedence.",
+          "default": 10
+        }
+      },
+      "additionalProperties": false
+    },
+    "material": {
+      "type": "array",
+      "description": "Creative assets associated with the offer.",
+      "items": {
+        "type": "object",
+        "properties": {
+          "image_url": {
+            "type": "string",
+            "format": "uri",
+            "description": "URL to the creative asset."
+          },
+          "tag": {
+            "type": "string",
+            "description": "Asset purpose tag such as logo, banner, hero, thumbnail."
+          },
+          "format": {
+            "type": "string",
+            "enum": [
+              "image",
+              "video",
+              "html5"
+            ],
+            "description": "Asset format."
+          },
+          "size": {
+            "type": "string",
+            "description": "Dimension specification such as 300x250, 728x90."
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "conversion_rule": {
+      "type": "object",
+      "description": "Rules for valid conversion events and attribution logic.",
+      "properties": {
+        "trigger": {
+          "type": "string",
+          "description": "Event type that triggers a valid conversion."
+        },
+        "window_hours": {
+          "type": "integer",
+          "minimum": 1,
+          "description": "Attribution window in hours from the initial click."
+        },
+        "attribution_type": {
+          "type": "string",
+          "enum": [
+            "last_click",
+            "first_click",
+            "multi_touch"
+          ],
+          "description": "Attribution model used for conversion credit."
+        }
+      },
+      "additionalProperties": false
+    },
+    "frequency_capping": {
+      "type": "object",
+      "description": "Exposure frequency limits.",
+      "properties": {
+        "per_user_day": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Maximum impressions per user per day."
+        },
+        "per_user_total": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Maximum lifetime impressions per user."
+        }
+      },
+      "additionalProperties": false
+    },
+    "tags": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Custom tags for filtering and semantic matching."
+    },
+    "entity": {
+      "type": "object",
+      "description": "Business entity associated with the offer.",
+      "required": [
+        "id",
+        "name"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Stable entity identifier."
+        },
+        "name": {
+          "type": "string",
+          "description": "Display name of the entity."
+        },
+        "type": {
+          "type": "string",
+          "description": "Entity classification such as merchant, brand, creator, seller, service_provider."
+        },
+        "description": {
+          "type": "string",
+          "description": "Short description of the entity."
+        },
+        "website": {
+          "type": "string",
+          "format": "uri",
+          "description": "Official website of the entity."
+        }
+      },
+      "additionalProperties": false
+    },
+    "action": {
+      "type": "object",
+      "description": "Primary executable action exposed by the offer.",
+      "required": [
+        "type",
+        "payload"
+      ],
+      "properties": {
+        "type": {
+          "type": "string",
+          "enum": [
+            "web_redirect",
+            "app_deep_link",
+            "api_trigger"
+          ],
+          "description": "Executable action type."
+        },
+        "name": {
+          "type": "string",
+          "description": "Short user-facing action name (CTA text).",
+          "maxLength": 80
+        },
+        "description": {
+          "type": "string",
+          "description": "Explanation of the action intent or destination.",
+          "maxLength": 300
+        },
+        "payload": {
+          "type": "object",
+          "required": [
+            "target"
+          ],
+          "properties": {
+            "target": {
+              "type": "string",
+              "format": "uri",
+              "description": "Destination URL, deep link, or API endpoint."
+            },
+            "requires_auth": {
+              "type": "boolean",
+              "description": "Whether the user must authenticate to complete the action."
+            },
+            "platform": {
+              "type": "string",
+              "enum": [
+                "web",
+                "ios",
+                "android",
+                "desktop"
+              ],
+              "description": "Target platform for the action flow."
+            }
+          },
+          "additionalProperties": false
+        }
+      },
+      "additionalProperties": false
+    },
+    "targeting": {
+      "type": "array",
+      "description": "Targeting constraints for offer surfacing.",
+      "items": {
+        "type": "object",
+        "properties": {
+          "geo": {
+            "type": "object",
+            "properties": {
+              "include": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "description": "Included geographic regions."
+              },
+              "exclude": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "description": "Excluded geographic regions."
+              }
+            },
+            "additionalProperties": false
+          },
+          "language": {
+            "type": "string",
+            "description": "Target language, ISO 639-1 code."
+          },
+          "device_type": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "enum": [
+                "mobile",
+                "desktop",
+                "tablet",
+                "smart_tv"
+              ]
+            },
+            "description": "Target device types."
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "commission": {
+      "type": "object",
+      "description": "Commission information.",
+      "properties": {
+        "amount": {
+          "type": "string",
+          "description": "Decimal string representing the commission amount."
+        },
+        "currency": {
+          "type": "string",
+          "description": "ISO 4217 currency code."
+        },
+        "model": {
+          "type": "string",
+          "enum": [
+            "fixed",
+            "percentage",
+            "cpa",
+            "cps"
+          ],
+          "description": "Commission calculation model."
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": false
+}
