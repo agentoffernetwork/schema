@@ -32,15 +32,15 @@ The schema uses three requirement levels as defined in [RFC 2119](https://datatr
 
 ## Category Types
 
-Six registered industry verticals. `entertainment` uses `attributes.sub_type` for finer classification.
+Six registered industry verticals, each with `sub_type` discrimination for finer classification:
 
-| type | sub_type |
-|------|----------|
-| `software_saas` | — |
-| `travel_hospitality` | — |
-| `education` | — |
-| `financial_service` | — |
-| `electronics` | — |
+| type | sub_types |
+|------|-----------|
+| `software_saas` | `project_management`, `design`, `development_tools`, `crm`, `analytics`, `communication`, `security`, `ai_tools` |
+| `travel_hospitality` | `hotel`, `flight`, `car_rental`, `vacation_package`, `restaurant`, `attraction` |
+| `education` | `online_course`, `certification`, `bootcamp`, `language_learning`, `tutoring`, `academic_program` |
+| `financial_service` | `credit_card`, `insurance`, `loan`, `investment`, `banking`, `payment` |
+| `electronics` | `smartphone`, `laptop`, `audio`, `wearable`, `gaming_hardware`, `smart_home`, `camera` |
 | `entertainment` | `game`, `streaming_video`, `ai_companion`, `social_audio`, `sports_betting`, `music_audio`, `live_streaming` |
 
 See `types/category-attributes.types.ts` for per-type attribute definitions.
