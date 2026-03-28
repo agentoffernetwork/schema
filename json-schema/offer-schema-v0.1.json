@@ -66,7 +66,12 @@
                 "education",
                 "financial_service",
                 "electronics",
-                "entertainment"
+                "entertainment",
+                "health_beauty",
+                "fashion",
+                "food_grocery",
+                "home_garden",
+                "automotive"
               ],
               "description": "Industry vertical identifier. All types use attributes.sub_type for finer classification."
             },
@@ -80,6 +85,170 @@
                   "description": "Industry sub-category discriminator. Valid values depend on the parent category.type."
                 }
               },
+              "allOf": [
+                {
+                  "if": {
+                    "properties": {
+                      "sub_type": {
+                        "enum": [
+                          "skincare",
+                          "supplement",
+                          "fitness",
+                          "cosmetics",
+                          "wellness",
+                          "medical_device"
+                        ]
+                      }
+                    }
+                  },
+                  "then": {
+                    "properties": {
+                      "ingredients_highlight": {
+                        "type": "array",
+                        "items": { "type": "string" },
+                        "description": "Key ingredients or active compounds highlighted for the product."
+                      },
+                      "skin_type": {
+                        "type": "string",
+                        "description": "Target skin type such as oily, dry, combination, sensitive, normal."
+                      },
+                      "organic": {
+                        "type": "boolean",
+                        "description": "Whether the product holds an organic certification."
+                      }
+                    }
+                  }
+                },
+                {
+                  "if": {
+                    "properties": {
+                      "sub_type": {
+                        "enum": [
+                          "clothing",
+                          "shoes",
+                          "accessories",
+                          "jewelry",
+                          "luxury",
+                          "sportswear"
+                        ]
+                      }
+                    }
+                  },
+                  "then": {
+                    "properties": {
+                      "gender": {
+                        "type": "string",
+                        "description": "Target gender: unisex, male, female."
+                      },
+                      "size_range": {
+                        "type": "string",
+                        "description": "Available size range description (e.g., XS-XXL, 6-12)."
+                      },
+                      "material": {
+                        "type": "string",
+                        "description": "Primary material or fabric."
+                      }
+                    }
+                  }
+                },
+                {
+                  "if": {
+                    "properties": {
+                      "sub_type": {
+                        "enum": [
+                          "meal_kit",
+                          "grocery_delivery",
+                          "specialty_food",
+                          "beverage",
+                          "organic",
+                          "snack"
+                        ]
+                      }
+                    }
+                  },
+                  "then": {
+                    "properties": {
+                      "dietary_info": {
+                        "type": "array",
+                        "items": { "type": "string" },
+                        "description": "Dietary labels such as vegan, gluten_free, keto, halal, kosher, organic."
+                      },
+                      "shelf_life_days": {
+                        "type": "integer",
+                        "description": "Shelf life in days."
+                      },
+                      "serving_size": {
+                        "type": "string",
+                        "description": "Serving size description."
+                      }
+                    }
+                  }
+                },
+                {
+                  "if": {
+                    "properties": {
+                      "sub_type": {
+                        "enum": [
+                          "furniture",
+                          "appliance",
+                          "decor",
+                          "smart_home",
+                          "garden",
+                          "cleaning"
+                        ]
+                      }
+                    }
+                  },
+                  "then": {
+                    "properties": {
+                      "dimensions": {
+                        "type": "string",
+                        "description": "Product dimensions description (e.g., 120x60x75 cm)."
+                      },
+                      "assembly_required": {
+                        "type": "boolean",
+                        "description": "Whether assembly is required."
+                      },
+                      "energy_rating": {
+                        "type": "string",
+                        "description": "Energy efficiency rating (e.g., A+, Energy Star)."
+                      }
+                    }
+                  }
+                },
+                {
+                  "if": {
+                    "properties": {
+                      "sub_type": {
+                        "enum": [
+                          "car_purchase",
+                          "car_lease",
+                          "insurance",
+                          "parts",
+                          "ev_charging",
+                          "ride_service"
+                        ]
+                      }
+                    }
+                  },
+                  "then": {
+                    "properties": {
+                      "vehicle_type": {
+                        "type": "string",
+                        "description": "Vehicle classification such as sedan, suv, truck, ev, motorcycle."
+                      },
+                      "fuel_type": {
+                        "type": "string",
+                        "description": "Fuel or power type: gasoline, diesel, electric, hybrid."
+                      },
+                      "warranty_years": {
+                        "type": "integer",
+                        "description": "Warranty duration in years."
+                      }
+                    }
+                  }
+                }
+              ],
               "additionalProperties": true
             },
             "commercial": {
@@ -207,25 +376,57 @@
     },
     "conversion_rule": {
       "type": "object",
-      "description": "Rules for valid conversion events and attribution logic.",
+      "description": "Rules for valid conversion events, attribution logic, and tracking windows. RECOMMENDED: SHOULD be present to establish clear attribution expectations.",
       "properties": {
-        "trigger": {
-          "type": "string",
-          "description": "Event type that triggers a valid conversion."
-        },
-        "window_hours": {
+        "click_window_hours": {
           "type": "integer",
-          "minimum": 1,
-          "description": "Attribution window in hours from the initial click."
+          "minimum": 0,
+          "description": "Click attribution window in hours. Conversions within this window after a click are eligible for attribution.",
+          "default": 720
         },
-        "attribution_type": {
+        "view_window_hours": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "View-through attribution window in hours. Default 0 (view-through attribution not supported).",
+          "default": 0
+        },
+        "attribution_model": {
           "type": "string",
           "enum": [
             "last_click",
-            "first_click",
-            "multi_touch"
+            "first_click"
           ],
-          "description": "Attribution model used for conversion credit."
+          "description": "Attribution method. last_click: credit goes to the last click before conversion. first_click: credit goes to the first click. linear is reserved for future use.",
+          "default": "last_click"
+        },
+        "accepted_types": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": [
+              "sale",
+              "lead",
+              "install",
+              "subscription",
+              "trial",
+              "custom"
+            ]
+          },
+          "description": "Accepted conversion types for this offer. Values reference the conversion_type enumeration."
+        },
+        "dedup_strategy": {
+          "type": "string",
+          "enum": [
+            "first",
+            "all",
+            "highest"
+          ],
+          "description": "Deduplication strategy for multiple conversions from the same user. first: only the first conversion counts. all: every conversion counts. highest: only the highest-value conversion counts.",
+          "default": "first"
+        },
+        "minimum_amount": {
+          "type": "string",
+          "description": "Minimum conversion amount, decimal string. Conversions below this threshold do not qualify for commission."
         }
       },
       "additionalProperties": false
@@ -391,29 +592,141 @@
         "additionalProperties": false
       }
     },
+    "source": {
+      "type": "object",
+      "description": "Offer origin and tracking configuration for affiliate workflows.",
+      "properties": {
+        "postback_url_template": {
+          "type": "string",
+          "description": "Agent-side conversion callback URL template. Supports variable substitution (e.g., {tracking_id}, {offer_id}, {conversion_type}, {amount}, {commission_amount}, {currency}, {sub_id_1}...{sub_id_5}, {timestamp})."
+        },
+        "tracking_url_template": {
+          "type": "string",
+          "description": "Tracking link generation template. Used to construct click-tracking URLs with embedded parameters."
+        }
+      },
+      "additionalProperties": false
+    },
     "commission": {
       "type": "object",
-      "description": "Commission information.",
+      "description": "Affiliate commission and payout information. RECOMMENDED: SHOULD be present when the offer participates in affiliate or performance-based compensation.",
+      "required": [
+        "model",
+        "currency"
+      ],
       "properties": {
-        "amount": {
-          "type": "string",
-          "description": "Decimal string representing the commission amount."
-        },
-        "currency": {
-          "type": "string",
-          "description": "ISO 4217 currency code."
-        },
         "model": {
           "type": "string",
           "enum": [
-            "fixed",
-            "percentage",
             "cpa",
-            "cps"
+            "cps",
+            "cpl",
+            "cpi",
+            "hybrid"
           ],
-          "description": "Commission calculation model."
+          "description": "Commission model: cpa (cost per action), cps (cost per sale, percentage-based), cpl (cost per lead), cpi (cost per install), hybrid (base amount plus percentage)."
+        },
+        "amount": {
+          "type": "string",
+          "description": "Fixed commission amount, decimal string. REQUIRED for cpa/cpl/cpi/hybrid, OPTIONAL for cps."
+        },
+        "currency": {
+          "type": "string",
+          "description": "ISO 4217 currency code for the commission amount."
+        },
+        "rate": {
+          "type": "string",
+          "description": "Commission rate as a decimal string (e.g., 0.15 = 15%). REQUIRED for cps/hybrid, OPTIONAL for other models."
+        },
+        "tier": {
+          "type": "array",
+          "description": "Tiered commission rules. When present, tier rules take precedence over top-level amount/rate.",
+          "items": {
+            "type": "object",
+            "required": [
+              "threshold",
+              "threshold_type"
+            ],
+            "properties": {
+              "threshold": {
+                "type": "string",
+                "description": "Threshold value that triggers this tier, decimal string."
+              },
+              "threshold_type": {
+                "type": "string",
+                "enum": [
+                  "revenue",
+                  "count"
+                ],
+                "description": "Threshold measurement type: revenue (cumulative amount) or count (cumulative conversions)."
+              },
+              "amount": {
+                "type": "string",
+                "description": "Fixed commission for this tier. Used when parent model is cpa, cpl, cpi, or hybrid."
+              },
+              "rate": {
+                "type": "string",
+                "description": "Commission rate for this tier. Used when parent model is cps or hybrid."
+              }
+            },
+            "additionalProperties": false
+          }
+        },
+        "cap": {
+          "type": "string",
+          "description": "Maximum commission per single conversion, decimal string."
+        },
+        "cap_currency": {
+          "type": "string",
+          "description": "Currency for the commission cap. When omitted, defaults to commission.currency."
+        },
+        "payout_delay_days": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Settlement delay in days (lock-up period).",
+          "default": 0
+        },
+        "validation_window_days": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Conversion validation window in days (advertiser confirmation period)."
         }
       },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "model": { "enum": ["cpa", "cpl", "cpi"] }
+            },
+            "required": ["model"]
+          },
+          "then": {
+            "required": ["amount"]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "model": { "const": "cps" }
+            },
+            "required": ["model"]
+          },
+          "then": {
+            "required": ["rate"]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "model": { "const": "hybrid" }
+            },
+            "required": ["model"]
+          },
+          "then": {
+            "required": ["amount", "rate"]
+          }
+        }
+      ],
       "additionalProperties": false
     }
   },

@@ -136,6 +136,101 @@
       },
       "additionalProperties": false
     },
+    "filter": {
+      "type": "object",
+      "description": "Structured filter constraints that narrow the result set before semantic ranking. filter is a hard constraint (exact match), intent is a soft signal (semantic relevance). When both are present, filter applies first, then intent ranks within the filtered results.",
+      "properties": {
+        "category_types": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": [
+              "software_saas",
+              "travel_hospitality",
+              "education",
+              "financial_service",
+              "electronics",
+              "entertainment",
+              "health_beauty",
+              "fashion",
+              "food_grocery",
+              "home_garden",
+              "automotive"
+            ]
+          },
+          "description": "Filter by category type. Values reference offer_info.category.type enum. OR logic: matches any specified type."
+        },
+        "commission_models": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": [
+              "cpa",
+              "cps",
+              "cpl",
+              "cpi",
+              "hybrid"
+            ]
+          },
+          "description": "Filter by commission model. Values reference commission.model enum. OR logic: matches any specified model."
+        },
+        "status": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": [
+              "active",
+              "paused",
+              "pending",
+              "rejected",
+              "expired"
+            ]
+          },
+          "description": "Filter by offer status. OR logic: matches any specified status."
+        },
+        "availability": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": [
+              "available",
+              "limited",
+              "sold_out",
+              "pre_order"
+            ]
+          },
+          "description": "Filter by availability. OR logic: matches any specified availability."
+        },
+        "min_commission_amount": {
+          "type": "string",
+          "description": "Minimum commission amount, decimal string. Requires filter.currency to be set."
+        },
+        "max_price_amount": {
+          "type": "string",
+          "description": "Maximum consumer-facing price, decimal string. Requires filter.currency to be set."
+        },
+        "currency": {
+          "type": "string",
+          "description": "ISO 4217 currency code for min_commission_amount and max_price_amount. Applies to both fields; offers with mismatched currencies are excluded."
+        },
+        "brand": {
+          "type": "string",
+          "description": "Filter by brand or entity name (case-insensitive substring match against entity.name)."
+        },
+        "country": {
+          "type": "string",
+          "description": "Filter by target country. ISO 3166-1 alpha-2 code."
+        },
+        "tags": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Filter by tags. AND logic: offer must match all specified tags."
+        }
+      },
+      "additionalProperties": false
+    },
     "pagination": {
       "type": "object",
       "description": "Pagination control.",
