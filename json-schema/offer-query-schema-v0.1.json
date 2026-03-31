@@ -56,15 +56,12 @@
           "type": "string",
           "description": "Session identifier for grouping related queries."
         },
-        "conversation_id": {
-          "description": "Conversation or thread identifier within the session."
-        },
         "user_profile": {
           "type": "object",
           "description": "User profile information for intent matching and targeting.",
           "required": [],
           "properties": {
-            "viewer_id": {
+            "user_pseudo_id": {
               "type": "string",
               "description": "Pseudonymous viewer identifier."
             },
@@ -150,12 +147,7 @@
               "education",
               "financial_service",
               "electronics",
-              "entertainment",
-              "health_beauty",
-              "fashion",
-              "food_grocery",
-              "home_garden",
-              "automotive"
+              "entertainment"
             ]
           },
           "description": "Filter by category type. Values reference offer_info.category.type enum. OR logic: matches any specified type."
@@ -188,19 +180,6 @@
           },
           "description": "Filter by offer status. OR logic: matches any specified status."
         },
-        "availability": {
-          "type": "array",
-          "items": {
-            "type": "string",
-            "enum": [
-              "available",
-              "limited",
-              "sold_out",
-              "pre_order"
-            ]
-          },
-          "description": "Filter by availability. OR logic: matches any specified availability."
-        },
         "min_commission_amount": {
           "type": "string",
           "description": "Minimum commission amount, decimal string. Requires filter.currency to be set."
@@ -220,13 +199,6 @@
         "country": {
           "type": "string",
           "description": "Filter by target country. ISO 3166-1 alpha-2 code."
-        },
-        "tags": {
-          "type": "array",
-          "items": {
-            "type": "string"
-          },
-          "description": "Filter by tags. AND logic: offer must match all specified tags."
         }
       },
       "additionalProperties": false

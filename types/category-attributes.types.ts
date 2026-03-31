@@ -76,6 +76,7 @@ export type EntertainmentSubType =
   | 'music_audio'
   | 'live_streaming';
 
+
 // ═══════════════════════════════════════════════════════════════════════════
 // 1. software_saas
 // ═══════════════════════════════════════════════════════════════════════════
@@ -701,160 +702,20 @@ export type ElectronicsAttributes =
 interface EntertainmentCommon {
   /** (required) Entertainment sub-category discriminator. */
   sub_type: EntertainmentSubType;
-  /** (optional) Supported platforms / devices. */
+  /** (optional) Supported devices or platforms. */
   supported_devices?: string[];
-  /** (optional) Age restriction or content rating. */
+  /** (optional) Age or content rating (e.g., ESRB T, PEGI 12, MPAA PG-13). */
   age_rating?: string;
   /** (optional) Supported languages. */
   languages?: string[];
 }
 
-// ── 6.1 game ───────────────────────────────────────────────────────────────
-
-export interface GameAttributes extends EntertainmentCommon {
-  sub_type: 'game';
-  /** (required) Supported gaming platforms. */
-  platform: ('pc' | 'console' | 'mobile' | 'web' | 'vr')[];
-  /** (required) Game genre. */
-  genre: string;
-  /** (optional) Whether multiplayer is supported. */
-  multiplayer?: boolean;
-  /** (optional) Developer studio name. */
-  developer?: string;
-  /** (optional) Release date. */
-  release_date?: string;
-  /** (optional) Whether in-app purchases exist. */
-  in_app_purchases?: boolean;
-  /** (optional) Minimum system requirements. */
-  system_requirements?: Record<string, string>;
-}
-
-// ── 6.2 streaming_video ────────────────────────────────────────────────────
-
-export interface StreamingVideoAttributes extends EntertainmentCommon {
-  sub_type: 'streaming_video';
-  /** (required) Primary content type offered. */
-  content_type: 'movie' | 'series' | 'short_drama' | 'documentary' | 'anime' | 'live' | 'variety';
-  /** (required) Access or subscription model. */
-  subscription_model: 'free' | 'ad_supported' | 'subscription' | 'pay_per_view';
-  /** (optional) Content genres available. */
-  genres?: string[];
-  /** (optional) Maximum streaming resolution. */
-  max_resolution?: string;
-  /** (optional) Simultaneous stream count. */
-  simultaneous_streams?: number;
-  /** (optional) Whether offline download is supported. */
-  offline_download?: boolean;
-  /** (optional) Whether platform produces original content. */
-  original_content?: boolean;
-}
-
-// ── 6.3 ai_companion ──────────────────────────────────────────────────────
-
-export interface AiCompanionAttributes extends EntertainmentCommon {
-  sub_type: 'ai_companion';
-  /** (required) Interaction modality. */
-  interaction_mode: 'text' | 'voice' | 'multimodal';
-  /** (required) Companion persona classification. */
-  persona_type: 'assistant' | 'character' | 'therapist' | 'tutor' | 'companion' | 'roleplay';
-  /** (optional) Whether the user can customize the persona. */
-  customizable_persona?: boolean;
-  /** (optional) Whether conversation memory is supported. */
-  memory_enabled?: boolean;
-  /** (optional) Content safety filtering level. */
-  content_filter?: 'strict' | 'moderate' | 'minimal';
-  /** (optional) Available voice options or TTS models. */
-  voice_options?: string[];
-}
-
-// ── 6.4 social_audio ──────────────────────────────────────────────────────
-
-export interface SocialAudioAttributes extends EntertainmentCommon {
-  sub_type: 'social_audio';
-  /** (required) Primary interaction type. */
-  interaction_type: 'voice_chat' | 'audio_room' | 'podcast_live' | 'karaoke' | 'voice_match';
-  /** (optional) Maximum participants per session. */
-  max_participants?: number;
-  /** (optional) Whether session recording is available. */
-  recording_enabled?: boolean;
-  /** (optional) Whether moderation tools are provided. */
-  moderation_tools?: boolean;
-  /** (optional) Whether creators can monetize. */
-  monetization_support?: boolean;
-}
-
-// ── 6.5 sports_betting ────────────────────────────────────────────────────
-
-export interface SportsBettingAttributes extends EntertainmentCommon {
-  sub_type: 'sports_betting';
-  /** (required) Jurisdiction where the license is held. */
-  license_jurisdiction: string;
-  /** (required) Regulatory license number. */
-  license_number: string;
-  /** (required) Sports categories available for betting. */
-  supported_sports: string[];
-  /** (required) Minimum legal age to participate. */
-  min_age: number;
-  /** (optional) Supported bet types. */
-  bet_types?: string[];
-  /** (optional) Whether live / in-play betting is supported. */
-  live_betting?: boolean;
-  /** (optional) Whether early cash-out is available. */
-  cash_out?: boolean;
-  /** (optional) Welcome bonus description. */
-  welcome_bonus?: string;
-  /** (optional) Responsible gambling tools provided. */
-  responsible_gambling_tools?: string[];
-}
-
-// ── 6.6 music_audio ───────────────────────────────────────────────────────
-
-export interface MusicAudioAttributes extends EntertainmentCommon {
-  sub_type: 'music_audio';
-  /** (required) Primary content type. */
-  content_type: 'music' | 'podcast' | 'audiobook' | 'radio';
-  /** (required) Access or subscription model. */
-  subscription_model: 'free' | 'ad_supported' | 'premium';
-  /** (optional) Catalog size description. */
-  catalog_size?: string;
-  /** (optional) Maximum audio quality. */
-  audio_quality?: string;
-  /** (optional) Whether offline playback is supported. */
-  offline_mode?: boolean;
-  /** (optional) Social or sharing features. */
-  social_features?: boolean;
-  /** (optional) Whether lyrics display is supported. */
-  lyrics_support?: boolean;
-}
-
-// ── 6.7 live_streaming ────────────────────────────────────────────────────
-
-export interface LiveStreamingAttributes extends EntertainmentCommon {
-  sub_type: 'live_streaming';
-  /** (required) Primary content vertical. */
-  content_type: 'gaming' | 'entertainment' | 'education' | 'commerce' | 'music' | 'lifestyle';
-  /** (required) Viewer interaction model. */
-  interaction_model: 'watch' | 'chat' | 'gift' | 'co_stream';
-  /** (optional) Maximum stream resolution. */
-  max_resolution?: string;
-  /** (optional) Monetization methods available. */
-  monetization?: ('tips' | 'subscriptions' | 'ads')[];
-  /** (optional) Whether low-latency mode is available. */
-  low_latency?: boolean;
-  /** (optional) Whether VOD replay is available after live ends. */
-  vod_replay?: boolean;
-  /** (optional) Tools provided for streamers. */
-  streamer_tools?: string[];
-}
-
-export type EntertainmentAttributes =
-  | GameAttributes
-  | StreamingVideoAttributes
-  | AiCompanionAttributes
-  | SocialAudioAttributes
-  | SportsBettingAttributes
-  | MusicAudioAttributes
-  | LiveStreamingAttributes;
+/**
+ * Entertainment attributes — common-only for v0.1.
+ * Sub_type-specific attributes are defined in the spec but
+ * deferred to a future schema revision for TypeScript typing.
+ */
+export type EntertainmentAttributes = EntertainmentCommon & Record<string, unknown>;
 
 // ─── Top-Level Discriminated Union ──────────────────────────────────────────
 

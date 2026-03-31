@@ -2,7 +2,10 @@
  * AgentOffer Offer Schema v0.1
  * TypeScript type definitions
  *
- * Protocol-aligned, client-facing offer object and query response envelope.
+ * Generated from the authoritative JSON Schema files:
+ *   - offer-schema-v0.1.json
+ *   - offer-query-schema-v0.1.json
+ *
  * Fields are annotated with requirement levels per RFC 2119:
  *   REQUIRED — Field MUST be present with a valid, non-empty value.
  *   RECOMMENDED — Field SHOULD be present and follow the standard structure; value MAY be empty or null.
@@ -11,16 +14,18 @@
  * @see https://agentoffernetwork.org/schema/offer/v0.1
  */
 
-import type { CategoryType, CategoryAttributes, EntertainmentSubType, EntertainmentAttributes } from './category-attributes.types';
+import type { CategoryType, CategoryAttributes } from './category-attributes.types';
 
-export type { CategoryType, CategoryAttributes, EntertainmentSubType, EntertainmentAttributes };
+export type { CategoryType, CategoryAttributes };
+
+// ─── Offer ─────────────────────────────────────────────────────────────────────
 
 /** Top-level offer object. */
 export interface Offer {
-  /** [REQUIRED] Stable protocol-side offer identifier. UUIDv7 is recommended. */
+  /** [REQUIRED] Stable protocol-side offer identifier. UUIDv7 is recommended. @example "019414a0-7e3b-7f1a-b5e2-0a1b2c3d4e5f" */
   uuid: string;
 
-  /** [REQUIRED] Offer document version. Current value: "1.0". */
+  /** [REQUIRED] Offer document version. @example "1.0" */
   version: string;
 
   /** [REQUIRED] Descriptive, categorical, and commercial information for the offer. */
@@ -32,178 +37,389 @@ export interface Offer {
   /** [REQUIRED] Primary executable action exposed by the offer. */
   action: OfferAction;
 
-  /** [RECOMMENDED] Creative assets associated with the offer. Field must be present; value may be an empty array. */
-  material: MaterialItem[];
+  /** [OPTIONAL] Creative assets associated with the offer. @example [{ "image_url": "https://cdn.example.com/banner.png", "tag": "banner", "format": "image" }] */
+  material?: MaterialItem[];
 
   /** [OPTIONAL] Targeting constraints for surfacing. */
   targeting?: TargetingRule[];
 
-  /** [OPTIONAL] Commission information. */
-  commission?: Commission;
+  /** [REQUIRED] Affiliate commission and payout information. */
+  commission: Commission;
 
-  /** [OPTIONAL] Conversion event rules and attribution logic. */
-  conversion_rule?: ConversionRule;
-
-  /** [OPTIONAL] Exposure frequency limits. */
-  frequency_capping?: FrequencyCapping;
-
-  /** [OPTIONAL] Custom tags for filtering and semantic matching. */
-  tags?: string[];
 }
+
+// ─── OfferInfo ──────────────────────────────────────────────────────────────────
 
 /** [REQUIRED] Core offer information. */
 export interface OfferInfo {
-  /** [REQUIRED] Display-ready title. */
+  /** [REQUIRED] Display-ready title. maxLength: 200. @example "Claude Pro — AI Assistant for Teams" */
   title: string;
 
-  /** [REQUIRED] Offer delivery form classification. */
-  offer_type: 'physical_product' | 'content' | 'online_service' | 'offline_service' | string;
+  /**
+   * [REQUIRED] Offer fulfillment form — how the offer is delivered to the end user.
+   * Determines Agent-side UX behavior: physical_product → shipping/returns flow,
+   * content → instant access, online_service → signup/subscription flow,
+   * offline_service → location/booking flow.
+   * Orthogonal to category.type (industry classification).
+   * @example "online_service"
+   */
+  offer_type: OfferType;
 
-  /** [REQUIRED] Industry category, vertical-specific attributes, and commercial context. */
+  /** [REQUIRED] Industry category and vertical-specific attributes. */
   category: Category;
 
-  /** [REQUIRED] Core semantic description. */
+  /** [REQUIRED] Core semantic description for end-user display. maxLength: 5000. @example "Claude Pro provides advanced AI assistance with extended context windows, priority access, and team collaboration features." */
   description: string;
 
-  /** [OPTIONAL] Upstream source-side offer or inventory identifier. */
+  /**
+   * [OPTIONAL] Partner-provided recommendation reason for AON ranking engine.
+   * Contains conversion advantages, target audience hints, and promotional context
+   * that help core make better ranking decisions. Not shown to end users.
+   * maxLength: 1000.
+   * @example "New user first month 90% off, 15% conversion rate among developers, strong retention after trial"
+   */
+  recommendation_reason?: string;
+
+  /** [RECOMMENDED] Pricing, availability, and inventory information. @example { "price": { "amount": "20.00", "currency": "USD" }, "availability": "available" } */
+  commercial?: CommercialInfo;
+
+  /** [OPTIONAL] Upstream source-side offer or inventory identifier. @example "partner-offer-88712" */
   source_offer_id?: string;
 
-  /** [OPTIONAL] RFC 3339 timestamp for when the offer becomes active. */
+  /** [OPTIONAL] RFC 3339 timestamp for when the offer becomes active. @example "2026-04-01T00:00:00Z" */
   start_at?: string;
 
-  /** [OPTIONAL] RFC 3339 timestamp for when the offer expires. */
+  /** [OPTIONAL] RFC 3339 timestamp for when the offer expires. @example "2026-12-31T23:59:59Z" */
   expire_at?: string;
 
-  /** [OPTIONAL] Lifecycle status. */
-  status?: 'active' | 'paused' | 'pending' | 'rejected' | 'expired';
+  /** [OPTIONAL] Lifecycle status. Default: "pending". @example "active" */
+  status?: OfferStatus;
 
-  /** [OPTIONAL] Compliance audit status. */
-  audit_status?: 'waiting' | 'pass' | 'reject';
+  /** [OPTIONAL] Compliance audit status. Default: "waiting". @example "pass" */
+  audit_status?: AuditStatus;
 
-  /** [OPTIONAL] Exposure priority. Higher values take precedence. */
+  /** [OPTIONAL] Exposure priority (0-100). Higher values take precedence. Default: 10. @example 50 */
   priority?: number;
 }
 
-/** [REQUIRED] Industry category with vertical-specific attributes and commercial context. */
-export interface Category {
-  /** [REQUIRED] Industry vertical identifier. Must be a registered CategoryType value. */
-  type: CategoryType;
+/** @example "online_service" */
+export type OfferType = 'physical_product' | 'digital_goods' | 'content' | 'online_service' | 'offline_service';
 
-  /**
-   * [RECOMMENDED] Vertical-specific attributes. Structure is determined by category.type.
-   * Field must be present; may be empty object.
-   * @see category-attributes.types.ts for per-type definitions.
-   */
-  attributes: Record<string, unknown>;
+/** @example "active" */
+export type OfferStatus = 'active' | 'paused' | 'pending' | 'rejected' | 'expired';
 
-  /** [RECOMMENDED] Pricing, availability, and inventory information. Field must be present; values may be empty. */
-  commercial: CommercialInfo;
-}
+/** @example "pass" */
+export type AuditStatus = 'waiting' | 'pass' | 'reject';
 
+// ─── Category ───────────────────────────────────────────────────────────────────
+
+/**
+ * [REQUIRED] Industry category with vertical-specific attributes.
+ * Type-safe: `attributes` structure is constrained by `type` via the CategoryAttributes discriminated union.
+ * @see category-attributes.types.ts for per-type attribute definitions.
+ */
+export type Category = CategoryAttributes;
+
+/**
+ * @example { "price": { "amount": "20.00", "currency": "USD" } }
+ */
 export interface CommercialInfo {
+  /** @example { "amount": "20.00", "currency": "USD" } */
   price?: Price;
-  availability?: 'available' | 'limited' | 'sold_out' | 'pre_order';
-  /** [OPTIONAL] Available inventory count. */
-  stock?: number;
 }
 
 export interface Price {
+  /** Decimal string representing the consumer-facing price amount. @example "20.00" */
   amount: string;
+  /** ISO 4217 currency code. @example "USD" */
   currency: string;
 }
 
+// ─── Entity ─────────────────────────────────────────────────────────────────────
+
 export interface Entity {
-  /** [REQUIRED] Stable entity identifier. */
+  /** [REQUIRED] Stable entity identifier. @example "ent_anthropic_001" */
   id: string;
-  /** [REQUIRED] Display name. */
+  /** [REQUIRED] Display name. @example "Anthropic" */
   name: string;
-  /** [OPTIONAL] Entity classification. */
-  type?: 'merchant' | 'brand' | 'creator' | 'seller' | 'service_provider' | 'financial_institution' | string;
-  /** [OPTIONAL] Short description. */
+  /** [OPTIONAL] Entity classification. @example "business" */
+  type?: EntityType;
+  /** [OPTIONAL] Short description. @example "AI safety company building reliable AI systems." */
   description?: string;
-  /** [OPTIONAL] Official website. */
+  /** [OPTIONAL] Official website. @example "https://www.anthropic.com" */
   website?: string;
 }
 
-export interface OfferAction {
-  /** [REQUIRED] Executable action type. */
-  type: ActionType;
-  /** [RECOMMENDED] Short user-facing action name (CTA text). */
+/** @example "business" */
+export type EntityType = 'business' | 'individual' | 'institution';
+
+// ─── Action ─────────────────────────────────────────────────────────────────────
+
+/**
+ * [REQUIRED] Primary executable action exposed by the offer.
+ * Discriminated union: payload structure is constrained by type.
+ */
+export type OfferAction = WebRedirectAction | AppDeepLinkAction;
+
+/** @example "web_redirect" */
+export type ActionType = 'web_redirect' | 'app_deep_link';
+
+interface ActionCommon {
+  /** [RECOMMENDED] Short user-facing action name (CTA text). maxLength: 80. @example "Start Free Trial" */
   name?: string;
-  /** [OPTIONAL] Explanation of the action intent. */
+  /** [OPTIONAL] Explanation of the action intent. maxLength: 300. @example "Redirects to Claude Pro sign-up page with a 14-day free trial." */
   description?: string;
-  /** [REQUIRED] Action-specific payload. */
-  payload: ActionPayload;
 }
 
-export type ActionType = 'web_redirect' | 'app_deep_link' | 'api_trigger';
-
-export interface ActionPayload {
-  /** [REQUIRED] Destination URL, deep link, or API endpoint. */
-  target: string;
-  /** [OPTIONAL] Whether the user must authenticate. */
-  requires_auth?: boolean;
-  /** [OPTIONAL] Target platform. */
-  platform?: 'web' | 'ios' | 'android' | 'desktop';
+/** @example { "type": "web_redirect", "payload": { "target": "https://claude.ai/upgrade?ref=aon" } } */
+export interface WebRedirectAction extends ActionCommon {
+  type: 'web_redirect';
+  payload: {
+    /** [REQUIRED] Destination URL. @example "https://claude.ai/upgrade?ref=aon" */
+    target: string;
+  };
 }
 
-/** [RECOMMENDED] Creative asset item. */
+/** @example { "type": "app_deep_link", "payload": { "target": "myapp://promo/123", "platform": "ios", "fallback_url": "https://apps.apple.com/app/myapp" } } */
+export interface AppDeepLinkAction extends ActionCommon {
+  type: 'app_deep_link';
+  payload: {
+    /** [REQUIRED] Deep link URI. @example "myapp://promo/123" */
+    target: string;
+    /** [OPTIONAL] Target platform. @example "ios" */
+    platform?: 'ios' | 'android';
+    /** [OPTIONAL] Fallback URL when app is not installed. @example "https://apps.apple.com/app/myapp" */
+    fallback_url?: string;
+  };
+}
+
+
+// ─── Material ───────────────────────────────────────────────────────────────────
+
+/**
+ * [RECOMMENDED] Creative asset item.
+ * @example { "image_url": "https://cdn.example.com/offers/claude-pro-banner.png", "tag": "banner", "format": "image", "size": "728x90" }
+ */
 export interface MaterialItem {
-  /** [RECOMMENDED] URL to the creative asset. */
-  image_url?: string;
-  /** [RECOMMENDED] Asset purpose tag. */
+  /** [RECOMMENDED] URL to the creative asset. @example "https://cdn.example.com/offers/claude-pro-banner.png" */
+  url?: string;
+  /** [RECOMMENDED] Asset purpose tag (e.g. logo, banner, hero, thumbnail). @example "banner" */
   tag?: string;
-  /** [RECOMMENDED] Asset format. */
-  format?: 'image' | 'video' | 'html5';
-  /** [OPTIONAL] Dimension specification. */
-  size?: string;
+  /** [RECOMMENDED] Asset format. @example "image" */
+  format?: MaterialFormat;
+  /** [OPTIONAL] Width x height dimension (e.g. 300x250, 728x90, 1920x1080). @example "728x90" */
+  dimensions?: string;
 }
 
+/** @example "image" */
+export type MaterialFormat = 'image' | 'video' | 'html5';
+
+// ─── Targeting ──────────────────────────────────────────────────────────────────
+
+/**
+ * @example { "geo": { "include": ["US", "GB", "CA"] }, "language": "en", "device_type": ["mobile", "desktop"] }
+ */
 export interface TargetingRule {
+  /** @example { "include": ["US", "GB", "CA"], "exclude": ["CN"] } */
   geo?: GeoTargeting;
+  /** ISO 639-1 language code. @example "en" */
   language?: string;
-  device_type?: ('mobile' | 'desktop' | 'tablet' | 'smart_tv')[];
+  /** @example ["mobile", "desktop"] */
+  device_type?: DeviceType[];
 }
 
 export interface GeoTargeting {
+  /** @example ["US", "GB", "CA"] */
   include?: string[];
+  /** @example ["CN"] */
   exclude?: string[];
 }
 
+/** @example "mobile" */
+export type DeviceType = 'mobile' | 'desktop' | 'tablet' | 'smart_tv';
+
+// ─── Commission ─────────────────────────────────────────────────────────────────
+
+/**
+ * Affiliate commission and payout information.
+ * Partner provides the determined commission amount at offer time.
+ *
+ * @example { "model": "cpa", "amount": "15.00", "currency": "USD" }
+ * @example { "model": "cps", "amount": "8.00", "currency": "USD" }
+ */
 export interface Commission {
-  amount?: string;
+  /** [REQUIRED] Commission model (for display purposes). @example "cpa" */
+  model: CommissionModel;
+
+  /** [REQUIRED] Determined commission amount, decimal string. @example "15.00" */
+  amount: string;
+
+  /** [REQUIRED] ISO 4217 currency code. @example "USD" */
+  currency: string;
+}
+
+/** @example "cpa" */
+export type CommissionModel = 'cpa' | 'cps' | 'cpl' | 'cpi' | 'hybrid';
+
+// ─── Query Request ──────────────────────────────────────────────────────────────
+
+/**
+ * Structured query request for discovering offers via POST /v1/offers/query.
+ * @example
+ * {
+ *   "request_id": "019414a0-8b2c-7d3e-a1b2-c3d4e5f60718",
+ *   "timestamp": "2026-03-31T10:30:00Z",
+ *   "context": {
+ *     "platform": { "name": "TravelBot", "version": "2.1.0", "channel": "telegram" },
+ *     "session_id": "sess_abc123",
+ *     "user_profile": { "user_pseudo_id": "viewer_xyz", "language": "en", "interests": ["travel", "hotels"] }
+ *   },
+ *   "intent": { "content": [{ "type": "input_text", "text": "Find me a hotel in Tokyo under $200/night" }] },
+ *   "filter": { "category_types": ["travel_hospitality"], "max_price_amount": "200.00", "currency": "USD", "country": "JP" },
+ *   "pagination": { "limit": 10, "offset": 0 }
+ * }
+ */
+export interface OfferQueryRequest {
+  /** [REQUIRED] Unique request identifier. UUIDv7 recommended. @example "019414a0-8b2c-7d3e-a1b2-c3d4e5f60718" */
+  request_id: string;
+
+  /** [REQUIRED] RFC 3339 timestamp of the request. @example "2026-03-31T10:30:00Z" */
+  timestamp: string;
+
+  /** [OPTIONAL] When true, request is treated as test. Default: false. @example false */
+  test_mode?: boolean;
+
+  /** [REQUIRED] Contextual information about the requesting platform, session, and user. */
+  context: QueryContext;
+
+  /** [REQUIRED] The user's intent expressed as multimodal content. */
+  intent: QueryIntent;
+
+  /** [OPTIONAL] Structured filter constraints that narrow the result set before semantic ranking. */
+  filter?: QueryFilter;
+
+  /** [OPTIONAL] Pagination control. */
+  pagination?: QueryPagination;
+}
+
+/**
+ * @example { "platform": { "name": "TravelBot", "version": "2.1.0", "channel": "telegram" }, "session_id": "sess_abc123", "user_profile": { "user_pseudo_id": "viewer_xyz", "language": "en" } }
+ */
+export interface QueryContext {
+  /**
+   * [OPTIONAL] Information about the requesting platform or agent.
+   * @example { "name": "TravelBot", "version": "2.1.0", "channel": "telegram" }
+   */
+  platform?: {
+    /** @example "TravelBot" */
+    name?: string;
+    /** @example "2.1.0" */
+    version?: string;
+    /** @example "telegram" */
+    channel?: string;
+  };
+
+  /** [OPTIONAL] Session identifier for grouping related queries. @example "sess_abc123" */
+  session_id?: string;
+
+  /** [REQUIRED] User profile information for intent matching and targeting. */
+  user_profile: UserProfile;
+}
+
+/**
+ * @example { "user_pseudo_id": "viewer_xyz", "language": "en", "interests": ["travel", "hotels"], "device_info": { "device_type": "mobile", "os": "ios", "os_version": "18.2" } }
+ */
+export interface UserProfile {
+  /** Pseudonymous viewer identifier. @example "viewer_xyz" */
+  user_pseudo_id?: string;
+  /** User language preference. ISO 639-1 code. @example "en" */
+  language?: string;
+  /** User interest tags. May be empty array. @example ["travel", "hotels"] */
+  interests?: string[];
+  /**
+   * Device information for targeting.
+   * @example { "device_type": "mobile", "os": "ios", "os_version": "18.2" }
+   */
+  device_info?: {
+    /** @example "mobile" */
+    device_type?: string;
+    /** @example "ios" */
+    os?: string;
+    /** @example "18.2" */
+    os_version?: string;
+  };
+}
+
+/**
+ * @example { "content": [{ "type": "input_text", "text": "Find me a hotel in Tokyo under $200/night" }] }
+ */
+export interface QueryIntent {
+  /** [REQUIRED] Array of content items. At least one item required. */
+  content: IntentContentItem[];
+}
+
+/**
+ * @example { "type": "input_text", "text": "Find me a hotel in Tokyo under $200/night" }
+ * @example { "type": "input_image", "image_url": "https://example.com/screenshot.png" }
+ */
+export interface IntentContentItem {
+  /** [REQUIRED] Content type. @example "input_text" */
+  type: 'input_text' | 'input_image';
+  /** Text content (when type=input_text). @example "Find me a hotel in Tokyo under $200/night" */
+  text?: string;
+  /** Image URL (when type=input_image). @example "https://example.com/screenshot.png" */
+  image_url?: string;
+}
+
+/**
+ * @example { "category_types": ["travel_hospitality"], "max_price_amount": "200.00", "currency": "USD", "country": "JP" }
+ */
+export interface QueryFilter {
+  /** Filter by category type. OR logic: matches any specified type. @example ["travel_hospitality"] */
+  category_types?: CategoryType[];
+  /** Filter by commission model. OR logic: matches any specified model. @example ["cpa", "cps"] */
+  commission_models?: CommissionModel[];
+  /** Filter by offer status. OR logic. @example ["active"] */
+  status?: OfferStatus[];
+  /** Minimum commission amount, decimal string. Requires filter.currency to be set. @example "5.00" */
+  min_commission_amount?: string;
+  /** Maximum consumer-facing price, decimal string. Requires filter.currency to be set. @example "200.00" */
+  max_price_amount?: string;
+  /** ISO 4217 currency code for min_commission_amount and max_price_amount. @example "USD" */
   currency?: string;
-  model?: 'fixed' | 'percentage' | 'cpa' | 'cps';
+  /** Filter by brand or entity name (case-insensitive substring match against entity.name). @example "Hilton" */
+  brand?: string;
+  /** Filter by target country. ISO 3166-1 alpha-2 code. @example "JP" */
+  country?: string;
 }
 
-/** [OPTIONAL] Conversion event rules. */
-export interface ConversionRule {
-  trigger?: string;
-  window_hours?: number;
-  attribution_type?: 'last_click' | 'first_click' | 'multi_touch';
-}
-
-/** [OPTIONAL] Frequency capping configuration. */
-export interface FrequencyCapping {
-  per_user_day?: number;
-  per_user_total?: number;
-}
-
-/** Query request for searching offers. */
-export interface OfferQuery {
-  q?: string;
-  offer_type?: string;
-  category_type?: string;
-  entity_id?: string;
-  source_offer_id?: string;
+/**
+ * @example { "limit": 10, "offset": 0 }
+ */
+export interface QueryPagination {
+  /** Number of offers to return. Min: 1, Max: 100, Default: 20. @example 10 */
   limit?: number;
-  cursor?: string | null;
+  /** Number of offers to skip. Default: 0. @example 0 */
+  offset?: number;
 }
 
-/** Query response envelope. */
+// ─── Query Response ─────────────────────────────────────────────────────────────
+
+/**
+ * Query response envelope.
+ * @example { "query_id": "019414a0-9f4c-7e2d-b3a1-d5e6f7081234", "offers": [] }
+ */
 export interface OfferResponse {
-  trace_id: string;
+  /** Core-generated unique identifier (UUIDv7) for this query, used to correlate downstream events (impression/click/conversion). @example "019414a0-9f4c-7e2d-b3a1-d5e6f7081234" */
+  query_id: string;
+  /** Ranked offer results, up to the requested limit. @example [] */
   offers: Offer[];
-  has_more?: boolean;
-  next_cursor?: string | null;
 }
+
+// ─── Legacy Aliases (deprecated) ────────────────────────────────────────────────
+
+/**
+ * @deprecated Use OfferQueryRequest instead. This flat query structure does not match
+ * the protocol's structured query format (offer-query-schema-v0.1.json).
+ */
+export type OfferQuery = OfferQueryRequest;
