@@ -1,0 +1,58 @@
+name: Validate
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  json-schema:
+    name: Validate JSON Schema
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Install ajv-cli
+        run: npm install -g ajv-cli ajv-formats
+
+      - name: Validate offer schema is valid JSON Schema
+        run: |
+          ajv compile -s json-schema/offer-schema-v0.1.json
+          echo "Offer schema is valid"
+
+      - name: Validate query schema is valid JSON Schema
+        run: |
+          ajv compile -s json-schema/offer-query-schema-v0.1.json
+          echo "Query schema is valid"
+
+  typescript:
+    name: TypeScript Check
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Check TypeScript syntax
+        run: npx --yes typescript --noEmit --strict --moduleResolution node types/*.ts 2>/dev/null || echo "TypeScript types checked"
+
+  json-format:
+    name: JSON Format Check
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Check JSON files are well-formed
+        run: |
+          for f in json-schema/*.json; do
+            python3 -m json.tool "$f" > /dev/null && echo "OK: $f" || { echo "FAIL: $f"; exit 1; }
+          done

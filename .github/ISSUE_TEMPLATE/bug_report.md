@@ -5,14 +5,18 @@ title: "[bug] "
 labels: bug
 ---
 
-## Problem
+## Summary
 
 Describe the incorrect schema or tooling behavior.
 
-## Artifact
+## Affected File
 
-Which file is affected?
+Which file is affected? (e.g., `json-schema/offer-schema-v0.1.json`, `types/offer.types.ts`)
 
-## Reproduction
+## Expected Behavior
 
-How can maintainers reproduce the issue?
+What should the schema define or the validator produce instead?
+
+## Steps to Reproduce
+
+How can maintainers reproduce the issue? Include commands, input data, or error messages.

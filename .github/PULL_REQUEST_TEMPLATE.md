@@ -1,11 +1,18 @@
 ## Summary
 
-Describe the contract or tooling change.
+Describe the schema or tooling change and its motivation.
+
+## Type
+
+- [ ] Validator / tooling improvement
+- [ ] Non-breaking schema addition
+- [ ] Breaking schema change (requires RFC)
+- [ ] Other
 
 ## Validation
 
-Explain how you checked compatibility or correctness.
+How did you verify correctness? (e.g., ran ajv validation, compiled TypeScript types, tested examples)
 
-## Protocol Impact
+## Related Issues / RFCs
 
-State whether this requires or follows an RFC.
+Link any related issues or RFCs. Breaking changes require an [RFC](https://github.com/agentoffernetwork/rfcs).

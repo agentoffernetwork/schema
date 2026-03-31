@@ -5,14 +5,18 @@ title: "[proposal] "
 labels: proposal
 ---
 
-## Need
+## Problem
 
 What use case is not supported today?
 
-## Proposed Direction
+## Proposed Change
 
-Describe the desired change.
+Describe the desired schema or tooling change.
 
-## Protocol Impact
+## Impact
 
-Will this require an RFC?
+Who would be affected? Does this change validation behavior or type definitions?
+
+## RFC Needed?
+
+Will this change affect the protocol contract? If yes, an [RFC](https://github.com/agentoffernetwork/rfcs) is required.

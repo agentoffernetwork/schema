@@ -1,0 +1,7 @@
+# Default owners for the schema repository
+
+* @agentoffernetwork/maintainers
+
+# Schema changes require core team review
+json-schema/ @agentoffernetwork/maintainers
+types/ @agentoffernetwork/maintainers
