@@ -18,7 +18,7 @@ You can already validate offers against the schema using ajv-cli:
 
 ```bash
 npm install -g ajv-cli
-ajv validate -s ../json-schema/offer-schema-v0.1.json -d your-offer.json
+ajv validate -s ../json-schema/offer-schema-v0.1.json -d your-offer.json --spec=draft2020
 ```
 
 ## Contributing

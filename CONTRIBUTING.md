@@ -34,7 +34,7 @@ cd schema
 
 # Validate an offer against the schema (requires ajv-cli)
 npm install -g ajv-cli
-ajv validate -s json-schema/offer-schema-v0.1.json -d ../examples/http/notion-offer.json
+ajv validate -s json-schema/offer-schema-v0.1.json -d ../examples/http/notion-offer.json --spec=draft2020
 ```
 
 ## Code of Conduct

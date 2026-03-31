@@ -23,12 +23,12 @@ jobs:
 
       - name: Validate offer schema is valid JSON Schema
         run: |
-          ajv compile -s json-schema/offer-schema-v0.1.json
+          ajv compile -s json-schema/offer-schema-v0.1.json --spec=draft2020
           echo "Offer schema is valid"
 
       - name: Validate query schema is valid JSON Schema
         run: |
-          ajv compile -s json-schema/offer-query-schema-v0.1.json
+          ajv compile -s json-schema/offer-query-schema-v0.1.json --spec=draft2020
           echo "Query schema is valid"
 
   typescript:

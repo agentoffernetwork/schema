@@ -33,7 +33,7 @@
 ```bash
 # Using ajv-cli
 npm install -g ajv-cli
-ajv validate -s json-schema/offer-schema-v0.1.json -d your-offer.json
+ajv validate -s json-schema/offer-schema-v0.1.json -d your-offer.json --spec=draft2020
 ```
 
 ### Use TypeScript types
