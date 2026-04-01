@@ -280,11 +280,11 @@ export type CommissionModel = 'cpa' | 'cps' | 'cpl' | 'cpi' | 'hybrid';
  * }
  */
 export interface OfferQueryRequest {
-  /** [REQUIRED] Unique request identifier. UUIDv7 recommended. @example "019414a0-8b2c-7d3e-a1b2-c3d4e5f60718" */
-  request_id: string;
+  /** [OPTIONAL] Unique request identifier. UUIDv7 recommended. When omitted, the server generates one. @example "019414a0-8b2c-7d3e-a1b2-c3d4e5f60718" */
+  request_id?: string;
 
-  /** [REQUIRED] RFC 3339 timestamp of the request. @example "2026-03-31T10:30:00Z" */
-  timestamp: string;
+  /** [OPTIONAL] RFC 3339 timestamp of the request. When omitted, the server uses the current time. @example "2026-03-31T10:30:00Z" */
+  timestamp?: string;
 
   /** [OPTIONAL] When true, request is treated as test. Default: false. @example false */
   test_mode?: boolean;

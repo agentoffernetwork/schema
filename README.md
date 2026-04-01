@@ -12,6 +12,7 @@
   <a href="#status"><img src="https://img.shields.io/badge/version-v0.1-orange.svg" alt="Version" /></a>
   <a href="#status"><img src="https://img.shields.io/badge/status-Draft-yellow.svg" alt="Status" /></a>
   <a href="https://github.com/agentoffernetwork/schema/issues"><img src="https://img.shields.io/github/issues/agentoffernetwork/schema.svg" alt="Issues" /></a>
+  <a href="https://github.com/agentoffernetwork/schema/actions/workflows/validate.yml"><img src="https://github.com/agentoffernetwork/schema/actions/workflows/validate.yml/badge.svg" alt="Validate" /></a>
 </p>
 
 ---

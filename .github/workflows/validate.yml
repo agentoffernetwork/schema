@@ -42,8 +42,11 @@ jobs:
         with:
           node-version: 20
 
+      - name: Install TypeScript
+        run: npm install -g typescript
+
       - name: Check TypeScript syntax
-        run: npx --yes typescript --noEmit --strict --moduleResolution node types/*.ts 2>/dev/null || echo "TypeScript types checked"
+        run: tsc --noEmit --strict --module node16 --moduleResolution node16 types/*.ts
 
   json-format:
     name: JSON Format Check
