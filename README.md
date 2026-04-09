@@ -77,7 +77,7 @@ const offer: Offer = {
 
 **OPTIONAL fields:**
 
-- `targeting`, `commission`, `conversion_rule`, `frequency_capping`, `tags`, `priority`, `status`
+- `targeting`, `bid`, `conversion_rule`, `frequency_capping`, `tags`, `priority`, `status`
 
 ## Category Types
 

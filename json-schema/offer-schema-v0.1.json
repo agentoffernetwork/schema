@@ -10,7 +10,7 @@
     "offer_info",
     "entity",
     "action",
-    "commission"
+    "bid"
   ],
   "properties": {
     "uuid": {
@@ -530,7 +530,7 @@
         },
         "minimum_amount": {
           "type": "string",
-          "description": "Minimum conversion amount, decimal string. Conversions below this threshold do not qualify for commission."
+          "description": "Minimum conversion amount, decimal string. Conversions below this threshold do not qualify for bid."
         }
       },
       "additionalProperties": false
@@ -706,9 +706,9 @@
         "additionalProperties": false
       }
     },
-    "commission": {
+    "bid": {
       "type": "object",
-      "description": "Affiliate commission and payout information. Partner provides the determined commission amount at offer time.",
+      "description": "Affiliate bid and payout information. Partner provides the determined bid amount at offer time.",
       "required": [
         "model",
         "amount",
@@ -724,11 +724,11 @@
             "cpi",
             "hybrid"
           ],
-          "description": "Commission model (for display purposes): cpa (cost per action), cps (cost per sale), cpl (cost per lead), cpi (cost per install), hybrid (combined)."
+          "description": "Bid model (for display purposes): cpa (cost per action), cps (cost per sale), cpl (cost per lead), cpi (cost per install), hybrid (combined)."
         },
         "amount": {
           "type": "string",
-          "description": "Determined commission amount, decimal string."
+          "description": "Determined bid amount, decimal string."
         },
         "currency": {
           "type": "string",

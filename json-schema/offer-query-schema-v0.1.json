@@ -150,7 +150,7 @@
           },
           "description": "Filter by category type. Values reference offer_info.category.type enum. OR logic: matches any specified type."
         },
-        "commission_models": {
+        "bid_models": {
           "type": "array",
           "items": {
             "type": "string",
@@ -162,7 +162,7 @@
               "hybrid"
             ]
           },
-          "description": "Filter by commission model. Values reference commission.model enum. OR logic: matches any specified model."
+          "description": "Filter by bid model. Values reference bid.model enum. OR logic: matches any specified model."
         },
         "status": {
           "type": "array",
@@ -178,9 +178,9 @@
           },
           "description": "Filter by offer status. OR logic: matches any specified status."
         },
-        "min_commission_amount": {
+        "min_bid_amount": {
           "type": "string",
-          "description": "Minimum commission amount, decimal string. Requires filter.currency to be set."
+          "description": "Minimum bid amount, decimal string. Requires filter.currency to be set."
         },
         "max_price_amount": {
           "type": "string",
@@ -188,7 +188,7 @@
         },
         "currency": {
           "type": "string",
-          "description": "ISO 4217 currency code for min_commission_amount and max_price_amount. Applies to both fields; offers with mismatched currencies are excluded."
+          "description": "ISO 4217 currency code for min_bid_amount and max_price_amount. Applies to both fields; offers with mismatched currencies are excluded."
         },
         "brand": {
           "type": "string",

@@ -43,8 +43,8 @@ export interface Offer {
   /** [OPTIONAL] Targeting constraints for surfacing. */
   targeting?: TargetingRule[];
 
-  /** [REQUIRED] Affiliate commission and payout information. */
-  commission: Commission;
+  /** [REQUIRED] Affiliate bid and payout information. */
+  bid: Bid;
 
 }
 
@@ -238,20 +238,20 @@ export interface GeoTargeting {
 /** @example "mobile" */
 export type DeviceType = 'mobile' | 'desktop' | 'tablet' | 'smart_tv';
 
-// ─── Commission ─────────────────────────────────────────────────────────────────
+// ─── Bid ────────────────────────────────────────────────────────────────────────
 
 /**
- * Affiliate commission and payout information.
- * Partner provides the determined commission amount at offer time.
+ * Affiliate bid and payout information.
+ * Partner provides the determined bid amount at offer time.
  *
  * @example { "model": "cpa", "amount": "15.00", "currency": "USD" }
  * @example { "model": "cps", "amount": "8.00", "currency": "USD" }
  */
-export interface Commission {
-  /** [REQUIRED] Commission model (for display purposes). @example "cpa" */
-  model: CommissionModel;
+export interface Bid {
+  /** [REQUIRED] Bid model (for display purposes). @example "cpa" */
+  model: BidModel;
 
-  /** [REQUIRED] Determined commission amount, decimal string. @example "15.00" */
+  /** [REQUIRED] Determined bid amount, decimal string. @example "15.00" */
   amount: string;
 
   /** [REQUIRED] ISO 4217 currency code. @example "USD" */
@@ -259,7 +259,7 @@ export interface Commission {
 }
 
 /** @example "cpa" */
-export type CommissionModel = 'cpa' | 'cps' | 'cpl' | 'cpi' | 'hybrid';
+export type BidModel = 'cpa' | 'cps' | 'cpl' | 'cpi' | 'hybrid';
 
 // ─── Query Request ──────────────────────────────────────────────────────────────
 
@@ -377,15 +377,15 @@ export interface IntentContentItem {
 export interface QueryFilter {
   /** Filter by category type. OR logic: matches any specified type. @example ["travel_hospitality"] */
   category_types?: CategoryType[];
-  /** Filter by commission model. OR logic: matches any specified model. @example ["cpa", "cps"] */
-  commission_models?: CommissionModel[];
+  /** Filter by bid model. OR logic: matches any specified model. @example ["cpa", "cps"] */
+  bid_models?: BidModel[];
   /** Filter by offer status. OR logic. @example ["active"] */
   status?: OfferStatus[];
-  /** Minimum commission amount, decimal string. Requires filter.currency to be set. @example "5.00" */
-  min_commission_amount?: string;
+  /** Minimum bid amount, decimal string. Requires filter.currency to be set. @example "5.00" */
+  min_bid_amount?: string;
   /** Maximum consumer-facing price, decimal string. Requires filter.currency to be set. @example "200.00" */
   max_price_amount?: string;
-  /** ISO 4217 currency code for min_commission_amount and max_price_amount. @example "USD" */
+  /** ISO 4217 currency code for min_bid_amount and max_price_amount. @example "USD" */
   currency?: string;
   /** Filter by brand or entity name (case-insensitive substring match against entity.name). @example "Hilton" */
   brand?: string;
