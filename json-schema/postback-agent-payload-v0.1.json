@@ -1,0 +1,90 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://agentoffernetwork.org/schema/postback-agent-payload/v0.1",
+  "title": "AgentOffer Postback Agent Payload Schema v0.1",
+  "description": "Payload that AON sends to an Agent developer's postback endpoint when a conversion is attributed. See postback.md Part A for the normative specification. Uses RFC 2119 requirement levels (REQUIRED/OPTIONAL).",
+  "type": "object",
+  "required": [
+    "event_id",
+    "event_type",
+    "tracking_id",
+    "offer_id",
+    "agent_id",
+    "conversion_type",
+    "amount",
+    "currency",
+    "bid_amount",
+    "timestamp"
+  ],
+  "properties": {
+    "event_id": {
+      "type": "string",
+      "pattern": "^evt_pb_[0-9A-HJKMNP-TV-Z]{26}$",
+      "description": "Unique event identifier (ULID-based). Idempotency key: all retries of the same postback share this value."
+    },
+    "event_type": {
+      "type": "string",
+      "const": "conversion",
+      "description": "Fixed value: conversion."
+    },
+    "tracking_id": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Tracking identifier from the original click event."
+    },
+    "offer_id": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Identifier of the converted offer."
+    },
+    "agent_id": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Identifier of the agent that drove the conversion."
+    },
+    "conversion_type": {
+      "type": "string",
+      "enum": ["sale", "lead", "install", "subscription", "trial", "custom"],
+      "description": "Conversion classification."
+    },
+    "amount": {
+      "type": "number",
+      "description": "Gross converted amount."
+    },
+    "currency": {
+      "type": "string",
+      "pattern": "^[A-Z]{3}$",
+      "description": "ISO 4217 currency code."
+    },
+    "bid_amount": {
+      "type": "number",
+      "description": "Bid amount computed by the platform."
+    },
+    "sub_id_1": {
+      "type": "string",
+      "description": "Custom tracking parameter 1. Inherited from the associated click event. Absent (not null) when not set on the original click."
+    },
+    "sub_id_2": {
+      "type": "string",
+      "description": "Custom tracking parameter 2."
+    },
+    "sub_id_3": {
+      "type": "string",
+      "description": "Custom tracking parameter 3."
+    },
+    "sub_id_4": {
+      "type": "string",
+      "description": "Custom tracking parameter 4."
+    },
+    "sub_id_5": {
+      "type": "string",
+      "description": "Custom tracking parameter 5."
+    },
+    "timestamp": {
+      "type": "string",
+      "format": "date-time",
+      "description": "ISO 8601 event timestamp."
+    }
+  },
+  "additionalProperties": false
+}

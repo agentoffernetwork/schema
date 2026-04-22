@@ -1,0 +1,71 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://agentoffernetwork.org/schema/offer-provider-response/v0.1",
+  "title": "AgentOffer OfferProvider Response Schema v0.1",
+  "description": "Response body returned by a Partner's OfferProvider endpoint. Two shapes are permitted: (a) success envelope { trace_id?, offers, has_more?, total? } and (b) error envelope following the AON ApiResponse contract { code, message, data, extra }. Uses RFC 2119 requirement levels.",
+  "oneOf": [
+    { "$ref": "#/$defs/SuccessEnvelope" },
+    { "$ref": "#/$defs/ErrorEnvelope" }
+  ],
+  "$defs": {
+    "SuccessEnvelope": {
+      "type": "object",
+      "description": "Success response envelope. Carried over HTTP 200. offers[] elements SHOULD conform to https://agentoffernetwork.org/schema/offer/v0.1 (offer-schema-v0.1.json).",
+      "required": ["offers"],
+      "properties": {
+        "trace_id": {
+          "type": "string",
+          "description": "Query trace ID. OPTIONAL in Partner responses: AON generates and injects a trace_id at request time; offer-mgmt backfills it on the AON side if Partner omits it. Partners MAY return their own trace_id for log correlation, but AON's value takes precedence."
+        },
+        "offers": {
+          "type": "array",
+          "description": "List of offer objects conforming to offer-schema-v0.1.json. MAY be an empty array when no matches are found.",
+          "items": {
+            "type": "object"
+          }
+        },
+        "has_more": {
+          "type": "boolean",
+          "description": "Whether another page is available for the same query."
+        },
+        "total": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Total number of matching offers when available."
+        }
+      },
+      "additionalProperties": false
+    },
+    "ErrorEnvelope": {
+      "type": "object",
+      "description": "Error response envelope aligned with the AON ApiResponse contract. Carried over HTTP 4xx/5xx.",
+      "required": ["code", "message", "data", "extra"],
+      "properties": {
+        "code": {
+          "type": "string",
+          "enum": [
+            "BAD_REQUEST",
+            "UNAUTHORIZED",
+            "FORBIDDEN",
+            "RATE_LIMITED",
+            "INTERNAL_ERROR"
+          ],
+          "description": "Business-level error code. MUST be one of the enumerated values; additional codes MAY be introduced in future revisions."
+        },
+        "message": {
+          "type": "string",
+          "description": "Human-readable description of the error. MAY be empty when no additional context is available."
+        },
+        "data": {
+          "type": "object",
+          "description": "Always an empty object for error responses per the AON ApiResponse contract."
+        },
+        "extra": {
+          "type": "object",
+          "description": "Optional diagnostic/extension fields (e.g., retry_after_seconds, debug metadata). Empty object when unused."
+        }
+      },
+      "additionalProperties": false
+    }
+  }
+}

@@ -25,7 +25,7 @@
 | `json-schema/offer-query-schema-v0.1.json` | Query request schema for `POST /v1/offers/query` |
 | `types/offer.types.ts` | TypeScript type definitions for Offer, Query, and Response |
 | `types/category-attributes.types.ts` | Per-category attribute definitions for all 6 verticals |
-| `validators/` | Schema validation tooling (coming soon) |
+| `validators/` | Reserved for future packaged validation tooling; current validation examples use `ajv-cli` directly |
 
 ## Quick Start
 
@@ -114,6 +114,8 @@ These artifacts are the machine-readable companion to the human-readable [protoc
 
 - **Version:** `v0.1`
 - **Status:** `Draft`
+- **Release posture:** `Public beta for machine-readable contract artifacts`
+- **Scope note:** This repo currently ships canonical JSON Schema and TypeScript types. Packaged validator tooling is planned follow-up work, not part of the current v0.1 deliverable.
 
 ## Contributing
 

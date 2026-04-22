@@ -1,0 +1,160 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://agentoffernetwork.org/schema/postback-partner-payload/v0.1",
+  "title": "AgentOffer Postback Partner Payload Schema v0.1",
+  "description": "Payload that a Partner sends to AON's POST /v1/postback endpoint. Supports three event types (conversion, refund, adjustment) via oneOf discriminated by event_type. See postback.md Part B for the normative specification. Uses RFC 2119 requirement levels (REQUIRED/OPTIONAL).",
+  "type": "object",
+  "oneOf": [
+    { "$ref": "#/$defs/ConversionEvent" },
+    { "$ref": "#/$defs/RefundEvent" },
+    { "$ref": "#/$defs/AdjustmentEvent" }
+  ],
+  "$defs": {
+    "EventId": {
+      "type": "string",
+      "pattern": "^evt_pb_[0-9A-HJKMNP-TV-Z]{26}$",
+      "description": "Unique event identifier (ULID-based). Partner-generated idempotency key; AON deduplicates on this value."
+    },
+    "TrackingId": {
+      "type": "string",
+      "minLength": 1,
+      "description": "AON tracking identifier from the original click (attribution key). Replaces the legacy aon_id field."
+    },
+    "OfferId": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Identifier of the associated offer."
+    },
+    "ConversionId": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Partner-side unique identifier for the conversion or transaction."
+    },
+    "Timestamp": {
+      "type": "string",
+      "format": "date-time",
+      "description": "ISO 8601 event timestamp."
+    },
+    "Currency": {
+      "type": "string",
+      "pattern": "^[A-Z]{3}$",
+      "description": "ISO 4217 currency code."
+    },
+    "ConversionEvent": {
+      "type": "object",
+      "description": "Conversion postback event: Partner reports a new conversion to AON.",
+      "required": [
+        "event_id",
+        "event_type",
+        "tracking_id",
+        "offer_id",
+        "conversion_id",
+        "timestamp",
+        "conversion_type",
+        "amount",
+        "bid",
+        "currency"
+      ],
+      "properties": {
+        "event_id": { "$ref": "#/$defs/EventId" },
+        "event_type": { "const": "conversion" },
+        "tracking_id": { "$ref": "#/$defs/TrackingId" },
+        "offer_id": { "$ref": "#/$defs/OfferId" },
+        "conversion_id": { "$ref": "#/$defs/ConversionId" },
+        "timestamp": { "$ref": "#/$defs/Timestamp" },
+        "conversion_type": {
+          "type": "string",
+          "enum": ["sale", "lead", "install", "subscription", "trial", "custom"],
+          "description": "Conversion classification."
+        },
+        "amount": {
+          "type": "number",
+          "description": "Order amount."
+        },
+        "bid": {
+          "type": "number",
+          "description": "Commission for this conversion (Partner's payout to AON, net of Partner's own margin)."
+        },
+        "currency": { "$ref": "#/$defs/Currency" },
+        "sub_id_1": { "type": "string", "description": "Custom tracking parameter 1. Inherited from click." },
+        "sub_id_2": { "type": "string", "description": "Custom tracking parameter 2." },
+        "sub_id_3": { "type": "string", "description": "Custom tracking parameter 3." },
+        "sub_id_4": { "type": "string", "description": "Custom tracking parameter 4." },
+        "sub_id_5": { "type": "string", "description": "Custom tracking parameter 5." },
+        "coupon_code": { "type": "string", "description": "Coupon code used for coupon-based attribution scenarios." }
+      },
+      "additionalProperties": false
+    },
+    "RefundEvent": {
+      "type": "object",
+      "description": "Refund postback event: Partner reports a refund against a previous conversion.",
+      "required": [
+        "event_id",
+        "event_type",
+        "tracking_id",
+        "offer_id",
+        "conversion_id",
+        "timestamp",
+        "original_event_id",
+        "refund_amount",
+        "currency"
+      ],
+      "properties": {
+        "event_id": { "$ref": "#/$defs/EventId" },
+        "event_type": { "const": "refund" },
+        "tracking_id": { "$ref": "#/$defs/TrackingId" },
+        "offer_id": { "$ref": "#/$defs/OfferId" },
+        "conversion_id": { "$ref": "#/$defs/ConversionId" },
+        "timestamp": { "$ref": "#/$defs/Timestamp" },
+        "original_event_id": {
+          "type": "string",
+          "pattern": "^evt_pb_[0-9A-HJKMNP-TV-Z]{26}$",
+          "description": "event_id of the original conversion postback being refunded."
+        },
+        "refund_amount": {
+          "type": "number",
+          "exclusiveMinimum": 0,
+          "description": "Refund amount (positive number)."
+        },
+        "currency": { "$ref": "#/$defs/Currency" },
+        "refund_reason": { "type": "string", "description": "Human-readable refund reason (free text)." }
+      },
+      "additionalProperties": false
+    },
+    "AdjustmentEvent": {
+      "type": "object",
+      "description": "Adjustment postback event: Partner reports an amount adjustment against a previous conversion.",
+      "required": [
+        "event_id",
+        "event_type",
+        "tracking_id",
+        "offer_id",
+        "conversion_id",
+        "timestamp",
+        "original_event_id",
+        "adjustment_amount",
+        "currency"
+      ],
+      "properties": {
+        "event_id": { "$ref": "#/$defs/EventId" },
+        "event_type": { "const": "adjustment" },
+        "tracking_id": { "$ref": "#/$defs/TrackingId" },
+        "offer_id": { "$ref": "#/$defs/OfferId" },
+        "conversion_id": { "$ref": "#/$defs/ConversionId" },
+        "timestamp": { "$ref": "#/$defs/Timestamp" },
+        "original_event_id": {
+          "type": "string",
+          "pattern": "^evt_pb_[0-9A-HJKMNP-TV-Z]{26}$",
+          "description": "event_id of the original conversion postback being adjusted."
+        },
+        "adjustment_amount": {
+          "type": "number",
+          "description": "Adjustment amount. Positive means increase, negative means decrease."
+        },
+        "currency": { "$ref": "#/$defs/Currency" },
+        "adjustment_reason": { "type": "string", "description": "Human-readable adjustment reason." }
+      },
+      "additionalProperties": false
+    }
+  }
+}
