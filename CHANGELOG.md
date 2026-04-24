@@ -15,6 +15,13 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - 6 category types with typed attribute contracts
 - RFC 2119 requirement level annotations in schema descriptions
 
+## [0.1.1] - 2026-04-23
+
+### Changed
+
+- Expanded category enums from 6 to 11 across Offer Schema and Query Schema artifacts
+- Added typed common attribute contracts for `health_beauty`, `fashion`, `food_grocery`, `home_garden`, and `automotive`
+
 ### Status
 
 - Version: `v0.1`

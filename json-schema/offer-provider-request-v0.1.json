@@ -114,7 +114,12 @@
               "education",
               "financial_service",
               "electronics",
-              "entertainment"
+              "entertainment",
+              "health_beauty",
+              "fashion",
+              "food_grocery",
+              "home_garden",
+              "automotive"
             ]
           }
         },

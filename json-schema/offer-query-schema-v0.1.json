@@ -145,7 +145,12 @@
               "education",
               "financial_service",
               "electronics",
-              "entertainment"
+              "entertainment",
+              "health_beauty",
+              "fashion",
+              "food_grocery",
+              "home_garden",
+              "automotive"
             ]
           },
           "description": "Filter by category type. Values reference offer_info.category.type enum. OR logic: matches any specified type."

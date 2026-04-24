@@ -24,7 +24,7 @@
 | `json-schema/offer-schema-v0.1.json` | Offer object JSON Schema with RFC 2119 requirement levels |
 | `json-schema/offer-query-schema-v0.1.json` | Query request schema for `POST /v1/offers/query` |
 | `types/offer.types.ts` | TypeScript type definitions for Offer, Query, and Response |
-| `types/category-attributes.types.ts` | Per-category attribute definitions for all 6 verticals |
+| `types/category-attributes.types.ts` | Per-category attribute definitions for all 11 verticals |
 | `validators/` | Reserved for future packaged validation tooling; current validation examples use `ajv-cli` directly |
 
 ## Quick Start
@@ -81,14 +81,15 @@ const offer: Offer = {
 
 ## Category Types
 
-| Type | Sub-Types |
-|------|-----------|
-| `software_saas` | project_management, design, development_tools, crm, analytics, communication, security, ai_tools |
-| `travel_hospitality` | hotel, flight, car_rental, vacation_package, restaurant, attraction |
-| `education` | online_course, certification, bootcamp, language_learning, tutoring, academic_program |
-| `financial_service` | credit_card, insurance, loan, investment, banking, payment |
-| `electronics` | smartphone, laptop, audio, wearable, gaming_hardware, smart_home, camera |
-| `entertainment` | game, streaming_video, ai_companion, social_audio, sports_betting, music_audio, live_streaming |
+The current canonical category surface is defined by the human-readable
+[Category Taxonomy](https://github.com/agentoffernetwork/protocol/blob/main/specs/category-taxonomy.md)
+document in the `protocol` repository.
+
+This repo follows that taxonomy boundary:
+
+- current public machine-readable category enums align with the current canonical 11-category public set
+- aliases are normalization concerns, not public enum members
+- reserved / future categories are not treated as current public machine-readable output until they are formally added
 
 ## Field Requirement Levels
 
@@ -107,6 +108,7 @@ These artifacts are the machine-readable companion to the human-readable [protoc
 | Need | Go to |
 |------|-------|
 | Human-readable spec | [`agentoffernetwork/protocol`](https://github.com/agentoffernetwork/protocol) |
+| Category registry | [`specs/category-taxonomy.md`](https://github.com/agentoffernetwork/protocol/blob/main/specs/category-taxonomy.md) |
 | Example payloads | [`agentoffernetwork/examples`](https://github.com/agentoffernetwork/examples) |
 | Change proposals | [`agentoffernetwork/rfcs`](https://github.com/agentoffernetwork/rfcs) |
 

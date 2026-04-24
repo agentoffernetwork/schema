@@ -66,7 +66,12 @@
                 "education",
                 "financial_service",
                 "electronics",
-                "entertainment"
+                "entertainment",
+                "health_beauty",
+                "fashion",
+                "food_grocery",
+                "home_garden",
+                "automotive"
               ],
               "description": "Industry vertical identifier. All types use attributes.sub_type for finer classification."
             },
@@ -359,6 +364,207 @@
                         "type": "array",
                         "items": { "type": "string" },
                         "description": "Supported languages."
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            {
+              "if": {
+                "properties": { "type": { "const": "health_beauty" } },
+                "required": ["type"]
+              },
+              "then": {
+                "properties": {
+                  "attributes": {
+                    "type": "object",
+                    "required": ["sub_type"],
+                    "properties": {
+                      "sub_type": {
+                        "type": "string",
+                        "enum": [
+                          "skincare",
+                          "supplement",
+                          "fitness",
+                          "cosmetics",
+                          "wellness",
+                          "medical_device"
+                        ]
+                      },
+                      "ingredients_highlight": {
+                        "type": "array",
+                        "items": { "type": "string" },
+                        "description": "Highlighted ingredients or active components."
+                      },
+                      "skin_type": {
+                        "type": "string",
+                        "description": "Intended skin type or consumer profile."
+                      },
+                      "organic": {
+                        "type": "boolean",
+                        "description": "Whether the product is organic-certified."
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            {
+              "if": {
+                "properties": { "type": { "const": "fashion" } },
+                "required": ["type"]
+              },
+              "then": {
+                "properties": {
+                  "attributes": {
+                    "type": "object",
+                    "required": ["sub_type"],
+                    "properties": {
+                      "sub_type": {
+                        "type": "string",
+                        "enum": [
+                          "clothing",
+                          "shoes",
+                          "accessories",
+                          "jewelry",
+                          "luxury",
+                          "sportswear"
+                        ]
+                      },
+                      "gender": {
+                        "type": "string",
+                        "enum": ["unisex", "male", "female"],
+                        "description": "Intended gender segment."
+                      },
+                      "size_range": {
+                        "type": "string",
+                        "description": "Size coverage summary."
+                      },
+                      "material": {
+                        "type": "string",
+                        "description": "Primary material."
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            {
+              "if": {
+                "properties": { "type": { "const": "food_grocery" } },
+                "required": ["type"]
+              },
+              "then": {
+                "properties": {
+                  "attributes": {
+                    "type": "object",
+                    "required": ["sub_type"],
+                    "properties": {
+                      "sub_type": {
+                        "type": "string",
+                        "enum": [
+                          "meal_kit",
+                          "grocery_delivery",
+                          "specialty_food",
+                          "beverage",
+                          "organic",
+                          "snack"
+                        ]
+                      },
+                      "dietary_info": {
+                        "type": "array",
+                        "items": { "type": "string" },
+                        "description": "Dietary tags such as vegan, gluten_free, keto."
+                      },
+                      "shelf_life_days": {
+                        "type": "integer",
+                        "minimum": 0,
+                        "description": "Shelf life in days."
+                      },
+                      "serving_size": {
+                        "type": "string",
+                        "description": "Serving size summary."
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            {
+              "if": {
+                "properties": { "type": { "const": "home_garden" } },
+                "required": ["type"]
+              },
+              "then": {
+                "properties": {
+                  "attributes": {
+                    "type": "object",
+                    "required": ["sub_type"],
+                    "properties": {
+                      "sub_type": {
+                        "type": "string",
+                        "enum": [
+                          "furniture",
+                          "appliance",
+                          "decor",
+                          "smart_home",
+                          "garden",
+                          "cleaning"
+                        ]
+                      },
+                      "dimensions": {
+                        "type": "string",
+                        "description": "Dimension summary."
+                      },
+                      "assembly_required": {
+                        "type": "boolean",
+                        "description": "Whether assembly is required."
+                      },
+                      "energy_rating": {
+                        "type": "string",
+                        "description": "Energy efficiency rating."
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            {
+              "if": {
+                "properties": { "type": { "const": "automotive" } },
+                "required": ["type"]
+              },
+              "then": {
+                "properties": {
+                  "attributes": {
+                    "type": "object",
+                    "required": ["sub_type"],
+                    "properties": {
+                      "sub_type": {
+                        "type": "string",
+                        "enum": [
+                          "car_purchase",
+                          "car_lease",
+                          "insurance",
+                          "parts",
+                          "ev_charging",
+                          "ride_service"
+                        ]
+                      },
+                      "vehicle_type": {
+                        "type": "string",
+                        "description": "Vehicle class such as sedan, suv, truck, ev."
+                      },
+                      "fuel_type": {
+                        "type": "string",
+                        "enum": ["gasoline", "diesel", "electric", "hybrid"],
+                        "description": "Fuel or powertrain type."
+                      },
+                      "warranty_years": {
+                        "type": "integer",
+                        "minimum": 0,
+                        "description": "Warranty duration in years."
                       }
                     }
                   }

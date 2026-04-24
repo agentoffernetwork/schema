@@ -20,7 +20,12 @@ export type CategoryType =
   | 'education'
   | 'financial_service'
   | 'electronics'
-  | 'entertainment';
+  | 'entertainment'
+  | 'health_beauty'
+  | 'fashion'
+  | 'food_grocery'
+  | 'home_garden'
+  | 'automotive';
 
 // ─── Sub-Type Enums ─────────────────────────────────────────────────────────
 
@@ -75,6 +80,46 @@ export type EntertainmentSubType =
   | 'sports_betting'
   | 'music_audio'
   | 'live_streaming';
+
+export type HealthBeautySubType =
+  | 'skincare'
+  | 'supplement'
+  | 'fitness'
+  | 'cosmetics'
+  | 'wellness'
+  | 'medical_device';
+
+export type FashionSubType =
+  | 'clothing'
+  | 'shoes'
+  | 'accessories'
+  | 'jewelry'
+  | 'luxury'
+  | 'sportswear';
+
+export type FoodGrocerySubType =
+  | 'meal_kit'
+  | 'grocery_delivery'
+  | 'specialty_food'
+  | 'beverage'
+  | 'organic'
+  | 'snack';
+
+export type HomeGardenSubType =
+  | 'furniture'
+  | 'appliance'
+  | 'decor'
+  | 'smart_home'
+  | 'garden'
+  | 'cleaning';
+
+export type AutomotiveSubType =
+  | 'car_purchase'
+  | 'car_lease'
+  | 'insurance'
+  | 'parts'
+  | 'ev_charging'
+  | 'ride_service';
 
 
 // ═══════════════════════════════════════════════════════════════════════════
@@ -717,6 +762,91 @@ interface EntertainmentCommon {
  */
 export type EntertainmentAttributes = EntertainmentCommon & Record<string, unknown>;
 
+// ═══════════════════════════════════════════════════════════════════════════
+// 7. health_beauty
+// ═══════════════════════════════════════════════════════════════════════════
+
+interface HealthBeautyCommon {
+  /** (required) Health & beauty sub-category discriminator. */
+  sub_type: HealthBeautySubType;
+  /** (optional) Highlighted ingredients or actives. */
+  ingredients_highlight?: string[];
+  /** (optional) Intended skin type or consumer profile. */
+  skin_type?: string;
+  /** (optional) Whether the product is organic-certified. */
+  organic?: boolean;
+}
+
+export type HealthBeautyAttributes = HealthBeautyCommon & Record<string, unknown>;
+
+// ═══════════════════════════════════════════════════════════════════════════
+// 8. fashion
+// ═══════════════════════════════════════════════════════════════════════════
+
+interface FashionCommon {
+  /** (required) Fashion sub-category discriminator. */
+  sub_type: FashionSubType;
+  /** (optional) Intended gender segment. */
+  gender?: 'unisex' | 'male' | 'female';
+  /** (optional) Size coverage summary. */
+  size_range?: string;
+  /** (optional) Primary material. */
+  material?: string;
+}
+
+export type FashionAttributes = FashionCommon & Record<string, unknown>;
+
+// ═══════════════════════════════════════════════════════════════════════════
+// 9. food_grocery
+// ═══════════════════════════════════════════════════════════════════════════
+
+interface FoodGroceryCommon {
+  /** (required) Food & grocery sub-category discriminator. */
+  sub_type: FoodGrocerySubType;
+  /** (optional) Dietary tags such as vegan, gluten_free, keto. */
+  dietary_info?: string[];
+  /** (optional) Shelf life in days. */
+  shelf_life_days?: number;
+  /** (optional) Serving size summary. */
+  serving_size?: string;
+}
+
+export type FoodGroceryAttributes = FoodGroceryCommon & Record<string, unknown>;
+
+// ═══════════════════════════════════════════════════════════════════════════
+// 10. home_garden
+// ═══════════════════════════════════════════════════════════════════════════
+
+interface HomeGardenCommon {
+  /** (required) Home & garden sub-category discriminator. */
+  sub_type: HomeGardenSubType;
+  /** (optional) Dimension summary. */
+  dimensions?: string;
+  /** (optional) Whether assembly is required. */
+  assembly_required?: boolean;
+  /** (optional) Energy efficiency rating. */
+  energy_rating?: string;
+}
+
+export type HomeGardenAttributes = HomeGardenCommon & Record<string, unknown>;
+
+// ═══════════════════════════════════════════════════════════════════════════
+// 11. automotive
+// ═══════════════════════════════════════════════════════════════════════════
+
+interface AutomotiveCommon {
+  /** (required) Automotive sub-category discriminator. */
+  sub_type: AutomotiveSubType;
+  /** (optional) Vehicle class such as sedan, suv, truck, ev. */
+  vehicle_type?: string;
+  /** (optional) Fuel or powertrain type. */
+  fuel_type?: 'gasoline' | 'diesel' | 'electric' | 'hybrid';
+  /** (optional) Warranty duration in years. */
+  warranty_years?: number;
+}
+
+export type AutomotiveAttributes = AutomotiveCommon & Record<string, unknown>;
+
 // ─── Top-Level Discriminated Union ──────────────────────────────────────────
 
 export type CategoryAttributes =
@@ -725,4 +855,9 @@ export type CategoryAttributes =
   | { type: 'education';           attributes: EducationAttributes }
   | { type: 'financial_service';   attributes: FinancialServiceAttributes }
   | { type: 'electronics';         attributes: ElectronicsAttributes }
-  | { type: 'entertainment';       attributes: EntertainmentAttributes };
+  | { type: 'entertainment';       attributes: EntertainmentAttributes }
+  | { type: 'health_beauty';       attributes: HealthBeautyAttributes }
+  | { type: 'fashion';             attributes: FashionAttributes }
+  | { type: 'food_grocery';        attributes: FoodGroceryAttributes }
+  | { type: 'home_garden';         attributes: HomeGardenAttributes }
+  | { type: 'automotive';          attributes: AutomotiveAttributes };
