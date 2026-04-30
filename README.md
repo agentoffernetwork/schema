@@ -43,7 +43,8 @@ ajv validate -s json-schema/offer-schema-v0.1.json -d your-offer.json --spec=dra
 import type { Offer, QueryRequest, QueryResponse } from './types/offer.types';
 
 const offer: Offer = {
-  uuid: 'offer-001',
+  offer_id: 'offer-001',
+  offer_instance_id: '019dd208-27d2-7673-b16f-6897fa120303',
   version: 1,
   offer_info: {
     title: 'My SaaS Product',
@@ -63,7 +64,8 @@ const offer: Offer = {
 
 **REQUIRED fields:**
 
-- `uuid` -- unique offer identifier
+- `offer_id` -- stable inventory-level offer identifier
+- `offer_instance_id` -- per-dispatch offer instance identifier
 - `version` -- schema version
 - `offer_info` -- title, offer_type, category (type + attributes), description
 - `entity` -- provider id and name

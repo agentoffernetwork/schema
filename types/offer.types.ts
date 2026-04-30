@@ -22,8 +22,36 @@ export type { CategoryType, CategoryAttributes };
 
 /** Top-level offer object. */
 export interface Offer {
-  /** [REQUIRED] Stable protocol-side offer identifier. UUIDv7 is recommended. @example "019414a0-7e3b-7f1a-b5e2-0a1b2c3d4e5f" */
-  uuid: string;
+  /**
+   * [REQUIRED] Stable inventory-level offer identifier. UUIDv7 is recommended.
+   * Same `offer_id` across multiple query responses for the same offer
+   * (one entry per inventory record). Industry alignment: affiliate platforms
+   * such as PartnerStack and Rakuten Advertising use `offer_id` for the
+   * inventory-stable identifier.
+   * @example "019414a0-7e3b-7f1a-b5e2-0a1b2c3d4e5f"
+   */
+  offer_id: string;
+
+  /**
+   * [REQUIRED] Per-dispatch unique identifier for this offer instance. UUIDv7
+   * is recommended. Generated fresh for each query response (i.e. each time the
+   * offer is "served"). Used as the primary key for the click → conversion →
+   * settlement attribution pipeline. The same value is carried in:
+   *   - landing-page URL query param: `?aon_tracking_id={offer_instance_id}`
+   *   - S2S postback body: `aon_tracking_id={offer_instance_id}`
+   *   - events.md `click_event` / `conversion_event`: the `aon_tracking_id`
+   *     field (see PROTO-F014b for the events/postback rename).
+   *
+   * Industry alignment: Google Ads `gclid`, Meta `fbclid`, TikTok `ttclid`,
+   * Microsoft `msclkid` all follow the `{platform_prefix}clid` pattern at the
+   * integration layer. AON keeps the protocol-side field name neutral
+   * (`offer_instance_id`) for protocol openness and uses `aon_tracking_id` only
+   * at the integration layer (URL query param + S2S body), avoiding vendor
+   * lock-in inside the schema while preserving brand identity in the
+   * partner-facing contract.
+   * @example "019dd208-27d2-7673-b16f-6897fa120303"
+   */
+  offer_instance_id: string;
 
   /** [REQUIRED] Offer document version. @example "1.0" */
   version: string;
@@ -83,8 +111,15 @@ export interface OfferInfo {
   /** [RECOMMENDED] Pricing, availability, and inventory information. @example { "price": { "amount": "20.00", "currency": "USD" }, "availability": "available" } */
   commercial?: CommercialInfo;
 
-  /** [OPTIONAL] Upstream source-side offer or inventory identifier. @example "partner-offer-88712" */
-  source_offer_id?: string;
+  // [REMOVED in v0.1 (non-breaking, no GA consumers)] `source_offer_id` was
+  // previously OPTIONAL upstream-source identifier. Removed in PROTO-F014a
+  // (Offer Protocol ID Naming Convergence) because:
+  //   - manual-source offers (source='manual') have no upstream and could
+  //     never populate this field meaningfully;
+  //   - adapter-source offers store the upstream id in the platform's
+  //     `offers.adapter_offer_id` DB column (not part of the open protocol)
+  //     and may also expose it via a future `source.*` sub-object if needed
+  //     (out of scope for this Feature).
 
   /** [OPTIONAL] RFC 3339 timestamp for when the offer becomes active. @example "2026-04-01T00:00:00Z" */
   start_at?: string;
