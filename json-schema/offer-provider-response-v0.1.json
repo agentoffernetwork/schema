@@ -2,7 +2,7 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://agentoffernetwork.org/schema/offer-provider-response/v0.1",
   "title": "AgentOffer OfferProvider Response Schema v0.1",
-  "description": "Response body returned by a Partner's OfferProvider endpoint. Two shapes are permitted: (a) success envelope { trace_id?, offers, has_more?, total? } and (b) error envelope following the AON ApiResponse contract { code, message, data, extra }. Uses RFC 2119 requirement levels.",
+  "description": "Response body returned by a Partner's OfferProvider endpoint. Two shapes are permitted: (a) success envelope { request_id, offers } and (b) error envelope following the AON ApiResponse contract { code, message, data, extra }. Uses RFC 2119 requirement levels.",
   "oneOf": [
     { "$ref": "#/$defs/SuccessEnvelope" },
     { "$ref": "#/$defs/ErrorEnvelope" }
@@ -11,11 +11,11 @@
     "SuccessEnvelope": {
       "type": "object",
       "description": "Success response envelope. Carried over HTTP 200. offers[] elements SHOULD conform to https://agentoffernetwork.org/schema/offer/v0.1 (offer-schema-v0.1.json).",
-      "required": ["offers"],
+      "required": ["request_id", "offers"],
       "properties": {
-        "trace_id": {
+        "request_id": {
           "type": "string",
-          "description": "Query trace ID. OPTIONAL in Partner responses: AON generates and injects a trace_id at request time; offer-mgmt backfills it on the AON side if Partner omits it. Partners MAY return their own trace_id for log correlation, but AON's value takes precedence."
+          "description": "Echoes the `request_id` from the incoming OfferProvider request so the full agent → AON → Partner chain shares one correlation id (UUIDv7). REQUIRED in Partner success responses: Partners MUST echo the value AON sent and MUST NOT replace it with a Partner-generated correlation id."
         },
         "offers": {
           "type": "array",
@@ -23,15 +23,6 @@
           "items": {
             "type": "object"
           }
-        },
-        "has_more": {
-          "type": "boolean",
-          "description": "Whether another page is available for the same query."
-        },
-        "total": {
-          "type": "integer",
-          "minimum": 0,
-          "description": "Total number of matching offers when available."
         }
       },
       "additionalProperties": false

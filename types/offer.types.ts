@@ -65,7 +65,7 @@ export interface Offer {
   /** [REQUIRED] Primary executable action exposed by the offer. */
   action: OfferAction;
 
-  /** [OPTIONAL] Creative assets associated with the offer. @example [{ "image_url": "https://cdn.example.com/banner.png", "tag": "banner", "format": "image" }] */
+  /** [OPTIONAL] Creative assets associated with the offer. @example [{ "url": "https://cdn.example.com/banner.png", "tag": "banner", "format": "image" }] */
   material?: MaterialItem[];
 
   /** [OPTIONAL] Targeting constraints for surfacing. */
@@ -73,6 +73,9 @@ export interface Offer {
 
   /** [REQUIRED] Affiliate bid and payout information. */
   bid: Bid;
+
+  /** [RECOMMENDED] Rules for valid conversion events, attribution windows, and dedup logic. SHOULD be present to establish clear attribution expectations. */
+  conversion_rule?: ConversionRule;
 
 }
 
@@ -233,7 +236,7 @@ export interface AppDeepLinkAction extends ActionCommon {
 
 /**
  * [RECOMMENDED] Creative asset item.
- * @example { "image_url": "https://cdn.example.com/offers/claude-pro-banner.png", "tag": "banner", "format": "image", "size": "728x90" }
+ * @example { "url": "https://cdn.example.com/offers/claude-pro-banner.png", "tag": "banner", "format": "image", "dimensions": "728x90" }
  */
 export interface MaterialItem {
   /** [RECOMMENDED] URL to the creative asset. @example "https://cdn.example.com/offers/claude-pro-banner.png" */
@@ -296,6 +299,27 @@ export interface Bid {
 /** @example "cpa" */
 export type BidModel = 'cpa' | 'cps' | 'cpl' | 'cpi' | 'hybrid';
 
+// ─── Conversion Rule ────────────────────────────────────────────────────────────
+
+/**
+ * Rules for valid conversion events, attribution logic, and tracking windows.
+ * @example { "click_window_hours": 720, "attribution_model": "last_click", "accepted_types": ["sale"], "dedup_strategy": "first" }
+ */
+export interface ConversionRule {
+  /** Click attribution window in hours. Conversions within this window after a click are eligible for attribution. Default: 720. @example 720 */
+  click_window_hours?: number;
+  /** View-through attribution window in hours. Default: 0 (view-through attribution not supported). @example 0 */
+  view_window_hours?: number;
+  /** Attribution method. Default: "last_click". @example "last_click" */
+  attribution_model?: 'last_click' | 'first_click';
+  /** Accepted conversion types for this offer. @example ["sale"] */
+  accepted_types?: ('sale' | 'lead' | 'install' | 'subscription' | 'trial' | 'custom')[];
+  /** Deduplication strategy for multiple conversions from the same user. Default: "first". @example "first" */
+  dedup_strategy?: 'first' | 'all' | 'highest';
+  /** Minimum conversion amount, decimal string. Conversions below this threshold do not qualify for bid. @example "10.00" */
+  minimum_amount?: string;
+}
+
 // ─── Query Request ──────────────────────────────────────────────────────────────
 
 /**
@@ -356,6 +380,9 @@ export interface QueryContext {
 
   /** [OPTIONAL] Session identifier for grouping related queries. @example "sess_abc123" */
   session_id?: string;
+
+  /** [OPTIONAL] Conversation or thread identifier within the session. @example "conv_42" */
+  conversation_id?: string | number;
 
   /** [REQUIRED] User profile information for intent matching and targeting. */
   user_profile: UserProfile;
@@ -442,11 +469,11 @@ export interface QueryPagination {
 
 /**
  * Query response envelope.
- * @example { "query_id": "019414a0-9f4c-7e2d-b3a1-d5e6f7081234", "offers": [] }
+ * @example { "request_id": "019414a0-9f4c-7e2d-b3a1-d5e6f7081234", "offers": [] }
  */
 export interface OfferResponse {
-  /** Core-generated unique identifier (UUIDv7) for this query, used to correlate downstream events (impression/click/conversion). @example "019414a0-9f4c-7e2d-b3a1-d5e6f7081234" */
-  query_id: string;
+  /** Echoes the request's `request_id` (UUIDv7) so the agent → AON → Partner chain shares one correlation id. Used to attribute downstream events (impression / click / conversion). @example "019414a0-9f4c-7e2d-b3a1-d5e6f7081234" */
+  request_id: string;
   /** Ranked offer results, up to the requested limit. @example [] */
   offers: Offer[];
 }
