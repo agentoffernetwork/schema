@@ -29,12 +29,30 @@
 
 ## Quick Start
 
+### Validate a Query API request
+
+Use this when you are building the body for `POST /v1/offers/query`.
+
+```bash
+npx --yes --package=ajv-cli@5 --package=ajv-formats@3 -- \
+  ajv validate \
+  -s json-schema/offer-query-schema-v0.1.json \
+  -d your-query-request.json \
+  --spec=draft2020
+```
+
+Start from the minimal request in the
+[Query API spec](https://github.com/agentoffernetwork/protocol/blob/main/specs/query-api.md)
+or the examples repository, then validate the payload your integration will actually send.
+
 ### Validate an offer with JSON Schema
 
 ```bash
-# Using ajv-cli
-npm install -g ajv-cli
-ajv validate -s json-schema/offer-schema-v0.1.json -d your-offer.json --spec=draft2020
+npx --yes --package=ajv-cli@5 --package=ajv-formats@3 -- \
+  ajv validate \
+  -s json-schema/offer-schema-v0.1.json \
+  -d ../examples/http/notion-offer.json \
+  --spec=draft2020
 ```
 
 ### Use TypeScript types
@@ -81,6 +99,29 @@ const offer: Offer = {
 
 - `targeting`, `bid`, `conversion_rule`, `frequency_capping`, `tags`, `priority`, `status`
 
+## Query API Validation Path
+
+| Step | Use | File |
+|------|-----|------|
+| 1 | Read the human-readable API contract | [`protocol/specs/query-api.md`](https://github.com/agentoffernetwork/protocol/blob/main/specs/query-api.md) |
+| 2 | Validate a request body | [`json-schema/offer-query-schema-v0.1.json`](json-schema/offer-query-schema-v0.1.json) |
+| 3 | Inspect a canonical request payload | [`examples/http/offer-query-request.json`](https://github.com/agentoffernetwork/examples/blob/main/http/offer-query-request.json) |
+| 4 | Understand returned `offers[]` objects | [`json-schema/offer-schema-v0.1.json`](json-schema/offer-schema-v0.1.json) |
+| 5 | Inspect a canonical response payload | [`examples/http/offer-response.json`](https://github.com/agentoffernetwork/examples/blob/main/http/offer-response.json) |
+
+The query request schema validates the request body. The offer schema validates each object inside `offers[]`.
+
+## Common Validation Failures
+
+| Symptom | Likely cause | Fix |
+|---------|--------------|-----|
+| Missing required property `context` | Request body omitted the context object | Send `context` with at least `user_profile` |
+| Missing required property `intent` | Request body omitted the user intent object | Send `intent.content[]` with at least one item |
+| `intent.content[]` fails validation | Missing content item `type` or unsupported content type | Use `input_text` or `input_image` |
+| Category enum fails validation | Category is not part of the current public set | Use the 11 canonical category types from the protocol taxonomy |
+| Stale identifier appears in offer payload | Payload still uses `uuid`, `original_offer_id`, or `source_offer_id` | Use `offer_id` and `offer_instance_id` |
+| Response metadata mismatch | Payload still expects `query_id`, `trace_id`, `has_more`, or `total` in the canonical Query API response | Use `request_id` and `offers[]`; see protocol contract governance for historical contexts |
+
 ## Category Types
 
 The current canonical category surface is defined by the human-readable
@@ -113,6 +154,8 @@ These artifacts are the machine-readable companion to the human-readable [protoc
 | Category registry | [`specs/category-taxonomy.md`](https://github.com/agentoffernetwork/protocol/blob/main/specs/category-taxonomy.md) |
 | Example payloads | [`agentoffernetwork/examples`](https://github.com/agentoffernetwork/examples) |
 | Change proposals | [`agentoffernetwork/rfcs`](https://github.com/agentoffernetwork/rfcs) |
+
+Use the protocol repo for semantics, this schema repo for validation, and the examples repo for payloads you can inspect or adapt.
 
 ## Status
 
