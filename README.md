@@ -29,6 +29,16 @@
 
 ## Quick Start
 
+If you are new to AON, start with the guided docs first:
+
+| Need | Link |
+|------|------|
+| Understand mock mode and the first working request | [Docs Quick Start](https://docs.agentoffernetwork.com/quickstart) |
+| Read field-level platform API tables | [AON API Reference](https://docs.agentoffernetwork.com/api) |
+| Understand the human-readable protocol semantics | [Protocol source](https://github.com/agentoffernetwork/protocol) |
+
+Use this repository when you need to validate payloads or reference TypeScript contract types.
+
 ### Validate a Query API request
 
 Use this when you are building the body for `POST /v1/offers/query`.
@@ -63,11 +73,18 @@ import type { Offer, QueryRequest, QueryResponse } from './types/offer.types';
 const offer: Offer = {
   offer_id: 'offer-001',
   offer_instance_id: '019dd208-27d2-7673-b16f-6897fa120303',
-  version: 1,
+  version: '1.0',
   offer_info: {
     title: 'My SaaS Product',
     offer_type: 'online_service',
-    category: { type: 'software_saas' },
+    category: {
+      type: 'software_saas',
+      attributes: {
+        sub_type: 'project_management',
+        plan_type: 'free_trial',
+        platform: ['web', 'api'],
+      },
+    },
     description: 'A great tool for teams',
   },
   entity: { id: 'entity-001', name: 'Acme Inc' },
@@ -75,6 +92,7 @@ const offer: Offer = {
     type: 'web_redirect',
     payload: { target: 'https://example.com/offer' },
   },
+  bid: { model: 'cpa', amount: '10.00', currency: 'USD' },
 };
 ```
 
@@ -88,16 +106,17 @@ const offer: Offer = {
 - `offer_info` -- title, offer_type, category (type + attributes), description
 - `entity` -- provider id and name
 - `action` -- type and payload.target
+- `bid` -- payout model, amount, and currency
 
 **RECOMMENDED fields:**
 
 - `material[]` -- creative assets (images, videos)
-- `category.attributes` -- vertical-specific typed attributes
-- `category.commercial` -- pricing and terms
+- `offer_info.commercial` -- pricing and terms
+- `conversion_rule` -- attribution windows and accepted conversion types
 
 **OPTIONAL fields:**
 
-- `targeting`, `bid`, `conversion_rule`, `frequency_capping`, `tags`, `priority`, `status`
+- `targeting`, `frequency_capping`, `tags`, `priority`, `status`
 
 ## Query API Validation Path
 
