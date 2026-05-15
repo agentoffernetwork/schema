@@ -2,7 +2,7 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://agentoffernetwork.org/schema/offer-provider-request/v0.1",
   "title": "AgentOffer OfferProvider Request Schema v0.1",
-  "description": "Request body that AON sends to a Partner's OfferProvider endpoint (POST {base_url}/v1/offers/query). Reuses the canonical OfferQueryRequest shape defined by offer-query-schema-v0.1.json. Uses RFC 2119 requirement levels (REQUIRED/RECOMMENDED/OPTIONAL).",
+  "description": "Request body that AON sends to a Partner's OfferProvider endpoint (POST {base_url}/v1/offers/query). This Partner-facing payload is derived from Query context, intent, and supply-side constraints for AON-to-Partner dispatch. Uses RFC 2119 requirement levels (REQUIRED/RECOMMENDED/OPTIONAL).",
   "type": "object",
   "required": [
     "request_id",
@@ -100,9 +100,9 @@
       },
       "additionalProperties": false
     },
-    "filter": {
+    "constraints": {
       "type": "object",
-      "description": "Structured filter constraints applied as hard constraints before semantic ranking.",
+      "description": "Partner-facing supply-side constraints applied by the Partner before returning eligible offers. Current v0.1 dispatches only expose category_types.",
       "properties": {
         "category_types": {
           "type": "array",
@@ -122,36 +122,6 @@
               "automotive"
             ]
           }
-        },
-        "bid_models": {
-          "type": "array",
-          "items": {
-            "type": "string",
-            "enum": ["cpa", "cps", "cpl", "cpi", "hybrid"]
-          }
-        },
-        "status": {
-          "type": "array",
-          "items": {
-            "type": "string",
-            "enum": ["active", "paused", "pending", "rejected", "expired"]
-          }
-        },
-        "availability": {
-          "type": "array",
-          "items": {
-            "type": "string",
-            "enum": ["available", "limited", "out_of_stock", "coming_soon"]
-          }
-        },
-        "min_bid_amount": { "type": "string" },
-        "max_price_amount": { "type": "string" },
-        "currency": { "type": "string" },
-        "brand": { "type": "string" },
-        "country": { "type": "string" },
-        "tags": {
-          "type": "array",
-          "items": { "type": "string" }
         }
       },
       "additionalProperties": false

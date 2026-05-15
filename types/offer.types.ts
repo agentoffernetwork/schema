@@ -334,7 +334,7 @@ export interface ConversionRule {
  *     "user_profile": { "user_pseudo_id": "viewer_xyz", "language": "en", "interests": ["travel", "hotels"] }
  *   },
  *   "intent": { "content": [{ "type": "input_text", "text": "Find me a hotel in Tokyo under $200/night" }] },
- *   "filter": { "category_types": ["travel_hospitality"], "max_price_amount": "200.00", "currency": "USD", "country": "JP" },
+ *   "constraints": { "category_types": ["travel_hospitality"] },
  *   "pagination": { "limit": 10, "offset": 0 }
  * }
  */
@@ -354,8 +354,8 @@ export interface OfferQueryRequest {
   /** [REQUIRED] The user's intent expressed as multimodal content. */
   intent: QueryIntent;
 
-  /** [OPTIONAL] Structured filter constraints that narrow the result set before semantic ranking. */
-  filter?: QueryFilter;
+  /** [OPTIONAL] Deterministic eligibility constraints that narrow the result set before semantic ranking. */
+  constraints?: QueryConstraints;
 
   /** [OPTIONAL] Pagination control. */
   pagination?: QueryPagination;
@@ -434,25 +434,13 @@ export interface IntentContentItem {
 }
 
 /**
- * @example { "category_types": ["travel_hospitality"], "max_price_amount": "200.00", "currency": "USD", "country": "JP" }
+ * @example { "category_types": ["travel_hospitality"] }
+ *
+ * The first public constraints surface only exposes category_types.
  */
-export interface QueryFilter {
-  /** Filter by category type. OR logic: matches any specified type. @example ["travel_hospitality"] */
+export interface QueryConstraints {
+  /** Constrain by category type. OR logic: matches any specified type. @example ["travel_hospitality"] */
   category_types?: CategoryType[];
-  /** Filter by bid model. OR logic: matches any specified model. @example ["cpa", "cps"] */
-  bid_models?: BidModel[];
-  /** Filter by offer status. OR logic. @example ["active"] */
-  status?: OfferStatus[];
-  /** Minimum bid amount, decimal string. Requires filter.currency to be set. @example "5.00" */
-  min_bid_amount?: string;
-  /** Maximum consumer-facing price, decimal string. Requires filter.currency to be set. @example "200.00" */
-  max_price_amount?: string;
-  /** ISO 4217 currency code for min_bid_amount and max_price_amount. @example "USD" */
-  currency?: string;
-  /** Filter by brand or entity name (case-insensitive substring match against entity.name). @example "Hilton" */
-  brand?: string;
-  /** Filter by target country. ISO 3166-1 alpha-2 code. @example "JP" */
-  country?: string;
 }
 
 /**
