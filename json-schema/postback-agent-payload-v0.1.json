@@ -7,7 +7,7 @@
   "required": [
     "event_id",
     "event_type",
-    "tracking_id",
+    "aon_tracking_id",
     "offer_id",
     "agent_id",
     "conversion_type",
@@ -27,7 +27,7 @@
       "const": "conversion",
       "description": "Fixed value: conversion."
     },
-    "tracking_id": {
+    "aon_tracking_id": {
       "type": "string",
       "minLength": 1,
       "description": "Tracking identifier from the original click event."

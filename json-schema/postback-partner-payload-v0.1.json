@@ -46,7 +46,7 @@
       "required": [
         "event_id",
         "event_type",
-        "tracking_id",
+        "aon_tracking_id",
         "offer_id",
         "conversion_id",
         "timestamp",
@@ -58,7 +58,7 @@
       "properties": {
         "event_id": { "$ref": "#/$defs/EventId" },
         "event_type": { "const": "conversion" },
-        "tracking_id": { "$ref": "#/$defs/TrackingId" },
+        "aon_tracking_id": { "$ref": "#/$defs/TrackingId" },
         "offer_id": { "$ref": "#/$defs/OfferId" },
         "conversion_id": { "$ref": "#/$defs/ConversionId" },
         "timestamp": { "$ref": "#/$defs/Timestamp" },
@@ -91,7 +91,7 @@
       "required": [
         "event_id",
         "event_type",
-        "tracking_id",
+        "aon_tracking_id",
         "offer_id",
         "conversion_id",
         "timestamp",
@@ -102,7 +102,7 @@
       "properties": {
         "event_id": { "$ref": "#/$defs/EventId" },
         "event_type": { "const": "refund" },
-        "tracking_id": { "$ref": "#/$defs/TrackingId" },
+        "aon_tracking_id": { "$ref": "#/$defs/TrackingId" },
         "offer_id": { "$ref": "#/$defs/OfferId" },
         "conversion_id": { "$ref": "#/$defs/ConversionId" },
         "timestamp": { "$ref": "#/$defs/Timestamp" },
@@ -127,7 +127,7 @@
       "required": [
         "event_id",
         "event_type",
-        "tracking_id",
+        "aon_tracking_id",
         "offer_id",
         "conversion_id",
         "timestamp",
@@ -138,7 +138,7 @@
       "properties": {
         "event_id": { "$ref": "#/$defs/EventId" },
         "event_type": { "const": "adjustment" },
-        "tracking_id": { "$ref": "#/$defs/TrackingId" },
+        "aon_tracking_id": { "$ref": "#/$defs/TrackingId" },
         "offer_id": { "$ref": "#/$defs/OfferId" },
         "conversion_id": { "$ref": "#/$defs/ConversionId" },
         "timestamp": { "$ref": "#/$defs/Timestamp" },
