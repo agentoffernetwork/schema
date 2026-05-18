@@ -255,7 +255,7 @@ export type MaterialFormat = 'image' | 'video' | 'html5';
 // ─── Targeting ──────────────────────────────────────────────────────────────────
 
 /**
- * @example { "geo": { "include": ["US", "GB", "CA"] }, "language": "en", "device_type": ["mobile", "desktop"] }
+ * @example { "geo": { "include": ["US", "GB", "CA"] }, "language": "en", "device_type": ["mobile", "desktop"], "os": ["ios", "android"] }
  */
 export interface TargetingRule {
   /** @example { "include": ["US", "GB", "CA"], "exclude": ["CN"] } */
@@ -264,6 +264,8 @@ export interface TargetingRule {
   language?: string;
   /** @example ["mobile", "desktop"] */
   device_type?: DeviceType[];
+  /** Target operating systems. @example ["ios", "android"] */
+  os?: OsType[];
 }
 
 export interface GeoTargeting {
@@ -275,6 +277,9 @@ export interface GeoTargeting {
 
 /** @example "mobile" */
 export type DeviceType = 'mobile' | 'desktop' | 'tablet' | 'smart_tv';
+
+/** Operating system for targeting. @example "ios" */
+export type OsType = 'ios' | 'android' | 'windows' | 'macos' | 'linux';
 
 // ─── Bid ────────────────────────────────────────────────────────────────────────
 
@@ -389,13 +394,15 @@ export interface QueryContext {
 }
 
 /**
- * @example { "user_pseudo_id": "viewer_xyz", "language": "en", "interests": ["travel", "hotels"], "device_info": { "device_type": "mobile", "os": "ios", "os_version": "18.2" } }
+ * @example { "user_pseudo_id": "viewer_xyz", "language": "en", "country": "SG", "interests": ["travel", "hotels"], "device_info": { "device_type": "mobile", "os": "ios", "os_version": "18.2" } }
  */
 export interface UserProfile {
   /** Pseudonymous viewer identifier. @example "viewer_xyz" */
   user_pseudo_id?: string;
   /** User language preference. ISO 639-1 code. @example "en" */
   language?: string;
+  /** User country for geo targeting. ISO 3166-1 alpha-2 code. @example "SG" */
+  country?: string;
   /** User interest tags. May be empty array. @example ["travel", "hotels"] */
   interests?: string[];
   /**

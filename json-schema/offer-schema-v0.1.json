@@ -1078,6 +1078,20 @@
               ]
             },
             "description": "Target device types."
+          },
+          "os": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "enum": [
+                "ios",
+                "android",
+                "windows",
+                "macos",
+                "linux"
+              ]
+            },
+            "description": "Target operating systems."
           }
         },
         "additionalProperties": false

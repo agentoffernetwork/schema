@@ -22,6 +22,18 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - Expanded category enums from 6 to 11 across Offer Schema and Query Schema artifacts
 - Added typed common attribute contracts for `health_beauty`, `fashion`, `food_grocery`, `home_garden`, and `automotive`
 
+## [0.1.2] - 2026-05-18
+
+### Added
+
+- Optional `targeting[].os` field on Offer Schema (`ios`/`android`/`windows`/`macos`/`linux`) for OS-level offer targeting
+- Optional `user_profile.country` field on Query Schema (ISO 3166-1 alpha-2) for geo targeting
+- `OsType` type definition in `offer.types.ts`
+
+### Notes
+
+- All new fields optional; non-breaking for existing offers and queries (SVC-CORE-F024)
+
 ### Status
 
 - Version: `v0.1`

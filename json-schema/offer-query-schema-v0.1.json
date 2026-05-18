@@ -67,6 +67,11 @@
               "type": "string",
               "description": "User language preference. ISO 639-1 code."
             },
+            "country": {
+              "type": "string",
+              "pattern": "^[A-Za-z]{2}$",
+              "description": "User country for geo targeting. ISO 3166-1 alpha-2 code."
+            },
             "interests": {
               "type": "array",
               "items": { "type": "string" },
