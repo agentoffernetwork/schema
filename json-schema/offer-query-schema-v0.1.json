@@ -57,7 +57,7 @@
         "user_profile": {
           "type": "object",
           "description": "User profile information for intent matching and targeting.",
-          "required": [],
+          "required": ["device_info"],
           "properties": {
             "user_pseudo_id": {
               "type": "string",
@@ -69,8 +69,8 @@
             },
             "country": {
               "type": "string",
-              "pattern": "^[A-Za-z]{2}$",
-              "description": "User country for geo targeting. ISO 3166-1 alpha-2 code."
+              "pattern": "^[A-Z]{2}$",
+              "description": "User country for geo targeting. Uppercase ISO 3166-1 alpha-2 code."
             },
             "interests": {
               "type": "array",
@@ -79,15 +79,30 @@
             },
             "device_info": {
               "type": "object",
-              "description": "Device information for targeting.",
+              "description": "Required device information for targeting.",
+              "required": ["device_type", "os"],
               "properties": {
                 "device_type": {
                   "type": "string",
-                  "description": "Device type."
+                  "enum": [
+                    "desktop",
+                    "mobile",
+                    "tablet",
+                    "smart_tv",
+                    "other"
+                  ],
+                  "description": "Canonical viewer device type."
                 },
                 "os": {
                   "type": "string",
-                  "description": "Operating system."
+                  "enum": [
+                    "ios",
+                    "android",
+                    "windows",
+                    "macos",
+                    "other"
+                  ],
+                  "description": "Canonical viewer operating system."
                 },
                 "os_version": {
                   "type": "string",

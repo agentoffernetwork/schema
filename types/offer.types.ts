@@ -401,23 +401,35 @@ export interface UserProfile {
   user_pseudo_id?: string;
   /** User language preference. ISO 639-1 code. @example "en" */
   language?: string;
-  /** User country for geo targeting. ISO 3166-1 alpha-2 code. @example "SG" */
+  /** User country for geo targeting. Uppercase ISO 3166-1 alpha-2 code. @example "SG" */
   country?: string;
   /** User interest tags. May be empty array. @example ["travel", "hotels"] */
   interests?: string[];
   /**
-   * Device information for targeting.
+   * [REQUIRED] Device information for targeting.
+   * Use `other` values when the caller cannot determine the viewer environment.
    * @example { "device_type": "mobile", "os": "ios", "os_version": "18.2" }
    */
-  device_info?: {
-    /** @example "mobile" */
-    device_type?: string;
-    /** @example "ios" */
-    os?: string;
+  device_info: {
+    /** [REQUIRED] @example "mobile" */
+    device_type: QueryDeviceType;
+    /** [REQUIRED] @example "ios" */
+    os: QueryOsType;
     /** @example "18.2" */
     os_version?: string;
   };
 }
+
+/** Canonical viewer device type for Query context. @example "mobile" */
+export type QueryDeviceType = 'desktop' | 'mobile' | 'tablet' | 'smart_tv' | 'other';
+
+/** Canonical viewer operating system for Query context. @example "ios" */
+export type QueryOsType =
+  | 'ios'
+  | 'android'
+  | 'windows'
+  | 'macos'
+  | 'other';
 
 /**
  * @example { "content": [{ "type": "input_text", "text": "Find me a hotel in Tokyo under $200/night" }] }
