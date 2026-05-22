@@ -62,7 +62,12 @@
               "properties": {
                 "device_type": { "type": "string" },
                 "os": { "type": "string" },
-                "os_version": { "type": "string" }
+                "os_version": { "type": "string" },
+                "user_agent": {
+                  "type": "string",
+                  "maxLength": 1024,
+                  "description": "Optional raw or normalized end-user user-agent string for diagnostics and compatibility. Do not use as a stable identifier."
+                }
               },
               "additionalProperties": false
             }

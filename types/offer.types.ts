@@ -417,6 +417,8 @@ export interface UserProfile {
     os: QueryOsType;
     /** @example "18.2" */
     os_version?: string;
+    /** Optional raw or normalized user-agent string. Do not use as a stable identifier. @example "Mozilla/5.0" */
+    user_agent?: string;
   };
 }
 

@@ -41,6 +41,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - Renamed the `travel_hospitality` sub-type `restaurant` to `dining_experience` across Offer Schema and category attribute types.
 - Clarified that Query diagnostics use the hosted API `X-AON-TRACE-ID` response header, not JSON body fields such as `trace_id` or `aon_trace_id`.
 
+### Added
+
+- Optional `user_profile.device_info.user_agent` on Query and Provider request schemas for diagnostics and compatibility; not intended as a stable viewer identifier.
+
 ### Status
 
 - Version: `v0.1`
