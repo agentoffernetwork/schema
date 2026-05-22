@@ -34,6 +34,13 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 - All new fields optional; non-breaking for existing offers and queries (SVC-CORE-F024)
 
+## [0.1.3] - 2026-05-22
+
+### Changed
+
+- Renamed the `travel_hospitality` sub-type `restaurant` to `dining_experience` across Offer Schema and category attribute types.
+- Clarified that Query diagnostics use the hosted API `X-AON-TRACE-ID` response header, not JSON body fields such as `trace_id` or `aon_trace_id`.
+
 ### Status
 
 - Version: `v0.1`

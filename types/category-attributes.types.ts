@@ -44,7 +44,7 @@ export type TravelHospitalitySubType =
   | 'flight'
   | 'car_rental'
   | 'vacation_package'
-  | 'restaurant'
+  | 'dining_experience'
   | 'attraction';
 
 export type EducationSubType =
@@ -356,11 +356,11 @@ export interface VacationPackageAttributes extends TravelHospitalityCommon {
   all_inclusive?: boolean;
 }
 
-// ── 2.5 restaurant ─────────────────────────────────────────────────────────
+// ── 2.5 dining_experience ──────────────────────────────────────────────────
 
-export interface RestaurantAttributes extends TravelHospitalityCommon {
-  sub_type: 'restaurant';
-  /** (required) Cuisine type. */
+export interface DiningExperienceAttributes extends TravelHospitalityCommon {
+  sub_type: 'dining_experience';
+  /** (required) Cuisine or dining style. */
   cuisine_type: string;
   /** (required) Price range indicator. */
   price_range: '$' | '$$' | '$$$' | '$$$$';
@@ -391,7 +391,7 @@ export type TravelHospitalityAttributes =
   | FlightAttributes
   | CarRentalAttributes
   | VacationPackageAttributes
-  | RestaurantAttributes
+  | DiningExperienceAttributes
   | AttractionAttributes;
 
 // ═══════════════════════════════════════════════════════════════════════════

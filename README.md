@@ -139,7 +139,7 @@ The query request schema validates the request body. The offer schema validates 
 | `intent.content[]` fails validation | Missing content item `type` or unsupported content type | Use `input_text` or `input_image` |
 | Category enum fails validation | Category is not part of the current public set | Use the 11 canonical category types from the protocol taxonomy |
 | Stale identifier appears in offer payload | Payload still uses `uuid`, `original_offer_id`, or `source_offer_id` | Use `offer_id` and `offer_instance_id` |
-| Response metadata mismatch | Payload still expects `query_id`, `trace_id`, `has_more`, or `total` in the canonical Query API response | Use `request_id` and `offers[]`; see protocol contract governance for historical contexts |
+| Response metadata mismatch | Payload still expects `query_id`, `trace_id`, `aon_trace_id`, `has_more`, or `total` in the canonical Query API JSON response | Use `request_id` and `offers[]`; use the hosted API `X-AON-TRACE-ID` response header for diagnostics |
 
 ## Category Types
 
