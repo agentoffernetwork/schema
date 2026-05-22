@@ -383,7 +383,10 @@
                           "wearable",
                           "gaming_hardware",
                           "smart_home",
-                          "camera"
+                          "camera",
+                          "tablet",
+                          "tv_video",
+                          "computer_accessory"
                         ]
                       },
                       "brand": {
@@ -445,7 +448,9 @@
                           "social_audio",
                           "sports_betting",
                           "music_audio",
-                          "live_streaming"
+                          "live_streaming",
+                          "event_ticketing",
+                          "books_media"
                         ]
                       },
                       "supported_devices": {
@@ -498,7 +503,10 @@
                           "fitness",
                           "cosmetics",
                           "wellness",
-                          "medical_device"
+                          "medical_device",
+                          "haircare",
+                          "personal_care",
+                          "fragrance"
                         ]
                       },
                       "ingredients_highlight": {
@@ -599,7 +607,6 @@
                           "grocery_delivery",
                           "specialty_food",
                           "beverage",
-                          "organic",
                           "snack"
                         ]
                       },
@@ -651,7 +658,11 @@
                           "decor",
                           "smart_home",
                           "garden",
-                          "cleaning"
+                          "cleaning",
+                          "kitchen_dining",
+                          "bedding_bath",
+                          "tools_hardware",
+                          "home_improvement"
                         ]
                       },
                       "dimensions": {
@@ -698,7 +709,10 @@
                           "insurance",
                           "parts",
                           "ev_charging",
-                          "ride_service"
+                          "ride_service",
+                          "service_repair",
+                          "tires_wheels",
+                          "motorcycle"
                         ]
                       },
                       "vehicle_type": {

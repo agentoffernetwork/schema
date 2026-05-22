@@ -70,7 +70,10 @@ export type ElectronicsSubType =
   | 'wearable'
   | 'gaming_hardware'
   | 'smart_home'
-  | 'camera';
+  | 'camera'
+  | 'tablet'
+  | 'tv_video'
+  | 'computer_accessory';
 
 export type EntertainmentSubType =
   | 'game'
@@ -79,7 +82,9 @@ export type EntertainmentSubType =
   | 'social_audio'
   | 'sports_betting'
   | 'music_audio'
-  | 'live_streaming';
+  | 'live_streaming'
+  | 'event_ticketing'
+  | 'books_media';
 
 export type HealthBeautySubType =
   | 'skincare'
@@ -87,7 +92,10 @@ export type HealthBeautySubType =
   | 'fitness'
   | 'cosmetics'
   | 'wellness'
-  | 'medical_device';
+  | 'medical_device'
+  | 'haircare'
+  | 'personal_care'
+  | 'fragrance';
 
 export type FashionSubType =
   | 'clothing'
@@ -102,7 +110,6 @@ export type FoodGrocerySubType =
   | 'grocery_delivery'
   | 'specialty_food'
   | 'beverage'
-  | 'organic'
   | 'snack';
 
 export type HomeGardenSubType =
@@ -111,7 +118,11 @@ export type HomeGardenSubType =
   | 'decor'
   | 'smart_home'
   | 'garden'
-  | 'cleaning';
+  | 'cleaning'
+  | 'kitchen_dining'
+  | 'bedding_bath'
+  | 'tools_hardware'
+  | 'home_improvement';
 
 export type AutomotiveSubType =
   | 'car_purchase'
@@ -119,7 +130,10 @@ export type AutomotiveSubType =
   | 'insurance'
   | 'parts'
   | 'ev_charging'
-  | 'ride_service';
+  | 'ride_service'
+  | 'service_repair'
+  | 'tires_wheels'
+  | 'motorcycle';
 
 
 // ═══════════════════════════════════════════════════════════════════════════
@@ -730,6 +744,46 @@ export interface CameraAttributes extends ElectronicsCommon {
   video_resolution?: string;
 }
 
+// ── 5.8 tablet ─────────────────────────────────────────────────────────────
+
+export interface TabletAttributes extends ElectronicsCommon {
+  sub_type: 'tablet';
+  /** (required) Storage capacity in GB. */
+  storage_gb: number;
+  /** (optional) Screen size in inches. */
+  screen_size_inches?: number;
+  /** (optional) Connectivity standard. */
+  connectivity?: '5g' | '4g' | 'wifi';
+  /** (optional) Operating system. */
+  os?: 'ios' | 'android' | 'windows' | 'other';
+}
+
+// ── 5.9 tv_video ───────────────────────────────────────────────────────────
+
+export interface TvVideoAttributes extends ElectronicsCommon {
+  sub_type: 'tv_video';
+  /** (required) Display or video device type. */
+  display_type: 'tv' | 'projector' | 'streaming_device' | 'monitor';
+  /** (optional) Screen size in inches when applicable. */
+  screen_size_inches?: number;
+  /** (optional) Maximum supported resolution. */
+  resolution?: string;
+  /** (optional) Whether smart TV features are included. */
+  smart_tv?: boolean;
+}
+
+// ── 5.10 computer_accessory ────────────────────────────────────────────────
+
+export interface ComputerAccessoryAttributes extends ElectronicsCommon {
+  sub_type: 'computer_accessory';
+  /** (required) Computer accessory type. */
+  accessory_type: 'keyboard' | 'mouse' | 'dock' | 'monitor' | 'storage' | 'cable' | 'charger' | 'other';
+  /** (optional) Compatible platforms, devices, or standards. */
+  compatibility?: string[];
+  /** (optional) Whether wireless connectivity is supported. */
+  wireless?: boolean;
+}
+
 export type ElectronicsAttributes =
   | SmartphoneAttributes
   | LaptopAttributes
@@ -737,7 +791,10 @@ export type ElectronicsAttributes =
   | WearableAttributes
   | GamingHardwareAttributes
   | SmartHomeAttributes
-  | CameraAttributes;
+  | CameraAttributes
+  | TabletAttributes
+  | TvVideoAttributes
+  | ComputerAccessoryAttributes;
 
 // ═══════════════════════════════════════════════════════════════════════════
 // 6. entertainment
