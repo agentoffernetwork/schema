@@ -23,8 +23,11 @@
 |------|-------------|
 | `json-schema/offer-schema-v0.1.json` | Offer object JSON Schema with RFC 2119 requirement levels |
 | `json-schema/offer-query-schema-v0.1.json` | Query request schema for `POST /v1/offers/query` |
+| `json-schema/taxonomy-v1.schema.json` | Source tree schema for AON Taxonomy v1 |
+| `taxonomy/aon-taxonomy-v1.json` | AON Taxonomy v1 source tree (`name + children`) |
+| `taxonomy/v0.1-to-taxonomy-v1.json` | Legacy v0.1 category migration mapping |
 | `types/offer.types.ts` | TypeScript type definitions for Offer, Query, and Response |
-| `types/category-attributes.types.ts` | Per-category attribute definitions for all 11 verticals |
+| `types/category-attributes.types.ts` | AON Taxonomy v1 category id and registry types |
 | `validators/` | Reserved for future packaged validation tooling; current validation examples use `ajv-cli` directly |
 
 ## Quick Start
@@ -68,22 +71,17 @@ npx --yes --package=ajv-cli@5 --package=ajv-formats@3 -- \
 ### Use TypeScript types
 
 ```typescript
-import type { Offer, QueryRequest, QueryResponse } from './types/offer.types';
+import type { Offer, OfferQueryRequest, OfferResponse } from './types/offer.types';
 
 const offer: Offer = {
-  offer_id: 'offer-001',
+  offer_id: '019414a0-7e3b-7f1a-b5e2-0a1b2c3d4e5f',
   offer_instance_id: '019dd208-27d2-7673-b16f-6897fa120303',
   version: '1.0',
   offer_info: {
     title: 'My SaaS Product',
     offer_type: 'online_service',
     category: {
-      type: 'software_saas',
-      attributes: {
-        sub_type: 'project_management',
-        plan_type: 'free_trial',
-        platform: ['web', 'api'],
-      },
+      id: 'computers_electronics.computers.software',
     },
     description: 'A great tool for teams',
   },
@@ -103,7 +101,7 @@ const offer: Offer = {
 - `offer_id` -- stable inventory-level offer identifier
 - `offer_instance_id` -- per-dispatch offer instance identifier
 - `version` -- schema version
-- `offer_info` -- title, offer_type, category (type + attributes), description
+- `offer_info` -- title, offer_type, category id, description
 - `entity` -- provider id and name
 - `action` -- type and payload.target
 - `bid` -- payout model, amount, and currency

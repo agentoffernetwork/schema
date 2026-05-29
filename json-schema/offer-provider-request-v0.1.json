@@ -36,33 +36,56 @@
           "type": "object",
           "description": "Information about the requesting platform or agent.",
           "properties": {
-            "name": { "type": "string" },
-            "version": { "type": "string" },
-            "channel": { "type": "string" }
+            "name": {
+              "type": "string"
+            },
+            "version": {
+              "type": "string"
+            },
+            "channel": {
+              "type": "string"
+            }
           },
           "additionalProperties": false
         },
-        "session_id": { "type": "string" },
+        "session_id": {
+          "type": "string"
+        },
         "conversation_id": {
-          "type": ["string", "number"],
+          "type": [
+            "string",
+            "number"
+          ],
           "description": "Conversation or thread identifier within the session."
         },
         "user_profile": {
           "type": "object",
           "description": "User profile information for intent matching and targeting.",
           "properties": {
-            "user_pseudo_id": { "type": "string" },
-            "language": { "type": "string" },
+            "user_pseudo_id": {
+              "type": "string"
+            },
+            "language": {
+              "type": "string"
+            },
             "interests": {
               "type": "array",
-              "items": { "type": "string" }
+              "items": {
+                "type": "string"
+              }
             },
             "device_info": {
               "type": "object",
               "properties": {
-                "device_type": { "type": "string" },
-                "os": { "type": "string" },
-                "os_version": { "type": "string" },
+                "device_type": {
+                  "type": "string"
+                },
+                "os": {
+                  "type": "string"
+                },
+                "os_version": {
+                  "type": "string"
+                },
                 "user_agent": {
                   "type": "string",
                   "maxLength": 1024,
@@ -80,20 +103,29 @@
     "intent": {
       "type": "object",
       "description": "The user's intent expressed as multimodal content.",
-      "required": ["content"],
+      "required": [
+        "content"
+      ],
       "properties": {
         "content": {
           "type": "array",
           "minItems": 1,
           "items": {
             "type": "object",
-            "required": ["type"],
+            "required": [
+              "type"
+            ],
             "properties": {
               "type": {
                 "type": "string",
-                "enum": ["input_text", "input_image"]
+                "enum": [
+                  "input_text",
+                  "input_image"
+                ]
               },
-              "text": { "type": "string" },
+              "text": {
+                "type": "string"
+              },
               "image_url": {
                 "type": "string",
                 "format": "uri"
@@ -107,26 +139,15 @@
     },
     "constraints": {
       "type": "object",
-      "description": "Partner-facing supply-side constraints applied by the Partner before returning eligible offers. Current v0.1 dispatches only expose category_types.",
+      "description": "Partner-facing supply-side constraints applied by the Partner before returning eligible offers. Category constraints use AON Taxonomy v1 category_ids.",
       "properties": {
-        "category_types": {
+        "category_ids": {
           "type": "array",
           "items": {
             "type": "string",
-            "enum": [
-              "software_saas",
-              "travel_hospitality",
-              "education",
-              "financial_service",
-              "electronics",
-              "entertainment",
-              "health_beauty",
-              "fashion",
-              "food_grocery",
-              "home_garden",
-              "automotive"
-            ]
-          }
+            "pattern": "^[a-z0-9]+(?:_[a-z0-9]+)*(?:\\.[a-z0-9]+(?:_[a-z0-9]+)*)*$"
+          },
+          "description": "Constrain by AON Taxonomy v1 category id. OR logic within the array; each id matches the selected taxonomy node and all descendants. Registry membership is validated by the taxonomy drift guard."
         }
       },
       "additionalProperties": false

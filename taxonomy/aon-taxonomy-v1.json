@@ -1,0 +1,1817 @@
+[
+  {
+    "name": "Apparel",
+    "children": [
+      {
+        "name": "Clothing",
+        "children": [
+          {
+            "name": "Children's Clothing"
+          },
+          {
+            "name": "Formal Wear"
+          },
+          {
+            "name": "Men's Clothing"
+          },
+          {
+            "name": "Plus Size Clothing"
+          },
+          {
+            "name": "Shirts, Tops & Blouses",
+            "children": [
+              {
+                "name": "Jerseys & Knit Shirts"
+              }
+            ]
+          },
+          {
+            "name": "Sleepwear"
+          },
+          {
+            "name": "Swimwear"
+          },
+          {
+            "name": "Underwear"
+          },
+          {
+            "name": "Women's Clothing"
+          }
+        ]
+      },
+      {
+        "name": "Footwear",
+        "children": [
+          {
+            "name": "Athletic Shoes"
+          }
+        ]
+      },
+      {
+        "name": "Handbags & Purses"
+      },
+      {
+        "name": "Jewelry",
+        "children": [
+          {
+            "name": "Watches & Watch Accessories"
+          }
+        ]
+      },
+      {
+        "name": "Sunglasses"
+      }
+    ]
+  },
+  {
+    "name": "Arts & Entertainment",
+    "children": [
+      {
+        "name": "Arts & Entertainment Awards"
+      },
+      {
+        "name": "Entertainment Industry",
+        "children": [
+          {
+            "name": "Film & TV Industry"
+          }
+        ]
+      },
+      {
+        "name": "Events, Shows & Cultural Attractions",
+        "children": [
+          {
+            "name": "Ticket Sales & Exchanges"
+          }
+        ]
+      },
+      {
+        "name": "Fantasy Sports"
+      },
+      {
+        "name": "Fun & Trivia",
+        "children": [
+          {
+            "name": "Fun Tests & Silly Surveys"
+          }
+        ]
+      },
+      {
+        "name": "Humor & Jokes"
+      },
+      {
+        "name": "Movies & Films",
+        "children": [
+          {
+            "name": "Horror Films"
+          }
+        ]
+      },
+      {
+        "name": "Music & Audio",
+        "children": [
+          {
+            "name": "Music Streams & Downloads"
+          },
+          {
+            "name": "Radio"
+          }
+        ]
+      },
+      {
+        "name": "Offbeat",
+        "children": [
+          {
+            "name": "Edgy & Bizarre"
+          }
+        ]
+      },
+      {
+        "name": "Sports Event Tickets & Ticketing Services"
+      },
+      {
+        "name": "TV & Video",
+        "children": [
+          {
+            "name": "TV Broadcasting"
+          },
+          {
+            "name": "TV Shows & Programs",
+            "children": [
+              {
+                "name": "TV Cartoons"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "Visual Art & Design"
+      },
+      {
+        "name": "Adult Entertainment",
+        "children": []
+      }
+    ]
+  },
+  {
+    "name": "Autos & Vehicles",
+    "children": [
+      {
+        "name": "Boats & Watercraft"
+      },
+      {
+        "name": "Driving Instruction & Driver Education"
+      },
+      {
+        "name": "Motor Vehicles",
+        "children": [
+          {
+            "name": "Campers & RVs"
+          },
+          {
+            "name": "Cars & Trucks",
+            "children": [
+              {
+                "name": "Hybrid & Alternative Vehicles"
+              }
+            ]
+          },
+          {
+            "name": "Motorcycles"
+          },
+          {
+            "name": "Used Motor Vehicles"
+          }
+        ]
+      },
+      {
+        "name": "Vehicle Dealers",
+        "children": [
+          {
+            "name": "Boat & Yacht Sales & Brokers"
+          },
+          {
+            "name": "Car Dealers"
+          }
+        ]
+      },
+      {
+        "name": "Vehicle Parts & Accessories",
+        "children": [
+          {
+            "name": "Car Parts & Accessories"
+          },
+          {
+            "name": "Vehicle Tires & Tire Parts"
+          }
+        ]
+      },
+      {
+        "name": "Vehicle Repair & Maintenance"
+      }
+    ]
+  },
+  {
+    "name": "Beauty & Personal Care",
+    "children": [
+      {
+        "name": "Anti-Aging"
+      },
+      {
+        "name": "Body Art"
+      },
+      {
+        "name": "Hair Care",
+        "children": [
+          {
+            "name": "Shampoos & Conditioners"
+          }
+        ]
+      },
+      {
+        "name": "Hygiene & Toiletries",
+        "children": [
+          {
+            "name": "Antiperspirants, Deodorants & Body Spray"
+          },
+          {
+            "name": "Feminine Hygiene Products"
+          }
+        ]
+      },
+      {
+        "name": "Make-Up & Cosmetics"
+      },
+      {
+        "name": "Oral Care"
+      },
+      {
+        "name": "Perfumes & Fragrances"
+      },
+      {
+        "name": "Shaving & Grooming"
+      },
+      {
+        "name": "Skin Care",
+        "children": [
+          {
+            "name": "Face Care"
+          },
+          {
+            "name": "Hand & Body Soaps & Cleansers"
+          }
+        ]
+      },
+      {
+        "name": "Spa & Medical Spa"
+      },
+      {
+        "name": "Tanning & Sun Care"
+      }
+    ]
+  },
+  {
+    "name": "Business & Industrial",
+    "children": [
+      {
+        "name": "Building Construction & Maintenance",
+        "children": [
+          {
+            "name": "Building Materials & Supplies"
+          },
+          {
+            "name": "Commercial & General Contracting"
+          },
+          {
+            "name": "Hardware Tools & Accessories",
+            "children": [
+              {
+                "name": "Power Tools"
+              }
+            ]
+          },
+          {
+            "name": "HVAC & Climate Control"
+          }
+        ]
+      },
+      {
+        "name": "Chemical Industry"
+      },
+      {
+        "name": "Commercial & Industrial Printing"
+      },
+      {
+        "name": "Design & Engineering"
+      },
+      {
+        "name": "Energy Industry",
+        "children": [
+          {
+            "name": "Oil & Gas"
+          },
+          {
+            "name": "Renewable & Alternative Energy"
+          }
+        ]
+      },
+      {
+        "name": "Food Service Industry"
+      },
+      {
+        "name": "Industrial Goods & Manufacturing",
+        "children": [
+          {
+            "name": "Industrial Electronics"
+          },
+          {
+            "name": "Plant & Facility"
+          }
+        ]
+      },
+      {
+        "name": "Office",
+        "children": [
+          {
+            "name": "Office Appliances"
+          }
+        ]
+      },
+      {
+        "name": "Office & Facilities Management"
+      },
+      {
+        "name": "Scientific Equipment & Services"
+      },
+      {
+        "name": "Security Equipment & Services",
+        "children": [
+          {
+            "name": "Guns & Firearms"
+          },
+          {
+            "name": "Security Weapons"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "Computers & Consumer Electronics",
+    "children": [
+      {
+        "name": "Computers",
+        "children": [
+          {
+            "name": "Computer Accessories"
+          },
+          {
+            "name": "Computer Systems & Hardware",
+            "children": [
+              {
+                "name": "Computer Networking Devices"
+              },
+              {
+                "name": "Laptop Computers"
+              }
+            ]
+          },
+          {
+            "name": "Software",
+            "children": [
+              {
+                "name": "Business & Productivity Software",
+                "children": [
+                  {
+                    "name": "Business Management Software",
+                    "children": [
+                      {
+                        "name": "Project Management Software"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "name": "Educational Software"
+              },
+              {
+                "name": "Graphics & Multimedia Software",
+                "children": [
+                  {
+                    "name": "Photo Software"
+                  }
+                ]
+              },
+              {
+                "name": "Internet Software & Web Apps",
+                "children": [
+                  {
+                    "name": "Network Security Software",
+                    "children": [
+                      {
+                        "name": "Anti-Virus Software"
+                      }
+                    ]
+                  },
+                  {
+                    "name": "Screensavers & Digital Wallpaper"
+                  },
+                  {
+                    "name": "Web Browsers"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "Consumer Electronics",
+        "children": [
+          {
+            "name": "Car Audio & Video"
+          },
+          {
+            "name": "Consumer Electronic Accessories"
+          },
+          {
+            "name": "GPS & Navigation"
+          },
+          {
+            "name": "Home Audio & Video",
+            "children": [
+              {
+                "name": "Speakers"
+              },
+              {
+                "name": "Televisions"
+              }
+            ]
+          },
+          {
+            "name": "Portable Media Devices"
+          },
+          {
+            "name": "Wireless Devices"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "Dining & Nightlife",
+    "children": [
+      {
+        "name": "Dining & Nightlife Reviews, Guides & Listings"
+      },
+      {
+        "name": "Nightclubs, Bars & Music Clubs"
+      },
+      {
+        "name": "Restaurants",
+        "children": [
+          {
+            "name": "Dine-In Restaurants"
+          },
+          {
+            "name": "Fast Food Restaurants"
+          },
+          {
+            "name": "Pizzerias & Pizza Delivery"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "Family & Community",
+    "children": [
+      {
+        "name": "Alcohol & Substance Abuse"
+      },
+      {
+        "name": "Baby, Parenting & Family",
+        "children": [
+          {
+            "name": "Baby",
+            "children": [
+              {
+                "name": "Baby Care & Hygiene",
+                "children": [
+                  {
+                    "name": "Baby Diapering & Toilet Training"
+                  }
+                ]
+              },
+              {
+                "name": "Baby Feeding"
+              }
+            ]
+          },
+          {
+            "name": "Parenting & Family",
+            "children": [
+              {
+                "name": "Maternity & New Parent"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "Faith & Belief",
+        "children": [
+          {
+            "name": "Astrology & Horoscopes"
+          },
+          {
+            "name": "Buddhism"
+          },
+          {
+            "name": "Christianity"
+          },
+          {
+            "name": "Hinduism"
+          },
+          {
+            "name": "Islam"
+          },
+          {
+            "name": "Judaism"
+          },
+          {
+            "name": "Occult & Paranormal",
+            "children": [
+              {
+                "name": "Psychics & Fortune Telling"
+              }
+            ]
+          },
+          {
+            "name": "Scientology"
+          }
+        ]
+      },
+      {
+        "name": "Romance & Relationships",
+        "children": [
+          {
+            "name": "Divorce & Separation"
+          }
+        ]
+      },
+      {
+        "name": "Social Issues & Advocacy",
+        "children": [
+          {
+            "name": "Animal Rights Activism"
+          },
+          {
+            "name": "Environmental Activism"
+          },
+          {
+            "name": "Reproductive Rights"
+          },
+          {
+            "name": "Work & Labor Issues"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "Finance",
+    "children": [
+      {
+        "name": "Accounting & Auditing",
+        "children": [
+          {
+            "name": "Tax Preparation & Planning"
+          }
+        ]
+      },
+      {
+        "name": "Banking",
+        "children": [
+          {
+            "name": "Debit & Check Cards"
+          },
+          {
+            "name": "Fixed Deposit Accounts & Certificates"
+          },
+          {
+            "name": "Online Banking"
+          },
+          {
+            "name": "Private Banking"
+          }
+        ]
+      },
+      {
+        "name": "Business Finance"
+      },
+      {
+        "name": "Business News & Media"
+      },
+      {
+        "name": "Credit & Lending",
+        "children": [
+          {
+            "name": "Credit Cards"
+          },
+          {
+            "name": "Credit Reports & Reporting Services"
+          },
+          {
+            "name": "Debt Management & Consolidation"
+          },
+          {
+            "name": "Loans",
+            "children": [
+              {
+                "name": "Auto Financing"
+              },
+              {
+                "name": "Commercial Lending"
+              },
+              {
+                "name": "Home Loans & Mortgages",
+                "children": [
+                  {
+                    "name": "Buy-To-Let Mortgages"
+                  },
+                  {
+                    "name": "Fixed Rate Mortgages"
+                  },
+                  {
+                    "name": "Government Mortgages"
+                  },
+                  {
+                    "name": "Home Equity Loans & Lines of Credit"
+                  },
+                  {
+                    "name": "Home Refinancing Loans"
+                  },
+                  {
+                    "name": "Interest Only Mortgages"
+                  }
+                ]
+              },
+              {
+                "name": "Personal Lending & Borrowing",
+                "children": [
+                  {
+                    "name": "Payday & Emergency Loans"
+                  },
+                  {
+                    "name": "Personal Loans & Lines of Credit"
+                  },
+                  {
+                    "name": "Title Loans"
+                  }
+                ]
+              },
+              {
+                "name": "Unsecured Credit & Lending"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "Financial Planning & Management"
+      },
+      {
+        "name": "Grants, Scholarships & Financial Aid",
+        "children": [
+          {
+            "name": "Student Loans"
+          }
+        ]
+      },
+      {
+        "name": "Insurance",
+        "children": [
+          {
+            "name": "Health Insurance"
+          },
+          {
+            "name": "Life Insurance"
+          },
+          {
+            "name": "Property Insurance"
+          },
+          {
+            "name": "Vehicle Insurance"
+          }
+        ]
+      },
+      {
+        "name": "Investing",
+        "children": [
+          {
+            "name": "Brokerages & Day Trading"
+          },
+          {
+            "name": "Currencies & Foreign Exchange"
+          },
+          {
+            "name": "Investor Relations & Venture Capital"
+          },
+          {
+            "name": "Mutual Funds"
+          },
+          {
+            "name": "Real Estate Investments"
+          },
+          {
+            "name": "Retirement Investments",
+            "children": [
+              {
+                "name": "401(K)s"
+              },
+              {
+                "name": "IRAs"
+              }
+            ]
+          },
+          {
+            "name": "Securities",
+            "children": [
+              {
+                "name": "Stocks"
+              }
+            ]
+          },
+          {
+            "name": "Spread Betting"
+          }
+        ]
+      },
+      {
+        "name": "Money Transfer & Wire Services"
+      }
+    ]
+  },
+  {
+    "name": "Food & Groceries",
+    "children": [
+      {
+        "name": "Beverages",
+        "children": [
+          {
+            "name": "Alcoholic Beverages",
+            "children": [
+              {
+                "name": "Beer"
+              },
+              {
+                "name": "Liquor"
+              },
+              {
+                "name": "Wine"
+              }
+            ]
+          },
+          {
+            "name": "Non-Alcoholic Beverages",
+            "children": [
+              {
+                "name": "Coffee"
+              },
+              {
+                "name": "Energy Drinks"
+              },
+              {
+                "name": "Juice"
+              },
+              {
+                "name": "Soft Drinks"
+              },
+              {
+                "name": "Sports Drinks"
+              },
+              {
+                "name": "Tea"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "Food",
+        "children": [
+          {
+            "name": "Baked Goods"
+          },
+          {
+            "name": "Baking Ingredients"
+          },
+          {
+            "name": "Breakfast Foods",
+            "children": [
+              {
+                "name": "Breakfast Cereals"
+              }
+            ]
+          },
+          {
+            "name": "Candy, Gum & Mints"
+          },
+          {
+            "name": "Dairy & Non-Dairy Alternatives"
+          },
+          {
+            "name": "Desserts"
+          },
+          {
+            "name": "Frozen Foods"
+          },
+          {
+            "name": "Meat & Poultry"
+          },
+          {
+            "name": "Sauces"
+          },
+          {
+            "name": "Snack Foods"
+          }
+        ]
+      },
+      {
+        "name": "Online Grocery Shopping & Grocery Delivery"
+      },
+      {
+        "name": "Tobacco & Vaping Products"
+      }
+    ]
+  },
+  {
+    "name": "Health",
+    "children": [
+      {
+        "name": "Biotech & Pharmaceutical",
+        "children": [
+          {
+            "name": "Gene Research"
+          }
+        ]
+      },
+      {
+        "name": "Health Care Services",
+        "children": [
+          {
+            "name": "Alternative & Natural Medicine",
+            "children": [
+              {
+                "name": "Chiropractors & Chiropractic"
+              },
+              {
+                "name": "Cleansing & Detoxification"
+              }
+            ]
+          },
+          {
+            "name": "Hospitals & Health Clinics"
+          },
+          {
+            "name": "Laboratory Testing & Medical Diagnostic Services"
+          },
+          {
+            "name": "Mental Health Services"
+          },
+          {
+            "name": "Orthopedics & Sports Medicine"
+          },
+          {
+            "name": "Physical Rehabilitation"
+          },
+          {
+            "name": "Plastic Surgery",
+            "children": [
+              {
+                "name": "Cosmetic & Aesthetic Plastic Surgery"
+              }
+            ]
+          },
+          {
+            "name": "Vision Services"
+          },
+          {
+            "name": "Wellness Therapy & Massage"
+          }
+        ]
+      },
+      {
+        "name": "Health Conditions & Concerns",
+        "children": [
+          {
+            "name": "AIDS & HIV"
+          },
+          {
+            "name": "Allergy & Sinus",
+            "children": [
+              {
+                "name": "Air Cleaners & Filters"
+              }
+            ]
+          },
+          {
+            "name": "Arthritis"
+          },
+          {
+            "name": "Blood Sugar & Diabetes"
+          },
+          {
+            "name": "Cancer & Cancer Treatment"
+          },
+          {
+            "name": "Cold Sores"
+          },
+          {
+            "name": "Dental Health"
+          },
+          {
+            "name": "Digestive Health & Disorders"
+          },
+          {
+            "name": "Eating Disorders"
+          },
+          {
+            "name": "Geriatrics & Aging",
+            "children": [
+              {
+                "name": "Alzheimer's Disease"
+              }
+            ]
+          },
+          {
+            "name": "Headache & Pain Management"
+          },
+          {
+            "name": "Hearing Loss"
+          },
+          {
+            "name": "Heart Health",
+            "children": [
+              {
+                "name": "High Blood Pressure"
+              },
+              {
+                "name": "High Cholesterol"
+              }
+            ]
+          },
+          {
+            "name": "Hemorrhoids"
+          },
+          {
+            "name": "Hepatitis"
+          },
+          {
+            "name": "Infectious Diseases & Viruses"
+          },
+          {
+            "name": "Learning & Developmental Disabilities"
+          },
+          {
+            "name": "Men's Health"
+          },
+          {
+            "name": "Mental Health"
+          },
+          {
+            "name": "Neurological Conditions"
+          },
+          {
+            "name": "Skin Conditions & Skin Health",
+            "children": [
+              {
+                "name": "Acne"
+              },
+              {
+                "name": "Warts"
+              }
+            ]
+          },
+          {
+            "name": "Smoking & Smoking Cessation"
+          },
+          {
+            "name": "Vision",
+            "children": [
+              {
+                "name": "Contact Lenses & Accessories"
+              },
+              {
+                "name": "Eyeglass Frames"
+              }
+            ]
+          },
+          {
+            "name": "Weight Loss Products",
+            "children": [
+              {
+                "name": "Weight Loss Drugs & Medications"
+              },
+              {
+                "name": "Weight Loss Supplements"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "Medical Devices, Equipment & Supplies",
+        "children": [
+          {
+            "name": "First Aid Supplies"
+          },
+          {
+            "name": "Medical Diagnostic Equipment & Monitoring Devices"
+          },
+          {
+            "name": "Mobility Equipment & Accessories"
+          }
+        ]
+      },
+      {
+        "name": "Nutrition & Dieting",
+        "children": [
+          {
+            "name": "Diets & Diet Programs"
+          }
+        ]
+      },
+      {
+        "name": "Pharmacy",
+        "children": [
+          {
+            "name": "Drugs & Medications"
+          },
+          {
+            "name": "Vitamins & Supplements",
+            "children": [
+              {
+                "name": "Multi-Vitamins"
+              },
+              {
+                "name": "Sports Nutrition Supplements"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "Professional Medical Resources",
+        "children": [
+          {
+            "name": "Medical Research"
+          },
+          {
+            "name": "Professional Health Care Education"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "Hobbies, Games & Leisure",
+    "children": [
+      {
+        "name": "Ancestry & Genealogy"
+      },
+      {
+        "name": "Antiques & Collectibles"
+      },
+      {
+        "name": "Arts & Crafts",
+        "children": [
+          {
+            "name": "Fiber Craft"
+          }
+        ]
+      },
+      {
+        "name": "Camping & Outdoor Recreation",
+        "children": [
+          {
+            "name": "Climbing"
+          },
+          {
+            "name": "Hiking"
+          },
+          {
+            "name": "Multi-tools & Pocket Knives"
+          }
+        ]
+      },
+      {
+        "name": "Cooking",
+        "children": [
+          {
+            "name": "Cuisines"
+          },
+          {
+            "name": "Recipes"
+          }
+        ]
+      },
+      {
+        "name": "Gardening",
+        "children": [
+          {
+            "name": "Garden Structures"
+          },
+          {
+            "name": "Trees, Plants & Shrubs"
+          }
+        ]
+      },
+      {
+        "name": "Leisure Gambling",
+        "children": [
+          {
+            "name": "Poker & Casino Games"
+          },
+          {
+            "name": "iGaming",
+            "children": []
+          }
+        ]
+      },
+      {
+        "name": "Pets & Animals",
+        "children": [
+          {
+            "name": "Pet Breeding"
+          },
+          {
+            "name": "Pet Food & Supplies",
+            "children": [
+              {
+                "name": "Flea & Tick Control Products"
+              },
+              {
+                "name": "Pet Food & Treats"
+              },
+              {
+                "name": "Pet Medications"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "Photo & Video",
+        "children": [
+          {
+            "name": "Digital Cameras"
+          },
+          {
+            "name": "Photo & Video Accessories"
+          },
+          {
+            "name": "Photographic & Digital Arts"
+          },
+          {
+            "name": "Video Cameras & Camcorders"
+          }
+        ]
+      },
+      {
+        "name": "Prizes & Competitions",
+        "children": [
+          {
+            "name": "Sweepstakes, Product Promotions & Giveaways"
+          }
+        ]
+      },
+      {
+        "name": "Toys & Games",
+        "children": [
+          {
+            "name": "Games",
+            "children": [
+              {
+                "name": "Arcade & Coin-Op Games"
+              },
+              {
+                "name": "Board Games"
+              },
+              {
+                "name": "Card Games"
+              },
+              {
+                "name": "Children's Games & Activities"
+              },
+              {
+                "name": "Online Games & Puzzles",
+                "children": [
+                  {
+                    "name": "Massive Multiplayer Online Games"
+                  }
+                ]
+              },
+              {
+                "name": "Puzzles & Brainteasers"
+              },
+              {
+                "name": "Roleplaying Games"
+              },
+              {
+                "name": "Strategy Games"
+              },
+              {
+                "name": "Video Games, Consoles & Accessories",
+                "children": [
+                  {
+                    "name": "Computer & Video Games",
+                    "children": [
+                      {
+                        "name": "Action & Platform Games"
+                      },
+                      {
+                        "name": "Adventure Games"
+                      },
+                      {
+                        "name": "Casual Games"
+                      },
+                      {
+                        "name": "Driving & Racing Games"
+                      },
+                      {
+                        "name": "Family & Children's Games"
+                      },
+                      {
+                        "name": "Music & Dance Games"
+                      },
+                      {
+                        "name": "Shooter Games"
+                      },
+                      {
+                        "name": "Simulation Games"
+                      },
+                      {
+                        "name": "Sports Games"
+                      }
+                    ]
+                  },
+                  {
+                    "name": "Video Game Consoles"
+                  }
+                ]
+              },
+              {
+                "name": "Word Games"
+              }
+            ]
+          },
+          {
+            "name": "Toys",
+            "children": [
+              {
+                "name": "Action Figures"
+              },
+              {
+                "name": "Building Toys"
+              },
+              {
+                "name": "Children's Dolls, Dress-Up Toys & Costumes"
+              },
+              {
+                "name": "Educational Toys"
+              },
+              {
+                "name": "Radio Controlled Toys & Accessories"
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "Home & Garden",
+    "children": [
+      {
+        "name": "Bedding & Linens"
+      },
+      {
+        "name": "Home Appliances",
+        "children": [
+          {
+            "name": "Home Appliance Service & Repair"
+          },
+          {
+            "name": "Major Kitchen Appliances"
+          },
+          {
+            "name": "Vacuum Cleaners & Accessories"
+          },
+          {
+            "name": "Washers & Dryers"
+          }
+        ]
+      },
+      {
+        "name": "Home Decor & Interior Decorating"
+      },
+      {
+        "name": "Home Furniture",
+        "children": [
+          {
+            "name": "Mattresses"
+          }
+        ]
+      },
+      {
+        "name": "Home Heating & Cooling"
+      },
+      {
+        "name": "Home Improvement & Maintenance"
+      },
+      {
+        "name": "Home Safety & Security"
+      },
+      {
+        "name": "Household Supplies",
+        "children": [
+          {
+            "name": "Food Wraps & Food Storage"
+          },
+          {
+            "name": "Household Cleaning Products",
+            "children": [
+              {
+                "name": "Air Fresheners & Deodorizers"
+              },
+              {
+                "name": "Dish Detergents"
+              },
+              {
+                "name": "Laundry Detergents"
+              }
+            ]
+          },
+          {
+            "name": "Paper Towels & Household Paper Products"
+          }
+        ]
+      },
+      {
+        "name": "Kitchen & Dining"
+      },
+      {
+        "name": "Lights & Lighting"
+      },
+      {
+        "name": "Residential Cleaning"
+      },
+      {
+        "name": "Water Filters"
+      },
+      {
+        "name": "Yard, Garden & Patio",
+        "children": [
+          {
+            "name": "Outdoor Cooking Equipment & Accessories"
+          },
+          {
+            "name": "Pest & Weed Control"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "Internet & Telecom",
+    "children": [
+      {
+        "name": "Cable TV"
+      },
+      {
+        "name": "Internet & Online Services",
+        "children": [
+          {
+            "name": "Domain Names & Domain Name Registration"
+          },
+          {
+            "name": "Email & Messaging"
+          },
+          {
+            "name": "Internet Service Plans"
+          },
+          {
+            "name": "People Search"
+          },
+          {
+            "name": "RSS Feeds & Aggregators"
+          },
+          {
+            "name": "Social Networks & Online Communities"
+          },
+          {
+            "name": "Web Design & Development"
+          },
+          {
+            "name": "Web Hosting"
+          },
+          {
+            "name": "Web Portals"
+          }
+        ]
+      },
+      {
+        "name": "Satellite TV"
+      },
+      {
+        "name": "Telephony",
+        "children": [
+          {
+            "name": "Mobile Phones & Accessories",
+            "children": [
+              {
+                "name": "Mobile Phones"
+              }
+            ]
+          },
+          {
+            "name": "Phone Plans",
+            "children": [
+              {
+                "name": "Mobile Phone Plans"
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "Jobs & Education",
+    "children": [
+      {
+        "name": "Education & Training",
+        "children": [
+          {
+            "name": "Colleges, Universities & Post-Secondary Education",
+            "children": [
+              {
+                "name": "Graduate Programs"
+              }
+            ]
+          },
+          {
+            "name": "Language Education"
+          },
+          {
+            "name": "Music Education & Instruction"
+          },
+          {
+            "name": "Online Education & Degree Programs"
+          },
+          {
+            "name": "Standardized & Admissions Tests"
+          },
+          {
+            "name": "Training & Certification"
+          },
+          {
+            "name": "Tutoring Services"
+          },
+          {
+            "name": "Vocational Training & Trade Schools"
+          }
+        ]
+      },
+      {
+        "name": "Job Listings"
+      }
+    ]
+  },
+  {
+    "name": "Law & Government",
+    "children": [
+      {
+        "name": "Legal",
+        "children": [
+          {
+            "name": "Attorneys & Law Firms"
+          },
+          {
+            "name": "Immigration Law"
+          }
+        ]
+      },
+      {
+        "name": "Military"
+      },
+      {
+        "name": "Public Services",
+        "children": [
+          {
+            "name": "Public Utilities"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "Mobile App Utilities",
+    "children": [
+      {
+        "name": "Flashlight Apps"
+      },
+      {
+        "name": "Location Tracking Apps"
+      },
+      {
+        "name": "Mobile Screen & App Locks"
+      },
+      {
+        "name": "Mobile System Management Apps",
+        "children": [
+          {
+            "name": "Battery Management Apps"
+          },
+          {
+            "name": "File Manager Apps"
+          },
+          {
+            "name": "Mobile Task & App Management"
+          }
+        ]
+      },
+      {
+        "name": "Network Connectivity Apps"
+      }
+    ]
+  },
+  {
+    "name": "News, Books & Publications",
+    "children": [
+      {
+        "name": "Books & Literature",
+        "children": [
+          {
+            "name": "Audiobooks"
+          },
+          {
+            "name": "Book Retailers"
+          },
+          {
+            "name": "E-Books"
+          }
+        ]
+      },
+      {
+        "name": "Celebrities & Entertainment News"
+      },
+      {
+        "name": "Newspapers"
+      },
+      {
+        "name": "Reference Materials & Resources",
+        "children": [
+          {
+            "name": "Public Records"
+          },
+          {
+            "name": "Translation"
+          }
+        ]
+      },
+      {
+        "name": "Weather"
+      }
+    ]
+  },
+  {
+    "name": "Occasions & Gifts",
+    "children": [
+      {
+        "name": "Cards & Greetings"
+      },
+      {
+        "name": "Flower Arrangements"
+      },
+      {
+        "name": "Gifts"
+      },
+      {
+        "name": "Holidays & Seasonal Events",
+        "children": [
+          {
+            "name": "Halloween & October 31st"
+          }
+        ]
+      },
+      {
+        "name": "Parties & Party Supplies"
+      },
+      {
+        "name": "Special Occasions",
+        "children": [
+          {
+            "name": "Funerals & Bereavement"
+          },
+          {
+            "name": "Weddings"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "Real Estate",
+    "children": [
+      {
+        "name": "Property Development"
+      },
+      {
+        "name": "Real Estate Agents & Brokerages"
+      },
+      {
+        "name": "Real Estate Listings",
+        "children": [
+          {
+            "name": "Rental Listings"
+          }
+        ]
+      },
+      {
+        "name": "Relocation & Household Moving"
+      }
+    ]
+  },
+  {
+    "name": "Sports & Fitness",
+    "children": [
+      {
+        "name": "Boating & Water Recreation",
+        "children": [
+          {
+            "name": "Fishing"
+          }
+        ]
+      },
+      {
+        "name": "Fitness",
+        "children": [
+          {
+            "name": "Fitness Classes & Instruction"
+          },
+          {
+            "name": "Gyms & Gym Memberships"
+          },
+          {
+            "name": "Personal Training"
+          }
+        ]
+      },
+      {
+        "name": "Sporting Goods",
+        "children": [
+          {
+            "name": "Airsoft Equipment"
+          },
+          {
+            "name": "Bicycles & Accessories"
+          },
+          {
+            "name": "Golf Equipment"
+          },
+          {
+            "name": "Sports Equipment Rental Services"
+          }
+        ]
+      },
+      {
+        "name": "Sports",
+        "children": [
+          {
+            "name": "American Football"
+          },
+          {
+            "name": "Baseball"
+          },
+          {
+            "name": "Basketball"
+          },
+          {
+            "name": "Combat Sports"
+          },
+          {
+            "name": "Hockey"
+          },
+          {
+            "name": "Hunting & Shooting"
+          },
+          {
+            "name": "Soccer"
+          },
+          {
+            "name": "Winter Sports"
+          }
+        ]
+      },
+      {
+        "name": "Sports & Fitness Apparel"
+      },
+      {
+        "name": "Sports Fan Gear & Apparel",
+        "children": [
+          {
+            "name": "Sports Team Jerseys"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "Travel & Tourism",
+    "children": [
+      {
+        "name": "Accommodations",
+        "children": [
+          {
+            "name": "Hotels, Motels & Resorts",
+            "children": [
+              {
+                "name": "Hotels"
+              },
+              {
+                "name": "Resorts"
+              }
+            ]
+          },
+          {
+            "name": "Vacation Rentals"
+          }
+        ]
+      },
+      {
+        "name": "Air Travel",
+        "children": [
+          {
+            "name": "Airline Tickets, Fares & Flights"
+          }
+        ]
+      },
+      {
+        "name": "Cruises & Cruise Services"
+      },
+      {
+        "name": "Last Minute Travel"
+      },
+      {
+        "name": "Luggage"
+      },
+      {
+        "name": "Specialty Travel"
+      },
+      {
+        "name": "Tourist Attractions & Destinations",
+        "children": [
+          {
+            "name": "Theme Parks"
+          }
+        ]
+      },
+      {
+        "name": "Transportation & Excursions",
+        "children": [
+          {
+            "name": "Bus & Rail Services",
+            "children": [
+              {
+                "name": "Bus Services"
+              },
+              {
+                "name": "Rail Services"
+              }
+            ]
+          },
+          {
+            "name": "Car Rental Services"
+          },
+          {
+            "name": "Taxi Services"
+          }
+        ]
+      },
+      {
+        "name": "Travel Booking Services"
+      },
+      {
+        "name": "Travel Media & Publications"
+      },
+      {
+        "name": "Vacation Packages"
+      }
+    ]
+  }
+]

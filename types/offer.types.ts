@@ -14,9 +14,9 @@
  * @see https://agentoffernetwork.org/schema/offer/v0.1
  */
 
-import type { CategoryType, CategoryAttributes } from './category-attributes.types';
+import type { CategoryId, OfferCategory } from './category-attributes.types';
 
-export type { CategoryType, CategoryAttributes };
+export type { CategoryId, OfferCategory };
 
 // ─── Offer ─────────────────────────────────────────────────────────────────────
 
@@ -91,12 +91,12 @@ export interface OfferInfo {
    * Determines Agent-side UX behavior: physical_product → shipping/returns flow,
    * content → instant access, online_service → signup/subscription flow,
    * offline_service → location/booking flow.
-   * Orthogonal to category.type (industry classification).
+   * Orthogonal to offer_info.category.id (industry classification).
    * @example "online_service"
    */
   offer_type: OfferType;
 
-  /** [REQUIRED] Industry category and vertical-specific attributes. */
+  /** [REQUIRED] AON Taxonomy v1 category reference. */
   category: Category;
 
   /** [REQUIRED] Core semantic description for end-user display. maxLength: 5000. @example "Claude Pro provides advanced AI assistance with extended context windows, priority access, and team collaboration features." */
@@ -152,11 +152,11 @@ export type AuditStatus = 'waiting' | 'pass' | 'reject';
 // ─── Category ───────────────────────────────────────────────────────────────────
 
 /**
- * [REQUIRED] Industry category with vertical-specific attributes.
- * Type-safe: `attributes` structure is constrained by `type` via the CategoryAttributes discriminated union.
- * @see category-attributes.types.ts for per-type attribute definitions.
+ * [REQUIRED] AON Taxonomy v1 category reference.
+ * Registry membership is validated by scripts/validate-taxonomy-v1.mjs.
+ * @see category-attributes.types.ts
  */
-export type Category = CategoryAttributes;
+export type Category = OfferCategory;
 
 /**
  * @example { "price": { "amount": "20.00", "currency": "USD" } }
@@ -339,7 +339,7 @@ export interface ConversionRule {
  *     "user_profile": { "user_pseudo_id": "viewer_xyz", "language": "en", "interests": ["travel", "hotels"] }
  *   },
  *   "intent": { "content": [{ "type": "input_text", "text": "Find me a hotel in Tokyo under $200/night" }] },
- *   "constraints": { "category_types": ["travel_hospitality"] },
+ *   "constraints": { "category_ids": ["travel_tourism"] },
  *   "pagination": { "limit": 10, "offset": 0 }
  * }
  */
@@ -455,13 +455,14 @@ export interface IntentContentItem {
 }
 
 /**
- * @example { "category_types": ["travel_hospitality"] }
+ * @example { "category_ids": ["travel_tourism"] }
  *
- * The first public constraints surface only exposes category_types.
+ * Category constraints use AON Taxonomy v1 ids. Each id matches the selected
+ * taxonomy node and all descendants.
  */
 export interface QueryConstraints {
-  /** Constrain by category type. OR logic: matches any specified type. @example ["travel_hospitality"] */
-  category_types?: CategoryType[];
+  /** Constrain by category id. OR logic with subtree matching. @example ["travel_tourism"] */
+  category_ids?: CategoryId[];
 }
 
 /**

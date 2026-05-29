@@ -49,3 +49,16 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 - Version: `v0.1`
 - Status: `Draft`
+
+## [Unreleased]
+
+### Added
+
+- AON Taxonomy v1 source tree (`taxonomy/aon-taxonomy-v1.json`), taxonomy
+  source schema, legacy v0.1 migration mapping, and drift guard script.
+
+### Changed
+
+- Offer Schema category payload now uses `offer_info.category.id`.
+- Query and Provider request schemas now use `constraints.category_ids`.
+- TypeScript category types now expose `CategoryId` and `OfferCategory`.

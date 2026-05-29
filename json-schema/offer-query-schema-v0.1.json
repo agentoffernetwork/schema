@@ -57,7 +57,9 @@
         "user_profile": {
           "type": "object",
           "description": "User profile information for intent matching and targeting.",
-          "required": ["device_info"],
+          "required": [
+            "device_info"
+          ],
           "properties": {
             "user_pseudo_id": {
               "type": "string",
@@ -74,13 +76,18 @@
             },
             "interests": {
               "type": "array",
-              "items": { "type": "string" },
+              "items": {
+                "type": "string"
+              },
               "description": "User interest tags. May be empty array."
             },
             "device_info": {
               "type": "object",
               "description": "Required device information for targeting.",
-              "required": ["device_type", "os"],
+              "required": [
+                "device_type",
+                "os"
+              ],
               "properties": {
                 "device_type": {
                   "type": "string",
@@ -125,7 +132,9 @@
     "intent": {
       "type": "object",
       "description": "The user's intent expressed as multimodal content.",
-      "required": ["content"],
+      "required": [
+        "content"
+      ],
       "properties": {
         "content": {
           "type": "array",
@@ -133,11 +142,16 @@
           "minItems": 1,
           "items": {
             "type": "object",
-            "required": ["type"],
+            "required": [
+              "type"
+            ],
             "properties": {
               "type": {
                 "type": "string",
-                "enum": ["input_text", "input_image"],
+                "enum": [
+                  "input_text",
+                  "input_image"
+                ],
                 "description": "Content type."
               },
               "text": {
@@ -158,27 +172,15 @@
     },
     "constraints": {
       "type": "object",
-      "description": "Deterministic eligibility constraints that narrow the result set before semantic ranking. constraints is a hard constraint surface, intent is a soft signal for semantic relevance. The first public constraints surface only exposes category_types.",
+      "description": "Deterministic eligibility constraints that narrow the result set before semantic ranking. The category constraint surface uses AON Taxonomy v1 category_ids.",
       "properties": {
-        "category_types": {
+        "category_ids": {
           "type": "array",
           "items": {
             "type": "string",
-            "enum": [
-              "software_saas",
-              "travel_hospitality",
-              "education",
-              "financial_service",
-              "electronics",
-              "entertainment",
-              "health_beauty",
-              "fashion",
-              "food_grocery",
-              "home_garden",
-              "automotive"
-            ]
+            "pattern": "^[a-z0-9]+(?:_[a-z0-9]+)*(?:\\.[a-z0-9]+(?:_[a-z0-9]+)*)*$"
           },
-          "description": "Constrain by category type. Values reference offer_info.category.type enum. OR logic: matches any specified type."
+          "description": "Constrain by AON Taxonomy v1 category id. OR logic within the array; each id matches the selected taxonomy node and all descendants. Registry membership is validated by the taxonomy drift guard."
         }
       },
       "additionalProperties": false
