@@ -56,9 +56,13 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 - AON Taxonomy v1 source tree (`taxonomy/aon-taxonomy-v1.json`), taxonomy
   source schema, legacy v0.1 migration mapping, and drift guard script.
+- `bid.model_subtype` (CPA Type): optional free-form token
+  (`^[A-Za-z0-9_-]{1,16}$`) qualifying the CPA bid model.
 
 ### Changed
 
 - Offer Schema category payload now uses `offer_info.category.id`.
 - Query and Provider request schemas now use `constraints.category_ids`.
 - TypeScript category types now expose `CategoryId` and `OfferCategory`.
+- `bid.model` is narrowed to `cpa`, `cps`, and `hybrid`; lead/install use
+  `cpa` plus `model_subtype`.

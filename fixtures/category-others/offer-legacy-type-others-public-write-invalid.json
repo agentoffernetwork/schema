@@ -1,0 +1,28 @@
+{
+  "offer_id": "019dd208-27d2-7673-b16f-6897fa120306",
+  "offer_instance_id": "019dd208-27d2-7673-b16f-6897fa120307",
+  "version": "1.0",
+  "offer_info": {
+    "title": "Legacy Type Shape",
+    "offer_type": "online_service",
+    "category": {
+      "type": "others"
+    },
+    "description": "Public writes must use category.id."
+  },
+  "entity": {
+    "id": "ent_category_others",
+    "name": "Category Others"
+  },
+  "action": {
+    "type": "web_redirect",
+    "payload": {
+      "target": "https://example.com/offer"
+    }
+  },
+  "bid": {
+    "model": "cpa",
+    "amount": "1.00",
+    "currency": "USD"
+  }
+}

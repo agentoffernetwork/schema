@@ -36,14 +36,16 @@ const levelOneOverrides = new Map([
   ['Mobile App Utilities', 'mobile_utilities'],
   ['News, Books & Publications', 'news_books_publications'],
   ['Occasions & Gifts', 'gifts_occasions'],
+  ['Others', 'others'],
   ['Real Estate', 'real_estate'],
   ['Sports & Fitness', 'sports_fitness'],
   ['Travel & Tourism', 'travel_tourism'],
 ]);
 
 const requiredIds = [
+  'others',
   'arts_entertainment.adult_entertainment',
-  'hobbies_games_leisure.leisure_gambling.igaming',
+  'arts_entertainment.igaming',
 ];
 
 function readJson(file) {
@@ -128,6 +130,20 @@ function findCategoryRefs(value, file, refs = []) {
 function main() {
   const taxonomy = readJson(taxonomyPath);
   const generatedIds = collectIds(taxonomy);
+  const othersNode = taxonomy.find((node) => node?.name === 'Others');
+  if (!othersNode) {
+    throw new Error('required Level 1 taxonomy node missing: Others');
+  }
+  const othersChildren = othersNode.children ?? [];
+  if (!Array.isArray(othersChildren) || othersChildren.length !== 0) {
+    throw new Error('Others must be a Level 1 taxonomy node with no children');
+  }
+  const publicFields = Object.keys(othersNode).sort();
+  if (JSON.stringify(publicFields) !== JSON.stringify(['children', 'name'])) {
+    throw new Error(
+      `Others must use only public taxonomy fields name/children; got ${publicFields.join(',')}`,
+    );
+  }
 
   for (const required of requiredIds) {
     if (!generatedIds.has(required)) {

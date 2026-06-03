@@ -1,0 +1,23 @@
+{
+  "context": {
+    "user_profile": {
+      "device_info": {
+        "device_type": "mobile",
+        "os": "ios"
+      }
+    }
+  },
+  "intent": {
+    "content": [
+      {
+        "type": "input_text",
+        "text": "Find offers that use the fallback category"
+      }
+    ]
+  },
+  "constraints": {
+    "category_ids": [
+      "others"
+    ]
+  }
+}

@@ -35,7 +35,7 @@
   "entertainment.live_streaming": "arts_entertainment.tv_video",
   "entertainment.music_audio": "arts_entertainment.music_audio",
   "entertainment.social_audio": "arts_entertainment.music_audio",
-  "entertainment.sports_betting": "hobbies_games_leisure.leisure_gambling.igaming",
+  "entertainment.sports_betting": "arts_entertainment.igaming",
   "entertainment.streaming_video": "arts_entertainment.tv_video",
   "fashion": "fashion_apparel",
   "fashion.accessories": "fashion_apparel",

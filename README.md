@@ -135,11 +135,11 @@ The query request schema validates the request body. The offer schema validates 
 | Missing required property `context` | Request body omitted the context object | Send `context` with at least `user_profile` |
 | Missing required property `intent` | Request body omitted the user intent object | Send `intent.content[]` with at least one item |
 | `intent.content[]` fails validation | Missing content item `type` or unsupported content type | Use `input_text` or `input_image` |
-| Category enum fails validation | Category is not part of the current public set | Use the 11 canonical category types from the protocol taxonomy |
+| Category id fails validation | Category id is malformed or not part of the current registry | Use a lowercase AON Taxonomy v1 id from the protocol taxonomy; schema pattern checks are not a substitute for registry validation |
 | Stale identifier appears in offer payload | Payload still uses `uuid`, `original_offer_id`, or `source_offer_id` | Use `offer_id` and `offer_instance_id` |
 | Response metadata mismatch | Payload still expects `query_id`, `trace_id`, `aon_trace_id`, `has_more`, or `total` in the canonical Query API JSON response | Use `request_id` and `offers[]`; use the hosted API `X-AON-TRACE-ID` response header for diagnostics |
 
-## Category Types
+## Category IDs
 
 The current canonical category surface is defined by the human-readable
 [Category Taxonomy](https://github.com/agentoffernetwork/protocol/blob/main/specs/category-taxonomy.md)
@@ -147,9 +147,9 @@ document in the `protocol` repository.
 
 This repo follows that taxonomy boundary:
 
-- current public machine-readable category enums align with the current canonical 11-category public set
-- aliases are normalization concerns, not public enum members
-- reserved / future categories are not treated as current public machine-readable output until they are formally added
+- current public machine-readable category values are AON Taxonomy v1 ids such as `travel_tourism`, `finance.credit_lending`, and `others`
+- aliases and legacy v0.1 `category.type + attributes.sub_type` values are migration concerns, not public request fields
+- JSON Schema enforces id shape; use the taxonomy guard or generated SDK validators for registry membership checks
 
 ## Field Requirement Levels
 

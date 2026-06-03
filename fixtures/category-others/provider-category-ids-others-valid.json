@@ -1,0 +1,24 @@
+{
+  "request_id": "019dd208-27d2-7673-b16f-6897fa120305",
+  "context": {
+    "user_profile": {
+      "device_info": {
+        "device_type": "mobile",
+        "os": "ios"
+      }
+    }
+  },
+  "intent": {
+    "content": [
+      {
+        "type": "input_text",
+        "text": "Find offers that use the fallback category"
+      }
+    ]
+  },
+  "constraints": {
+    "category_ids": [
+      "others"
+    ]
+  }
+}

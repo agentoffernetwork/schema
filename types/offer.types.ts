@@ -290,10 +290,9 @@ export type OsType = 'ios' | 'android' | 'windows' | 'macos' | 'linux';
  * @example { "model": "cpa", "amount": "15.00", "currency": "USD" }
  * @example { "model": "cps", "amount": "8.00", "currency": "USD" }
  */
-export interface Bid {
-  /** [REQUIRED] Bid model (for display purposes). @example "cpa" */
-  model: BidModel;
+export type Bid = CpaBid | NonCpaBid;
 
+interface BaseBid {
   /** [REQUIRED] Determined bid amount, decimal string. @example "15.00" */
   amount: string;
 
@@ -301,8 +300,32 @@ export interface Bid {
   currency: string;
 }
 
-/** @example "cpa" */
-export type BidModel = 'cpa' | 'cps' | 'cpl' | 'cpi' | 'hybrid';
+export interface CpaBid extends BaseBid {
+  /** [REQUIRED] Bid model (for display purposes). @example "cpa" */
+  model: 'cpa';
+
+  /**
+   * CPA Type — subtype of the CPA bid model. Free-form token matching
+   * `^[A-Za-z0-9_-]{1,16}$`. OPTIONAL when `model` is `"cpa"`.
+   * Common values: Registration, Submission, Transaction, Retention, Install.
+   * Partners may define custom per-partner values. @example "Registration"
+   */
+  model_subtype?: string;
+}
+
+export interface NonCpaBid extends BaseBid {
+  /** [REQUIRED] Bid model (for display purposes). @example "cps" */
+  model: Exclude<BidModel, 'cpa'>;
+
+  /** `model_subtype` is valid only for `model: "cpa"`. */
+  model_subtype?: never;
+}
+
+/**
+ * @example "cpa"
+ * WS-002: `cpl`/`cpi` removed — represent lead/install as `cpa` + `model_subtype`.
+ */
+export type BidModel = 'cpa' | 'cps' | 'hybrid';
 
 // ─── Conversion Rule ────────────────────────────────────────────────────────────
 

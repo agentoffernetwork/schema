@@ -151,6 +151,13 @@
       {
         "name": "Adult Entertainment",
         "children": []
+      },
+      {
+        "name": "Short Drama"
+      },
+      {
+        "name": "iGaming",
+        "children": []
       }
     ]
   },
@@ -480,6 +487,19 @@
           },
           {
             "name": "Pizzerias & Pizza Delivery"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "E-commerce & Marketplace",
+    "children": [
+      {
+        "name": "Comprehensive E-commerce Platform",
+        "children": [
+          {
+            "name": "B2C Marketplace"
           }
         ]
       }
@@ -1135,10 +1155,6 @@
         "children": [
           {
             "name": "Poker & Casino Games"
-          },
-          {
-            "name": "iGaming",
-            "children": []
           }
         ]
       },
@@ -1813,5 +1829,9 @@
         "name": "Vacation Packages"
       }
     ]
+  },
+  {
+    "name": "Others",
+    "children": []
   }
 ]

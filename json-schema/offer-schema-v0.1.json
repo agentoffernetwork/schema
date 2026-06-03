@@ -456,11 +456,9 @@
           "enum": [
             "cpa",
             "cps",
-            "cpl",
-            "cpi",
             "hybrid"
           ],
-          "description": "Bid model (for display purposes): cpa (cost per action), cps (cost per sale), cpl (cost per lead), cpi (cost per install), hybrid (combined)."
+          "description": "Bid model (for display purposes): cpa (cost per action), cps (cost per sale), hybrid (combined). WS-002: cpl/cpi removed — represent lead/install as cpa + model_subtype (Submission/Install)."
         },
         "amount": {
           "type": "string",
@@ -469,9 +467,31 @@
         "currency": {
           "type": "string",
           "description": "ISO 4217 currency code."
+        },
+        "model_subtype": {
+          "type": "string",
+          "maxLength": 16,
+          "pattern": "^[A-Za-z0-9_-]{1,16}$",
+          "description": "CPA Type — subtype of the CPA bid model (free-form token, only valid when model='cpa'). Common values: Registration, Submission, Transaction, Retention, Install. Partners may define custom per-partner values.",
+          "examples": ["Registration", "Submission", "Transaction", "Retention", "Install"]
         }
       },
-      "additionalProperties": false
+      "additionalProperties": false,
+      "if": {
+        "properties": {
+          "model": {
+            "const": "cpa"
+          }
+        }
+      },
+      "then": {},
+      "else": {
+        "not": {
+          "required": [
+            "model_subtype"
+          ]
+        }
+      }
     }
   },
   "additionalProperties": false

@@ -1,0 +1,28 @@
+{
+  "offer_id": "019dd208-27d2-7673-b16f-6897fa120303",
+  "offer_instance_id": "019dd208-27d2-7673-b16f-6897fa120304",
+  "version": "1.0",
+  "offer_info": {
+    "title": "Fallback Category Offer",
+    "offer_type": "online_service",
+    "category": {
+      "id": "others"
+    },
+    "description": "Offer whose best available taxonomy classification is the standard fallback category."
+  },
+  "entity": {
+    "id": "ent_category_others",
+    "name": "Category Others"
+  },
+  "action": {
+    "type": "web_redirect",
+    "payload": {
+      "target": "https://example.com/offer"
+    }
+  },
+  "bid": {
+    "model": "cpa",
+    "amount": "1.00",
+    "currency": "USD"
+  }
+}
