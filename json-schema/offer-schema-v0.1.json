@@ -391,18 +391,96 @@
             "type": "object",
             "properties": {
               "include": {
-                "type": "array",
-                "items": {
-                  "type": "string"
-                },
-                "description": "Included geographic regions."
+                "oneOf": [
+                  {
+                    "type": "array",
+                    "maxItems": 0,
+                    "description": "Empty include means the location dimension is unconstrained."
+                  },
+                  {
+                    "type": "array",
+                    "minItems": 1,
+                    "items": {
+                      "type": "string",
+                      "pattern": "^([A-Z]{2}|ALL)$"
+                    },
+                    "uniqueItems": true,
+                    "description": "Legacy included country codes."
+                  },
+                  {
+                    "type": "array",
+                    "minItems": 1,
+                    "items": {
+                      "type": "object",
+                      "required": [
+                        "location_id"
+                      ],
+                      "properties": {
+                        "location_id": {
+                          "type": "string",
+                          "pattern": "^[0-9]+$",
+                          "description": "AON Location Registry v1 location id, sourced from Google Geo Target Criteria ID."
+                        }
+                      },
+                      "additionalProperties": false
+                    },
+                    "uniqueItems": true,
+                    "description": "Included AON Location Registry v1 locations."
+                  }
+                ],
+                "description": "Included geographic locations. Use either legacy country strings or structured location_id objects, not both in the same array."
               },
               "exclude": {
-                "type": "array",
-                "items": {
-                  "type": "string"
-                },
-                "description": "Excluded geographic regions."
+                "oneOf": [
+                  {
+                    "type": "array",
+                    "maxItems": 0,
+                    "description": "Empty exclude means no location is excluded."
+                  },
+                  {
+                    "type": "array",
+                    "minItems": 1,
+                    "items": {
+                      "type": "string",
+                      "pattern": "^([A-Z]{2}|ALL)$"
+                    },
+                    "uniqueItems": true,
+                    "description": "Legacy excluded country codes."
+                  },
+                  {
+                    "type": "array",
+                    "minItems": 1,
+                    "items": {
+                      "type": "object",
+                      "required": [
+                        "location_id"
+                      ],
+                      "properties": {
+                        "location_id": {
+                          "type": "string",
+                          "pattern": "^[0-9]+$",
+                          "description": "AON Location Registry v1 location id, sourced from Google Geo Target Criteria ID."
+                        }
+                      },
+                      "additionalProperties": false
+                    },
+                    "uniqueItems": true,
+                    "description": "Excluded AON Location Registry v1 locations."
+                  }
+                ],
+                "description": "Excluded geographic locations. Exclude wins over include."
+              }
+            },
+            "additionalProperties": false
+          },
+          "eligibility": {
+            "type": "object",
+            "properties": {
+              "min_age": {
+                "type": "integer",
+                "minimum": 13,
+                "maximum": 120,
+                "description": "Minimum verified viewer age required for this targeting rule."
               }
             },
             "additionalProperties": false

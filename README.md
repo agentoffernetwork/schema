@@ -23,11 +23,15 @@
 |------|-------------|
 | `json-schema/offer-schema-v0.1.json` | Offer object JSON Schema with RFC 2119 requirement levels |
 | `json-schema/offer-query-schema-v0.1.json` | Query request schema for `POST /v1/offers/query` |
+| `json-schema/location-registry-v1.schema.json` | JSON Schema for AON Location Registry v1 |
+| `locations/aon-location-registry-v1.json` | AON Location Registry v1, generated from Google Geo Targets Criteria IDs and limited to COUNTRY, REGION, and CITY |
 | `json-schema/taxonomy-v1.schema.json` | Source tree schema for AON Taxonomy v1 |
 | `taxonomy/aon-taxonomy-v1.json` | AON Taxonomy v1 source tree (`name + children`) |
 | `taxonomy/v0.1-to-taxonomy-v1.json` | Legacy v0.1 category migration mapping |
 | `types/offer.types.ts` | TypeScript type definitions for Offer, Query, and Response |
 | `types/category-attributes.types.ts` | AON Taxonomy v1 category id and registry types |
+| `scripts/generate-location-registry-v1.mjs` | Generates the supported AON location registry from a Google Geo Targets CSV |
+| `scripts/validate-location-registry-v1.mjs` | Validates registry shape, parent links, and supported levels |
 | `validators/` | Reserved for future packaged validation tooling; current validation examples use `ajv-cli` directly |
 
 ## Quick Start
@@ -36,8 +40,8 @@ If you are new to AON, start with the guided docs first:
 
 | Need | Link |
 |------|------|
-| Understand mock mode and the first working request | [Docs Quick Start](https://docs.agentoffernetwork.com/quickstart) |
-| Read field-level platform API tables | [AON API Reference](https://docs.agentoffernetwork.com/api) |
+| Understand mock mode and the first working request | [Docs Quick Start](https://docs.aon.pro/quickstart) |
+| Read field-level platform API tables | [AON API Reference](https://docs.aon.pro/api) |
 | Understand the human-readable protocol semantics | [Protocol source](https://github.com/agentoffernetwork/protocol) |
 
 Use this repository when you need to validate payloads or reference TypeScript contract types.
@@ -136,6 +140,8 @@ The query request schema validates the request body. The offer schema validates 
 | Missing required property `intent` | Request body omitted the user intent object | Send `intent.content[]` with at least one item |
 | `intent.content[]` fails validation | Missing content item `type` or unsupported content type | Use `input_text` or `input_image` |
 | Category id fails validation | Category id is malformed or not part of the current registry | Use a lowercase AON Taxonomy v1 id from the protocol taxonomy; schema pattern checks are not a substitute for registry validation |
+| Location id fails registry validation | `location_id` is not in AON Location Registry v1 or uses an unsupported level | Use `locations/aon-location-registry-v1.json`; the first release supports COUNTRY, REGION, and CITY only |
+| Structured and legacy geo entries are mixed | `targeting[].geo.include` or `exclude` combines legacy country strings with `{ "location_id": "..." }` objects | Use one entry shape per array; prefer structured location entries for new payloads |
 | Stale identifier appears in offer payload | Payload still uses `uuid`, `original_offer_id`, or `source_offer_id` | Use `offer_id` and `offer_instance_id` |
 | Response metadata mismatch | Payload still expects `query_id`, `trace_id`, `aon_trace_id`, `has_more`, or `total` in the canonical Query API JSON response | Use `request_id` and `offers[]`; use the hosted API `X-AON-TRACE-ID` response header for diagnostics |
 
@@ -150,6 +156,27 @@ This repo follows that taxonomy boundary:
 - current public machine-readable category values are AON Taxonomy v1 ids such as `travel_tourism`, `finance.credit_lending`, and `others`
 - aliases and legacy v0.1 `category.type + attributes.sub_type` values are migration concerns, not public request fields
 - JSON Schema enforces id shape; use the taxonomy guard or generated SDK validators for registry membership checks
+
+## Location Registry
+
+AON Location Registry v1 is the canonical machine-readable source for location
+targeting ids. The first public release is generated from Google Ads Geo Targets
+Criteria IDs and intentionally exposes only three AON-supported levels:
+
+- `COUNTRY`
+- `REGION`
+- `CITY`
+
+New offer payloads should use structured geo entries such as
+`{ "location_id": "21137" }` in `targeting[].geo.include` or
+`targeting[].geo.exclude`. Query requests should send the viewer's known
+location chain in `context.user_profile.location_ids`, for example
+`["1014221", "21137", "2840"]`.
+
+The matcher uses self-or-ancestor semantics and fails closed for unknown
+locations. Age eligibility uses `targeting[].eligibility.min_age` on the offer
+and `context.user_profile.verified_age_over[]` on the query request; do not send
+date of birth or exact age in public Query payloads.
 
 ## Field Requirement Levels
 
@@ -169,6 +196,7 @@ These artifacts are the machine-readable companion to the human-readable [protoc
 |------|-------|
 | Human-readable spec | [`agentoffernetwork/protocol`](https://github.com/agentoffernetwork/protocol) |
 | Category registry | [`specs/category-taxonomy.md`](https://github.com/agentoffernetwork/protocol/blob/main/specs/category-taxonomy.md) |
+| Location registry | [`locations/aon-location-registry-v1.json`](locations/aon-location-registry-v1.json) |
 | Example payloads | [`agentoffernetwork/examples`](https://github.com/agentoffernetwork/examples) |
 | Change proposals | [`agentoffernetwork/rfcs`](https://github.com/agentoffernetwork/rfcs) |
 

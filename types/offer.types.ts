@@ -255,11 +255,13 @@ export type MaterialFormat = 'image' | 'video' | 'html5';
 // ─── Targeting ──────────────────────────────────────────────────────────────────
 
 /**
- * @example { "geo": { "include": ["US", "GB", "CA"] }, "language": "en", "device_type": ["mobile", "desktop"], "os": ["ios", "android"] }
+ * @example { "geo": { "include": [{ "location_id": "2840" }, { "location_id": "21137" }] }, "eligibility": { "min_age": 18 }, "language": "en", "device_type": ["mobile", "desktop"], "os": ["ios", "android"] }
  */
 export interface TargetingRule {
-  /** @example { "include": ["US", "GB", "CA"], "exclude": ["CN"] } */
+  /** @example { "include": [{ "location_id": "2840" }], "exclude": [{ "location_id": "21180" }] } */
   geo?: GeoTargeting;
+  /** Viewer eligibility restrictions for this rule. @example { "min_age": 18 } */
+  eligibility?: TargetingEligibility;
   /** ISO 639-1 language code. @example "en" */
   language?: string;
   /** @example ["mobile", "desktop"] */
@@ -269,10 +271,24 @@ export interface TargetingRule {
 }
 
 export interface GeoTargeting {
-  /** @example ["US", "GB", "CA"] */
-  include?: string[];
-  /** @example ["CN"] */
-  exclude?: string[];
+  /** Use either legacy country strings or structured location_id entries, not both in the same array. @example [{ "location_id": "2840" }, { "location_id": "21137" }] */
+  include?: LegacyGeoCountryCode[] | GeoLocationEntry[];
+  /** Exclude wins over include. @example [{ "location_id": "21180" }] */
+  exclude?: LegacyGeoCountryCode[] | GeoLocationEntry[];
+}
+
+/** Legacy uppercase ISO 3166-1 alpha-2 country code, or ALL. @example "US" */
+export type LegacyGeoCountryCode = string;
+
+/** AON Location Registry v1 entry. `location_id` is Google Geo Target Criteria ID as a string. */
+export interface GeoLocationEntry {
+  /** @example "21137" */
+  location_id: string;
+}
+
+export interface TargetingEligibility {
+  /** Minimum verified viewer age required for this targeting rule. @example 18 */
+  min_age?: number;
 }
 
 /** @example "mobile" */
@@ -417,15 +433,19 @@ export interface QueryContext {
 }
 
 /**
- * @example { "user_pseudo_id": "viewer_xyz", "language": "en", "country": "SG", "interests": ["travel", "hotels"], "device_info": { "device_type": "mobile", "os": "ios", "os_version": "18.2" } }
+ * @example { "user_pseudo_id": "viewer_xyz", "language": "en", "country": "US", "location_ids": ["1014221", "21137", "2840"], "verified_age_over": [18], "interests": ["travel", "hotels"], "device_info": { "device_type": "mobile", "os": "ios", "os_version": "18.2" } }
  */
 export interface UserProfile {
   /** Pseudonymous viewer identifier. @example "viewer_xyz" */
   user_pseudo_id?: string;
   /** User language preference. ISO 639-1 code. @example "en" */
   language?: string;
-  /** User country for geo targeting. Uppercase ISO 3166-1 alpha-2 code. @example "SG" */
+  /** Legacy user country for geo targeting. Uppercase ISO 3166-1 alpha-2 code. @example "US" */
   country?: string;
+  /** Viewer location ids from AON Location Registry v1, most specific first when available. @example ["1014221", "21137", "2840"] */
+  location_ids?: string[];
+  /** Verified age thresholds the viewer satisfies. @example [18] */
+  verified_age_over?: number[];
   /** User interest tags. May be empty array. @example ["travel", "hotels"] */
   interests?: string[];
   /**

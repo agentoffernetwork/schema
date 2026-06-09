@@ -1,0 +1,123 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://agentoffernetwork.org/schema/location-registry/v1",
+  "title": "AON Location Registry v1",
+  "type": "object",
+  "required": [
+    "version",
+    "source_name",
+    "source_file",
+    "source_file_date",
+    "source_sha256",
+    "generated_at",
+    "supported_levels",
+    "locations"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "version": {
+      "type": "string",
+      "const": "v1"
+    },
+    "source_name": {
+      "type": "string",
+      "const": "google-ads-geotargets"
+    },
+    "source_file": {
+      "type": "string",
+      "minLength": 1
+    },
+    "source_file_date": {
+      "type": "string",
+      "pattern": "^\\d{4}-\\d{2}-\\d{2}$"
+    },
+    "source_sha256": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "generated_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "supported_levels": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "enum": ["COUNTRY", "REGION", "CITY"]
+      },
+      "minItems": 3,
+      "uniqueItems": true
+    },
+    "locations": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/location"
+      },
+      "minItems": 1
+    }
+  },
+  "$defs": {
+    "location": {
+      "type": "object",
+      "required": [
+        "location_id",
+        "source_criteria_id",
+        "name",
+        "canonical_name",
+        "country_code",
+        "target_type",
+        "aon_level",
+        "parent_location_id",
+        "ancestor_location_ids",
+        "status"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "location_id": {
+          "type": "string",
+          "pattern": "^[0-9]+$"
+        },
+        "source_criteria_id": {
+          "type": "string",
+          "pattern": "^[0-9]+$"
+        },
+        "name": {
+          "type": "string",
+          "minLength": 1
+        },
+        "canonical_name": {
+          "type": "string",
+          "minLength": 1
+        },
+        "country_code": {
+          "type": "string",
+          "pattern": "^[A-Z]{2}$"
+        },
+        "target_type": {
+          "type": "string",
+          "minLength": 1
+        },
+        "aon_level": {
+          "type": "string",
+          "enum": ["COUNTRY", "REGION", "CITY"]
+        },
+        "parent_location_id": {
+          "type": ["string", "null"],
+          "pattern": "^[0-9]+$"
+        },
+        "ancestor_location_ids": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^[0-9]+$"
+          },
+          "uniqueItems": true
+        },
+        "status": {
+          "type": "string",
+          "const": "ACTIVE"
+        }
+      }
+    }
+  }
+}

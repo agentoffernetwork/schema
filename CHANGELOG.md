@@ -58,6 +58,14 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
   source schema, legacy v0.1 migration mapping, and drift guard script.
 - `bid.model_subtype` (CPA Type): optional free-form token
   (`^[A-Za-z0-9_-]{1,16}$`) qualifying the CPA bid model.
+- AON Location Registry v1 (`locations/aon-location-registry-v1.json`),
+  generated from Google Ads Geo Targets `geotargets-2026-05-28.csv` and limited
+  to `COUNTRY`, `REGION`, and `CITY` levels.
+- Structured offer geo entries via `{ "location_id": "<Google Criteria ID>" }`
+  plus `targeting[].eligibility.min_age`.
+- Query `context.user_profile.location_ids` and
+  `context.user_profile.verified_age_over` for canonical location and non-PII
+  age threshold targeting.
 
 ### Changed
 
@@ -66,3 +74,6 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - TypeScript category types now expose `CategoryId` and `OfferCategory`.
 - `bid.model` is narrowed to `cpa`, `cps`, and `hybrid`; lead/install use
   `cpa` plus `model_subtype`.
+- `targeting[].geo.include` and `targeting[].geo.exclude` now accept either
+  legacy country strings or structured `location_id` objects, but mixed arrays
+  are invalid.

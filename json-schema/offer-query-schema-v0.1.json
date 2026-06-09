@@ -72,7 +72,26 @@
             "country": {
               "type": "string",
               "pattern": "^[A-Z]{2}$",
-              "description": "User country for geo targeting. Uppercase ISO 3166-1 alpha-2 code."
+              "description": "Legacy user country for geo targeting. Uppercase ISO 3166-1 alpha-2 code."
+            },
+            "location_ids": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "pattern": "^[0-9]+$"
+              },
+              "uniqueItems": true,
+              "description": "Viewer location ids from AON Location Registry v1, ordered from most specific to broader known locations."
+            },
+            "verified_age_over": {
+              "type": "array",
+              "items": {
+                "type": "integer",
+                "minimum": 13,
+                "maximum": 120
+              },
+              "uniqueItems": true,
+              "description": "Verified age thresholds the viewer satisfies, such as [18] for an 18+ verified viewer."
             },
             "interests": {
               "type": "array",

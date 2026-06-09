@@ -4,7 +4,7 @@
 
 If you discover a security vulnerability in the AgentOffer Protocol specification or any related tooling, please report it responsibly.
 
-**Email:** [security@agentoffernetwork.com](mailto:security@agentoffernetwork.com)
+**Email:** [security@aon.pro](mailto:security@aon.pro)
 
 Please include:
 
