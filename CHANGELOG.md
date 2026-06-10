@@ -66,6 +66,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - Query `context.user_profile.location_ids` and
   `context.user_profile.verified_age_over` for canonical location and non-PII
   age threshold targeting.
+- Optional `offer_info.tags` on Offer Schema and TypeScript types for
+  partner-supplied content matching hints.
 
 ### Changed
 

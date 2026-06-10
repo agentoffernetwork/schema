@@ -103,6 +103,15 @@ export interface OfferInfo {
   description: string;
 
   /**
+   * [OPTIONAL] Partner-supplied content matching tags.
+   * Lightweight semantic hints that do not replace offer_info.category.id,
+   * targeting, query filters, compliance policy, or guaranteed end-user display.
+   * maxItems: 50; item maxLength: 80.
+   * @example ["cashback", "travel rewards"]
+   */
+  tags?: string[];
+
+  /**
    * [OPTIONAL] Partner-provided recommendation reason for AON ranking engine.
    * Contains conversion advantages, target audience hints, and promotional context
    * that help core make better ranking decisions. Not shown to end users.

@@ -88,6 +88,7 @@ const offer: Offer = {
       id: 'computers_electronics.computers.software',
     },
     description: 'A great tool for teams',
+    tags: ['project-management', 'team-collaboration'],
   },
   entity: { id: 'entity-001', name: 'Acme Inc' },
   action: {
@@ -118,7 +119,8 @@ const offer: Offer = {
 
 **OPTIONAL fields:**
 
-- `targeting`, `frequency_capping`, `tags`, `priority`, `status`
+- `offer_info.tags` -- partner-supplied content matching hints
+- `targeting`, `frequency_capping`, `offer_info.priority`, `offer_info.status`
 
 ## Query API Validation Path
 

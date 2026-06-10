@@ -79,6 +79,18 @@
           "minLength": 1,
           "maxLength": 5000
         },
+        "tags": {
+          "type": "array",
+          "description": "Partner-supplied content matching tags. These tags are optional semantic hints and do not replace offer_info.category.id, targeting rules, query filters, compliance policy, or guaranteed end-user display.",
+          "maxItems": 50,
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 80,
+            "pattern": "\\S"
+          }
+        },
         "recommendation_reason": {
           "type": "string",
           "description": "Partner-provided recommendation reason for AON ranking engine. Contains conversion advantages, target audience hints, and promotional context. Not shown to end users.",
