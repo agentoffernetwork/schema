@@ -68,7 +68,6 @@
         "target_type",
         "aon_level",
         "parent_location_id",
-        "ancestor_location_ids",
         "status"
       ],
       "additionalProperties": false,
@@ -104,14 +103,6 @@
         "parent_location_id": {
           "type": ["string", "null"],
           "pattern": "^[0-9]+$"
-        },
-        "ancestor_location_ids": {
-          "type": "array",
-          "items": {
-            "type": "string",
-            "pattern": "^[0-9]+$"
-          },
-          "uniqueItems": true
         },
         "status": {
           "type": "string",

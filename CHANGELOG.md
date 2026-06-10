@@ -77,3 +77,6 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - `targeting[].geo.include` and `targeting[].geo.exclude` now accept either
   legacy country strings or structured `location_id` objects, but mixed arrays
   are invalid.
+- AON Location Registry v1 now publishes `parent_location_id` only; consumers
+  derive ancestor chains from parent links instead of reading
+  `ancestor_location_ids`.

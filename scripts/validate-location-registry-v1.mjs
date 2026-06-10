@@ -21,6 +21,27 @@ function readJson(file) {
   return JSON.parse(fs.readFileSync(file, 'utf8'));
 }
 
+function parentChain(location, byId) {
+  const chain = [];
+  const seen = new Set([location.location_id]);
+  let parentId = location.parent_location_id;
+
+  while (parentId) {
+    if (seen.has(parentId)) {
+      fail(`parent cycle detected for ${location.location_id}`);
+    }
+    const parent = byId.get(parentId);
+    if (!parent) {
+      fail(`parent ${parentId} missing for ${location.location_id}`);
+    }
+    chain.push(parentId);
+    seen.add(parentId);
+    parentId = parent.parent_location_id;
+  }
+
+  return chain;
+}
+
 function validateRegistry(registry) {
   if (registry.version !== 'v1') fail('version must be v1');
   if (registry.source_name !== 'google-ads-geotargets') fail('source_name must be google-ads-geotargets');
@@ -36,7 +57,9 @@ function validateRegistry(registry) {
     if (location.parent_location_id !== null && !/^[0-9]+$/.test(location.parent_location_id)) {
       fail(`invalid parent_location_id for ${location.location_id}`);
     }
-    if (!Array.isArray(location.ancestor_location_ids)) fail(`ancestor_location_ids must be array for ${location.location_id}`);
+    if (Object.prototype.hasOwnProperty.call(location, 'ancestor_location_ids')) {
+      fail(`ancestor_location_ids must not be published for ${location.location_id}`);
+    }
     byId.set(location.location_id, location);
   }
   for (const [id, name] of requiredIds) {
@@ -45,16 +68,8 @@ function validateRegistry(registry) {
     if (location.name !== name) fail(`required location ${id} expected ${name}, got ${location.name}`);
   }
   for (const location of registry.locations) {
-    if (location.parent_location_id && !byId.has(location.parent_location_id)) {
-      fail(`parent ${location.parent_location_id} missing for ${location.location_id}`);
-    }
-    if (location.parent_location_id && location.ancestor_location_ids[0] !== location.parent_location_id) {
-      fail(`ancestor order must be nearest-first for ${location.location_id}`);
-    }
-    for (const ancestorId of location.ancestor_location_ids) {
-      if (!byId.has(ancestorId)) fail(`ancestor ${ancestorId} missing for ${location.location_id}`);
-    }
-    if (location.aon_level === 'CITY' && location.ancestor_location_ids.length === 0) {
+    const ancestors = parentChain(location, byId);
+    if (location.aon_level === 'CITY' && ancestors.length === 0) {
       fail(`city ${location.location_id} must have at least one supported ancestor`);
     }
   }

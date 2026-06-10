@@ -21,11 +21,28 @@ assert.equal(registrySchema.$defs.location.properties.location_id.pattern, '^[0-
 
 const byId = new Map(registry.locations.map((location) => [location.location_id, location]));
 
+function parentChain(locationId) {
+  const chain = [];
+  const seen = new Set([locationId]);
+  let parentId = byId.get(locationId)?.parent_location_id;
+  while (parentId) {
+    assert.equal(seen.has(parentId), false);
+    const parent = byId.get(parentId);
+    assert.ok(parent);
+    chain.push(parentId);
+    seen.add(parentId);
+    parentId = parent.parent_location_id;
+  }
+  return chain;
+}
+
 assert.equal(byId.get('2840')?.name, 'United States');
 assert.equal(byId.get('2840')?.aon_level, 'COUNTRY');
 assert.equal(byId.get('21137')?.name, 'California');
 assert.equal(byId.get('21137')?.parent_location_id, '2840');
 assert.equal(byId.get('1014221')?.name, 'San Francisco');
-assert.deepEqual(byId.get('1014221')?.ancestor_location_ids, ['21137', '2840']);
+assert.equal(Object.hasOwn(byId.get('1014221') ?? {}, 'ancestor_location_ids'), false);
+assert.equal(registry.locations.every((location) => !Object.hasOwn(location, 'ancestor_location_ids')), true);
+assert.deepEqual(parentChain('1014221'), ['21137', '2840']);
 
 console.log('location-contract-sync OK');

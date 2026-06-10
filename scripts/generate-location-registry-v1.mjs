@@ -117,17 +117,6 @@ function nearestSupportedParent(row, byId, supportedIds) {
   return null;
 }
 
-function ancestorsFor(row, byId, supportedIds) {
-  const ancestors = [];
-  let parentId = nearestSupportedParent(row, byId, supportedIds);
-  while (parentId) {
-    ancestors.push(parentId);
-    const parent = byId.get(parentId);
-    parentId = parent ? nearestSupportedParent(parent, byId, supportedIds) : null;
-  }
-  return ancestors;
-}
-
 function buildRegistry(csvPath) {
   const bytes = fs.readFileSync(csvPath);
   const rows = parseCsv(bytes.toString('utf8').replace(/^\uFEFF/, ''));
@@ -149,7 +138,6 @@ function buildRegistry(csvPath) {
       target_type: row['Target Type'],
       aon_level: level,
       parent_location_id: parent,
-      ancestor_location_ids: ancestorsFor(row, byId, supportedIds),
       status: 'ACTIVE',
     };
   });

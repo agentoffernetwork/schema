@@ -173,10 +173,11 @@ New offer payloads should use structured geo entries such as
 location chain in `context.user_profile.location_ids`, for example
 `["1014221", "21137", "2840"]`.
 
-The matcher uses self-or-ancestor semantics and fails closed for unknown
-locations. Age eligibility uses `targeting[].eligibility.min_age` on the offer
-and `context.user_profile.verified_age_over[]` on the query request; do not send
-date of birth or exact age in public Query payloads.
+The matcher uses self-or-ancestor semantics and derives ancestor chains from
+registry `parent_location_id` links. It fails closed for unknown locations. Age
+eligibility uses `targeting[].eligibility.min_age` on the offer and
+`context.user_profile.verified_age_over[]` on the query request; do not send date
+of birth or exact age in public Query payloads.
 
 ## Field Requirement Levels
 
