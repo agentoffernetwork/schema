@@ -73,6 +73,17 @@
           },
           "additionalProperties": false
         },
+        "secondary_category_ids": {
+          "type": "array",
+          "description": "Optional auxiliary AON Taxonomy v1 category ids for offers that have additional taxonomy meanings beyond the primary offer_info.category.id. These ids participate in AON-owned category matching and safety filtering, but they do not replace the primary category.",
+          "maxItems": 5,
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "pattern": "^[a-z0-9]+(?:_[a-z0-9]+)*(?:\\.[a-z0-9]+(?:_[a-z0-9]+)*)*$"
+          }
+        },
         "description": {
           "type": "string",
           "description": "Core semantic description for agent understanding and end-user display.",

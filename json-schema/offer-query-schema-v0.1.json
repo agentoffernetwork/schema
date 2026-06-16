@@ -24,6 +24,13 @@
       "description": "When true, request is treated as test. Defaults to false.",
       "default": false
     },
+    "placement_id": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 64,
+      "pattern": "^\\S+$",
+      "description": "Optional provider-neutral placement identifier for hosted routing. Values are bounded opaque strings; hosted AON placement IDs such as plc_... are platform examples, not a protocol grammar."
+    },
     "context": {
       "type": "object",
       "description": "Contextual information about the requesting platform, session, and user.",

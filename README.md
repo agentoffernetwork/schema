@@ -24,12 +24,15 @@
 | `json-schema/offer-schema-v0.1.json` | Offer object JSON Schema with RFC 2119 requirement levels |
 | `json-schema/offer-query-schema-v0.1.json` | Query request schema for `POST /v1/offers/query` |
 | `json-schema/location-registry-v1.schema.json` | JSON Schema for AON Location Registry v1 |
+| `json-schema/location-search-response-v0.1.json` | JSON Schema for Location Search API success responses |
 | `locations/aon-location-registry-v1.json` | AON Location Registry v1, generated from Google Geo Targets Criteria IDs and limited to COUNTRY, REGION, and CITY |
 | `json-schema/taxonomy-v1.schema.json` | Source tree schema for AON Taxonomy v1 |
 | `taxonomy/aon-taxonomy-v1.json` | AON Taxonomy v1 source tree (`name + children`) |
 | `taxonomy/v0.1-to-taxonomy-v1.json` | Legacy v0.1 category migration mapping |
 | `types/offer.types.ts` | TypeScript type definitions for Offer, Query, and Response |
+| `types/location.types.ts` | TypeScript types for Location Search API results and migration helper contracts |
 | `types/category-attributes.types.ts` | AON Taxonomy v1 category id and registry types |
+| `helpers/location-helpers.mjs` | Country, subdivision-code, edge-header, and location-chain helpers for migration |
 | `scripts/generate-location-registry-v1.mjs` | Generates the supported AON location registry from a Google Geo Targets CSV |
 | `scripts/validate-location-registry-v1.mjs` | Validates registry shape, parent links, and supported levels |
 | `validators/` | Reserved for future packaged validation tooling; current validation examples use `ajv-cli` directly |
@@ -87,6 +90,7 @@ const offer: Offer = {
     category: {
       id: 'computers_electronics.computers.software',
     },
+    secondary_category_ids: ['finance.investing.crypto_and_digital_assets'],
     description: 'A great tool for teams',
     tags: ['project-management', 'team-collaboration'],
   },
@@ -115,6 +119,8 @@ const offer: Offer = {
 
 - `material[]` -- creative assets (images, videos)
 - `offer_info.commercial` -- pricing and terms
+- `offer_info.secondary_category_ids` -- optional secondary category ids; they
+  are deterministic taxonomy ids, unlike `offer_info.tags` semantic hints.
 - `conversion_rule` -- attribution windows and accepted conversion types
 
 **OPTIONAL fields:**
@@ -155,6 +161,12 @@ document in the `protocol` repository.
 
 This repo follows that taxonomy boundary:
 
+- `offer_info.category.id` is the primary category for the offer.
+- `offer_info.secondary_category_ids` is an optional secondary category id array
+  for auxiliary taxonomy meanings. AON-owned `constraints.category_ids` matching
+  checks the primary or secondary category with subtree semantics.
+- `offer_info.tags` are partner-supplied semantic hints; tags are not
+  deterministic category ids and do not replace category filters.
 - current public machine-readable category values are AON Taxonomy v1 ids such as `travel_tourism`, `finance.credit_lending`, and `others`
 - aliases and legacy v0.1 `category.type + attributes.sub_type` values are migration concerns, not public request fields
 - JSON Schema enforces id shape; use the taxonomy guard or generated SDK validators for registry membership checks
@@ -181,6 +193,41 @@ eligibility uses `targeting[].eligibility.min_age` on the offer and
 `context.user_profile.verified_age_over[]` on the query request; do not send date
 of birth or exact age in public Query payloads.
 
+When callers need to resolve human-readable locations, use the
+[Location Search API protocol contract](https://github.com/agentoffernetwork/protocol/blob/main/specs/location-search-api.md)
+or the local helper functions:
+
+```javascript
+import {
+  buildLocationChain,
+  cloudflareHeadersToLocationContext,
+  countryCodeToLocationId,
+  googleCloudHeadersToLocationContext,
+  legacyCountryGeoToLocationGeo,
+  subdivisionCodeToLocationId,
+} from './helpers/location-helpers.mjs';
+
+countryCodeToLocationId('US'); // "2840"
+subdivisionCodeToLocationId('US-CA'); // "21137"
+legacyCountryGeoToLocationGeo(['US', 'SG']);
+buildLocationChain('1014221'); // ["1014221", "21137", "2840"]
+cloudflareHeadersToLocationContext({
+  'cf-ipcountry': 'US',
+  'cf-region-code': 'CA',
+  'cf-ipcity': 'San Francisco',
+}).location_ids; // ["1014221", "21137", "2840"]
+googleCloudHeadersToLocationContext({
+  client_region: 'US',
+  client_region_subdivision: 'USCA',
+  client_city: 'San Francisco',
+}).location_ids; // ["1014221", "21137", "2840"]
+```
+
+External codes such as ISO 3166-2 `US-CA`, CLDR `USCA`, Cloudflare
+`cf-region-code`, and Google Cloud `client_region_subdivision` are lookup
+aliases only. Offer and Query payloads still use canonical AON `location_id`
+values.
+
 ## Field Requirement Levels
 
 Following [RFC 2119](https://datatracker.ietf.org/doc/html/rfc2119):
@@ -200,6 +247,7 @@ These artifacts are the machine-readable companion to the human-readable [protoc
 | Human-readable spec | [`agentoffernetwork/protocol`](https://github.com/agentoffernetwork/protocol) |
 | Category registry | [`specs/category-taxonomy.md`](https://github.com/agentoffernetwork/protocol/blob/main/specs/category-taxonomy.md) |
 | Location registry | [`locations/aon-location-registry-v1.json`](locations/aon-location-registry-v1.json) |
+| Location lookup contract | [`specs/location-search-api.md`](https://github.com/agentoffernetwork/protocol/blob/main/specs/location-search-api.md) |
 | Example payloads | [`agentoffernetwork/examples`](https://github.com/agentoffernetwork/examples) |
 | Change proposals | [`agentoffernetwork/rfcs`](https://github.com/agentoffernetwork/rfcs) |
 

@@ -46,7 +46,12 @@ const requiredIds = [
   'others',
   'arts_entertainment.adult_entertainment',
   'arts_entertainment.igaming',
+  'finance.investing.crypto_and_digital_assets',
 ];
+
+const childSlugOverrides = new Map([
+  ['finance.investing|Crypto & Digital Assets', 'crypto_and_digital_assets'],
+]);
 
 function readJson(file) {
   return JSON.parse(fs.readFileSync(file, 'utf8'));
@@ -68,9 +73,10 @@ function collectIds(nodes, prefix = '', depth = 0, out = new Map()) {
     if (!node || typeof node.name !== 'string' || node.name.trim() === '') {
       throw new Error('taxonomy node must have a non-empty name');
     }
+    const overrideKey = prefix ? `${prefix}|${node.name}` : '';
     const ownSlug = depth === 0
       ? levelOneOverrides.get(node.name) ?? slug(node.name)
-      : slug(node.name);
+      : childSlugOverrides.get(overrideKey) ?? slug(node.name);
     const id = prefix ? `${prefix}.${ownSlug}` : ownSlug;
     if (out.has(id)) {
       throw new Error(`duplicate generated category id: ${id}`);
@@ -112,7 +118,7 @@ function findCategoryRefs(value, file, refs = []) {
   ) {
     refs.push({ file, id: value.offer_info.category.id });
   }
-  for (const key of ['category_ids']) {
+  for (const key of ['category_ids', 'secondary_category_ids']) {
     if (Array.isArray(value[key])) {
       for (const id of value[key]) {
         if (typeof id === 'string') {

@@ -61,14 +61,25 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - AON Location Registry v1 (`locations/aon-location-registry-v1.json`),
   generated from Google Ads Geo Targets `geotargets-2026-05-28.csv` and limited
   to `COUNTRY`, `REGION`, and `CITY` levels.
+- Optional `offer_info.tags` on Offer Schema and TypeScript types for
+  partner-supplied content matching hints.
+- Optional `offer_info.secondary_category_ids` on Offer Schema and TypeScript
+  types for auxiliary AON Taxonomy v1 ids.
+- Taxonomy node `finance.investing.crypto_and_digital_assets` under
+  Finance > Investing.
+- Location Search API response schema, TypeScript location types, and helper
+  functions for country-code migration and location-chain derivation.
+- Location resolve response schema, external code aliases (`external_codes`),
+  ISO 3166-2 / CLDR subdivision helpers, and Cloudflare / Google Cloud header
+  normalization helpers.
 - Structured offer geo entries via `{ "location_id": "<Google Criteria ID>" }`
   plus `targeting[].eligibility.min_age`.
 - Query `context.user_profile.location_ids` and
   `context.user_profile.verified_age_over` for canonical location and non-PII
   age threshold targeting.
-- Optional `offer_info.tags` on Offer Schema and TypeScript types for
-  partner-supplied content matching hints.
-
+- Optional top-level Query request `placement_id` in JSON Schema, TypeScript
+  types, and canonical examples. The schema treats it as a bounded opaque string
+  and rejects null, empty, whitespace-containing, and overlong values.
 ### Changed
 
 - Offer Schema category payload now uses `offer_info.category.id`.

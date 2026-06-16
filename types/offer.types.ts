@@ -99,6 +99,16 @@ export interface OfferInfo {
   /** [REQUIRED] AON Taxonomy v1 category reference. */
   category: Category;
 
+  /**
+   * [OPTIONAL] Auxiliary AON Taxonomy v1 category ids.
+   * Use these only for additional taxonomy meanings beyond the primary
+   * offer_info.category.id. They participate in AON-owned category matching
+   * and safety filtering, but do not replace the primary category.
+   * maxItems: 5.
+   * @example ["finance.investing.crypto_and_digital_assets"]
+   */
+  secondary_category_ids?: CategoryId[];
+
   /** [REQUIRED] Core semantic description for end-user display. maxLength: 5000. @example "Claude Pro provides advanced AI assistance with extended context windows, priority access, and team collaboration features." */
   description: string;
 
@@ -381,6 +391,7 @@ export interface ConversionRule {
  * {
  *   "request_id": "019414a0-8b2c-7d3e-a1b2-c3d4e5f60718",
  *   "timestamp": "2026-03-31T10:30:00Z",
+ *   "placement_id": "plc_A1b2C3d4E5f6G7h8",
  *   "context": {
  *     "platform": { "name": "TravelBot", "version": "2.1.0", "channel": "telegram" },
  *     "session_id": "sess_abc123",
@@ -400,6 +411,9 @@ export interface OfferQueryRequest {
 
   /** [OPTIONAL] When true, request is treated as test. Default: false. @example false */
   test_mode?: boolean;
+
+  /** [OPTIONAL] Provider-neutral placement identifier for hosted placement routing. @example "plc_A1b2C3d4E5f6G7h8" */
+  placement_id?: string;
 
   /** [REQUIRED] Contextual information about the requesting platform, session, and user. */
   context: QueryContext;

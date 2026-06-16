@@ -31,6 +31,12 @@ jobs:
           ajv compile -s json-schema/offer-query-schema-v0.1.json --spec=draft2020 -c ajv-formats
           echo "Query schema is valid"
 
+      - name: Validate location schemas are valid JSON Schema
+        run: |
+          ajv compile -s json-schema/location-registry-v1.schema.json --spec=draft2020 -c ajv-formats
+          ajv compile -s json-schema/location-search-response-v0.1.json --spec=draft2020 -c ajv-formats
+          echo "Location schemas are valid"
+
   typescript:
     name: TypeScript Check
     runs-on: ubuntu-latest
@@ -47,6 +53,22 @@ jobs:
 
       - name: Check TypeScript syntax
         run: tsc --noEmit --strict --module node16 --moduleResolution node16 types/*.ts
+
+  contract-tests:
+    name: Contract Tests
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Run location helper and protocol contract tests
+        run: |
+          node test/location-helpers.test.mjs
+          node test/location-search-contract.test.mjs
 
   json-format:
     name: JSON Format Check
