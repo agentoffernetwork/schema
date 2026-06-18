@@ -38,7 +38,7 @@ function test_offer_info_tags_schema_shape() {
 function test_offer_info_tags_optional_compatibility() {
   const required = new Set(offerInfo.required);
   assert.equal(required.has('title'), true);
-  assert.equal(required.has('offer_type'), true);
+  assert.equal(required.has('offer_type'), false);
   assert.equal(required.has('category'), true);
   assert.equal(required.has('description'), true);
   assert.equal(required.has('tags'), false);

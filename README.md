@@ -110,7 +110,7 @@ const offer: Offer = {
 - `offer_id` -- stable inventory-level offer identifier
 - `offer_instance_id` -- per-dispatch offer instance identifier
 - `version` -- schema version
-- `offer_info` -- title, offer_type, category id, description
+- `offer_info` -- title, category id, description; optional offer_type fulfillment hint
 - `entity` -- provider id and name
 - `action` -- type and payload.target
 - `bid` -- payout model, amount, and currency

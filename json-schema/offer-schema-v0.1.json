@@ -36,7 +36,6 @@
       "description": "Core descriptive, categorical, and commercial information for the offer.",
       "required": [
         "title",
-        "offer_type",
         "category",
         "description"
       ],
@@ -56,7 +55,7 @@
             "online_service",
             "offline_service"
           ],
-          "description": "Offer fulfillment form — how the offer is delivered to the end user. Determines Agent-side UX behavior: physical_product (shipping/returns), content (instant access), online_service (signup/subscription), offline_service (location/booking). Orthogonal to offer_info.category.id (industry classification)."
+          "description": "Optional offer fulfillment form — how the offer is delivered to the end user. This is a fulfillment hint, not the primary classification. Orthogonal to offer_info.category.id and secondary_category_ids."
         },
         "category": {
           "type": "object",
@@ -259,6 +258,11 @@
       },
       "additionalProperties": false
     },
+    "extra": {
+      "type": "object",
+      "description": "Offer-level open extension metadata. This is part of the Offer payload and is distinct from any API response envelope extra field.",
+      "additionalProperties": true
+    },
     "entity": {
       "type": "object",
       "description": "Business entity associated with the offer.",
@@ -292,6 +296,26 @@
           "type": "string",
           "format": "uri",
           "description": "Official website of the entity."
+        },
+        "logo": {
+          "type": "object",
+          "description": "Canonical merchant/entity logo for identity display. This is distinct from offer creative assets in material[].",
+          "required": [
+            "url"
+          ],
+          "properties": {
+            "url": {
+              "type": "string",
+              "format": "uri",
+              "pattern": "^https?://",
+              "description": "Stable public HTTP(S) URL of the entity logo image."
+            },
+            "alt_text": {
+              "type": "string",
+              "description": "Accessible text for the logo. Consumers may fall back to entity.name when absent."
+            }
+          },
+          "additionalProperties": false
         }
       },
       "additionalProperties": false
@@ -321,6 +345,23 @@
           "type": "string",
           "description": "Explanation of the action intent or destination.",
           "maxLength": 300
+        },
+        "destination_types": {
+          "type": "array",
+          "description": "Destination target-shape hints for UI/display. This field does not replace action.type or action.payload.target and does not express click URL priority.",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "enum": [
+              "website",
+              "app_store",
+              "google_play",
+              "apk",
+              "agent",
+              "others"
+            ]
+          }
         },
         "payload": {
           "type": "object",

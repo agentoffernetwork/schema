@@ -77,6 +77,9 @@ export interface Offer {
   /** [RECOMMENDED] Rules for valid conversion events, attribution windows, and dedup logic. SHOULD be present to establish clear attribution expectations. */
   conversion_rule?: ConversionRule;
 
+  /** [OPTIONAL] Offer-level open extension metadata. Distinct from API response envelope extra. */
+  extra?: Record<string, unknown>;
+
 }
 
 // ─── OfferInfo ──────────────────────────────────────────────────────────────────
@@ -87,14 +90,12 @@ export interface OfferInfo {
   title: string;
 
   /**
-   * [REQUIRED] Offer fulfillment form — how the offer is delivered to the end user.
-   * Determines Agent-side UX behavior: physical_product → shipping/returns flow,
-   * content → instant access, online_service → signup/subscription flow,
-   * offline_service → location/booking flow.
-   * Orthogonal to offer_info.category.id (industry classification).
+   * [OPTIONAL] Offer fulfillment form — how the offer is delivered to the end user.
+   * A fulfillment hint only; category.id and secondary_category_ids remain the
+   * primary industry/category matching fields.
    * @example "online_service"
    */
-  offer_type: OfferType;
+  offer_type?: OfferType;
 
   /** [REQUIRED] AON Taxonomy v1 category reference. */
   category: Category;
@@ -205,10 +206,19 @@ export interface Entity {
   description?: string;
   /** [OPTIONAL] Official website. @example "https://www.anthropic.com" */
   website?: string;
+  /** [OPTIONAL] Canonical merchant/entity logo for identity display. */
+  logo?: EntityLogo;
 }
 
 /** @example "business" */
 export type EntityType = 'business' | 'individual' | 'institution';
+
+export interface EntityLogo {
+  /** [REQUIRED] Stable public HTTP(S) URL of the entity logo image. */
+  url: string;
+  /** [OPTIONAL] Accessible text. Consumers may fall back to entity.name. */
+  alt_text?: string;
+}
 
 // ─── Action ─────────────────────────────────────────────────────────────────────
 
@@ -221,11 +231,16 @@ export type OfferAction = WebRedirectAction | AppDeepLinkAction;
 /** @example "web_redirect" */
 export type ActionType = 'web_redirect' | 'app_deep_link';
 
+/** @example "app_store" */
+export type DestinationType = 'website' | 'app_store' | 'google_play' | 'apk' | 'agent' | 'others';
+
 interface ActionCommon {
   /** [RECOMMENDED] Short user-facing action name (CTA text). maxLength: 80. @example "Start Free Trial" */
   name?: string;
   /** [OPTIONAL] Explanation of the action intent. maxLength: 300. @example "Redirects to Claude Pro sign-up page with a 14-day free trial." */
   description?: string;
+  /** [OPTIONAL] Target-shape hints for UI/display. Non-empty and unique when present; order does not express priority. */
+  destination_types?: DestinationType[];
 }
 
 /** @example { "type": "web_redirect", "payload": { "target": "https://claude.ai/upgrade?ref=aon" } } */
