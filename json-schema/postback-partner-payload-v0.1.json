@@ -18,7 +18,12 @@
     "TrackingId": {
       "type": "string",
       "minLength": 1,
-      "description": "AON tracking identifier from the original click (attribution key). Replaces the legacy aon_id field."
+      "description": "AON dispatch-level tracking identifier from the original click. Replaces the legacy aon_id field and remains the fallback attribution key."
+    },
+    "ClickId": {
+      "type": "string",
+      "pattern": "^aci_.+",
+      "description": "AON per-click event identifier. Use click_id for the canonical S2S field and aon_click_id when the landing URL supplied AON's fallback query parameter. The value is an AON-generated aci_ public click id string and must be treated as opaque."
     },
     "OfferId": {
       "type": "string",
@@ -46,7 +51,6 @@
       "required": [
         "event_id",
         "event_type",
-        "aon_tracking_id",
         "offer_id",
         "conversion_id",
         "timestamp",
@@ -55,10 +59,17 @@
         "bid",
         "currency"
       ],
+      "anyOf": [
+        { "required": ["aon_tracking_id"] },
+        { "required": ["click_id"] },
+        { "required": ["aon_click_id"] }
+      ],
       "properties": {
         "event_id": { "$ref": "#/$defs/EventId" },
         "event_type": { "const": "conversion" },
         "aon_tracking_id": { "$ref": "#/$defs/TrackingId" },
+        "click_id": { "$ref": "#/$defs/ClickId" },
+        "aon_click_id": { "$ref": "#/$defs/ClickId" },
         "offer_id": { "$ref": "#/$defs/OfferId" },
         "conversion_id": { "$ref": "#/$defs/ConversionId" },
         "timestamp": { "$ref": "#/$defs/Timestamp" },

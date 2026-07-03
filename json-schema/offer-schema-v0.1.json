@@ -21,7 +21,7 @@
     },
     "offer_instance_id": {
       "type": "string",
-      "description": "Per-dispatch unique identifier. UUIDv7 is recommended. Generated fresh for each query response. Used as the primary key for click → conversion → settlement attribution. Carried in landing-page URL query param ?aon_tracking_id={offer_instance_id} and S2S postback body aon_tracking_id={offer_instance_id}. Industry alignment with Google Ads gclid / Meta fbclid / TikTok ttclid integration-layer pattern.",
+      "description": "Per-dispatch unique identifier. UUIDv7 is recommended. Generated fresh for each query response. Used as the dispatch-level fallback key for click → conversion → settlement attribution. Carried in landing-page URL query param ?aon_tracking_id={offer_instance_id} and S2S postback body aon_tracking_id={offer_instance_id}. Per-click attribution uses a distinct redirect-time click ID exposed through the {CLICK_ID} macro or aon_click_id fallback query parameter. Industry alignment with Google Ads gclid / Meta fbclid / TikTok ttclid integration-layer pattern.",
       "examples": [
         "019dd208-27d2-7673-b16f-6897fa120303"
       ]
@@ -74,7 +74,7 @@
         },
         "secondary_category_ids": {
           "type": "array",
-          "description": "Optional auxiliary AON Taxonomy v1 category ids for offers that have additional taxonomy meanings beyond the primary offer_info.category.id. These ids participate in AON-owned category matching and safety filtering, but they do not replace the primary category.",
+          "description": "Optional auxiliary AON Taxonomy v1 category ids for offers that have additional taxonomy meanings beyond the primary offer_info.category.id. These ids participate in AON-owned category matching and safety filtering, but they do not replace the primary category. Each secondary id must be from a different taxonomy branch than the primary category and the other secondary ids; do not repeat an ancestor or descendant relationship.",
           "maxItems": 5,
           "uniqueItems": true,
           "items": {
@@ -340,6 +340,30 @@
           "type": "string",
           "description": "Short user-facing action name (CTA text).",
           "maxLength": 80
+        },
+        "consumer_action": {
+          "type": "string",
+          "enum": [
+            "learn_more",
+            "watch",
+            "play",
+            "listen",
+            "install",
+            "download",
+            "registration",
+            "sign_up",
+            "subscribe",
+            "purchase",
+            "apply",
+            "submission",
+            "start_trial",
+            "read",
+            "book",
+            "claim",
+            "redeem",
+            "contact"
+          ],
+          "description": "Main end-user action semantic for CTA fallback and consumer-owned analytics. This does not replace action.name, action.type, action.destination_types, action.payload.target, or conversion_rule."
         },
         "description": {
           "type": "string",

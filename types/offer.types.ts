@@ -36,11 +36,16 @@ export interface Offer {
    * [REQUIRED] Per-dispatch unique identifier for this offer instance. UUIDv7
    * is recommended. Generated fresh for each query response (i.e. each time the
    * offer is "served"). Used as the primary key for the click → conversion →
-   * settlement attribution pipeline. The same value is carried in:
+   * settlement attribution pipeline as the dispatch-level fallback key. The
+   * same value is carried in:
    *   - landing-page URL query param: `?aon_tracking_id={offer_instance_id}`
    *   - S2S postback body: `aon_tracking_id={offer_instance_id}`
    *   - events.md `click_event` / `conversion_event`: the `aon_tracking_id`
    *     field (see PROTO-F014b for the events/postback rename).
+   *
+   * Actual click-level attribution uses a distinct per-click ID generated at
+   * redirect time and exposed through the canonical `{CLICK_ID}` macro or the
+   * `aon_click_id` fallback query parameter.
    *
    * Industry alignment: Google Ads `gclid`, Meta `fbclid`, TikTok `ttclid`,
    * Microsoft `msclkid` all follow the `{platform_prefix}clid` pattern at the
@@ -105,6 +110,9 @@ export interface OfferInfo {
    * Use these only for additional taxonomy meanings beyond the primary
    * offer_info.category.id. They participate in AON-owned category matching
    * and safety filtering, but do not replace the primary category.
+   * Each secondary id must be from a different taxonomy branch than the primary
+   * category and the other secondary ids; do not repeat parent/child category
+   * relationships here.
    * maxItems: 5.
    * @example ["finance.investing.crypto_and_digital_assets"]
    */
@@ -234,9 +242,32 @@ export type ActionType = 'web_redirect' | 'app_deep_link';
 /** @example "app_store" */
 export type DestinationType = 'website' | 'app_store' | 'google_play' | 'apk' | 'agent' | 'others';
 
+/** @example "purchase" */
+export type ConsumerAction =
+  | 'learn_more'
+  | 'watch'
+  | 'play'
+  | 'listen'
+  | 'install'
+  | 'download'
+  | 'registration'
+  | 'sign_up'
+  | 'subscribe'
+  | 'purchase'
+  | 'apply'
+  | 'submission'
+  | 'start_trial'
+  | 'read'
+  | 'book'
+  | 'claim'
+  | 'redeem'
+  | 'contact';
+
 interface ActionCommon {
   /** [RECOMMENDED] Short user-facing action name (CTA text). maxLength: 80. @example "Start Free Trial" */
   name?: string;
+  /** [RECOMMENDED] Main end-user action semantic for CTA fallback and consumer-owned analytics. @example "purchase" */
+  consumer_action?: ConsumerAction;
   /** [OPTIONAL] Explanation of the action intent. maxLength: 300. @example "Redirects to Claude Pro sign-up page with a 14-day free trial." */
   description?: string;
   /** [OPTIONAL] Target-shape hints for UI/display. Non-empty and unique when present; order does not express priority. */

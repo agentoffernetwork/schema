@@ -116,6 +116,8 @@ function test_AC2_secondary_category_ids_schema_shape_and_invalid_arrays() {
     '^[a-z0-9]+(?:_[a-z0-9]+)*(?:\\.[a-z0-9]+(?:_[a-z0-9]+)*)*$',
   );
   assert.match(offerTypes, /secondary_category_ids\?: CategoryId\[\];/);
+  assert.match(secondary.description, /different taxonomy branch/i);
+  assert.match(offerTypes, /different taxonomy branch/i);
 
   assert.equal(matchesSecondarySchema([]), true);
   assert.equal(
@@ -139,6 +141,7 @@ function test_AC3_docs_define_primary_secondary_tags_and_constraints_boundary() 
     assert.match(doc, /primary category/i);
     assert.match(doc, /offer_info\.secondary_category_ids/);
     assert.match(doc, /secondary categor/i);
+    assert.match(doc, /cross-branch|different taxonomy branch/i);
     assert.match(doc, /offer_info\.tags/);
     assert.match(doc, /semantic hints/i);
     assert.match(doc, /constraints\.category_ids/);

@@ -64,7 +64,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - Optional `offer_info.tags` on Offer Schema and TypeScript types for
   partner-supplied content matching hints.
 - Optional `offer_info.secondary_category_ids` on Offer Schema and TypeScript
-  types for auxiliary AON Taxonomy v1 ids.
+  types for auxiliary cross-branch AON Taxonomy v1 ids.
 - Taxonomy node `finance.investing.crypto_and_digital_assets` under
   Finance > Investing.
 - Location Search API response schema, TypeScript location types, and helper

@@ -164,7 +164,9 @@ This repo follows that taxonomy boundary:
 - `offer_info.category.id` is the primary category for the offer.
 - `offer_info.secondary_category_ids` is an optional secondary category id array
   for auxiliary taxonomy meanings. AON-owned `constraints.category_ids` matching
-  checks the primary or secondary category with subtree semantics.
+  checks the primary or secondary category with subtree semantics. Secondary
+  ids must be cross-branch: do not repeat the primary category, and do not list
+  an ancestor or descendant of the primary or another secondary id.
 - `offer_info.tags` are partner-supplied semantic hints; tags are not
   deterministic category ids and do not replace category filters.
 - current public machine-readable category values are AON Taxonomy v1 ids such as `travel_tourism`, `finance.credit_lending`, and `others`
