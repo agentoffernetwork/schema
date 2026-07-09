@@ -74,7 +74,7 @@
             },
             "language": {
               "type": "string",
-              "description": "User language preference. ISO 639-1 code."
+              "description": "BCP 47 language tag for the end user. Used as request context and targeting input; it does not describe the language of returned Offer content."
             },
             "country": {
               "type": "string",

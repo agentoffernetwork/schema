@@ -31,6 +31,11 @@
       "description": "Offer document version indicating which schema revision the instance conforms to.",
       "default": "1.0"
     },
+    "content_language": {
+      "type": "string",
+      "pattern": "^[A-Za-z]{2,3}(?:-[A-Za-z]{4})?(?:-(?:[A-Za-z]{2}|[0-9]{3}))?(?:-[A-Za-z0-9]{5,8})*$",
+      "description": "BCP 47 language tag for the user-facing content in this Offer payload, such as title, description, and action copy. This is content metadata and does not affect targeting or eligibility."
+    },
     "offer_info": {
       "type": "object",
       "description": "Core descriptive, categorical, and commercial information for the offer.",
@@ -354,6 +359,8 @@
             "sign_up",
             "subscribe",
             "purchase",
+            "pay",
+            "order",
             "apply",
             "submission",
             "start_trial",

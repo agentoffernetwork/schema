@@ -61,6 +61,14 @@ export interface Offer {
   /** [REQUIRED] Offer document version. @example "1.0" */
   version: string;
 
+  /**
+   * [OPTIONAL] BCP 47 language tag for the user-facing content in this Offer
+   * payload, such as title, description, and action copy. Content metadata only;
+   * it does not affect targeting or eligibility.
+   * @example "en-US"
+   */
+  content_language?: string;
+
   /** [REQUIRED] Descriptive, categorical, and commercial information for the offer. */
   offer_info: OfferInfo;
 
@@ -254,6 +262,8 @@ export type ConsumerAction =
   | 'sign_up'
   | 'subscribe'
   | 'purchase'
+  | 'pay'
+  | 'order'
   | 'apply'
   | 'submission'
   | 'start_trial'
@@ -327,7 +337,7 @@ export interface TargetingRule {
   geo?: GeoTargeting;
   /** Viewer eligibility restrictions for this rule. @example { "min_age": 18 } */
   eligibility?: TargetingEligibility;
-  /** ISO 639-1 language code. @example "en" */
+  /** BCP 47 language tag targeted by this offer rule. @example "en" */
   language?: string;
   /** @example ["mobile", "desktop"] */
   device_type?: DeviceType[];
@@ -507,7 +517,7 @@ export interface QueryContext {
 export interface UserProfile {
   /** Pseudonymous viewer identifier. @example "viewer_xyz" */
   user_pseudo_id?: string;
-  /** User language preference. ISO 639-1 code. @example "en" */
+  /** BCP 47 language tag for the end user. @example "en" */
   language?: string;
   /** Legacy user country for geo targeting. Uppercase ISO 3166-1 alpha-2 code. @example "US" */
   country?: string;

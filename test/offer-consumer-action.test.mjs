@@ -25,6 +25,12 @@ const productOffer = JSON.parse(
 const entertainmentOffer = JSON.parse(
   readFileSync(resolve(examplesRoot, 'http/entertainment-offer.json'), 'utf8'),
 );
+const foodGroceryOffer = JSON.parse(
+  readFileSync(resolve(examplesRoot, 'http/food-grocery-offer.json'), 'utf8'),
+);
+const financialServiceOffer = JSON.parse(
+  readFileSync(resolve(examplesRoot, 'http/financial-service-offer.json'), 'utf8'),
+);
 const shortDramaOffer = JSON.parse(
   readFileSync(resolve(examplesRoot, 'http/short-drama-offer.json'), 'utf8'),
 );
@@ -45,6 +51,8 @@ const consumerActionEnum = [
   'sign_up',
   'subscribe',
   'purchase',
+  'pay',
+  'order',
   'apply',
   'submission',
   'start_trial',
@@ -233,7 +241,7 @@ function test_consumer_action_allowed_enum_values() {
   for (const value of consumerActionEnum) {
     assert.equal(isValidOfferPayload(cloneOfferWithConsumerAction(value)), true, `${value} should be a valid consumer_action`);
   }
-  for (const value of ['open', 'view', 'pay', 'other', 'custom']) {
+  for (const value of ['open', 'view', 'other', 'custom']) {
     assert.equal(isValidOfferPayload(cloneOfferWithConsumerAction(value)), false, `${value} should not be canonical`);
     assert.doesNotMatch(consumerActionTypeBlock, new RegExp(`'${value}'`));
   }
@@ -243,7 +251,6 @@ function test_consumer_action_invalid_values_and_missing_compatibility() {
   assert.equal(isValidOfferPayload(cloneOfferWithConsumerAction(undefined)), true);
   for (const value of [
     '',
-    'pay',
     'view',
     'other',
     'custom',
@@ -275,6 +282,11 @@ function test_consumer_action_semantic_boundaries() {
   assert.match(offerSpec, /`conversion_rule\.accepted_types`[^\n]+conversion result/i);
   assert.match(offerSpec, /consumer-owned analytics/i);
   assert.match(offerSpec, /`sign_up`[^\n]+legacy\/deprecated alias/i);
+  assert.match(offerSpec, /`purchase`[\s\S]+one-time digital good/i);
+  assert.match(offerSpec, /`pay`[\s\S]+bill/i);
+  assert.match(offerSpec, /`order`[\s\S]+delivery order/i);
+  assert.match(offerSpec, /Use `purchase`[\s\S]+Use `pay`[\s\S]+Use `order`[\s\S]+Use `book`[\s\S]+Use `submission`/i);
+  assert.doesNotMatch(offerSpec, /\| `purchase` \| Buy, order, or pay/i);
   assert.match(offerSpec, /`registration`[\s\S]+`sign_up`/i);
   assert.match(offerSpec, /`submission`[\s\S]+`apply`/i);
   assert.match(offerSpec, /`start_trial`[\s\S]+`subscribe`/i);
@@ -284,14 +296,25 @@ function test_consumer_action_semantic_boundaries() {
   assert.doesNotMatch(postbackSpec, /consumer_action/);
 }
 
-function test_consumer_action_examples_cover_purchase_play_watch_trial_read() {
+function test_consumer_action_examples_cover_purchase_pay_order_semantics() {
   assert.equal(offerResponse.offers[0].action.consumer_action, 'start_trial');
   assert.equal(productOffer.action.consumer_action, 'purchase');
+  assert.equal(financialServiceOffer.action.consumer_action, 'pay');
+  assert.equal(foodGroceryOffer.action.consumer_action, 'order');
   assert.equal(entertainmentOffer.action.consumer_action, 'play');
   assert.equal(shortDramaOffer.action.consumer_action, 'watch');
   assert.equal(contentOffer.action.consumer_action, 'read');
 
-  for (const offer of [offerResponse.offers[0], productOffer, entertainmentOffer, shortDramaOffer, contentOffer]) {
+  for (const offer of [
+    offerResponse.offers[0],
+    productOffer,
+    financialServiceOffer,
+    foodGroceryOffer,
+    entertainmentOffer,
+    shortDramaOffer,
+    contentOffer,
+  ]) {
+    assert.equal(isValidOfferPayload(offer), true, `${offer.offer_id} should remain schema-valid`);
     assert.ok(offer.action.type, `${offer.offer_id} action.type should remain present`);
     assert.ok(
       offer.action.payload?.target,
@@ -304,6 +327,6 @@ test_action_consumer_action_contract_shape();
 test_consumer_action_allowed_enum_values();
 test_consumer_action_invalid_values_and_missing_compatibility();
 test_consumer_action_semantic_boundaries();
-test_consumer_action_examples_cover_purchase_play_watch_trial_read();
+test_consumer_action_examples_cover_purchase_pay_order_semantics();
 
 console.log('offer-consumer-action OK');

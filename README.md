@@ -84,6 +84,7 @@ const offer: Offer = {
   offer_id: '019414a0-7e3b-7f1a-b5e2-0a1b2c3d4e5f',
   offer_instance_id: '019dd208-27d2-7673-b16f-6897fa120303',
   version: '1.0',
+  content_language: 'en-US',
   offer_info: {
     title: 'My SaaS Product',
     offer_type: 'online_service',
@@ -125,6 +126,8 @@ const offer: Offer = {
 
 **OPTIONAL fields:**
 
+- `content_language` -- BCP 47 language tag for user-facing offer content; it
+  does not replace `context.user_profile.language` or `targeting[].language`
 - `offer_info.tags` -- partner-supplied content matching hints
 - `targeting`, `frequency_capping`, `offer_info.priority`, `offer_info.status`
 

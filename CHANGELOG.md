@@ -77,12 +77,20 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - Query `context.user_profile.location_ids` and
   `context.user_profile.verified_age_over` for canonical location and non-PII
   age threshold targeting.
+- `action.consumer_action` enum values `pay` and `order` in the Offer Schema
+  JSON Schema and TypeScript definitions.
 - Optional top-level Query request `placement_id` in JSON Schema, TypeScript
   types, and canonical examples. The schema treats it as a bounded opaque string
   and rejects null, empty, whitespace-containing, and overlong values.
+- Optional top-level Offer `content_language` as BCP 47 content metadata for
+  user-facing offer copy. It is not a targeting, eligibility, event, or postback
+  field.
 ### Changed
 
 - Offer Schema category payload now uses `offer_info.category.id`.
+- `context.user_profile.language` and `targeting[].language` documentation now
+  explicitly use BCP 47 wording and distinguish user/targeting language from
+  returned offer content language.
 - Query and Provider request schemas now use `constraints.category_ids`.
 - TypeScript category types now expose `CategoryId` and `OfferCategory`.
 - `bid.model` is narrowed to `cpa`, `cps`, and `hybrid`; lead/install use
