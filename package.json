@@ -1,0 +1,1 @@
+{"name":"@agentoffer/schema","private":true,"type":"module","scripts":{"test":"node test/offer-conversion-goals-v0.2.test.mjs","typecheck":"tsc --noEmit --strict --module ESNext --moduleResolution bundler types/offer-v0.2.types.ts test/offer-v0.2.types.test-d.ts"},"devDependencies":{"ajv":"^8.17.1","ajv-formats":"^3.0.1","typescript":"^5.6.3"}}

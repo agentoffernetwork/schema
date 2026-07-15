@@ -1,0 +1,767 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://agentoffernetwork.org/schema/offer/v0.2",
+  "title": "AgentOffer Offer Schema v0.2",
+  "description": "Formal Offer Schema v0.2 with conversion goals and card display fields.",
+  "type": "object",
+  "required": [
+    "offer_id",
+    "offer_instance_id",
+    "version",
+    "offer_info",
+    "entity",
+    "action",
+    "goals"
+  ],
+  "properties": {
+    "offer_id": {
+      "type": "string",
+      "description": "Stable inventory-level offer identifier. UUIDv7 is recommended. Same offer_id across multiple query responses for the same offer.",
+      "format": "uuid"
+    },
+    "offer_instance_id": {
+      "type": "string",
+      "description": "Per-dispatch unique identifier. UUIDv7 is recommended. Generated fresh for each query response. Used as the dispatch-level fallback key for click → conversion → settlement attribution. Carried in landing-page URL query param ?aon_tracking_id={offer_instance_id} and S2S postback body aon_tracking_id={offer_instance_id}. Per-click attribution uses a distinct redirect-time click ID exposed through the {CLICK_ID} macro or aon_click_id fallback query parameter. Industry alignment with Google Ads gclid / Meta fbclid / TikTok ttclid integration-layer pattern.",
+      "examples": [
+        "019dd208-27d2-7673-b16f-6897fa120303"
+      ]
+    },
+    "version": {
+      "type": "string",
+      "const": "2.0",
+      "description": "Offer document version."
+    },
+    "content_language": {
+      "type": "string",
+      "pattern": "^[A-Za-z]{2,3}(?:-[A-Za-z]{4})?(?:-(?:[A-Za-z]{2}|[0-9]{3}))?(?:-[A-Za-z0-9]{5,8})*$",
+      "description": "BCP 47 language tag for the user-facing content in this Offer payload, such as title, description, and action copy. This is content metadata and does not affect targeting or eligibility."
+    },
+    "offer_info": {
+      "type": "object",
+      "description": "Core descriptive, categorical, and commercial information for the offer.",
+      "required": [
+        "title",
+        "category",
+        "description"
+      ],
+      "properties": {
+        "title": {
+          "type": "string",
+          "description": "Display-ready offer title.",
+          "minLength": 1,
+          "maxLength": 200
+        },
+        "offer_type": {
+          "type": "string",
+          "enum": [
+            "physical_product",
+            "digital_goods",
+            "content",
+            "online_service",
+            "offline_service"
+          ],
+          "description": "Optional offer fulfillment form — how the offer is delivered to the end user. This is a fulfillment hint, not the primary classification. Orthogonal to offer_info.category.id and secondary_category_ids."
+        },
+        "category": {
+          "type": "object",
+          "description": "AON Taxonomy v1 category reference. `id` is a stable generated dot-path category id from the taxonomy registry.",
+          "required": [
+            "id"
+          ],
+          "properties": {
+            "id": {
+              "type": "string",
+              "pattern": "^[a-z0-9]+(?:_[a-z0-9]+)*(?:\\.[a-z0-9]+(?:_[a-z0-9]+)*)*$",
+              "description": "Stable AON Taxonomy v1 category id. Registry membership is validated by the taxonomy drift guard."
+            }
+          },
+          "additionalProperties": false
+        },
+        "secondary_category_ids": {
+          "type": "array",
+          "description": "Optional auxiliary AON Taxonomy v1 category ids for offers that have additional taxonomy meanings beyond the primary offer_info.category.id. These ids participate in AON-owned category matching and safety filtering, but they do not replace the primary category. Each secondary id must be from a different taxonomy branch than the primary category and the other secondary ids; do not repeat an ancestor or descendant relationship.",
+          "maxItems": 5,
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "pattern": "^[a-z0-9]+(?:_[a-z0-9]+)*(?:\\.[a-z0-9]+(?:_[a-z0-9]+)*)*$"
+          }
+        },
+        "description": {
+          "type": "string",
+          "description": "Core semantic description for agent understanding and end-user display.",
+          "minLength": 1,
+          "maxLength": 5000
+        },
+        "tags": {
+          "type": "array",
+          "description": "Partner-supplied content matching tags. These tags are optional semantic hints and do not replace offer_info.category.id, targeting rules, query filters, compliance policy, or guaranteed end-user display.",
+          "maxItems": 50,
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 80,
+            "pattern": "\\S"
+          }
+        },
+        "rating": {
+          "type": "object",
+          "description": "Optional user-facing aggregate rating for the offer or merchant-provided offer content. This is a display rating, not an internal ranking score.",
+          "required": [
+            "value"
+          ],
+          "properties": {
+            "value": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 5,
+              "multipleOf": 0.1,
+              "description": "Rating value on a 0 to 5 display scale."
+            },
+            "count": {
+              "type": "integer",
+              "minimum": 0,
+              "description": "Optional number of ratings represented by the aggregate value."
+            },
+            "source": {
+              "type": "string",
+              "maxLength": 100,
+              "description": "Optional open-text rating source. Empty string is allowed; missing source is not materialized to a default."
+            }
+          },
+          "additionalProperties": false
+        },
+        "properties": {
+          "type": "array",
+          "description": "Optional ordered display properties for card highlights. These are structured offer properties, distinct from offer_info.tags matching hints.",
+          "maxItems": 6,
+          "items": {
+            "type": "object",
+            "required": [
+              "type",
+              "value"
+            ],
+            "properties": {
+              "type": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 64,
+                "pattern": "^[a-z][a-z0-9]*(?:_[a-z0-9]+)*$",
+                "description": "Open semantic property key. The schema validates format only; recommended property types may be documented separately but are not a closed enum."
+              },
+              "value": {
+                "oneOf": [
+                  {
+                    "type": "string",
+                    "maxLength": 100
+                  },
+                  {
+                    "type": "number"
+                  },
+                  {
+                    "type": "boolean"
+                  }
+                ],
+                "description": "Structured property value. String values are limited to 100 Unicode code points."
+              },
+              "unit": {
+                "type": "string",
+                "maxLength": 32,
+                "description": "Optional open unit string used with value, such as %, USD, days, or months."
+              },
+              "display_pattern": {
+                "type": "string",
+                "maxLength": 120,
+                "description": "Optional plain-text display template. This is not an enum and only exact same-item placeholders ${type}, ${value}, and ${unit} are valid after semantic validation."
+              }
+            },
+            "additionalProperties": false
+          }
+        },
+        "recommendation_reason": {
+          "type": "string",
+          "description": "Partner-provided user-readable recommendation reason. Consumers may choose to display this text; it must not contain internal conversion metrics or operational-only notes.",
+          "maxLength": 1000
+        },
+        "commercial": {
+          "type": "object",
+          "description": "Pricing information.",
+          "properties": {
+            "price": {
+              "type": "object",
+              "properties": {
+                "amount": {
+                  "type": "string",
+                  "description": "Decimal string representing the consumer-facing price amount."
+                },
+                "currency": {
+                  "type": "string",
+                  "description": "ISO 4217 currency code."
+                },
+                "unit": {
+                  "type": "string",
+                  "enum": [
+                    "one_time",
+                    "night",
+                    "day",
+                    "week",
+                    "month",
+                    "year"
+                  ],
+                  "description": "Optional pricing unit. Missing unit is interpreted as one_time for display semantics but must not be materialized during round-trip."
+                }
+              },
+              "additionalProperties": false
+            },
+            "fulfillment_note": {
+              "type": "string",
+              "maxLength": 80,
+              "description": "Optional display-ready transaction or fulfillment note, such as cancellation, shipping, payment, or eligibility conditions."
+            }
+          },
+          "additionalProperties": false
+        },
+        "start_at": {
+          "type": "string",
+          "format": "date-time",
+          "description": "RFC 3339 timestamp for when the offer becomes active."
+        },
+        "expire_at": {
+          "type": "string",
+          "format": "date-time",
+          "description": "RFC 3339 timestamp for when the offer expires."
+        },
+        "status": {
+          "type": "string",
+          "enum": [
+            "active",
+            "paused",
+            "pending",
+            "rejected",
+            "expired"
+          ],
+          "description": "Lifecycle status of the offer.",
+          "default": "pending"
+        },
+        "audit_status": {
+          "type": "string",
+          "enum": [
+            "waiting",
+            "pass",
+            "reject"
+          ],
+          "description": "Compliance audit status.",
+          "default": "waiting"
+        },
+        "priority": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 100,
+          "description": "Exposure priority. Higher values take precedence.",
+          "default": 10
+        }
+      },
+      "additionalProperties": false
+    },
+    "material": {
+      "type": "array",
+      "description": "Creative assets associated with the offer.",
+      "items": {
+        "type": "object",
+        "properties": {
+          "url": {
+            "type": "string",
+            "format": "uri",
+            "description": "URL to the creative asset."
+          },
+          "tag": {
+            "type": "string",
+            "description": "Asset purpose tag such as logo, banner, hero, thumbnail."
+          },
+          "format": {
+            "type": "string",
+            "enum": [
+              "image",
+              "video",
+              "html5"
+            ],
+            "description": "Asset format."
+          },
+          "dimensions": {
+            "type": "string",
+            "description": "Dimension specification such as 300x250, 728x90."
+          },
+          "alt_text": {
+            "type": "string",
+            "maxLength": 200,
+            "description": "Optional accessible replacement text for this creative asset. It describes the asset content for assistive technologies, loading fallback, and localization; it is not a visible caption or promotional highlight."
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "conversion_rule": {
+      "type": "object",
+      "description": "Rules for valid conversion events, attribution logic, and tracking windows. RECOMMENDED: SHOULD be present to establish clear attribution expectations.",
+      "properties": {
+        "click_window_hours": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Click attribution window in hours. Conversions within this window after a click are eligible for attribution.",
+          "default": 720
+        },
+        "view_window_hours": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "View-through attribution window in hours. Default 0 (view-through attribution not supported).",
+          "default": 0
+        },
+        "attribution_model": {
+          "type": "string",
+          "enum": [
+            "last_click",
+            "first_click"
+          ],
+          "description": "Attribution method. last_click: credit goes to the last click before conversion. first_click: credit goes to the first click. linear is reserved for future use.",
+          "default": "last_click"
+        },
+        "dedup_strategy": {
+          "type": "string",
+          "enum": [
+            "first",
+            "all",
+            "highest"
+          ],
+          "description": "Deduplication strategy for multiple conversions from the same user. first: only the first conversion counts. all: every conversion counts. highest: only the highest-value conversion counts.",
+          "default": "first"
+        },
+        "minimum_amount": {
+          "type": "string",
+          "description": "Minimum conversion amount, decimal string. Conversions below this threshold do not qualify for goal recognition."
+        }
+      },
+      "additionalProperties": false
+    },
+    "extra": {
+      "type": "object",
+      "description": "Offer-level open extension metadata. This is part of the Offer payload and is distinct from any API response envelope extra field.",
+      "additionalProperties": true
+    },
+    "entity": {
+      "type": "object",
+      "description": "Business entity associated with the offer.",
+      "required": [
+        "id",
+        "name"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Stable entity identifier."
+        },
+        "name": {
+          "type": "string",
+          "description": "Display name of the entity."
+        },
+        "type": {
+          "type": "string",
+          "enum": [
+            "business",
+            "individual",
+            "institution"
+          ],
+          "description": "Entity classification. business: registered commercial entity, individual: personal operator, institution: public/non-profit organization."
+        },
+        "description": {
+          "type": "string",
+          "description": "Short description of the entity."
+        },
+        "website": {
+          "type": "string",
+          "format": "uri",
+          "description": "Official website of the entity."
+        },
+        "logo": {
+          "type": "object",
+          "description": "Canonical merchant/entity logo for identity display. This is distinct from offer creative assets in material[].",
+          "required": [
+            "url"
+          ],
+          "properties": {
+            "url": {
+              "type": "string",
+              "format": "uri",
+              "pattern": "^https?://",
+              "description": "Stable public HTTP(S) URL of the entity logo image."
+            },
+            "alt_text": {
+              "type": "string",
+              "description": "Accessible text for the logo. Consumers may fall back to entity.name when absent."
+            }
+          },
+          "additionalProperties": false
+        }
+      },
+      "additionalProperties": false
+    },
+    "action": {
+      "type": "object",
+      "description": "Primary executable action exposed by the offer. Payload structure is constrained by type.",
+      "required": [
+        "type",
+        "payload"
+      ],
+      "properties": {
+        "type": {
+          "type": "string",
+          "enum": [
+            "web_redirect",
+            "app_deep_link"
+          ],
+          "description": "Executable action type."
+        },
+        "name": {
+          "type": "string",
+          "description": "Short user-facing action name (CTA text).",
+          "maxLength": 80
+        },
+        "consumer_action": {
+          "type": "string",
+          "enum": [
+            "learn_more",
+            "watch",
+            "play",
+            "listen",
+            "install",
+            "download",
+            "registration",
+            "sign_up",
+            "subscribe",
+            "purchase",
+            "pay",
+            "order",
+            "apply",
+            "submission",
+            "start_trial",
+            "read",
+            "book",
+            "claim",
+            "redeem",
+            "contact"
+          ],
+          "description": "Main end-user action semantic for CTA fallback and consumer-owned analytics. This does not replace action.name, action.type, action.destination_types, action.payload.target, or conversion_rule."
+        },
+        "description": {
+          "type": "string",
+          "description": "Explanation of the action intent or destination.",
+          "maxLength": 300
+        },
+        "destination_types": {
+          "type": "array",
+          "description": "Destination target-shape hints for UI/display. This field does not replace action.type or action.payload.target and does not express click URL priority.",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "enum": [
+              "website",
+              "app_store",
+              "google_play",
+              "apk",
+              "agent",
+              "others"
+            ]
+          }
+        },
+        "payload": {
+          "type": "object",
+          "required": [
+            "target"
+          ],
+          "properties": {
+            "target": {
+              "type": "string",
+              "description": "Destination URL or deep link URI."
+            }
+          }
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "type": {
+                "const": "web_redirect"
+              }
+            },
+            "required": [
+              "type"
+            ]
+          },
+          "then": {
+            "properties": {
+              "payload": {
+                "type": "object",
+                "properties": {
+                  "target": {
+                    "type": "string",
+                    "description": "Destination URL for web redirect."
+                  }
+                },
+                "additionalProperties": false
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "type": {
+                "const": "app_deep_link"
+              }
+            },
+            "required": [
+              "type"
+            ]
+          },
+          "then": {
+            "properties": {
+              "payload": {
+                "type": "object",
+                "properties": {
+                  "target": {
+                    "type": "string",
+                    "description": "Deep link URI for the app."
+                  },
+                  "platform": {
+                    "type": "string",
+                    "enum": [
+                      "ios",
+                      "android"
+                    ],
+                    "description": "Target platform."
+                  },
+                  "fallback_url": {
+                    "type": "string",
+                    "format": "uri",
+                    "description": "Fallback URL when app is not installed."
+                  }
+                },
+                "additionalProperties": false
+              }
+            }
+          }
+        }
+      ],
+      "additionalProperties": false
+    },
+    "targeting": {
+      "type": "array",
+      "description": "Targeting constraints for offer surfacing.",
+      "items": {
+        "type": "object",
+        "properties": {
+          "geo": {
+            "type": "object",
+            "properties": {
+              "include": {
+                "oneOf": [
+                  {
+                    "type": "array",
+                    "maxItems": 0,
+                    "description": "Empty include means the location dimension is unconstrained."
+                  },
+                  {
+                    "type": "array",
+                    "minItems": 1,
+                    "items": {
+                      "type": "string",
+                      "pattern": "^([A-Z]{2}|ALL)$"
+                    },
+                    "uniqueItems": true,
+                    "description": "Legacy included country codes."
+                  },
+                  {
+                    "type": "array",
+                    "minItems": 1,
+                    "items": {
+                      "type": "object",
+                      "required": [
+                        "location_id"
+                      ],
+                      "properties": {
+                        "location_id": {
+                          "type": "string",
+                          "pattern": "^[0-9]+$",
+                          "description": "AON Location Registry v1 location id, sourced from Google Geo Target Criteria ID."
+                        }
+                      },
+                      "additionalProperties": false
+                    },
+                    "uniqueItems": true,
+                    "description": "Included AON Location Registry v1 locations."
+                  }
+                ],
+                "description": "Included geographic locations. Use either legacy country strings or structured location_id objects, not both in the same array."
+              },
+              "exclude": {
+                "oneOf": [
+                  {
+                    "type": "array",
+                    "maxItems": 0,
+                    "description": "Empty exclude means no location is excluded."
+                  },
+                  {
+                    "type": "array",
+                    "minItems": 1,
+                    "items": {
+                      "type": "string",
+                      "pattern": "^([A-Z]{2}|ALL)$"
+                    },
+                    "uniqueItems": true,
+                    "description": "Legacy excluded country codes."
+                  },
+                  {
+                    "type": "array",
+                    "minItems": 1,
+                    "items": {
+                      "type": "object",
+                      "required": [
+                        "location_id"
+                      ],
+                      "properties": {
+                        "location_id": {
+                          "type": "string",
+                          "pattern": "^[0-9]+$",
+                          "description": "AON Location Registry v1 location id, sourced from Google Geo Target Criteria ID."
+                        }
+                      },
+                      "additionalProperties": false
+                    },
+                    "uniqueItems": true,
+                    "description": "Excluded AON Location Registry v1 locations."
+                  }
+                ],
+                "description": "Excluded geographic locations. Exclude wins over include."
+              }
+            },
+            "additionalProperties": false
+          },
+          "eligibility": {
+            "type": "object",
+            "properties": {
+              "min_age": {
+                "type": "integer",
+                "minimum": 13,
+                "maximum": 120,
+                "description": "Minimum verified viewer age required for this targeting rule."
+              }
+            },
+            "additionalProperties": false
+          },
+          "language": {
+            "type": "string",
+            "description": "Target language, ISO 639-1 code."
+          },
+          "device_type": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "enum": [
+                "mobile",
+                "desktop",
+                "tablet",
+                "smart_tv"
+              ]
+            },
+            "description": "Target device types."
+          },
+          "os": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "enum": [
+                "ios",
+                "android",
+                "windows",
+                "macos",
+                "linux"
+              ]
+            },
+            "description": "Target operating systems."
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "goals": {
+      "type": "array",
+      "minItems": 1,
+      "description": "Conversion goals.",
+      "items": {
+        "type": "object",
+        "required": [
+          "event",
+          "pricing"
+        ],
+        "properties": {
+          "event": {
+            "type": "string",
+            "pattern": "^[a-z0-9][a-z0-9_.-]{0,63}$"
+          },
+          "pricing": {
+            "oneOf": [
+              {
+                "type": "object",
+                "required": [
+                  "model",
+                  "amount",
+                  "currency"
+                ],
+                "properties": {
+                  "model": {
+                    "const": "cpa"
+                  },
+                  "amount": {
+                    "type": "string",
+                    "pattern": "^(?:0|[1-9][0-9]{0,11})(?:\\.[0-9]{1,6})?$"
+                  },
+                  "currency": {
+                    "type": "string",
+                    "pattern": "^[A-Z]{3}$"
+                  }
+                },
+                "additionalProperties": false
+              },
+              {
+                "type": "object",
+                "required": [
+                  "model",
+                  "rate"
+                ],
+                "properties": {
+                  "model": {
+                    "const": "cps"
+                  },
+                  "rate": {
+                    "type": "string",
+                    "pattern": "^(?:100(?:\\.0{1,4})?|[1-9]?[0-9](?:\\.[0-9]{1,4})?)$"
+                  }
+                },
+                "additionalProperties": false
+              }
+            ]
+          },
+          "description": {
+            "type": "string",
+            "maxLength": 500
+          }
+        },
+        "additionalProperties": false
+      }
+    }
+  },
+  "additionalProperties": false
+}

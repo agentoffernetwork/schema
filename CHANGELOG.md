@@ -1,5 +1,20 @@
 # Changelog
 
+## Offer v0.2 card display fields (2026-07-15)
+
+- Added schema, TypeScript, and semantic-validator coverage for optional card
+  display fields including rating, price unit, fulfillment note, structured
+  properties, and material alt text.
+- Documented the JSON Schema plus semantic-validator validation path for
+  Offer v0.2 payloads.
+- Added display pattern token grammar checks to the v0.2 semantic validator.
+
+## Formal v0.2 conversion goals (2026-07-10)
+
+- Added the complete Offer v0.2 JSON Schema and TypeScript snapshot.
+- Added the public post-schema semantic validator for goal uniqueness and positive pricing.
+- Added reproducible Ajv 2020, ajv-formats, and TypeScript development tooling.
+
 All notable changes to the AgentOffer Schema will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).

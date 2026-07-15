@@ -1,0 +1,32 @@
+{
+  "schema_version": "aon-conversion-events/v0.2-draft",
+  "status": "non-normative",
+  "description": "Non-normative well-known conversion event names for AgentOffer conversion goals. These names are interoperability recommendations only and are not required for validation; protocol validation never depends on this file. display_label is a presentation seed.",
+  "well_known_events": [
+    {
+      "code": "install",
+      "display_label": "Install",
+      "description": "The user installs or first opens the promoted app."
+    },
+    {
+      "code": "sale",
+      "display_label": "Sale",
+      "description": "The user completes a paid purchase or order."
+    },
+    {
+      "code": "lead",
+      "display_label": "Lead",
+      "description": "The user submits a lead form, registration, or qualified inquiry."
+    },
+    {
+      "code": "subscription",
+      "display_label": "Subscription",
+      "description": "The user starts or converts into a subscription."
+    },
+    {
+      "code": "trial",
+      "display_label": "Trial",
+      "description": "The user starts a free trial or trial-like activation."
+    }
+  ]
+}

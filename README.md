@@ -19,6 +19,13 @@
 
 ## What's Inside
 
+The formal Offer v0.2 contract is available at
+`json-schema/offer-schema-v0.2.json` and `types/offer-v0.2.types.ts`. It
+covers the complete Offer snapshot with conversion goals and optional card
+display fields. Validate payloads with Ajv Draft 2020-12 first, then
+`validators/offer-v0.2-semantics.mjs` for event uniqueness, positive pricing,
+and card display template token rules.
+
 | Path | Description |
 |------|-------------|
 | `json-schema/offer-schema-v0.1.json` | Offer object JSON Schema with RFC 2119 requirement levels |
@@ -35,7 +42,7 @@
 | `helpers/location-helpers.mjs` | Country, subdivision-code, edge-header, and location-chain helpers for migration |
 | `scripts/generate-location-registry-v1.mjs` | Generates the supported AON location registry from a Google Geo Targets CSV |
 | `scripts/validate-location-registry-v1.mjs` | Validates registry shape, parent links, and supported levels |
-| `validators/` | Reserved for future packaged validation tooling; current validation examples use `ajv-cli` directly |
+| `validators/` | Versioned semantic validators; v0.2 checks goal uniqueness, positive pricing, and display pattern token grammar after JSON Schema validation |
 
 ## Quick Start
 
@@ -73,6 +80,28 @@ npx --yes --package=ajv-cli@5 --package=ajv-formats@3 -- \
   -s json-schema/offer-schema-v0.1.json \
   -d ../examples/http/notion-offer.json \
   --spec=draft2020
+```
+
+### Validate an Offer v0.2 payload
+
+Offer v0.2 uses a two-step validation path: JSON Schema first, then the
+versioned semantic validator for cross-field rules.
+
+```bash
+pnpm install
+pnpm test
+```
+
+For application code, import the semantic validator after your JSON Schema
+check succeeds:
+
+```javascript
+import { validateOfferV02Semantics } from './validators/offer-v0.2-semantics.mjs';
+
+const result = validateOfferV02Semantics(offer);
+if (!result.valid) {
+  console.error(result.errors);
+}
 ```
 
 ### Use TypeScript types

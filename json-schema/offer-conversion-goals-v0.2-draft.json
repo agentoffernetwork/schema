@@ -1,0 +1,85 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://agentoffernetwork.org/schema/offer/conversion-goals/v0.2-draft",
+  "title": "AgentOffer Offer Conversion Goals v0.2 Draft",
+  "description": "Non-GA draft overlay expressing conversion goals on an AgentOffer offer. A goal is the recognized occurrence of an event priced by a cpa or cps pricing object. The active v0.1 offer-schema-v0.1.json remains the GA contract and is not modified by this draft.",
+  "type": "object",
+  "required": [
+    "goals"
+  ],
+  "properties": {
+    "goals": {
+      "type": "array",
+      "description": "Conversion goals. goals[].event values must be unique within one offer (exact string comparison). Array order carries no semantics.",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": [
+          "event",
+          "pricing"
+        ],
+        "properties": {
+          "event": {
+            "type": "string",
+            "pattern": "^[a-z0-9][a-z0-9_.-]{0,63}$",
+            "description": "Semantic identity and reference key of the goal, unique within the offer. Changing event replaces the goal. Cross-message references use (offer_id, event)."
+          },
+          "pricing": {
+            "description": "Price paid for one recognized occurrence of event.",
+            "oneOf": [
+              {
+                "type": "object",
+                "required": [
+                  "model",
+                  "amount",
+                  "currency"
+                ],
+                "properties": {
+                  "model": {
+                    "const": "cpa"
+                  },
+                  "amount": {
+                    "type": "string",
+                    "pattern": "^(?:0|[1-9][0-9]{0,11})(?:\\.[0-9]{1,6})?$",
+                    "description": "Positive decimal string; MUST be greater than zero (enforced by validators; the pattern alone admits zero). Exact passthrough, at most 12 integer and 6 fractional digits."
+                  },
+                  "currency": {
+                    "type": "string",
+                    "pattern": "^[A-Z]{3}$",
+                    "description": "ISO 4217 currency code."
+                  }
+                },
+                "additionalProperties": false
+              },
+              {
+                "type": "object",
+                "required": [
+                  "model",
+                  "rate"
+                ],
+                "properties": {
+                  "model": {
+                    "const": "cps"
+                  },
+                  "rate": {
+                    "type": "string",
+                    "pattern": "^(?:100(?:\\.0{1,4})?|[1-9]?[0-9](?:\\.[0-9]{1,4})?)$",
+                    "description": "Percentage of conversion value: positive decimal string, MUST be greater than zero, at most 4 fractional digits, structurally capped at 100. A ratio carries no currency."
+                  }
+                },
+                "additionalProperties": false
+              }
+            ]
+          },
+          "description": {
+            "type": "string",
+            "maxLength": 500,
+            "description": "Advisory human-readable note. Consumers MUST NOT derive billing, matching, or settlement behavior from it."
+          }
+        },
+        "additionalProperties": false
+      }
+    }
+  },
+  "additionalProperties": true
+}
