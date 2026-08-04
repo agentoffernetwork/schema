@@ -1,4 +1,6 @@
 /** Post-schema semantic checks for Offer v0.2. */
+import { aonTaxonomyV1Resolver } from '../taxonomy/aon-taxonomy-v1-resolver.mjs';
+
 const DISPLAY_PATTERN_TOKENS = new Set(['${type}', '${value}', '${unit}']);
 
 function validateDisplayPattern(pattern, instancePath, errors) {
@@ -38,18 +40,52 @@ export function validateOfferV02Semantics(offer) {
     });
   }
   const goals = offer?.goals;
-  if (!Array.isArray(goals)) return { valid: true, errors };
-  const seen = new Set();
-  goals.forEach((goal, i) => {
-    const path = `/goals/${i}`;
-    if (seen.has(goal.event)) errors.push({ code: 'event_unique', instancePath: `${path}/event`, message: 'goal event must be unique' });
-    seen.add(goal.event);
-    const pricing = goal.pricing;
-    if (pricing?.model === 'cpa' && Number(pricing.amount) <= 0)
-      errors.push({ code: 'amount_positive', instancePath: `${path}/pricing/amount`, message: 'cpa amount must be greater than zero' });
-    if (pricing?.model === 'cps' && Number(pricing.rate) <= 0)
-      errors.push({ code: 'rate_positive', instancePath: `${path}/pricing/rate`, message: 'cps rate must be greater than zero' });
-  });
+  if (Array.isArray(goals)) {
+    const seen = new Set();
+    goals.forEach((goal, i) => {
+      const path = `/goals/${i}`;
+      if (seen.has(goal.event)) errors.push({ code: 'event_unique', instancePath: `${path}/event`, message: 'goal event must be unique' });
+      seen.add(goal.event);
+      const pricing = goal.pricing;
+      if (pricing?.model === 'cpa' && Number(pricing.amount) <= 0)
+        errors.push({ code: 'amount_positive', instancePath: `${path}/pricing/amount`, message: 'cpa amount must be greater than zero' });
+    });
+  }
+
+  const primaryCategoryId = offer?.offer_info?.category?.id;
+  const secondaryCategoryIds = offer?.offer_info?.secondary_category_ids;
+  const categoryEntries = [];
+  if (typeof primaryCategoryId === 'string') {
+    categoryEntries.push({ id: primaryCategoryId, instancePath: '/offer_info/category/id' });
+  }
+  if (Array.isArray(secondaryCategoryIds)) {
+    secondaryCategoryIds.forEach((id, index) => {
+      categoryEntries.push({ id, instancePath: `/offer_info/secondary_category_ids/${index}` });
+    });
+  }
+
+  for (const entry of categoryEntries) {
+    if (!aonTaxonomyV1Resolver.has(entry.id)) {
+      errors.push({ code: 'taxonomy_registry_membership', instancePath: entry.instancePath, message: 'category id must exist in AON Taxonomy v1' });
+    }
+  }
+  for (let index = 1; index < categoryEntries.length; index += 1) {
+    const current = categoryEntries[index];
+    if (!aonTaxonomyV1Resolver.has(current.id)) continue;
+    for (let previousIndex = 0; previousIndex < index; previousIndex += 1) {
+      const previous = categoryEntries[previousIndex];
+      if (!aonTaxonomyV1Resolver.has(previous.id)) continue;
+      const categoryRelation = aonTaxonomyV1Resolver.relation(previous.id, current.id);
+      if (categoryRelation !== 'disjoint') {
+        errors.push({
+          code: 'taxonomy_branch_conflict',
+          instancePath: current.instancePath,
+          message: 'secondary category must not equal, contain, or be contained by another category',
+        });
+        break;
+      }
+    }
+  }
   return { valid: errors.length === 0, errors };
 }
 

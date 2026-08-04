@@ -10,8 +10,7 @@
     "version",
     "offer_info",
     "entity",
-    "action",
-    "bid"
+    "action"
   ],
   "properties": {
     "offer_id": {

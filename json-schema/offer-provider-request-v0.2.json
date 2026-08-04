@@ -1,0 +1,15 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://agentoffernetwork.org/schema/offer-provider-request/v0.2",
+  "title": "AgentOffer OfferProvider Request Schema v0.2",
+  "description": "AON-to-Partner request. It reuses the canonical Query business request and only makes request_id required.",
+  "allOf": [
+    {
+      "$ref": "https://agentoffernetwork.org/schema/offer-query/v0.2"
+    },
+    {
+      "type": "object",
+      "required": ["request_id"]
+    }
+  ]
+}

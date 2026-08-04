@@ -398,14 +398,11 @@ export interface TargetingRule {
 }
 
 export interface GeoTargeting {
-  /** Use either legacy country strings or structured location_id entries, not both in the same array. @example [{ "location_id": "2840" }, { "location_id": "21137" }] */
-  include?: LegacyGeoCountryCode[] | GeoLocationEntry[];
+  /** Structured AON Location Registry entries. Empty means inactive. @example [{ "location_id": "2840" }, { "location_id": "21137" }] */
+  include?: GeoLocationEntry[];
   /** Exclude wins over include. @example [{ "location_id": "21180" }] */
-  exclude?: LegacyGeoCountryCode[] | GeoLocationEntry[];
+  exclude?: GeoLocationEntry[];
 }
-
-/** Legacy uppercase ISO 3166-1 alpha-2 country code, or ALL. @example "US" */
-export type LegacyGeoCountryCode = string;
 
 /** AON Location Registry v1 entry. `location_id` is Google Geo Target Criteria ID as a string. */
 export interface GeoLocationEntry {
@@ -422,13 +419,13 @@ export interface TargetingEligibility {
 export type DeviceType = 'mobile' | 'desktop' | 'tablet' | 'smart_tv';
 
 /** Operating system for targeting. @example "ios" */
-export type OsType = 'ios' | 'android' | 'windows' | 'macos' | 'linux';
+export type OsType = 'ios' | 'android' | 'windows' | 'macos';
 
 // ─── Conversion Rule ────────────────────────────────────────────────────────────
 
 /**
  * Rules for valid conversion events, attribution logic, and tracking windows.
- * @example { "click_window_hours": 720, "attribution_model": "last_click", "accepted_types": ["sale"], "dedup_strategy": "first" }
+ * @example { "click_window_hours": 720, "attribution_model": "last_click", "dedup_strategy": "first" }
  */
 export interface ConversionRule {
   /** Click attribution window in hours. Conversions within this window after a click are eligible for attribution. Default: 720. @example 720 */
@@ -437,8 +434,6 @@ export interface ConversionRule {
   view_window_hours?: number;
   /** Attribution method. Default: "last_click". @example "last_click" */
   attribution_model?: 'last_click' | 'first_click';
-  /** Accepted conversion types for this offer. @example ["sale"] */
-  accepted_types?: ('sale' | 'lead' | 'install' | 'subscription' | 'trial' | 'custom')[];
   /** Deduplication strategy for multiple conversions from the same user. Default: "first". @example "first" */
   dedup_strategy?: 'first' | 'all' | 'highest';
   /** Minimum conversion amount, decimal string. Conversions below this threshold do not qualify. @example "10.00" */
@@ -518,15 +513,13 @@ export interface QueryContext {
 }
 
 /**
- * @example { "user_pseudo_id": "viewer_xyz", "language": "en", "country": "US", "location_ids": ["1014221", "21137", "2840"], "verified_age_over": [18], "interests": ["travel", "hotels"], "device_info": { "device_type": "mobile", "os": "ios", "os_version": "18.2" } }
+ * @example { "user_pseudo_id": "viewer_xyz", "language": "en", "location_ids": ["1014221", "21137", "2840"], "verified_age_over": [18], "interests": ["travel", "hotels"], "device_info": { "device_type": "mobile", "os": "ios", "os_version": "18.2" } }
  */
 export interface UserProfile {
   /** Pseudonymous viewer identifier. @example "viewer_xyz" */
   user_pseudo_id?: string;
-  /** BCP 47 language tag for the end user. @example "en" */
+  /** BCP 47 is recommended. Unparseable non-empty values are treated as unknown by targeting. @example "en" */
   language?: string;
-  /** Legacy user country for geo targeting. Uppercase ISO 3166-1 alpha-2 code. @example "US" */
-  country?: string;
   /** Viewer location ids from AON Location Registry v1, most specific first when available. @example ["1014221", "21137", "2840"] */
   location_ids?: string[];
   /** Verified age thresholds the viewer satisfies. @example [18] */
@@ -534,15 +527,15 @@ export interface UserProfile {
   /** User interest tags. May be empty array. @example ["travel", "hotels"] */
   interests?: string[];
   /**
-   * [REQUIRED] Device information for targeting.
-   * Use `other` values when the caller cannot determine the viewer environment.
+   * [OPTIONAL] Device information for targeting.
+   * Omitted fields and `other` values both represent unknown viewer context.
    * @example { "device_type": "mobile", "os": "ios", "os_version": "18.2" }
    */
-  device_info: {
-    /** [REQUIRED] @example "mobile" */
-    device_type: QueryDeviceType;
-    /** [REQUIRED] @example "ios" */
-    os: QueryOsType;
+  device_info?: {
+    /** [OPTIONAL] @example "mobile" */
+    device_type?: QueryDeviceType;
+    /** [OPTIONAL] @example "ios" */
+    os?: QueryOsType;
     /** @example "18.2" */
     os_version?: string;
     /** Optional raw or normalized user-agent string. Do not use as a stable identifier. @example "Mozilla/5.0" */
@@ -573,14 +566,19 @@ export interface QueryIntent {
  * @example { "type": "input_text", "text": "Find me a hotel in Tokyo under $200/night" }
  * @example { "type": "input_image", "image_url": "https://example.com/screenshot.png" }
  */
-export interface IntentContentItem {
-  /** [REQUIRED] Content type. @example "input_text" */
-  type: 'input_text' | 'input_image';
-  /** Text content (when type=input_text). @example "Find me a hotel in Tokyo under $200/night" */
-  text?: string;
-  /** Image URL (when type=input_image). @example "https://example.com/screenshot.png" */
-  image_url?: string;
-}
+export type IntentContentItem =
+  | {
+      /** [REQUIRED] Text discriminator. */
+      type: 'input_text';
+      /** [REQUIRED] Non-empty text content. */
+      text: string;
+    }
+  | {
+      /** [REQUIRED] Image discriminator. */
+      type: 'input_image';
+      /** [REQUIRED] Image URL. */
+      image_url: string;
+    };
 
 /**
  * @example { "category_ids": ["travel_tourism"] }
@@ -616,6 +614,58 @@ export interface OfferResponse {
   offers: Offer[];
 }
 
+/** AON-to-Partner request: canonical Query business core plus required request_id. */
+export type OfferProviderRequest = Omit<OfferQueryRequest, 'request_id'> & {
+  request_id: string;
+};
+
+export interface OfferProviderError {
+  code: 'BAD_REQUEST' | 'UNAUTHORIZED' | 'FORBIDDEN' | 'RATE_LIMITED' | 'INTERNAL_ERROR';
+  message: string;
+  data: Record<string, never>;
+  extra: Record<string, unknown>;
+}
+
+export type OfferProviderResponse = OfferResponse | OfferProviderError;
+
+/** Shared Goal event identity. Exact grammar is enforced by JSON Schema. */
+export type GoalEventName = string;
+
+interface PartnerPostbackCommonV02 {
+  event_name: GoalEventName;
+  amount?: string;
+  currency?: string;
+  order_id?: string;
+  partner_txn_id?: string;
+  event_id?: string;
+}
+
+/** Partner conversion requires at least one public attribution anchor. */
+export type PartnerPostbackPayloadV02 = PartnerPostbackCommonV02 & (
+  | { offer_instance_id: string }
+  | { aon_tracking_id: string }
+  | { tracking_id: string }
+  | { click_id: string }
+  | { aon_click_id: string }
+);
+
+export interface AgentPostbackPayloadV02 {
+  event_id: string;
+  event_type: 'conversion';
+  event_name: GoalEventName;
+  aon_tracking_id: string;
+  offer_id: string;
+  agent_id: string;
+  amount: number;
+  currency: string;
+  sub_id?: string;
+  sub_id_2?: string;
+  sub_id_3?: string;
+  sub_id_4?: string;
+  sub_id_5?: string;
+  timestamp: string;
+}
+
 // ─── Legacy Aliases (deprecated) ────────────────────────────────────────────────
 
 /**
@@ -624,6 +674,7 @@ export interface OfferResponse {
  */
 export type OfferQuery = OfferQueryRequest;
 
-export interface ConversionGoal { event: string; pricing: CpaPricing | CpsPricing; description?: string; }
+export interface ConversionGoal { event: GoalEventName; pricing: CpaPricing | CpsPricing; description?: string; }
 export interface CpaPricing { model: 'cpa'; amount: string; currency: string; }
+/** Public 0..100 percentage string. Exact grammar is enforced by JSON Schema. */
 export interface CpsPricing { model: 'cps'; rate: string; }

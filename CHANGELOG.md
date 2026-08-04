@@ -1,5 +1,16 @@
 # Changelog
 
+## Protocol v0.2 canonical contract baseline (2026-07-27)
+
+- Added closed Query, Provider, Offer, Goal Event Name, and both Postback v0.2
+  schemas plus their equivalent TypeScript projection.
+- Added the manifest-driven aggregate baseline with independently pinned
+  structural, semantic-follow-up, downstream, canonical-example, and
+  Postback-signature checks.
+- Made complete `offer_info.commercial.price` amount/currency pairs mandatory
+  when price is present; preserved strictly positive CPA semantics and CPS
+  inclusive `0..100` percent-string semantics.
+
 ## Offer v0.2 card display fields (2026-07-15)
 
 - Added schema, TypeScript, and semantic-validator coverage for optional card
@@ -65,7 +76,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - Version: `v0.1`
 - Status: `Draft`
 
-## [Unreleased]
+## Historical v0.1 development log (formerly Unreleased)
+
+> Historical v0.1 line — not current Schema v0.2 integration guidance. The
+> current v0.2 artifacts are recorded in the dated sections above.
 
 ### Added
 

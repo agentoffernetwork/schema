@@ -1,306 +1,102 @@
-<p align="center">
-  <h1 align="center">AgentOffer Schema</h1>
-  <p align="center">
-    Machine-readable contracts for <a href="https://github.com/agentoffernetwork/protocol">AgentOffer Protocol</a>.
-    <br />
-    JSON Schema + TypeScript types + validators.
-  </p>
-</p>
+# AgentOffer Schema
 
-<p align="center">
-  <a href="https://www.apache.org/licenses/LICENSE-2.0"><img src="https://img.shields.io/badge/license-Apache--2.0-blue.svg" alt="License" /></a>
-  <a href="#status"><img src="https://img.shields.io/badge/version-v0.1-orange.svg" alt="Version" /></a>
-  <a href="#status"><img src="https://img.shields.io/badge/status-Draft-yellow.svg" alt="Status" /></a>
-  <a href="https://github.com/agentoffernetwork/schema/issues"><img src="https://img.shields.io/github/issues/agentoffernetwork/schema.svg" alt="Issues" /></a>
-  <a href="https://github.com/agentoffernetwork/schema/actions/workflows/validate.yml"><img src="https://github.com/agentoffernetwork/schema/actions/workflows/validate.yml/badge.svg" alt="Validate" /></a>
-</p>
+JSON Schema, TypeScript types, semantic-validation inputs, and executable
+contract vectors for AgentOffer Protocol.
 
----
+**Current normative contract: Protocol v0.2**
 
-## What's Inside
+The v0.2 source package is stable. Hosted runtime support is tracked
+independently and is currently `not_available`; these artifacts define what
+future implementations must accept and emit without claiming that a service
+already does so.
 
-The formal Offer v0.2 contract is available at
-`json-schema/offer-schema-v0.2.json` and `types/offer-v0.2.types.ts`. It
-covers the complete Offer snapshot with conversion goals and optional card
-display fields. Validate payloads with Ajv Draft 2020-12 first, then
-`validators/offer-v0.2-semantics.mjs` for event uniqueness, positive pricing,
-and card display template token rules.
+## Canonical v0.2 files
 
-| Path | Description |
-|------|-------------|
-| `json-schema/offer-schema-v0.1.json` | Offer object JSON Schema with RFC 2119 requirement levels |
-| `json-schema/offer-query-schema-v0.1.json` | Query request schema for `POST /v1/offers/query` |
-| `json-schema/location-registry-v1.schema.json` | JSON Schema for AON Location Registry v1 |
-| `json-schema/location-search-response-v0.1.json` | JSON Schema for Location Search API success responses |
-| `locations/aon-location-registry-v1.json` | AON Location Registry v1, generated from Google Geo Targets Criteria IDs and limited to COUNTRY, REGION, and CITY |
-| `json-schema/taxonomy-v1.schema.json` | Source tree schema for AON Taxonomy v1 |
-| `taxonomy/aon-taxonomy-v1.json` | AON Taxonomy v1 source tree (`name + children`) |
-| `taxonomy/v0.1-to-taxonomy-v1.json` | Legacy v0.1 category migration mapping |
-| `types/offer.types.ts` | TypeScript type definitions for Offer, Query, and Response |
-| `types/location.types.ts` | TypeScript types for Location Search API results and migration helper contracts |
-| `types/category-attributes.types.ts` | AON Taxonomy v1 category id and registry types |
-| `helpers/location-helpers.mjs` | Country, subdivision-code, edge-header, and location-chain helpers for migration |
-| `scripts/generate-location-registry-v1.mjs` | Generates the supported AON location registry from a Google Geo Targets CSV |
-| `scripts/validate-location-registry-v1.mjs` | Validates registry shape, parent links, and supported levels |
-| `validators/` | Versioned semantic validators; v0.2 checks goal uniqueness, positive pricing, and display pattern token grammar after JSON Schema validation |
+| File | Role |
+|---|---|
+| `json-schema/goal-event-name-v0.2.json` | Shared Goal/Postback event-name grammar |
+| `json-schema/offer-schema-v0.2.json` | Canonical Offer |
+| `json-schema/offer-query-schema-v0.2.json` | Shared Query request business core |
+| `json-schema/offer-query-response-v0.2.json` | `{request_id, offers[]}` protocol success payload |
+| `json-schema/offer-provider-request-v0.2.json` | Shared core plus required `request_id` |
+| `json-schema/offer-provider-response-v0.2.json` | Raw Provider success or Provider error |
+| `json-schema/postback-partner-payload-v0.2.json` | Partner-to-AON conversion payload |
+| `json-schema/postback-agent-payload-v0.2.json` | AON-to-Agent conversion payload |
+| `types/offer-v0.2.types.ts` | TypeScript structural projection |
+| `fixtures/protocol-v0.2-contract-vectors.json` | Canonical structural and downstream-contract vectors (S1) |
+| `fixtures/protocol-v0.2-semantic-vectors.json` | BL-035 semantic vectors, executed after an Ajv schema gate |
 
-## Quick Start
+JSON Schema is the machine-readable structural source. The human-readable
+specification owns normative semantics that cannot be expressed structurally.
+TypeScript types and examples project these sources and must not introduce
+additional fields.
 
-If you are new to AON, start with the guided docs first:
+## Validation layers
 
-| Need | Link |
-|------|------|
-| Understand mock mode and the first working request | [Docs Quick Start](https://docs.aon.pro/quickstart) |
-| Read field-level platform API tables | [AON API Reference](https://docs.aon.pro/api) |
-| Understand the human-readable protocol semantics | [Protocol source](https://github.com/agentoffernetwork/protocol) |
+- **Structural** validation runs JSON Schema against one payload's shape,
+  required fields, closed objects, lexical patterns, and numeric bounds.
+- **Semantic** validation runs only after the structural gate and checks
+  cross-field Goal identity, CPA positivity, taxonomy registry/branch rules,
+  and test-only declared-goal postback context.
+- **Runtime** enforcement remains owned by downstream services. These local
+  validators do not provide routing, tracking lookup, HMAC, retries,
+  idempotency, settlement, or hosted error envelopes; `runtime_support`
+  remains `not_available` until those owners deliver it.
 
-Use this repository when you need to validate payloads or reference TypeScript contract types.
+## Validate locally
 
-### Validate a Query API request
-
-Use this when you are building the body for `POST /v1/offers/query`.
+From this directory:
 
 ```bash
-npx --yes --package=ajv-cli@5 --package=ajv-formats@3 -- \
-  ajv validate \
-  -s json-schema/offer-query-schema-v0.1.json \
-  -d your-query-request.json \
-  --spec=draft2020
+npm ci --ignore-scripts
+npm run test:v0.2-baseline
+npm run test:v0.2-semantic
+npm test
 ```
 
-Start from the minimal request in the
-[Query API spec](https://github.com/agentoffernetwork/protocol/blob/main/specs/query-api.md)
-or the examples repository, then validate the payload your integration will actually send.
+`test:v0.2-baseline` validates S1 structural/downstream contracts. The semantic
+runner validates only BL-035-owned vectors and fails closed on incompatible
+manifest fields, payload sources, validators, schemas, taxonomy versions, and
+postback context rules. `npm test` runs both runners, the taxonomy audit,
+TypeScript checks, and the Postback reference suite.
 
-### Validate an offer with JSON Schema
+The full gate:
 
-```bash
-npx --yes --package=ajv-cli@5 --package=ajv-formats@3 -- \
-  ajv validate \
-  -s json-schema/offer-schema-v0.1.json \
-  -d ../examples/http/notion-offer.json \
-  --spec=draft2020
-```
+- registers every required v0.2 schema and rejects missing references;
+- validates structural cases and semantic-vector payloads with Ajv 2020;
+- audits the taxonomy source tree, migration mappings, and example references;
+- checks that Provider schemas reuse the Query and Offer definitions;
+- compiles the TypeScript contract and negative type assertions;
+- verifies Postback payload examples, HMAC vectors, retry, and idempotency;
+- fails if required coverage, fixtures, navigation, or the known-bad canary is
+  missing.
 
-### Validate an Offer v0.2 payload
+Semantic rejection is not a runtime result or hosted HTTP response. CPS
+fraction-to-percent conversion and targeting evaluation remain downstream
+runtime contracts rather than BL-035 semantic rules.
 
-Offer v0.2 uses a two-step validation path: JSON Schema first, then the
-versioned semantic validator for cross-field rules.
+## Important v0.2 rules
 
-```bash
-pnpm install
-pnpm test
-```
+- Required properties must be present and non-null unless their schema
+  explicitly permits `null`; optional does not imply nullable.
+- Closed protocol objects reject unknown fields.
+- Offer `goals[]` is non-empty. Every Goal requires `event` and exactly one
+  closed pricing branch: CPA amount/currency or CPS percentage rate.
+- CPS `rate` is a decimal string in `0..100`, with at most four decimal places.
+- Offer `bid`, `conversion_rule.accepted_types`, Postback `conversion_type`,
+  and Postback `bid_amount` are not v0.2 fields.
+- Offer geo targeting uses only `{location_id}` entries. Offer OS targeting is
+  `ios`, `android`, `windows`, or `macos`; `linux` is not a valid Offer value.
 
-For application code, import the semantic validator after your JSON Schema
-check succeeds:
+## Registry data
 
-```javascript
-import { validateOfferV02Semantics } from './validators/offer-v0.2-semantics.mjs';
+AON Taxonomy v1 and AON Location Registry v1 remain shared registries used by
+v0.2. Schema patterns validate shape; registry membership and hierarchy are
+semantic checks.
 
-const result = validateOfferV02Semantics(offer);
-if (!result.valid) {
-  console.error(result.errors);
-}
-```
+## Historical material
 
-### Use TypeScript types
+Files carrying v0.1 in their names are historical references. They are not
+loaded by `test:v0.2-baseline` and are not the current integration path.
 
-```typescript
-import type { Offer, OfferQueryRequest, OfferResponse } from './types/offer.types';
-
-const offer: Offer = {
-  offer_id: '019414a0-7e3b-7f1a-b5e2-0a1b2c3d4e5f',
-  offer_instance_id: '019dd208-27d2-7673-b16f-6897fa120303',
-  version: '1.0',
-  content_language: 'en-US',
-  offer_info: {
-    title: 'My SaaS Product',
-    offer_type: 'online_service',
-    category: {
-      id: 'computers_electronics.computers.software',
-    },
-    secondary_category_ids: ['finance.investing.crypto_and_digital_assets'],
-    description: 'A great tool for teams',
-    tags: ['project-management', 'team-collaboration'],
-  },
-  entity: { id: 'entity-001', name: 'Acme Inc' },
-  action: {
-    type: 'web_redirect',
-    payload: { target: 'https://example.com/offer' },
-  },
-  bid: { model: 'cpa', amount: '10.00', currency: 'USD' },
-};
-```
-
-## Core Offer Shape
-
-**REQUIRED fields:**
-
-- `offer_id` -- stable inventory-level offer identifier
-- `offer_instance_id` -- per-dispatch offer instance identifier
-- `version` -- schema version
-- `offer_info` -- title, category id, description; optional offer_type fulfillment hint
-- `entity` -- provider id and name
-- `action` -- type and payload.target
-- `bid` -- payout model, amount, and currency
-
-**RECOMMENDED fields:**
-
-- `material[]` -- creative assets (images, videos)
-- `offer_info.commercial` -- pricing and terms
-- `offer_info.secondary_category_ids` -- optional secondary category ids; they
-  are deterministic taxonomy ids, unlike `offer_info.tags` semantic hints.
-- `conversion_rule` -- attribution windows and accepted conversion types
-
-**OPTIONAL fields:**
-
-- `content_language` -- BCP 47 language tag for user-facing offer content; it
-  does not replace `context.user_profile.language` or `targeting[].language`
-- `offer_info.tags` -- partner-supplied content matching hints
-- `targeting`, `frequency_capping`, `offer_info.priority`, `offer_info.status`
-
-## Query API Validation Path
-
-| Step | Use | File |
-|------|-----|------|
-| 1 | Read the human-readable API contract | [`protocol/specs/query-api.md`](https://github.com/agentoffernetwork/protocol/blob/main/specs/query-api.md) |
-| 2 | Validate a request body | [`json-schema/offer-query-schema-v0.1.json`](json-schema/offer-query-schema-v0.1.json) |
-| 3 | Inspect a canonical request payload | [`examples/http/offer-query-request.json`](https://github.com/agentoffernetwork/examples/blob/main/http/offer-query-request.json) |
-| 4 | Understand returned `offers[]` objects | [`json-schema/offer-schema-v0.1.json`](json-schema/offer-schema-v0.1.json) |
-| 5 | Inspect a canonical response payload | [`examples/http/offer-response.json`](https://github.com/agentoffernetwork/examples/blob/main/http/offer-response.json) |
-
-The query request schema validates the request body. The offer schema validates each object inside `offers[]`.
-
-## Common Validation Failures
-
-| Symptom | Likely cause | Fix |
-|---------|--------------|-----|
-| Missing required property `context` | Request body omitted the context object | Send `context` with at least `user_profile` |
-| Missing required property `intent` | Request body omitted the user intent object | Send `intent.content[]` with at least one item |
-| `intent.content[]` fails validation | Missing content item `type` or unsupported content type | Use `input_text` or `input_image` |
-| Category id fails validation | Category id is malformed or not part of the current registry | Use a lowercase AON Taxonomy v1 id from the protocol taxonomy; schema pattern checks are not a substitute for registry validation |
-| Location id fails registry validation | `location_id` is not in AON Location Registry v1 or uses an unsupported level | Use `locations/aon-location-registry-v1.json`; the first release supports COUNTRY, REGION, and CITY only |
-| Structured and legacy geo entries are mixed | `targeting[].geo.include` or `exclude` combines legacy country strings with `{ "location_id": "..." }` objects | Use one entry shape per array; prefer structured location entries for new payloads |
-| Stale identifier appears in offer payload | Payload still uses `uuid`, `original_offer_id`, or `source_offer_id` | Use `offer_id` and `offer_instance_id` |
-| Response metadata mismatch | Payload still expects `query_id`, `trace_id`, `aon_trace_id`, `has_more`, or `total` in the canonical Query API JSON response | Use `request_id` and `offers[]`; use the hosted API `X-AON-TRACE-ID` response header for diagnostics |
-
-## Category IDs
-
-The current canonical category surface is defined by the human-readable
-[Category Taxonomy](https://github.com/agentoffernetwork/protocol/blob/main/specs/category-taxonomy.md)
-document in the `protocol` repository.
-
-This repo follows that taxonomy boundary:
-
-- `offer_info.category.id` is the primary category for the offer.
-- `offer_info.secondary_category_ids` is an optional secondary category id array
-  for auxiliary taxonomy meanings. AON-owned `constraints.category_ids` matching
-  checks the primary or secondary category with subtree semantics. Secondary
-  ids must be cross-branch: do not repeat the primary category, and do not list
-  an ancestor or descendant of the primary or another secondary id.
-- `offer_info.tags` are partner-supplied semantic hints; tags are not
-  deterministic category ids and do not replace category filters.
-- current public machine-readable category values are AON Taxonomy v1 ids such as `travel_tourism`, `finance.credit_lending`, and `others`
-- aliases and legacy v0.1 `category.type + attributes.sub_type` values are migration concerns, not public request fields
-- JSON Schema enforces id shape; use the taxonomy guard or generated SDK validators for registry membership checks
-
-## Location Registry
-
-AON Location Registry v1 is the canonical machine-readable source for location
-targeting ids. The first public release is generated from Google Ads Geo Targets
-Criteria IDs and intentionally exposes only three AON-supported levels:
-
-- `COUNTRY`
-- `REGION`
-- `CITY`
-
-New offer payloads should use structured geo entries such as
-`{ "location_id": "21137" }` in `targeting[].geo.include` or
-`targeting[].geo.exclude`. Query requests should send the viewer's known
-location chain in `context.user_profile.location_ids`, for example
-`["1014221", "21137", "2840"]`.
-
-The matcher uses self-or-ancestor semantics and derives ancestor chains from
-registry `parent_location_id` links. It fails closed for unknown locations. Age
-eligibility uses `targeting[].eligibility.min_age` on the offer and
-`context.user_profile.verified_age_over[]` on the query request; do not send date
-of birth or exact age in public Query payloads.
-
-When callers need to resolve human-readable locations, use the
-[Location Search API protocol contract](https://github.com/agentoffernetwork/protocol/blob/main/specs/location-search-api.md)
-or the local helper functions:
-
-```javascript
-import {
-  buildLocationChain,
-  cloudflareHeadersToLocationContext,
-  countryCodeToLocationId,
-  googleCloudHeadersToLocationContext,
-  legacyCountryGeoToLocationGeo,
-  subdivisionCodeToLocationId,
-} from './helpers/location-helpers.mjs';
-
-countryCodeToLocationId('US'); // "2840"
-subdivisionCodeToLocationId('US-CA'); // "21137"
-legacyCountryGeoToLocationGeo(['US', 'SG']);
-buildLocationChain('1014221'); // ["1014221", "21137", "2840"]
-cloudflareHeadersToLocationContext({
-  'cf-ipcountry': 'US',
-  'cf-region-code': 'CA',
-  'cf-ipcity': 'San Francisco',
-}).location_ids; // ["1014221", "21137", "2840"]
-googleCloudHeadersToLocationContext({
-  client_region: 'US',
-  client_region_subdivision: 'USCA',
-  client_city: 'San Francisco',
-}).location_ids; // ["1014221", "21137", "2840"]
-```
-
-External codes such as ISO 3166-2 `US-CA`, CLDR `USCA`, Cloudflare
-`cf-region-code`, and Google Cloud `client_region_subdivision` are lookup
-aliases only. Offer and Query payloads still use canonical AON `location_id`
-values.
-
-## Field Requirement Levels
-
-Following [RFC 2119](https://datatracker.ietf.org/doc/html/rfc2119):
-
-| Level | Meaning |
-|-------|---------|
-| **REQUIRED** | MUST be present with a valid, non-empty value |
-| **RECOMMENDED** | SHOULD be present; value MAY be empty or null |
-| **OPTIONAL** | MAY be omitted entirely |
-
-## Source of Truth
-
-These artifacts are the machine-readable companion to the human-readable [protocol specification](https://github.com/agentoffernetwork/protocol).
-
-| Need | Go to |
-|------|-------|
-| Human-readable spec | [`agentoffernetwork/protocol`](https://github.com/agentoffernetwork/protocol) |
-| Category registry | [`specs/category-taxonomy.md`](https://github.com/agentoffernetwork/protocol/blob/main/specs/category-taxonomy.md) |
-| Location registry | [`locations/aon-location-registry-v1.json`](locations/aon-location-registry-v1.json) |
-| Location lookup contract | [`specs/location-search-api.md`](https://github.com/agentoffernetwork/protocol/blob/main/specs/location-search-api.md) |
-| Example payloads | [`agentoffernetwork/examples`](https://github.com/agentoffernetwork/examples) |
-| Change proposals | [`agentoffernetwork/rfcs`](https://github.com/agentoffernetwork/rfcs) |
-
-Use the protocol repo for semantics, this schema repo for validation, and the examples repo for payloads you can inspect or adapt.
-
-## Status
-
-- **Version:** `v0.1`
-- **Status:** `Draft`
-- **Release posture:** `Public beta for machine-readable contract artifacts`
-- **Scope note:** This repo currently ships canonical JSON Schema and TypeScript types. Packaged validator tooling is planned follow-up work, not part of the current v0.1 deliverable.
-
-## Contributing
-
-- **Tooling/validation improvements** -- open a PR directly
-- **Schema field changes** -- open an [RFC](https://github.com/agentoffernetwork/rfcs) when affecting the protocol contract
-
-See [CONTRIBUTING.md](CONTRIBUTING.md) for details.
-
-## License
-
-Licensed under [Apache License 2.0](https://www.apache.org/licenses/LICENSE-2.0).
+Licensed under [Apache License 2.0](LICENSE).

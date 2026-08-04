@@ -1,0 +1,21 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://agentoffernetwork.org/schema/offer-query-response/v0.2",
+  "title": "AgentOffer Query Success Payload v0.2",
+  "description": "Protocol success payload shared by Query and OfferProvider. Hosted Query may place this object inside its transport data field.",
+  "type": "object",
+  "required": ["request_id", "offers"],
+  "properties": {
+    "request_id": {
+      "type": "string",
+      "format": "uuid"
+    },
+    "offers": {
+      "type": "array",
+      "items": {
+        "$ref": "https://agentoffernetwork.org/schema/offer/v0.2"
+      }
+    }
+  },
+  "additionalProperties": false
+}

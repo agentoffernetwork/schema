@@ -1,9 +1,8 @@
 #!/usr/bin/env bash
 #
-# Validate Postback examples against their JSON Schemas.
+# Validate Postback examples and fixed signing vectors.
 #
-# Prerequisites: Node.js (for npx) and network access (ajv-cli is fetched
-# via `npx --yes`). No permanent install needed.
+# Prerequisites: repository Node dependencies and Python 3.
 #
 # Usage:
 #   bash schema/test/validate-postback.sh
@@ -15,51 +14,34 @@
 set -euo pipefail
 
 HERE="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-SCHEMA_DIR="$(cd "${HERE}/.." && pwd)/json-schema"
-EXAMPLES_DIR="$(cd "${HERE}/../.." && pwd)/examples/http/postback"
-
-AGENT_SCHEMA="${SCHEMA_DIR}/postback-agent-payload-v0.1.json"
-PARTNER_SCHEMA="${SCHEMA_DIR}/postback-partner-payload-v0.1.json"
-
 pass=0
 fail=0
 
-run() {
-  local label="$1"
-  local schema="$2"
-  local data="$3"
+run_schema_gate() {
   echo ""
-  echo ">>> ${label}"
-  echo "    schema: ${schema}"
-  echo "    data:   ${data}"
-  if npx --yes --package=ajv-cli@5 --package=ajv-formats@3 -- \
-       ajv validate \
-       --spec=draft2020 \
-       -c ajv-formats \
-       --strict-types=false \
-       --all-errors \
-       -s "${schema}" \
-       -d "${data}"; then
+  echo ">>> Local Ajv v0.2 Postback schema vectors"
+  if node "${HERE}/protocol-v0.2-contract-baseline.test.mjs" --postback-only; then
     pass=$((pass + 1))
   else
     fail=$((fail + 1))
   fi
 }
 
-# Part A: Agent payload schema
-run "basic-conversion.json against agent payload schema" \
-    "${AGENT_SCHEMA}" \
-    "${EXAMPLES_DIR}/agent/basic-conversion.json"
+run_reference_verifier() {
+  echo ""
+  echo ">>> Python stdlib reference verifier for signing and receiver vectors"
+  if python3 "${HERE}/verify-postback-v0.2.py"; then
+    pass=$((pass + 1))
+  else
+    fail=$((fail + 1))
+  fi
+}
 
-# Part B: Partner payload schema (conversion)
-run "conversion.json against partner payload schema" \
-    "${PARTNER_SCHEMA}" \
-    "${EXAMPLES_DIR}/partner/conversion.json"
+run_schema_gate
 
-# Part B: Partner payload schema (refund)
-run "refund.json against partner payload schema" \
-    "${PARTNER_SCHEMA}" \
-    "${EXAMPLES_DIR}/partner/refund.json"
+# Static contract gate: signature, URL byte preservation, retry and idempotency
+# vectors require no Node package, network access, sender, or receiver runtime.
+run_reference_verifier
 
 echo ""
 echo "================ Summary ================"

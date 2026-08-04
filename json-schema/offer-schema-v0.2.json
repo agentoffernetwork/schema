@@ -191,6 +191,10 @@
           "properties": {
             "price": {
               "type": "object",
+              "required": [
+                "amount",
+                "currency"
+              ],
               "properties": {
                 "amount": {
                   "type": "string",
@@ -567,84 +571,38 @@
             "type": "object",
             "properties": {
               "include": {
-                "oneOf": [
-                  {
-                    "type": "array",
-                    "maxItems": 0,
-                    "description": "Empty include means the location dimension is unconstrained."
-                  },
-                  {
-                    "type": "array",
-                    "minItems": 1,
-                    "items": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "required": ["location_id"],
+                  "properties": {
+                    "location_id": {
                       "type": "string",
-                      "pattern": "^([A-Z]{2}|ALL)$"
-                    },
-                    "uniqueItems": true,
-                    "description": "Legacy included country codes."
+                      "pattern": "^[0-9]+$",
+                      "description": "AON Location Registry v1 location id."
+                    }
                   },
-                  {
-                    "type": "array",
-                    "minItems": 1,
-                    "items": {
-                      "type": "object",
-                      "required": [
-                        "location_id"
-                      ],
-                      "properties": {
-                        "location_id": {
-                          "type": "string",
-                          "pattern": "^[0-9]+$",
-                          "description": "AON Location Registry v1 location id, sourced from Google Geo Target Criteria ID."
-                        }
-                      },
-                      "additionalProperties": false
-                    },
-                    "uniqueItems": true,
-                    "description": "Included AON Location Registry v1 locations."
-                  }
-                ],
-                "description": "Included geographic locations. Use either legacy country strings or structured location_id objects, not both in the same array."
+                  "additionalProperties": false
+                },
+                "uniqueItems": true,
+                "description": "Included structured locations. Empty means the location dimension is inactive."
               },
               "exclude": {
-                "oneOf": [
-                  {
-                    "type": "array",
-                    "maxItems": 0,
-                    "description": "Empty exclude means no location is excluded."
-                  },
-                  {
-                    "type": "array",
-                    "minItems": 1,
-                    "items": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "required": ["location_id"],
+                  "properties": {
+                    "location_id": {
                       "type": "string",
-                      "pattern": "^([A-Z]{2}|ALL)$"
-                    },
-                    "uniqueItems": true,
-                    "description": "Legacy excluded country codes."
+                      "pattern": "^[0-9]+$",
+                      "description": "AON Location Registry v1 location id."
+                    }
                   },
-                  {
-                    "type": "array",
-                    "minItems": 1,
-                    "items": {
-                      "type": "object",
-                      "required": [
-                        "location_id"
-                      ],
-                      "properties": {
-                        "location_id": {
-                          "type": "string",
-                          "pattern": "^[0-9]+$",
-                          "description": "AON Location Registry v1 location id, sourced from Google Geo Target Criteria ID."
-                        }
-                      },
-                      "additionalProperties": false
-                    },
-                    "uniqueItems": true,
-                    "description": "Excluded AON Location Registry v1 locations."
-                  }
-                ],
-                "description": "Excluded geographic locations. Exclude wins over include."
+                  "additionalProperties": false
+                },
+                "uniqueItems": true,
+                "description": "Excluded structured locations. Exclude wins over include; empty means inactive."
               }
             },
             "additionalProperties": false
@@ -663,6 +621,7 @@
           },
           "language": {
             "type": "string",
+            "pattern": "^[a-z]{2}$",
             "description": "Target language, ISO 639-1 code."
           },
           "device_type": {
@@ -686,8 +645,7 @@
                 "ios",
                 "android",
                 "windows",
-                "macos",
-                "linux"
+                "macos"
               ]
             },
             "description": "Target operating systems."
@@ -708,8 +666,7 @@
         ],
         "properties": {
           "event": {
-            "type": "string",
-            "pattern": "^[a-z0-9][a-z0-9_.-]{0,63}$"
+            "$ref": "https://agentoffernetwork.org/schema/goal-event-name/v0.2"
           },
           "pricing": {
             "oneOf": [

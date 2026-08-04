@@ -111,7 +111,7 @@ export function test_AC6_rev2_exact_boundary_equivalence_classes() {
     ['null goals', { ...clone(offer), goals: null }, false],
     ['object goals', { ...clone(offer), goals: {} }, false],
     ['null event', { ...clone(offer), goals: [{ event: null, pricing: { model: 'cpa', amount: '1', currency: 'USD' } }] }, false],
-    ['zero cps', { ...clone(offer), goals: [{ event: 'sale', pricing: { model: 'cps', rate: '0' } }] }, false],
+    ['zero cps', { ...clone(offer), goals: [{ event: 'sale', pricing: { model: 'cps', rate: '0' } }] }, true],
     ['cps currency mix', { ...clone(offer), goals: [{ event: 'sale', pricing: { model: 'cps', rate: '1', currency: 'USD' } }] }, false],
     ['unknown goal field', { ...clone(offer), goals: [{ event: 'sale', pricing: { model: 'cpa', amount: '1', currency: 'USD' }, unknown: true }] }, false],
   ];

@@ -15,10 +15,7 @@ const offerQuerySchema = JSON.parse(
   readFileSync(resolve(schemaRoot, 'json-schema/offer-query-schema-v0.1.json'), 'utf8'),
 );
 const agentPostbackSchema = JSON.parse(
-  readFileSync(resolve(schemaRoot, 'json-schema/postback-agent-payload-v0.1.json'), 'utf8'),
-);
-const partnerPostbackSchema = JSON.parse(
-  readFileSync(resolve(schemaRoot, 'json-schema/postback-partner-payload-v0.1.json'), 'utf8'),
+  readFileSync(resolve(schemaRoot, 'json-schema/postback-agent-payload-v0.2.json'), 'utf8'),
 );
 const offerTypes = readFileSync(resolve(schemaRoot, 'types/offer.types.ts'), 'utf8');
 const schemaReadme = readFileSync(resolve(schemaRoot, 'README.md'), 'utf8');
@@ -94,9 +91,7 @@ function test_content_language_does_not_change_targeting_or_event_contracts() {
   assert.match(queryLanguage.description, /BCP 47/i);
   assert.equal(Object.hasOwn(offerQuerySchema.properties, 'content_language'), false);
 
-  const serializedEvents = `${JSON.stringify(agentPostbackSchema)}\n${JSON.stringify(
-    partnerPostbackSchema,
-  )}\n${eventsSpec}\n${postbackSpec}`;
+  const serializedEvents = `${JSON.stringify(agentPostbackSchema)}\n${eventsSpec}\n${postbackSpec}`;
   assert.doesNotMatch(serializedEvents, /content_language/);
 }
 

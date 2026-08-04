@@ -4,9 +4,10 @@ Schema validation tooling for AgentOffer Protocol.
 
 ## Status
 
-`offer-v0.2-semantics.mjs` is available for the public Offer v0.2 contract. Run
-JSON Schema validation first, then run this semantic validator for rules that
-cannot be expressed cleanly in JSON Schema.
+Run JSON Schema **structural** validation first, then use these pure
+**semantic** validators for rules that cannot be expressed cleanly in one
+payload schema. They do not implement **runtime** enforcement and must not be
+used to claim that a hosted service is supported.
 
 ## Offer v0.2 Semantic Validator
 
@@ -19,11 +20,59 @@ if (!result.valid) {
 }
 ```
 
-The validator checks:
+The Offer validator checks:
 
 - `goals[].event` uniqueness within one Offer.
-- Positive decimal pricing for `cpa.amount` and `cps.rate`.
+- Strictly positive `cpa.amount`; CPS range and precision remain JSON Schema
+  responsibilities, so `"0"` and `"0.0000"` are accepted semantically.
 - `offer_info.properties[].display_pattern` token grammar.
+- AON Taxonomy v1 primary/secondary registry membership and branch conflicts.
+
+The validator deliberately does not create a currency registry: a schema-valid
+three-letter uppercase value such as `ZZZ` remains valid. Taxonomy facts come
+from the immutable resolver derived from `aon-taxonomy-v1.json`.
+
+## Query and Provider Taxonomy Validator
+
+```javascript
+import { validateTaxonomyConstraintsV02 } from './taxonomy-v0.2-semantics.mjs';
+
+const result = validateTaxonomyConstraintsV02(queryOrProviderRequest);
+```
+
+This validator checks `constraints.category_ids` against AON Taxonomy v1. It
+does not perform Query subtree matching or Provider routing; those are runtime
+responsibilities.
+
+## Postback Declared-Goal Context Validator
+
+```javascript
+import { validatePostbackDeclaredGoalContext } from './postback-v0.2-semantics.mjs';
+
+const result = validatePostbackDeclaredGoalContext(postback, {
+  declared_goal_events: ['trial', 'subscription'],
+});
+```
+
+This context is a semantic-vector test input only. It does not read tracking
+anchors, databases, provider configuration, HMAC state, retry state,
+idempotency state, or settlement state.
+
+Stable semantic rule codes are `event_unique`, `amount_positive`,
+`taxonomy_registry_membership`, `taxonomy_branch_conflict`, `context_required`,
+`context_invalid`, and `event_undeclared`. They are not hosted HTTP error codes.
+
+## Run semantic vectors
+
+From `schema/`:
+
+```bash
+npm run test:v0.2-semantic
+```
+
+The runner validates every vector structurally with Ajv before dispatching its
+closed semantic validator set. `npm test` also runs the S1 baseline,
+TypeScript checks, and the Postback reference suite.
 
 ## Planned Packaging
 

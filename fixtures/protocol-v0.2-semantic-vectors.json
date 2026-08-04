@@ -1,0 +1,419 @@
+{
+  "manifest_version": "1",
+  "protocol_version": "0.2",
+  "cases": [
+    {
+      "id": "offer-duplicate-goal-same-pricing",
+      "consumer": "BL-035",
+      "covers": ["offer.goal-duplicate.same-pricing"],
+      "validator": "offer",
+      "schema_id": "https://agentoffernetwork.org/schema/offer/v0.2",
+      "taxonomy_version": "aon-taxonomy-v1",
+      "fixture": "examples/http/offer-response-v0.2.json",
+      "fixture_pointer": "/offers/0",
+      "mutations": [
+        {
+          "op": "append",
+          "path": "/goals",
+          "value": {
+            "event": "trial",
+            "pricing": { "model": "cpa", "amount": "2.50", "currency": "USD" }
+          }
+        }
+      ],
+      "expected": { "layer": "semantic", "result": "reject", "rule": "event_unique" }
+    },
+    {
+      "id": "offer-duplicate-goal-different-pricing",
+      "consumer": "BL-035",
+      "covers": ["offer.goal-duplicate.different-pricing"],
+      "validator": "offer",
+      "schema_id": "https://agentoffernetwork.org/schema/offer/v0.2",
+      "taxonomy_version": "aon-taxonomy-v1",
+      "fixture": "examples/http/offer-response-v0.2.json",
+      "fixture_pointer": "/offers/0",
+      "mutations": [
+        {
+          "op": "append",
+          "path": "/goals",
+          "value": { "event": "trial", "pricing": { "model": "cps", "rate": "20" } }
+        }
+      ],
+      "expected": { "layer": "semantic", "result": "reject", "rule": "event_unique" }
+    },
+    {
+      "id": "offer-custom-goal-accepted",
+      "consumer": "BL-035",
+      "covers": ["offer.goal-custom-event.accept"],
+      "validator": "offer",
+      "schema_id": "https://agentoffernetwork.org/schema/offer/v0.2",
+      "taxonomy_version": "aon-taxonomy-v1",
+      "fixture": "examples/http/offer-response-v0.2.json",
+      "fixture_pointer": "/offers/0",
+      "mutations": [
+        {
+          "op": "append",
+          "path": "/goals",
+          "value": { "event": "custom_goal", "pricing": { "model": "cps", "rate": "20" } }
+        }
+      ],
+      "expected": { "layer": "semantic", "result": "accept" }
+    },
+    {
+      "id": "offer-display-pattern-token-rejected",
+      "consumer": "BL-035",
+      "covers": ["offer.display-pattern.semantic-reject"],
+      "validator": "offer",
+      "schema_id": "https://agentoffernetwork.org/schema/offer/v0.2",
+      "taxonomy_version": "aon-taxonomy-v1",
+      "fixture": "examples/http/offer-response-v0.2.json",
+      "fixture_pointer": "/offers/0",
+      "mutations": [
+        {
+          "op": "set",
+          "path": "/offer_info/properties/0/display_pattern",
+          "value": "Cashback ${unknown}"
+        }
+      ],
+      "expected": { "layer": "semantic", "result": "reject", "rule": "display_pattern_token" }
+    },
+    {
+      "id": "cpa-zero-semantic-rejected",
+      "consumer": "BL-035",
+      "covers": ["cpa.zero.semantic-reject"],
+      "validator": "offer",
+      "schema_id": "https://agentoffernetwork.org/schema/offer/v0.2",
+      "taxonomy_version": "aon-taxonomy-v1",
+      "fixture": "examples/http/offer-response-v0.2.json",
+      "fixture_pointer": "/offers/0",
+      "mutations": [
+        { "op": "set", "path": "/goals/0/pricing/amount", "value": "0" }
+      ],
+      "expected": { "layer": "semantic", "result": "reject", "rule": "amount_positive" }
+    },
+    {
+      "id": "offer-cpa-currency-zzz-accepted",
+      "consumer": "BL-035",
+      "covers": ["cpa.currency.no-registry"],
+      "validator": "offer",
+      "schema_id": "https://agentoffernetwork.org/schema/offer/v0.2",
+      "taxonomy_version": "aon-taxonomy-v1",
+      "fixture": "examples/http/offer-response-v0.2.json",
+      "fixture_pointer": "/offers/0",
+      "mutations": [
+        { "op": "set", "path": "/goals/0/pricing/currency", "value": "ZZZ" }
+      ],
+      "expected": { "layer": "semantic", "result": "accept" }
+    },
+    {
+      "id": "offer-cps-zero-accepted",
+      "consumer": "BL-035",
+      "covers": ["cps.zero.semantic-accept"],
+      "validator": "offer",
+      "schema_id": "https://agentoffernetwork.org/schema/offer/v0.2",
+      "taxonomy_version": "aon-taxonomy-v1",
+      "fixture": "examples/http/offer-response-v0.2.json",
+      "fixture_pointer": "/offers/0",
+      "mutations": [
+        { "op": "set", "path": "/goals/0/pricing", "value": { "model": "cps", "rate": "0" } }
+      ],
+      "expected": { "layer": "semantic", "result": "accept" }
+    },
+    {
+      "id": "offer-cps-zero-precision-accepted",
+      "consumer": "BL-035",
+      "covers": ["cps.zero-precision.semantic-accept"],
+      "validator": "offer",
+      "schema_id": "https://agentoffernetwork.org/schema/offer/v0.2",
+      "taxonomy_version": "aon-taxonomy-v1",
+      "fixture": "examples/http/offer-response-v0.2.json",
+      "fixture_pointer": "/offers/0",
+      "mutations": [
+        { "op": "set", "path": "/goals/0/pricing", "value": { "model": "cps", "rate": "0.0000" } }
+      ],
+      "expected": { "layer": "semantic", "result": "accept" }
+    },
+    {
+      "id": "offer-cps-upper-boundaries-accepted",
+      "consumer": "BL-035",
+      "covers": ["cps.upper-boundary.semantic-accept"],
+      "validator": "offer",
+      "schema_id": "https://agentoffernetwork.org/schema/offer/v0.2",
+      "taxonomy_version": "aon-taxonomy-v1",
+      "fixture": "examples/http/offer-response-v0.2.json",
+      "fixture_pointer": "/offers/0",
+      "mutations": [
+        { "op": "set", "path": "/goals/0/pricing", "value": { "model": "cps", "rate": "100.0000" } }
+      ],
+      "expected": { "layer": "semantic", "result": "accept" }
+    },
+    {
+      "id": "offer-cps-fractional-upper-boundary-accepted",
+      "consumer": "BL-035",
+      "covers": ["cps.fractional-upper-boundary.semantic-accept"],
+      "validator": "offer",
+      "schema_id": "https://agentoffernetwork.org/schema/offer/v0.2",
+      "taxonomy_version": "aon-taxonomy-v1",
+      "fixture": "examples/http/offer-response-v0.2.json",
+      "fixture_pointer": "/offers/0",
+      "mutations": [
+        { "op": "set", "path": "/goals/0/pricing", "value": { "model": "cps", "rate": "99.9999" } }
+      ],
+      "expected": { "layer": "semantic", "result": "accept" }
+    },
+    {
+      "id": "offer-cps-whole-upper-boundary-accepted",
+      "consumer": "BL-035",
+      "covers": ["cps.whole-upper-boundary.semantic-accept"],
+      "validator": "offer",
+      "schema_id": "https://agentoffernetwork.org/schema/offer/v0.2",
+      "taxonomy_version": "aon-taxonomy-v1",
+      "fixture": "examples/http/offer-response-v0.2.json",
+      "fixture_pointer": "/offers/0",
+      "mutations": [
+        { "op": "set", "path": "/goals/0/pricing", "value": { "model": "cps", "rate": "100" } }
+      ],
+      "expected": { "layer": "semantic", "result": "accept" }
+    },
+    {
+      "id": "taxonomy-unknown-registry-id",
+      "consumer": "BL-035",
+      "covers": ["taxonomy.registry-membership"],
+      "validator": "offer",
+      "schema_id": "https://agentoffernetwork.org/schema/offer/v0.2",
+      "taxonomy_version": "aon-taxonomy-v1",
+      "fixture": "examples/http/offer-response-v0.2.json",
+      "fixture_pointer": "/offers/0",
+      "mutations": [
+        { "op": "set", "path": "/offer_info/category/id", "value": "unknown.valid_shape" }
+      ],
+      "expected": { "layer": "semantic", "result": "reject", "rule": "taxonomy_registry_membership" }
+    },
+    {
+      "id": "taxonomy-secondary-same-branch",
+      "consumer": "BL-035",
+      "covers": ["taxonomy.secondary-cross-branch"],
+      "validator": "offer",
+      "schema_id": "https://agentoffernetwork.org/schema/offer/v0.2",
+      "taxonomy_version": "aon-taxonomy-v1",
+      "fixture": "examples/http/offer-response-v0.2.json",
+      "fixture_pointer": "/offers/0",
+      "mutations": [
+        {
+          "op": "set",
+          "path": "/offer_info/secondary_category_ids",
+          "value": ["computers_electronics.computers"]
+        }
+      ],
+      "expected": { "layer": "semantic", "result": "reject", "rule": "taxonomy_branch_conflict" }
+    },
+    {
+      "id": "offer-taxonomy-secondary-equals-primary-rejected",
+      "consumer": "BL-035",
+      "covers": ["taxonomy.secondary-equals-primary"],
+      "validator": "offer",
+      "schema_id": "https://agentoffernetwork.org/schema/offer/v0.2",
+      "taxonomy_version": "aon-taxonomy-v1",
+      "fixture": "examples/http/offer-response-v0.2.json",
+      "fixture_pointer": "/offers/0",
+      "mutations": [
+        {
+          "op": "set",
+          "path": "/offer_info/secondary_category_ids",
+          "value": ["computers_electronics.computers.software.business_productivity_software.business_management_software.project_management_software"]
+        }
+      ],
+      "expected": { "layer": "semantic", "result": "reject", "rule": "taxonomy_branch_conflict" }
+    },
+    {
+      "id": "offer-taxonomy-secondary-descendant-rejected",
+      "consumer": "BL-035",
+      "covers": ["taxonomy.secondary-descendant"],
+      "validator": "offer",
+      "schema_id": "https://agentoffernetwork.org/schema/offer/v0.2",
+      "taxonomy_version": "aon-taxonomy-v1",
+      "fixture": "examples/http/offer-response-v0.2.json",
+      "fixture_pointer": "/offers/0",
+      "mutations": [
+        { "op": "set", "path": "/offer_info/category/id", "value": "computers_electronics.computers" },
+        {
+          "op": "set",
+          "path": "/offer_info/secondary_category_ids",
+          "value": ["computers_electronics.computers.software"]
+        }
+      ],
+      "expected": { "layer": "semantic", "result": "reject", "rule": "taxonomy_branch_conflict" }
+    },
+    {
+      "id": "offer-taxonomy-sibling-accepted",
+      "consumer": "BL-035",
+      "covers": ["taxonomy.secondary-sibling.accept"],
+      "validator": "offer",
+      "schema_id": "https://agentoffernetwork.org/schema/offer/v0.2",
+      "taxonomy_version": "aon-taxonomy-v1",
+      "fixture": "examples/http/offer-response-v0.2.json",
+      "fixture_pointer": "/offers/0",
+      "mutations": [
+        {
+          "op": "set",
+          "path": "/offer_info/category/id",
+          "value": "computers_electronics.computers.software"
+        },
+        {
+          "op": "set",
+          "path": "/offer_info/secondary_category_ids",
+          "value": ["computers_electronics.consumer_electronics"]
+        }
+      ],
+      "expected": { "layer": "semantic", "result": "accept" }
+    },
+    {
+      "id": "query-taxonomy-registry-known",
+      "consumer": "BL-035",
+      "covers": ["taxonomy.query.registry-known"],
+      "validator": "taxonomy_constraints",
+      "schema_id": "https://agentoffernetwork.org/schema/offer-query/v0.2",
+      "taxonomy_version": "aon-taxonomy-v1",
+      "fixture": "examples/http/offer-query-request-v0.2-full.json",
+      "expected": { "layer": "semantic", "result": "accept" }
+    },
+    {
+      "id": "query-taxonomy-registry-unknown",
+      "consumer": "BL-035",
+      "covers": ["taxonomy.query.registry-unknown"],
+      "validator": "taxonomy_constraints",
+      "schema_id": "https://agentoffernetwork.org/schema/offer-query/v0.2",
+      "taxonomy_version": "aon-taxonomy-v1",
+      "fixture": "examples/http/offer-query-request-v0.2-full.json",
+      "mutations": [
+        { "op": "set", "path": "/constraints/category_ids/0", "value": "unknown.valid_shape" }
+      ],
+      "expected": { "layer": "semantic", "result": "reject", "rule": "taxonomy_registry_membership" }
+    },
+    {
+      "id": "provider-taxonomy-registry-known",
+      "consumer": "BL-035",
+      "covers": ["taxonomy.provider.registry-known"],
+      "validator": "taxonomy_constraints",
+      "schema_id": "https://agentoffernetwork.org/schema/offer-provider-request/v0.2",
+      "taxonomy_version": "aon-taxonomy-v1",
+      "fixture": "examples/http/offer-provider/full-query-v0.2.json",
+      "expected": { "layer": "semantic", "result": "accept" }
+    },
+    {
+      "id": "provider-taxonomy-registry-unknown",
+      "consumer": "BL-035",
+      "covers": ["taxonomy.provider.registry-unknown"],
+      "validator": "taxonomy_constraints",
+      "schema_id": "https://agentoffernetwork.org/schema/offer-provider-request/v0.2",
+      "taxonomy_version": "aon-taxonomy-v1",
+      "fixture": "examples/http/offer-provider/full-query-v0.2.json",
+      "mutations": [
+        { "op": "set", "path": "/constraints/category_ids/0", "value": "unknown.valid_shape" }
+      ],
+      "expected": { "layer": "semantic", "result": "reject", "rule": "taxonomy_registry_membership" }
+    },
+    {
+      "id": "postback-event-declared",
+      "consumer": "BL-035",
+      "covers": ["postback.event.declared"],
+      "validator": "postback_declared_goal_context",
+      "schema_id": "https://agentoffernetwork.org/schema/postback-agent-payload/v0.2",
+      "fixture": "examples/http/postback/agent/basic-conversion.json",
+      "context": { "declared_goal_events": ["trial", "subscription"] },
+      "expected": { "layer": "semantic", "result": "accept" }
+    },
+    {
+      "id": "postback-context-required",
+      "consumer": "BL-035",
+      "covers": ["postback.context.required"],
+      "validator": "postback_declared_goal_context",
+      "schema_id": "https://agentoffernetwork.org/schema/postback-partner-payload/v0.2",
+      "fixture": "examples/http/postback/partner/basic-conversion-v0.2.json",
+      "expected": { "layer": "semantic", "result": "reject", "rule": "context_required" }
+    },
+    {
+      "id": "postback-context-non-object",
+      "consumer": "BL-035",
+      "covers": ["postback.context.non-object"],
+      "validator": "postback_declared_goal_context",
+      "schema_id": "https://agentoffernetwork.org/schema/postback-partner-payload/v0.2",
+      "fixture": "examples/http/postback/partner/basic-conversion-v0.2.json",
+      "context": [],
+      "expected": { "layer": "semantic", "result": "reject", "rule": "context_invalid" }
+    },
+    {
+      "id": "postback-context-missing-declared-goal-events",
+      "consumer": "BL-035",
+      "covers": ["postback.context.missing-declared-goal-events"],
+      "validator": "postback_declared_goal_context",
+      "schema_id": "https://agentoffernetwork.org/schema/postback-partner-payload/v0.2",
+      "fixture": "examples/http/postback/partner/basic-conversion-v0.2.json",
+      "context": {},
+      "expected": { "layer": "semantic", "result": "reject", "rule": "context_invalid" }
+    },
+    {
+      "id": "postback-context-events-non-array",
+      "consumer": "BL-035",
+      "covers": ["postback.context.events-non-array"],
+      "validator": "postback_declared_goal_context",
+      "schema_id": "https://agentoffernetwork.org/schema/postback-partner-payload/v0.2",
+      "fixture": "examples/http/postback/partner/basic-conversion-v0.2.json",
+      "context": { "declared_goal_events": "subscription" },
+      "expected": { "layer": "semantic", "result": "reject", "rule": "context_invalid" }
+    },
+    {
+      "id": "postback-context-extra-key",
+      "consumer": "BL-035",
+      "covers": ["postback.context.extra-key"],
+      "validator": "postback_declared_goal_context",
+      "schema_id": "https://agentoffernetwork.org/schema/postback-partner-payload/v0.2",
+      "fixture": "examples/http/postback/partner/basic-conversion-v0.2.json",
+      "context": { "declared_goal_events": ["subscription"], "extra": true },
+      "expected": { "layer": "semantic", "result": "reject", "rule": "context_invalid" }
+    },
+    {
+      "id": "postback-context-empty",
+      "consumer": "BL-035",
+      "covers": ["postback.context.empty"],
+      "validator": "postback_declared_goal_context",
+      "schema_id": "https://agentoffernetwork.org/schema/postback-partner-payload/v0.2",
+      "fixture": "examples/http/postback/partner/basic-conversion-v0.2.json",
+      "context": { "declared_goal_events": [] },
+      "expected": { "layer": "semantic", "result": "reject", "rule": "context_invalid" }
+    },
+    {
+      "id": "postback-context-duplicate",
+      "consumer": "BL-035",
+      "covers": ["postback.context.duplicate"],
+      "validator": "postback_declared_goal_context",
+      "schema_id": "https://agentoffernetwork.org/schema/postback-partner-payload/v0.2",
+      "fixture": "examples/http/postback/partner/basic-conversion-v0.2.json",
+      "context": { "declared_goal_events": ["subscription", "subscription"] },
+      "expected": { "layer": "semantic", "result": "reject", "rule": "context_invalid" }
+    },
+    {
+      "id": "postback-context-event-invalid",
+      "consumer": "BL-035",
+      "covers": ["postback.context.event-invalid"],
+      "validator": "postback_declared_goal_context",
+      "schema_id": "https://agentoffernetwork.org/schema/postback-partner-payload/v0.2",
+      "fixture": "examples/http/postback/partner/basic-conversion-v0.2.json",
+      "context": { "declared_goal_events": ["Invalid Event"] },
+      "expected": { "layer": "semantic", "result": "reject", "rule": "context_invalid" }
+    },
+    {
+      "id": "postback-event-undeclared",
+      "consumer": "BL-035",
+      "covers": ["postback.event.undeclared"],
+      "validator": "postback_declared_goal_context",
+      "schema_id": "https://agentoffernetwork.org/schema/postback-partner-payload/v0.2",
+      "fixture": "examples/http/postback/partner/basic-conversion-v0.2.json",
+      "mutations": [
+        { "op": "set", "path": "/event_name", "value": "undeclared_custom_goal" }
+      ],
+      "context": { "declared_goal_events": ["subscription"] },
+      "expected": { "layer": "semantic", "result": "reject", "rule": "event_undeclared" }
+    }
+  ]
+}

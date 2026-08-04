@@ -1,4 +1,4 @@
-name: Validate
+name: Contract CI
 
 on:
   push:
@@ -7,8 +7,8 @@ on:
     branches: [main]
 
 jobs:
-  json-schema:
-    name: Validate JSON Schema
+  contract-ci:
+    name: Complete v0.2 Contract Suite
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -18,66 +18,8 @@ jobs:
         with:
           node-version: 20
 
-      - name: Install ajv-cli
-        run: npm install -g ajv-cli ajv-formats
+      - name: Install locked dependencies
+        run: npm ci --ignore-scripts
 
-      - name: Validate offer schema is valid JSON Schema
-        run: |
-          ajv compile -s json-schema/offer-schema-v0.1.json --spec=draft2020 -c ajv-formats
-          echo "Offer schema is valid"
-
-      - name: Validate query schema is valid JSON Schema
-        run: |
-          ajv compile -s json-schema/offer-query-schema-v0.1.json --spec=draft2020 -c ajv-formats
-          echo "Query schema is valid"
-
-      - name: Validate location schemas are valid JSON Schema
-        run: |
-          ajv compile -s json-schema/location-registry-v1.schema.json --spec=draft2020 -c ajv-formats
-          ajv compile -s json-schema/location-search-response-v0.1.json --spec=draft2020 -c ajv-formats
-          echo "Location schemas are valid"
-
-  typescript:
-    name: TypeScript Check
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: 20
-
-      - name: Install TypeScript
-        run: npm install -g typescript
-
-      - name: Check TypeScript syntax
-        run: tsc --noEmit --strict --module node16 --moduleResolution node16 types/*.ts
-
-  contract-tests:
-    name: Contract Tests
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: 20
-
-      - name: Run location helper and protocol contract tests
-        run: |
-          node test/location-helpers.test.mjs
-          node test/location-search-contract.test.mjs
-
-  json-format:
-    name: JSON Format Check
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-
-      - name: Check JSON files are well-formed
-        run: |
-          for f in json-schema/*.json; do
-            python3 -m json.tool "$f" > /dev/null && echo "OK: $f" || { echo "FAIL: $f"; exit 1; }
-          done
+      - name: Run complete v0.2 contract suite
+        run: npm run test:contract-ci

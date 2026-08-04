@@ -1,0 +1,37 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://agentoffernetwork.org/schema/postback-agent-payload/v0.2",
+  "title": "AgentOffer AON-to-Agent Conversion Webhook Payload Schema v0.2",
+  "description": "Payload core owned by WS-25. Callback registration, HMAC, retry, sub_id and delivery remain WS-22 responsibilities.",
+  "type": "object",
+  "required": [
+    "event_id",
+    "event_type",
+    "event_name",
+    "aon_tracking_id",
+    "offer_id",
+    "agent_id",
+    "amount",
+    "currency",
+    "timestamp"
+  ],
+  "properties": {
+    "event_id": {"type": "string", "minLength": 1},
+    "event_type": {"type": "string", "const": "conversion"},
+    "event_name": {
+      "$ref": "https://agentoffernetwork.org/schema/goal-event-name/v0.2"
+    },
+    "aon_tracking_id": {"type": "string", "minLength": 1},
+    "offer_id": {"type": "string", "minLength": 1},
+    "agent_id": {"type": "string", "minLength": 1},
+    "amount": {"type": "number"},
+    "currency": {"type": "string", "pattern": "^[A-Z]{3}$"},
+    "sub_id": {"type": "string"},
+    "sub_id_2": {"type": "string"},
+    "sub_id_3": {"type": "string"},
+    "sub_id_4": {"type": "string"},
+    "sub_id_5": {"type": "string"},
+    "timestamp": {"type": "string", "format": "date-time"}
+  },
+  "additionalProperties": false
+}

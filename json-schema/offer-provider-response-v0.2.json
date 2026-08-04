@@ -1,0 +1,37 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://agentoffernetwork.org/schema/offer-provider-response/v0.2",
+  "title": "AgentOffer OfferProvider Response Schema v0.2",
+  "description": "Raw success payload or Provider channel error envelope.",
+  "oneOf": [
+    {
+      "$ref": "https://agentoffernetwork.org/schema/offer-query-response/v0.2"
+    },
+    {
+      "$ref": "#/$defs/ErrorEnvelope"
+    }
+  ],
+  "$defs": {
+    "ErrorEnvelope": {
+      "type": "object",
+      "required": ["code", "message", "data", "extra"],
+      "properties": {
+        "code": {
+          "type": "string",
+          "enum": ["BAD_REQUEST", "UNAUTHORIZED", "FORBIDDEN", "RATE_LIMITED", "INTERNAL_ERROR"]
+        },
+        "message": {"type": "string"},
+        "data": {
+          "type": "object",
+          "maxProperties": 0,
+          "additionalProperties": false
+        },
+        "extra": {
+          "type": "object",
+          "additionalProperties": true
+        }
+      },
+      "additionalProperties": false
+    }
+  }
+}

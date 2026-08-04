@@ -1,0 +1,147 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://agentoffernetwork.org/schema/offer-query/v0.2",
+  "title": "AgentOffer Query Request Schema v0.2",
+  "description": "Canonical business request shared by Agent Query and OfferProvider dispatch. Query request_id is optional; OfferProvider adds requiredness by reference.",
+  "type": "object",
+  "required": ["context", "intent"],
+  "properties": {
+    "request_id": {
+      "type": "string",
+      "format": "uuid",
+      "description": "Optional Query correlation id. The hosted service generates one when omitted."
+    },
+    "timestamp": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "test_mode": {
+      "type": "boolean",
+      "default": false
+    },
+    "placement_id": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 64,
+      "pattern": "^\\S+$"
+    },
+    "context": {
+      "type": "object",
+      "required": ["user_profile"],
+      "properties": {
+        "platform": {
+          "type": "object",
+          "properties": {
+            "name": {"type": "string"},
+            "version": {"type": "string"},
+            "channel": {"type": "string"}
+          },
+          "additionalProperties": false
+        },
+        "session_id": {"type": "string"},
+        "conversation_id": {"type": ["string", "number"]},
+        "user_profile": {
+          "type": "object",
+          "properties": {
+            "user_pseudo_id": {"type": "string"},
+            "language": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 64,
+              "description": "BCP 47 is recommended. Unparseable non-empty values remain structurally reachable and are treated as unknown by targeting."
+            },
+            "location_ids": {
+              "type": "array",
+              "items": {"type": "string", "pattern": "^[0-9]+$"},
+              "uniqueItems": true
+            },
+            "verified_age_over": {
+              "type": "array",
+              "items": {"type": "integer", "minimum": 13, "maximum": 120},
+              "uniqueItems": true
+            },
+            "interests": {
+              "type": "array",
+              "items": {"type": "string"}
+            },
+            "device_info": {
+              "type": "object",
+              "description": "Optional viewer device context. Missing fields and `other` represent unknown targeting context.",
+              "properties": {
+                "device_type": {
+                  "type": "string",
+                  "enum": ["desktop", "mobile", "tablet", "smart_tv", "other"]
+                },
+                "os": {
+                  "type": "string",
+                  "enum": ["ios", "android", "windows", "macos", "other"]
+                },
+                "os_version": {"type": "string"},
+                "user_agent": {"type": "string", "maxLength": 1024}
+              },
+              "additionalProperties": false
+            }
+          },
+          "additionalProperties": false
+        }
+      },
+      "additionalProperties": false
+    },
+    "intent": {
+      "type": "object",
+      "required": ["content"],
+      "properties": {
+        "content": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "oneOf": [
+              {
+                "type": "object",
+                "required": ["type", "text"],
+                "properties": {
+                  "type": {"const": "input_text"},
+                  "text": {"type": "string", "minLength": 1}
+                },
+                "additionalProperties": false
+              },
+              {
+                "type": "object",
+                "required": ["type", "image_url"],
+                "properties": {
+                  "type": {"const": "input_image"},
+                  "image_url": {"type": "string", "format": "uri"}
+                },
+                "additionalProperties": false
+              }
+            ]
+          }
+        }
+      },
+      "additionalProperties": false
+    },
+    "constraints": {
+      "type": "object",
+      "properties": {
+        "category_ids": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^[a-z0-9]+(?:_[a-z0-9]+)*(?:\\.[a-z0-9]+(?:_[a-z0-9]+)*)*$"
+          },
+          "uniqueItems": true
+        }
+      },
+      "additionalProperties": false
+    },
+    "pagination": {
+      "type": "object",
+      "properties": {
+        "limit": {"type": "integer", "minimum": 1, "maximum": 100, "default": 20},
+        "offset": {"type": "integer", "minimum": 0, "default": 0}
+      },
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": false
+}
