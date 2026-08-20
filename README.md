@@ -1,14 +1,20 @@
 # AgentOffer Schema
 
+## v0.3 adopted assets
+
+Versioned `*-v0.3.json`, TypeScript, fixture, and validator files are the
+adopted v0.3 contract assets. They are not a runtime availability signal and do
+not change the stable v0.2 files. The v0.3 public surface intentionally
+excludes `decision_factors`, `watch_status`, and generic `next_actions`.
+
 JSON Schema, TypeScript types, semantic-validation inputs, and executable
 contract vectors for AgentOffer Protocol.
 
-**Current normative contract: Protocol v0.2**
+**Current normative contract: Protocol v0.3**
 
-The v0.2 source package is stable. Hosted runtime support is tracked
-independently and is currently `not_available`; these artifacts define what
-future implementations must accept and emit without claiming that a service
-already does so.
+The v0.3 source package is adopted. Runtime support is tracked independently by
+each deployment owner; these artifacts define what conforming implementations
+must accept and emit without claiming that a particular service is live.
 
 ## Canonical v0.2 files
 
@@ -30,6 +36,15 @@ JSON Schema is the machine-readable structural source. The human-readable
 specification owns normative semantics that cannot be expressed structurally.
 TypeScript types and examples project these sources and must not introduce
 additional fields.
+
+## Integration quickstarts
+
+For a new integration, start with the canonical
+[Agent quickstart](https://github.com/agentoffernetwork/protocol/blob/main/AGENT-QUICKSTART.md)
+or
+[Partner quickstart](https://github.com/agentoffernetwork/protocol/blob/main/PARTNER-QUICKSTART.md).
+This repository provides the executable schemas and vectors referenced there;
+it does not duplicate the integration workflow.
 
 ## Validation layers
 

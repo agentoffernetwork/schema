@@ -499,9 +499,15 @@ function testPublicNavigation() {
   const governanceReadme = resolve(workspaceRoot, 'protocol/docs/contract-governance/README.md');
   const releaseChecklist = resolve(workspaceRoot, 'protocol/docs/contract-governance/release-checklist.md');
 
-  for (const path of [protocolReadme, schemaReadme, examplesReadme]) {
-    assertIncludes(path, ['Current normative contract: Protocol v0.2']);
-  }
+  assertIncludes(protocolReadme, [
+    'Current normative contract: Protocol v0.3',
+    'Protocol v0.2 remains an explicit compatibility path',
+  ]);
+  assertIncludes(schemaReadme, [
+    'Current normative contract: Protocol v0.3',
+    'not change the stable v0.2 files',
+  ]);
+  assertIncludes(examplesReadme, ['Current normative contract: Protocol v0.2']);
   assertIncludes(querySpec, [
     'AON-Protocol-Version: 0.2',
     'BL-034 delivers the hosted Query boundary',

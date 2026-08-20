@@ -143,6 +143,10 @@ export async function runs_all_v02_contract_groups() {
       '--noEmit', '--strict', '--module', 'ESNext', '--moduleResolution', 'bundler',
       'types/offer-v0.2.types.ts', 'test/offer-v0.2.types.test-d.ts',
     ], 'TypeScript contract types');
+    run(resolve(schemaRoot, 'node_modules/.bin/tsc'), [
+      '--noEmit', '--strict', '--module', 'ESNext', '--moduleResolution', 'bundler',
+      'types/offer-v0.3.types.ts', 'types/offer-query-v0.3.types.ts', 'test/offer-v0.3.types.test-d.ts',
+    ], 'TypeScript v0.3 contract types');
   });
   await runGroup('postback', async () => {
     if (hasMonorepoContractTopology()) {
@@ -157,6 +161,9 @@ export async function runs_all_v02_contract_groups() {
     else await runStandaloneOfferProviderChecks();
   });
   await runGroup('extensions', async () => runExtensions());
+  await runGroup('v0.3', async () => {
+    run(process.execPath, [resolve(here, 'protocol-v0.3-contract.test.mjs')], 'v0.3 contract')
+  });
 }
 
 export function exits_nonzero_when_any_contract_group_fails() {
@@ -166,6 +173,7 @@ export function exits_nonzero_when_any_contract_group_fails() {
   });
   assert.equal(success.status, 0, `complete suite must pass: ${success.stderr}`);
   assert.match(success.stdout, /PASS contract-ci group: extensions/, 'complete suite must report every group');
+  assert.match(success.stdout, /PASS contract-ci group: v0.3/, 'complete suite must report v0.3 group');
 
   const failure = spawnSync(process.execPath, [fileURLToPath(import.meta.url), '--execute'], {
     cwd: schemaRoot,
