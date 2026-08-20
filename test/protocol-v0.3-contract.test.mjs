@@ -41,7 +41,7 @@ export function testV03AjvContracts() {
   const offer = ajv.getSchema("https://agentoffernetwork.org/schema/offer/v0.3")
   const control = ajv.getSchema("https://agentoffernetwork.org/schema/offer-control/v0.3")
   assert(query && response && offer && control, "v0.3 root schemas must compile and be registered")
-  const fixture = readJson("../examples/http/offer-query-v0.3.json")
+  const fixture = readJson("fixtures/protocol-v0.3-query-example.json")
   assertValid(query, fixture.request, "query example")
   assertValid(response, fixture.response, "response example")
   const queryWithBudget = structuredClone(fixture.request)
@@ -58,7 +58,7 @@ export function testV03AjvContracts() {
   const { empty_reason: _emptyReason, ...responseWithoutEmptyReason } = fixture.response
   assertInvalid(response, { ...responseWithoutEmptyReason, offers: [] }, "missing empty_reason")
   assertInvalid(response, { ...fixture.response, empty_reason: "no_material" }, "empty_reason with offers")
-  const controlExample = readJson("../examples/http/offer-control-v0.3.json")
+  const controlExample = readJson("fixtures/protocol-v0.3-control-example.json")
   assertValid(control, controlExample, "control example")
   assertInvalid(control, { ...controlExample, target: { kind: "category", id: "travel.hotel" } }, "feedback target must be offer")
   assertInvalid(control, { ...controlExample, operation: "watch", feedback: "not_interested" }, "watch cannot carry feedback")
@@ -91,7 +91,7 @@ export function testV03FixtureInventory() {
   assert(Array.isArray(vectors.cases) && vectors.cases.length >= 6, "v0.3 contract vectors must cover the adopted surface")
   for (const testCase of vectors.cases) {
     assert.equal(typeof testCase.fixture, "string", `${testCase.id} must identify a fixture`)
-    assert(existsSync(resolve(schemaRoot, "..", testCase.fixture)), `${testCase.id} fixture must exist: ${testCase.fixture}`)
+    assert(existsSync(resolve(schemaRoot, testCase.fixture)), `${testCase.id} fixture must exist: ${testCase.fixture}`)
   }
   assert(!JSON.stringify(vectors).includes("decision_factors"), "v0.3 vectors must not define decision_factors")
 }

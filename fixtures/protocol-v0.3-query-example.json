@@ -1,0 +1,71 @@
+{
+  "request": {
+    "request_id": "019dd208-27d2-7673-b16f-6897fa120305",
+    "context": {
+      "session": {
+        "previous_request_id": "019dd208-27d2-7673-b16f-6897fa120306",
+        "recent_topics": ["quiet hotels"]
+      }
+    },
+    "intent": {
+      "content": [{"type": "input_text", "text": "Find me a quiet hotel in San Francisco"}],
+      "provenance": "user_expressed",
+      "origin": [{"kind": "query_helper", "id": "budget"}],
+      "signals": {"purchase_stage": "exploring", "timeframe": "this_month"}
+    },
+    "constraints": {"features": ["quiet", "walkable"]},
+    "force_offer": true,
+    "response_options": {"thinking_mode": true}
+  },
+  "response": {
+    "request_id": "019dd208-27d2-7673-b16f-6897fa120305",
+    "protocol_version": "0.3",
+    "language": "en-US",
+    "offers": [
+      {
+        "offer_id": "019dd208-27d2-7673-b16f-6897fa120303",
+        "offer_instance_id": "019dd208-27d2-7673-b16f-6897fa120304",
+        "version": "3.0",
+        "offer_info": {
+          "title": "Quiet hotel near Union Square",
+          "category": {"id": "travel_tourism.accommodations.hotels_motels_resorts.hotels"},
+          "description": "A quiet hotel with walkable access to Union Square.",
+          "recommendation_reason": "Matches your request for a quiet, walkable stay."
+        },
+        "entity": {"id": "example-hotels", "name": "Example Hotels", "type": "merchant"},
+        "listing_source": {
+          "kind": "marketplace",
+          "name": "Example Travel",
+          "observed_at": "2026-08-13T00:00:00Z"
+        },
+        "action": {"type": "open_url", "consumer_action": "book", "payload": {"url": "https://example.com/hotel"}},
+        "claims": [{"kind": "advertiser_claim", "text": "Free cancellation until 48 hours before check-in."}],
+        "match_reason": "The offer matches the requested quiet and walkable features.",
+        "goals": [{"event": "booking", "pricing": {"model": "cpa", "amount": "10", "currency": "USD"}}]
+      }
+    ],
+    "engagement": {
+      "refinements": [
+        {
+          "label": "Set a nightly budget",
+          "query_helper": {
+            "request_patch": {"intent": {"signals": {"budget": {"max": 250, "currency": "USD"}}}},
+            "origin": [{"kind": "query_helper", "id": "budget"}]
+          },
+          "speak": "Show options up to 250 USD per night."
+        }
+      ],
+      "followup_topics": [
+        {
+          "label": "Compare hotels near the airport",
+          "basis": "comparison_alternative",
+          "query_helper": {
+            "request_patch": {"constraints": {"features": ["near_airport"]}},
+            "origin": [{"kind": "query_helper", "id": "airport-hotels"}]
+          },
+          "confidence": 0.81
+        }
+      ]
+    }
+  }
+}

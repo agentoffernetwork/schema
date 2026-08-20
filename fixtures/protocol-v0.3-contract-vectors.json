@@ -5,14 +5,14 @@
     {
       "id": "query-v03-valid-thinking-mode-off",
       "schema_id": "https://agentoffernetwork.org/schema/offer-query/v0.3",
-      "fixture": "examples/http/offer-query-v0.3.json",
+      "fixture": "fixtures/protocol-v0.3-query-example.json",
       "expected": "valid",
       "covers": ["thinking_mode.false", "query.current-intent-only"]
     },
     {
       "id": "query-v03-invalid-thinking-mode-type",
       "schema_id": "https://agentoffernetwork.org/schema/offer-query/v0.3",
-      "fixture": "examples/http/offer-query-v0.3.json",
+      "fixture": "fixtures/protocol-v0.3-query-example.json",
       "mutation": {"path": "/request/response_options/thinking_mode", "value": "false"},
       "expected": "reject",
       "covers": ["thinking_mode.invalid-type"]
@@ -20,35 +20,35 @@
     {
       "id": "response-v03-valid-guidance",
       "schema_id": "https://agentoffernetwork.org/schema/offer-query-response/v0.3",
-      "fixture": "examples/http/offer-query-v0.3.json",
+      "fixture": "fixtures/protocol-v0.3-query-example.json",
       "expected": "valid",
       "covers": ["engagement.refinements", "engagement.followup_topics", "query_helper.item-level"]
     },
     {
       "id": "offer-v03-source-separated",
       "schema_id": "https://agentoffernetwork.org/schema/offer/v0.3",
-      "fixture": "examples/http/offer-query-v0.3.json",
+      "fixture": "fixtures/protocol-v0.3-query-example.json",
       "expected": "valid",
       "covers": ["entity.listing_source.action"]
     },
     {
       "id": "provider-v03-request-id-required",
       "schema_id": "https://agentoffernetwork.org/schema/offer-provider-request/v0.3",
-      "fixture": "examples/http/offer-query-v0.3.json",
+      "fixture": "fixtures/protocol-v0.3-query-example.json",
       "expected": "valid",
       "covers": ["provider.request_id"]
     },
     {
       "id": "control-v03-feedback-explicit",
       "schema_id": "https://agentoffernetwork.org/schema/offer-control/v0.3",
-      "fixture": "examples/http/offer-control-v0.3.json",
+      "fixture": "fixtures/protocol-v0.3-control-example.json",
       "expected": "valid",
       "covers": ["control.feedback", "control.idempotency"]
     },
     {
       "id": "control-v03-watch-status-not-response-field",
       "schema_id": "https://agentoffernetwork.org/schema/offer-control/v0.3",
-      "fixture": "examples/http/offer-control-v0.3.json",
+      "fixture": "fixtures/protocol-v0.3-control-example.json",
       "mutation": {"path": "/watch_status", "value": "watching"},
       "expected": "reject",
       "covers": ["removed.watch_status"]
