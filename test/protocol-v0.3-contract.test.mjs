@@ -44,6 +44,12 @@ export function testV03AjvContracts() {
   const fixture = readJson("fixtures/protocol-v0.3-query-example.json")
   assertValid(query, fixture.request, "query example")
   assertValid(response, fixture.response, "response example")
+  const fixtureOffer = fixture.response.offers[0]
+  assertInvalid(offer, { ...fixtureOffer, action: { ...fixtureOffer.action, type: "web_redirect" } }, "legacy web_redirect action")
+  assertInvalid(offer, { ...fixtureOffer, action: { ...fixtureOffer.action, payload: { target: fixtureOffer.action.payload.url } } }, "legacy payload.target action")
+  assertInvalid(offer, { ...fixtureOffer, action: { ...fixtureOffer.action, payload: {} } }, "action missing payload.url")
+  assertInvalid(offer, { ...fixtureOffer, action: { ...fixtureOffer.action, payload: { ...fixtureOffer.action.payload, extra: true } } }, "action payload extra key")
+  assertInvalid(query, { ...fixture.request, constraints: { features: ["quiet"] } }, "removed constraints.features")
   const queryWithBudget = structuredClone(fixture.request)
   queryWithBudget.intent.signals.budget = { max: 250, currency: "USD" }
   assertValid(query, queryWithBudget, "query budget with currency")
@@ -53,6 +59,9 @@ export function testV03AjvContracts() {
   const responseWithPartialBudgetPatch = structuredClone(fixture.response)
   delete responseWithPartialBudgetPatch.engagement.refinements[0].query_helper.request_patch.intent.signals.budget.currency
   assertInvalid(response, responseWithPartialBudgetPatch, "query helper budget missing currency")
+  const responseWithFeaturesPatch = structuredClone(fixture.response)
+  responseWithFeaturesPatch.engagement.followup_topics[0].query_helper.request_patch = { constraints: { features: ["near_airport"] } }
+  assertInvalid(response, responseWithFeaturesPatch, "removed query helper constraints.features")
   assertInvalid(offer, { ...fixture.response.offers[0], listing_source: { ...fixture.response.offers[0].listing_source, url: "https://example.com/listing" } }, "removed listing_source.url")
   assertInvalid(query, { ...fixture.request, context: { user_profile: {} } }, "removed user_profile")
   const { empty_reason: _emptyReason, ...responseWithoutEmptyReason } = fixture.response
@@ -106,11 +115,13 @@ export function testV03SemanticRules() {
   assert.equal(validateOfferQueryV03Semantics({ context: {}, intent: { provenance: "user_expressed", signals: { budget: { max: 100 } } } }).valid, false)
   assert.equal(validateOfferQueryV03Semantics({ context: {}, intent: { provenance: "user_expressed", signals: { budget: { max: 100, currency: "usd" } } } }).valid, false)
   assert.equal(validateOfferQueryV03Semantics({ context: {}, intent: { provenance: "user_expressed", signals: { budget: { max: 100, currency: "USD" } } } }).valid, true)
+  assert.equal(validateOfferQueryV03Semantics({ context: {}, intent: { provenance: "user_expressed" }, constraints: { features: ["quiet"] } }).valid, false)
   assert.equal(validateOfferQueryResponseV03Semantics({ offers: [{ match_reason: "x" }] }, { response_options: { thinking_mode: false } }).valid, false)
   assert.equal(validateOfferQueryResponseV03Semantics({ offers: [], empty_reason: "no_material" }).valid, true)
   assert.equal(validateOfferQueryResponseV03Semantics({ offers: [] }).valid, false)
   assert.equal(validateOfferQueryResponseV03Semantics({ offers: [{ id: "x" }], empty_reason: "no_material" }).valid, false)
-  assert.equal(validateQueryHelperPatch({ constraints: { features: ["quiet"] } }).valid, true)
+  assert.equal(validateQueryHelperPatch({ constraints: { features: ["quiet"] } }).valid, false)
+  assert.equal(validateQueryHelperPatch({ constraints: { features: {} } }).valid, false)
   assert.equal(validateQueryHelperPatch({ response_options: { thinking_mode: false } }).valid, false)
   assert.equal(validateQueryHelperPatch({ intent: { signals: { budget: { max: 100 } } } }).valid, false)
   assert.equal(validateQueryHelperPatch({ intent: { signals: { budget: { max: 100, currency: "USD" } } } }).valid, true)

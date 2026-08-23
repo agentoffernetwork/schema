@@ -41,7 +41,6 @@ export interface QuerySignalsV03 {
 export interface QueryConstraintsV03 {
   category_ids?: string[]
   excluded_category_ids?: string[]
-  features?: string[]
 }
 
 export interface OfferQueryResponseV03 {

@@ -10,7 +10,6 @@ const QUERY_HELPER_PATHS = new Set([
   "intent.signals",
   "constraints.category_ids",
   "constraints.excluded_category_ids",
-  "constraints.features",
 ])
 
 function validateBudgetSignal(budget, path, errors) {
@@ -48,6 +47,7 @@ export function validateOfferQueryV03Semantics(request) {
   if (new Set(originKeys).size !== originKeys.length) errors.push("intent.origin entries must be unique by kind and id")
   if (origins.length > 3) errors.push("intent.origin must contain at most three entries")
   if (origins.length > 0 && request.intent?.provenance !== "user_expressed") errors.push("intent.origin requires user_expressed provenance")
+  if (Object.hasOwn(request.constraints ?? {}, "features")) errors.push("constraints.features is not defined in v0.3")
   validateBudgetSignal(request.intent?.signals?.budget, "intent.signals.budget", errors)
   return { valid: errors.length === 0, errors }
 }
@@ -75,8 +75,11 @@ export function validateQueryHelperPatch(patch) {
     if (!value || typeof value !== "object" || Array.isArray(value)) return
     for (const [key, child] of Object.entries(value)) {
       const childPath = path ? `${path}.${key}` : key
+      if (![...QUERY_HELPER_PATHS].some((allowed) => allowed === childPath || childPath.startsWith(`${allowed}.`) || allowed.startsWith(`${childPath}.`))) {
+        errors.push(childPath)
+        continue
+      }
       if (child && typeof child === "object" && !Array.isArray(child)) visit(child, childPath)
-      else if (![...QUERY_HELPER_PATHS].some((allowed) => allowed === childPath || childPath.startsWith(`${allowed}.`) || allowed.startsWith(`${childPath}.`))) errors.push(childPath)
     }
   }
   visit(patch)

@@ -4,16 +4,16 @@
     "context": {
       "session": {
         "previous_request_id": "019dd208-27d2-7673-b16f-6897fa120306",
-        "recent_topics": ["quiet hotels"]
+        "recent_topics": ["San Francisco hotels"]
       }
     },
     "intent": {
-      "content": [{"type": "input_text", "text": "Find me a quiet hotel in San Francisco"}],
+      "content": [{"type": "input_text", "text": "Find me a hotel in San Francisco"}],
       "provenance": "user_expressed",
       "origin": [{"kind": "query_helper", "id": "budget"}],
       "signals": {"purchase_stage": "exploring", "timeframe": "this_month"}
     },
-    "constraints": {"features": ["quiet", "walkable"]},
+    "constraints": {"category_ids": ["travel_tourism.accommodations.hotels_motels_resorts.hotels"]},
     "force_offer": true,
     "response_options": {"thinking_mode": true}
   },
@@ -27,7 +27,7 @@
         "offer_instance_id": "019dd208-27d2-7673-b16f-6897fa120304",
         "version": "3.0",
         "offer_info": {
-          "title": "Quiet hotel near Union Square",
+          "title": "Hotel near Union Square",
           "category": {"id": "travel_tourism.accommodations.hotels_motels_resorts.hotels"},
           "description": "A quiet hotel with walkable access to Union Square.",
           "recommendation_reason": "Matches your request for a quiet, walkable stay."
@@ -40,7 +40,7 @@
         },
         "action": {"type": "open_url", "consumer_action": "book", "payload": {"url": "https://example.com/hotel"}},
         "claims": [{"kind": "advertiser_claim", "text": "Free cancellation until 48 hours before check-in."}],
-        "match_reason": "The offer matches the requested quiet and walkable features.",
+        "match_reason": "The offer is a hotel near Union Square in San Francisco.",
         "goals": [{"event": "booking", "pricing": {"model": "cpa", "amount": "10", "currency": "USD"}}]
       }
     ],
@@ -57,11 +57,11 @@
       ],
       "followup_topics": [
         {
-          "label": "Compare hotels near the airport",
+          "label": "Explore the broader accommodations category",
           "basis": "comparison_alternative",
           "query_helper": {
-            "request_patch": {"constraints": {"features": ["near_airport"]}},
-            "origin": [{"kind": "query_helper", "id": "airport-hotels"}]
+            "request_patch": {"constraints": {"category_ids": ["travel_tourism.accommodations"]}},
+            "origin": [{"kind": "query_helper", "id": "accommodations"}]
           },
           "confidence": 0.81
         }
