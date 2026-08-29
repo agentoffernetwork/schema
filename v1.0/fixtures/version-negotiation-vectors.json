@@ -1,0 +1,12 @@
+{
+  "version": "stable-v1.0-version-namespace",
+  "cases": [
+    {"id": "stable-v10-explicit", "request_header": "1.0", "expected_line": "stable-v1.0", "expected_outcome": "select", "expected_response_header": "1.0", "expected_response_protocol_version": "1.0", "expected_offer_version": "3.0"},
+    {"id": "omitted-selector-rejected", "request_header": null, "expected_outcome": "reject", "expected_error": "unsupported_protocol_version"},
+    {"id": "predecessor-selector-rejected", "request_header": "0.3", "expected_outcome": "reject", "expected_error": "unsupported_protocol_version"},
+    {"id": "historical-selector-rejected", "request_header": "0.2", "expected_outcome": "reject", "expected_error": "unsupported_protocol_version"},
+    {"id": "unknown-selector-rejected", "request_header": "1.1", "expected_outcome": "reject", "expected_error": "unsupported_protocol_version"},
+    {"id": "range-selector-rejected", "request_header": ">=1.0", "expected_outcome": "reject", "expected_error": "unsupported_protocol_version"},
+    {"id": "approximate-selector-rejected", "request_header": "1", "expected_outcome": "reject", "expected_error": "unsupported_protocol_version"}
+  ]
+}

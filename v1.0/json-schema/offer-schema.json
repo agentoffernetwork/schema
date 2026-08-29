@@ -1,0 +1,90 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://agentoffernetwork.org/schema/offer/v1.0",
+  "title": "AgentOffer Offer Schema v1.0",
+  "description": "Adopted Offer Schema v1.0 for intent-matched conversational recommendations.",
+  "type": "object",
+  "required": ["offer_id", "offer_instance_id", "version", "offer_info", "entity", "action", "goals"],
+  "properties": {
+    "offer_id": {"type": "string", "format": "uuid", "description": "AON-issued, globally unique inventory identity for the logical Offer. It remains stable across returned instances and must never contain a Partner source identifier, row id, or request correlation id."},
+    "offer_instance_id": {"type": "string", "format": "uuid", "description": "AON-issued identity for this dispatch of the Offer. Consumers propagate it unchanged through click and conversion attribution; a later dispatch of the same offer_id receives a different value."},
+    "version": {"const": "3.0", "description": "Offer document-model lineage. It identifies the Offer payload model and does not select the transport protocol version."},
+    "content_language": {"type": "string", "minLength": 2, "maxLength": 64, "pattern": "^[A-Za-z]{2,3}(?:-[A-Za-z]{3}){0,3}(?:-[A-Za-z]{4})?(?:-(?:[A-Za-z]{2}|[0-9]{3}))?(?:-(?:[A-Za-z0-9]{5,8}|[0-9][A-Za-z0-9]{3}))*(?:-[0-9A-WY-Za-wy-z](?:-[A-Za-z0-9]{2,8})+)*(?:-[Xx](?:-[A-Za-z0-9]{1,8})+)?$", "description": "Language tag for user-facing Offer text under the stable-v1.0 BCP-47 profile: a two- or three-letter ASCII primary language subtag with optional extlang, script, region, variant, extension, and private-use subtags. This profile validates syntax, not IANA registry membership. It does not express targeting eligibility or select the protocol version."},
+    "offer_info": {
+      "type": "object",
+      "description": "User-facing descriptive, category, commercial, and availability information for the Offer.",
+      "required": ["title", "category", "description"],
+      "properties": {
+        "title": {"type": "string", "minLength": 1, "maxLength": 200, "description": "Short user-facing name used to identify the Offer in a result, card, or other presentation."},
+        "offer_type": {"type": "string", "enum": ["physical_product", "digital_goods", "content", "online_service", "offline_service"], "description": "High-level class of what is offered. It supports presentation and product understanding; it is not the executable consumer action."},
+        "category": {"$ref": "#/$defs/category", "description": "Primary AON Taxonomy v1 classification for the Offer."},
+        "secondary_category_ids": {"type": "array", "minItems": 1, "maxItems": 5, "uniqueItems": true, "items": {"$ref": "#/$defs/categoryId"}, "description": "Optional additional AON Taxonomy v1 classifications. When present the array is non-empty; entries add descriptive coverage and must remain distinct from the primary category and from one another under semantic validation."},
+        "description": {"type": "string", "minLength": 1, "maxLength": 2000, "description": "User-facing explanation of what the Offer provides. It is Offer content, not an AON ranking explanation."},
+        "tags": {"type": "array", "minItems": 1, "maxItems": 20, "uniqueItems": true, "items": {"type": "string", "minLength": 1, "maxLength": 64}, "description": "Optional non-empty set of short descriptive labels for presentation or filtering. Tags do not replace canonical taxonomy classification or targeting rules."},
+        "rating": {"$ref": "#/$defs/rating", "description": "Optional user-visible rating summary supplied with the Offer. It is descriptive content and not an AON endorsement."},
+        "properties": {"type": "array", "minItems": 1, "maxItems": 6, "items": {"$ref": "#/$defs/displayProperty"}, "description": "Optional non-empty, bounded list of structured user-facing facts, such as duration, plan tier, or included features."},
+        "recommendation_reason": {"type": "string", "minLength": 1, "maxLength": 1000, "description": "Optional non-empty static Partner- or provider-authored Offer copy. It may be displayed to the user, but is not a per-request AON match explanation and is unaffected by thinking_mode."},
+        "commercial": {"$ref": "#/$defs/commercial", "description": "Optional public commercial presentation, including a displayed price and fulfillment note. It excludes internal commission, settlement, and eligibility policy."},
+        "start_at": {"type": "string", "format": "date-time", "description": "Optional start of the user-visible Offer availability window."},
+        "expire_at": {"type": "string", "format": "date-time", "description": "Optional end of the user-visible Offer availability window. When both availability bounds are supplied, it must not precede start_at."}
+      },
+      "additionalProperties": false
+    },
+    "entity": {
+      "type": "object",
+      "description": "Public identity of the party responsible for the Offer.",
+      "required": ["id", "name"],
+      "properties": {
+        "id": {"type": "string", "minLength": 1, "maxLength": 128, "description": "Stable identifier for the merchant, brand, provider, publisher, or other party responsible for the Offer. It is not an Offer identifier."},
+        "name": {"type": "string", "minLength": 1, "maxLength": 200, "description": "User-facing name of the entity responsible for the Offer."},
+        "type": {"type": "string", "enum": ["merchant", "brand", "provider", "publisher", "other"], "description": "Role of the entity in relation to the Offer."},
+        "description": {"type": "string", "minLength": 1, "maxLength": 1000, "description": "Optional non-empty user-facing description of the responsible entity."},
+        "website": {"type": "string", "format": "uri", "pattern": "^[Hh][Tt][Tt][Pp][Ss]://", "description": "Optional public HTTPS website for the responsible entity. It is identity metadata, not the action destination, and must not contain URI userinfo."},
+        "logo": {"type": "string", "format": "uri", "pattern": "^[Hh][Tt][Tt][Pp][Ss]://", "description": "Optional public logo for the responsible entity. It is an absolute HTTPS resource URI and must not contain URI userinfo."}
+      },
+      "additionalProperties": false
+    },
+    "listing_source": {
+      "type": "object",
+      "description": "Optional provenance for the external platform or site where listing information was observed.",
+      "required": ["kind", "name", "observed_at"],
+      "properties": {
+        "kind": {"type": "string", "enum": ["platform", "marketplace", "merchant_site", "official_site", "other"], "description": "Classification of the external place where user-facing listing information was observed."},
+        "name": {"type": "string", "minLength": 1, "maxLength": 160, "description": "User-facing name of the observed platform or site. It remains distinct from entity.name."},
+        "observed_at": {"type": "string", "format": "date-time", "description": "UTC timestamp for when the listing information was observed. It is provenance metadata, not the Offer availability window."},
+        "logo": {"type": "string", "format": "uri", "pattern": "^[Hh][Tt][Tt][Pp][Ss]://", "maxLength": 2048, "description": "Optional explicit logo of the observed platform or site. It is an absolute HTTPS resource URI without userinfo and must not be inferred from entity, action, or material fields."}
+      },
+      "additionalProperties": false
+    },
+    "action": {
+      "type": "object",
+      "description": "Executable user-choice destination associated with the Offer.",
+      "required": ["type", "payload"],
+      "properties": {
+        "type": {"type": "string", "enum": ["open_url", "deep_link", "open_app", "custom"], "description": "Technical form of the executable action destination."},
+        "name": {"type": "string", "minLength": 1, "maxLength": 120, "description": "Optional non-empty concise call-to-action label for the user."},
+        "consumer_action": {"type": "string", "enum": ["learn_more", "buy", "book", "subscribe", "download", "claim", "sign_up", "open"], "description": "User-intent classification for the action. It describes what the user is invited to do and is distinct from a conversion Goal event."},
+        "description": {"type": "string", "minLength": 1, "maxLength": 500, "description": "Optional non-empty user-facing explanation of what invoking the action does."},
+        "destination_types": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"type": "string", "enum": ["web", "app", "phone", "email"]}, "description": "Optional non-empty declaration of destination surfaces supported by the action."},
+        "payload": {"type": "object", "required": ["url"], "description": "Executable action parameters. Stable v1.0 defines one safe absolute URI destination.", "properties": {"url": {"type": "string", "format": "uri", "pattern": "^(?!(?:[Jj][Aa][Vv][Aa][Ss][Cc][Rr][Ii][Pp][Tt]|[Dd][Aa][Tt][Aa]|[Vv][Bb][Ss][Cc][Rr][Ii][Pp][Tt]|[Ff][Ii][Ll][Ee]):)[A-Za-z][A-Za-z0-9+.-]*:", "maxLength": 2048, "description": "Safe absolute URI invoked when the user chooses the action. javascript, data, vbscript, and file schemes are forbidden; open_url additionally requires HTTPS."}}, "additionalProperties": false}
+      },
+      "additionalProperties": false,
+      "allOf": [{"if": {"properties": {"type": {"const": "open_url", "description": "Conditional discriminator selecting the HTTPS-only open_url branch."}}, "required": ["type"]}, "then": {"properties": {"payload": {"type": "object", "description": "Action payload constrained by the selected open_url branch.", "properties": {"url": {"type": "string", "pattern": "^[Hh][Tt][Tt][Pp][Ss]://", "description": "Absolute HTTPS destination required when action.type is open_url."}}}}}}]
+    },
+    "material": {"type": "array", "minItems": 1, "maxItems": 10, "items": {"$ref": "#/$defs/material"}, "description": "Optional non-empty list of user-facing creative assets for presenting the Offer."},
+    "claims": {"type": "array", "minItems": 1, "maxItems": 10, "items": {"$ref": "#/$defs/claim"}, "description": "Optional non-empty, bounded list of source-provided statements about the Offer. They are not AON endorsements."},
+    "match_reason": {"type": "string", "minLength": 1, "maxLength": 500, "description": "AON-authored, per-request user-facing explanation of why this Offer matches the current intent. It is omitted when response_options.thinking_mode is false and must not expose private reasoning or ranking data."},
+    "goals": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/goal"}, "description": "Public conversion event declarations and their associated public pricing model."}
+  },
+  "additionalProperties": false,
+  "$defs": {
+    "categoryId": {"type": "string", "pattern": "^[a-z0-9]+(?:_[a-z0-9]+)*(?:\\.[a-z0-9]+(?:_[a-z0-9]+)*)*$", "description": "Canonical AON Taxonomy v1 category identifier."},
+    "category": {"type": "object", "description": "Taxonomy classification object.", "required": ["id"], "properties": {"id": {"$ref": "#/$defs/categoryId", "description": "Canonical AON Taxonomy v1 category identifier."}}, "additionalProperties": false},
+    "rating": {"type": "object", "description": "User-visible rating summary that always declares a rating value.", "required": ["value"], "properties": {"value": {"type": "number", "minimum": 0, "maximum": 5, "description": "Rating value on the declared five-point scale."}, "count": {"type": "integer", "minimum": 1, "description": "Positive number of observations represented by the rating when supplied. Omit count when no observation count is available."}, "source": {"type": "string", "minLength": 1, "maxLength": 100, "description": "Optional name of the source that supplied the rating."}}, "additionalProperties": false},
+    "displayProperty": {"type": "object", "description": "Structured user-facing Offer fact.", "required": ["type", "value"], "properties": {"type": {"type": "string", "pattern": "^[a-z][a-z0-9]*(?:_[a-z0-9]+)*$", "maxLength": 64, "description": "Stable machine-readable key for the displayed fact."}, "value": {"type": ["string", "number", "boolean"], "description": "Value of the displayed fact."}, "unit": {"type": "string", "minLength": 1, "maxLength": 32, "description": "Optional non-empty unit that qualifies the displayed value."}, "display_pattern": {"type": "string", "minLength": 1, "maxLength": 120, "description": "Optional non-empty presentation template for this fact. Only same-item tokens ${type}, ${value}, and ${unit} are allowed; the template does not change the underlying value."}}, "additionalProperties": false},
+    "commercial": {"type": "object", "minProperties": 1, "description": "Non-empty public commercial presentation fields.", "properties": {"price": {"type": "object", "description": "Optional displayed price. It is public Offer content, not Goal commission or final settlement data.", "required": ["amount", "currency"], "properties": {"amount": {"type": "string", "minLength": 1, "description": "Canonical decimal string for the displayed price amount."}, "currency": {"type": "string", "pattern": "^[A-Z]{3}$", "description": "Uppercase three-letter currency code for the displayed price."}, "unit": {"type": "string", "enum": ["one_time", "night", "day", "week", "month", "year"], "description": "Unit or billing period to which the displayed price applies."}}, "additionalProperties": false}, "fulfillment_note": {"type": "string", "minLength": 1, "maxLength": 80, "description": "Optional short user-facing note about fulfillment or a material price condition."}}, "additionalProperties": false},
+    "material": {"type": "object", "description": "One user-facing creative asset retrieved from a trusted transport resource.", "required": ["url", "format"], "properties": {"url": {"type": "string", "format": "uri", "pattern": "^[Hh][Tt][Tt][Pp][Ss]://", "description": "Absolute HTTPS URI for retrieving the creative asset; URI userinfo is forbidden."}, "tag": {"type": "string", "minLength": 1, "maxLength": 64, "description": "Optional producer-supplied label for the creative asset. It must not be treated as targeting or eligibility data."}, "format": {"type": "string", "enum": ["image", "video", "html5"], "description": "Creative asset format."}, "dimensions": {"type": "string", "minLength": 1, "maxLength": 32, "description": "Optional producer-declared dimensions or aspect descriptor for rendering."}, "alt_text": {"type": "string", "minLength": 1, "maxLength": 200, "description": "Optional accessibility text describing the creative asset."}}, "additionalProperties": false},
+    "claim": {"type": "object", "description": "One bounded source-provided statement about the Offer.", "required": ["kind", "text"], "properties": {"kind": {"type": "string", "enum": ["advertiser_claim", "user_benefit", "availability"], "description": "Classification of the statement so consumers can present it with appropriate context."}, "text": {"type": "string", "minLength": 1, "maxLength": 500, "description": "User-facing text of the statement. It remains source-provided content, not an AON endorsement."}}, "additionalProperties": false},
+    "goal": {"type": "object", "description": "Public declaration of a billable conversion event and the gross Partner-to-AON commission basis. It is not the user-visible Offer price or a final settlement record.", "required": ["event", "pricing"], "properties": {"event": {"$ref": "https://agentoffernetwork.org/schema/goal-event-name/v1.0", "description": "Canonical conversion event name for this Goal; events are unique within one Offer."}, "pricing": {"description": "Gross commission the Partner declares payable to AON for an approved, attributed occurrence of this Goal, before AON fees, developer share, refunds, holds, disputes, or adjustments.", "oneOf": [{"type": "object", "description": "Fixed Partner-to-AON commission for each approved occurrence of the Goal event.", "required": ["model", "amount", "currency"], "properties": {"model": {"const": "cpa", "description": "Cost per action: a fixed gross commission per approved, attributed Goal event."}, "amount": {"type": "string", "pattern": "^(?:0|[1-9][0-9]{0,11})(?:\\.[0-9]{1,6})?$", "not": {"enum": ["0", "0.0", "0.00", "0.000", "0.0000", "0.00000", "0.000000"]}, "description": "Strictly positive canonical decimal amount of gross Partner-to-AON commission for one approved Goal event."}, "currency": {"type": "string", "pattern": "^[A-Z]{3}$", "description": "Uppercase three-letter currency code for the CPA commission amount."}}, "additionalProperties": false}, {"type": "object", "description": "Percentage Partner-to-AON commission applied to the gross conversion amount reported for an approved sale.", "required": ["model", "rate"], "properties": {"model": {"const": "cps", "description": "Cost per sale: a percentage of the approved conversion's gross reported amount."}, "rate": {"type": "string", "pattern": "^(?:100(?:\\.0{1,4})?|[1-9]?[0-9](?:\\.[0-9]{1,4})?)$", "not": {"enum": ["0", "0.0", "0.00", "0.000", "0.0000"]}, "description": "Strictly positive canonical percentage rate, greater than zero and no greater than 100, applied to the gross conversion amount in its reported currency."}}, "additionalProperties": false}]}, "description": {"type": "string", "minLength": 1, "maxLength": 500, "description": "Optional non-empty user-facing explanation of what user outcome constitutes the Goal; it does not change attribution or payment terms."}}, "additionalProperties": false}
+  }
+}

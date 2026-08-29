@@ -1,0 +1,26 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://agentoffernetwork.org/schema/postback-partner-payload/v1.0",
+  "title": "AgentOffer Provider-to-AON Postback Payload v1.0",
+  "description": "Canonical JSON-only current Provider conversion payload. Protocol selection is the AON-Protocol-Version HTTP header, never a payload field.",
+  "type": "object",
+  "required": ["event_name"],
+  "properties": {
+    "event_name": {"$ref": "https://agentoffernetwork.org/schema/goal-event-name/v1.0"},
+    "aon_click_id": {"type": "string", "minLength": 1, "pattern": "^\\S(?:.*\\S)?$"},
+    "aon_tracking_id": {"type": "string", "minLength": 1, "pattern": "^\\S(?:.*\\S)?$"},
+    "offer_instance_id": {"type": "string", "format": "uuid"},
+    "amount": {"type": "string", "pattern": "^(?:0|[1-9][0-9]{0,11})(?:\\.[0-9]{1,6})?$"},
+    "currency": {"type": "string", "pattern": "^[A-Z]{3}$"},
+    "event_id": {"type": "string", "minLength": 1, "maxLength": 256, "pattern": ".*\\S.*", "x-aon-maxUtf8Bytes": 256},
+    "order_id": {"type": "string", "minLength": 1, "maxLength": 256, "pattern": ".*\\S.*", "x-aon-maxUtf8Bytes": 256},
+    "partner_txn_id": {"type": "string", "minLength": 1, "maxLength": 256, "pattern": ".*\\S.*", "x-aon-maxUtf8Bytes": 256}
+  },
+  "oneOf": [
+    {"required": ["aon_click_id"], "not": {"anyOf": [{"required": ["aon_tracking_id"]}, {"required": ["offer_instance_id"]}]}},
+    {"required": ["aon_tracking_id"], "not": {"anyOf": [{"required": ["aon_click_id"]}, {"required": ["offer_instance_id"]}]}},
+    {"required": ["offer_instance_id"], "not": {"anyOf": [{"required": ["aon_click_id"]}, {"required": ["aon_tracking_id"]}]}}
+  ],
+  "dependentRequired": {"amount": ["currency"], "currency": ["amount"]},
+  "additionalProperties": false
+}

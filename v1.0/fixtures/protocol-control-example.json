@@ -1,0 +1,8 @@
+{
+  "protocol_version": "1.0",
+  "target": {"kind": "offer", "id": "019dd208-27d2-7673-b16f-6897fa120303"},
+  "operation": "feedback",
+  "user_action": "explicit",
+  "idempotency_key": "feedback-019dd208-27d2-7673-b16f-6897fa120303",
+  "feedback": "not_interested"
+}

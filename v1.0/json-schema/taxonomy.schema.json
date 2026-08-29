@@ -1,0 +1,33 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://agentoffernetwork.org/schema/taxonomy/v1",
+  "title": "AON Taxonomy v1 Source Tree",
+  "description": "Machine-readable source tree for AON Taxonomy v1. Source nodes use name + children; stable category ids are generated from paths by the validation guard.",
+  "type": "array",
+  "items": {
+    "$ref": "#/$defs/taxonomyNode"
+  },
+  "minItems": 1,
+  "$defs": {
+    "taxonomyNode": {
+      "type": "object",
+      "required": [
+        "name"
+      ],
+      "properties": {
+        "name": {
+          "type": "string",
+          "minLength": 1
+        },
+        "children": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/taxonomyNode"
+          },
+          "default": []
+        }
+      },
+      "additionalProperties": false
+    }
+  }
+}

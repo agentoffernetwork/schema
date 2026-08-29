@@ -1,0 +1,10 @@
+{
+  "version": "stable-v1.0-version-namespace",
+  "header": "AON-Protocol-Version",
+  "response_header": "AON-Protocol-Version",
+  "cache_vary": "AON-Protocol-Version",
+  "lines": [
+    {"id": "stable-v1.0", "status": "canonical", "request_selector": "1.0", "response_echo": "1.0", "response_body_pointer": "/protocol_version", "response_body_value": "1.0", "offer_payload_pointer": "/version", "offer_payload_value": "3.0", "offer_version_namespace": "offer-document-model-lineage"}
+  ],
+  "rejections": {"omitted_selector": "unsupported_protocol_version", "unknown_selector": "unsupported_protocol_version", "silent_fallback": false}
+}

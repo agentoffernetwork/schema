@@ -1,0 +1,10 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://agentoffernetwork.org/schema/offer-provider-request/v1.0",
+  "title": "AgentOffer OfferProvider Request Schema v1.0",
+  "description": "Adopted AON-to-Provider request. It uses the v1.0 Query business request and requires request_id.",
+  "allOf": [
+    {"$ref": "https://agentoffernetwork.org/schema/offer-query/v1.0"},
+    {"type": "object", "required": ["request_id"]}
+  ]
+}

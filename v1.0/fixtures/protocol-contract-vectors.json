@@ -1,0 +1,90 @@
+{
+  "version": "v1.0",
+  "status": "canonical",
+  "cases": [
+    {
+      "id": "query-v10-valid-thinking-mode-off",
+      "schema_id": "https://agentoffernetwork.org/schema/offer-query/v1.0",
+      "fixture": "fixtures/protocol-v1.0-query-example.json",
+      "expected": "valid",
+      "covers": ["thinking_mode.false", "query.current-intent-only"]
+    },
+    {
+      "id": "query-v10-invalid-thinking-mode-type",
+      "schema_id": "https://agentoffernetwork.org/schema/offer-query/v1.0",
+      "fixture": "fixtures/protocol-v1.0-query-example.json",
+      "mutation": {"path": "/request/response_options/thinking_mode", "value": "false"},
+      "expected": "reject",
+      "covers": ["thinking_mode.invalid-type"]
+    },
+    {
+      "id": "response-v10-valid-guidance",
+      "schema_id": "https://agentoffernetwork.org/schema/offer-query-response/v1.0",
+      "fixture": "fixtures/protocol-v1.0-query-example.json",
+      "expected": "valid",
+      "covers": ["engagement.refinements", "engagement.followup_topics", "query_helper.item-level"]
+    },
+    {
+      "id": "offer-v10-source-separated",
+      "schema_id": "https://agentoffernetwork.org/schema/offer/v1.0",
+      "fixture": "fixtures/protocol-v1.0-query-example.json",
+      "expected": "valid",
+      "covers": ["entity.listing_source.logo.action"]
+    },
+    {
+      "id": "provider-v10-request-id-required",
+      "schema_id": "https://agentoffernetwork.org/schema/offer-provider-request/v1.0",
+      "fixture": "fixtures/protocol-v1.0-query-example.json",
+      "expected": "valid",
+      "covers": ["provider.request_id"]
+    },
+    {
+      "id": "control-v10-feedback-explicit",
+      "schema_id": "https://agentoffernetwork.org/schema/offer-control/v1.0",
+      "fixture": "fixtures/protocol-v1.0-control-example.json",
+      "expected": "valid",
+      "covers": ["control.feedback", "control.idempotency"]
+    },
+    {
+      "id": "control-v10-watch-status-not-response-field",
+      "schema_id": "https://agentoffernetwork.org/schema/offer-control/v1.0",
+      "fixture": "fixtures/protocol-v1.0-control-example.json",
+      "mutation": {"path": "/watch_status", "value": "watching"},
+      "expected": "reject",
+      "covers": ["removed.watch_status"]
+    },
+    {
+      "id": "postback-provider-v10-current",
+      "schema_id": "https://agentoffernetwork.org/schema/postback-partner-payload/v1.0",
+      "fixture": "../examples/http/postback/partner/basic-conversion-v1.0.json",
+      "expected": "valid",
+      "source_refs": ["json-schema/goal-event-name-v1.0.json", "types/postback-v1.0.types.ts", "../examples/http/postback/partner/basic-conversion-v1.0.http"],
+      "covers": ["postback.provider.current", "postback.provider.single-anchor", "postback.provider.no-payload-version"]
+    },
+    {
+      "id": "postback-provider-v10-unknown-field",
+      "schema_id": "https://agentoffernetwork.org/schema/postback-partner-payload/v1.0",
+      "fixture": "../examples/http/postback/partner/invalid-unknown-field-v1.0.json",
+      "expected": "reject",
+      "source_refs": ["json-schema/postback-partner-payload-v1.0.json", "../examples/http/postback/partner/invalid-unknown-field-v1.0.http"],
+      "covers": ["postback.provider.closed"]
+    },
+    {
+      "id": "postback-agent-v10-current",
+      "schema_id": "https://agentoffernetwork.org/schema/postback-agent-payload/v1.0",
+      "fixture": "../examples/http/postback/agent/basic-conversion-v1.0.json",
+      "expected": "valid",
+      "source_refs": ["json-schema/goal-event-name-v1.0.json", "fixtures/postback-agent-webhook-v1.0.json", "types/postback-v1.0.types.ts", "../examples/http/postback/agent/basic-conversion-v1.0.http"],
+      "covers": ["postback.agent.current", "postback.agent.signature", "postback.agent.retry"]
+    },
+    {
+      "id": "postback-agent-v10-cpa-without-revenue",
+      "schema_id": "https://agentoffernetwork.org/schema/postback-agent-payload/v1.0",
+      "fixture": "../examples/http/postback/agent/basic-conversion-v1.0.json",
+      "mutation": {"remove": ["amount", "currency"]},
+      "expected": "valid",
+      "source_refs": ["json-schema/postback-agent-payload-v1.0.json"],
+      "covers": ["postback.agent.cpa-optional-revenue"]
+    }
+  ]
+}

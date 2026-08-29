@@ -38,9 +38,9 @@ npm run test:contract-ci
 ```
 
 For a new integration, use the canonical
-[Agent quickstart](https://github.com/agentoffernetwork/protocol/blob/main/v0.3/quickstarts/agent.md)
+[Agent quickstart](https://github.com/agentoffernetwork/protocol/blob/main/v1.0/quickstarts/agent.md)
 or
-[Partner quickstart](https://github.com/agentoffernetwork/protocol/blob/main/v0.3/quickstarts/partner.md).
+[Partner quickstart](https://github.com/agentoffernetwork/protocol/blob/main/v1.0/quickstarts/partner.md).
 This document governs schema contributions.
 
 ## Code of Conduct
