@@ -1,0 +1,8 @@
+[
+  { "id": "public-null-root", "artifact": "public_offer", "value": null },
+  { "id": "public-array-root", "artifact": "public_offer", "value": [] },
+  { "id": "public-scalar-root", "artifact": "public_offer", "value": "offer" },
+  { "id": "partner-null-root", "artifact": "partner_offer", "value": null },
+  { "id": "partner-array-root", "artifact": "partner_offer", "value": [] },
+  { "id": "partner-scalar-root", "artifact": "partner_offer", "value": 1 }
+]

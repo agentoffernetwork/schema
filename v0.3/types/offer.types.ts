@@ -19,8 +19,6 @@ export interface OfferV03 {
   listing_source?: ListingSourceV03
   action: OfferActionV03
   material?: MaterialItemV03[]
-  targeting?: TargetingRuleV03[]
-  conversion_rule?: ConversionRuleV03
   claims?: ClaimV03[]
   match_reason?: string
   goals: ConversionGoalV03[]
@@ -33,15 +31,12 @@ export interface OfferInfoV03 {
   secondary_category_ids?: CategoryId[]
   description: string
   tags?: string[]
-  rating?: { value?: number; count?: number; source?: string }
+  rating?: { value: number; count?: number; source?: string }
   properties?: DisplayPropertyV03[]
   recommendation_reason?: string
   commercial?: CommercialInfoV03
   start_at?: string
   expire_at?: string
-  status?: "active" | "paused" | "pending" | "rejected" | "expired"
-  audit_status?: "waiting" | "pass" | "reject"
-  priority?: number
 }
 
 export interface EntityV03 {
@@ -75,26 +70,6 @@ export interface MaterialItemV03 {
   format: "image" | "video" | "html5"
   dimensions?: string
   alt_text?: string
-}
-
-export interface TargetingRuleV03 {
-  geo?: { include?: LocationTargetV03[]; exclude?: LocationTargetV03[] }
-  eligibility?: { min_age?: number }
-  language?: string
-  device_type?: Array<"mobile" | "desktop" | "tablet" | "smart_tv">
-  os?: Array<"ios" | "android" | "windows" | "macos">
-}
-
-export interface LocationTargetV03 {
-  location_id: string
-}
-
-export interface ConversionRuleV03 {
-  click_window_hours?: number
-  view_window_hours?: number
-  attribution_model?: "last_click" | "first_click"
-  dedup_strategy?: "first" | "all"
-  minimum_amount?: string
 }
 
 export interface ClaimV03 {

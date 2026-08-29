@@ -1,4 +1,9 @@
 import type { OfferV03 } from "./offer-v0.3.types"
+import type { PartnerOfferV03 } from "./offer-partner-v0.3.types"
+
+type AtLeastOne<T, Keys extends keyof T = keyof T> = Keys extends keyof T
+  ? Required<Pick<T, Keys>> & Partial<Omit<T, Keys>>
+  : never
 
 export interface OfferQueryRequestV03 {
   request_id?: string
@@ -79,17 +84,21 @@ export interface FollowupTopicV03 {
 }
 
 export interface QueryHelperV03 {
-  request_patch: {
-    intent?: { signals?: QuerySignalsV03 | null }
-    constraints?: QueryConstraintsV03 | null
-  }
+  request_patch: QueryHelperRequestPatchV03
   origin?: OriginV03[]
 }
+
+export type QueryHelperRequestPatchV03 = AtLeastOne<{
+  intent: { signals: AtLeastOne<QuerySignalsV03> }
+  constraints: AtLeastOne<QueryConstraintsV03>
+}>
 
 export interface HookV03 {
   kind: "price_change" | "availability_change" | "eligibility_change" | "content_change"
   title: string
   description?: string
+  subject_offer_id: string
+  baseline_request_id: string
   query_helper?: QueryHelperV03
 }
 
@@ -110,4 +119,11 @@ export interface ProtocolErrorV03 {
 }
 
 export type OfferProviderRequestV03 = OfferQueryRequestV03 & { request_id: string }
-export type OfferProviderResponseV03 = OfferQueryResponseV03 | ProtocolErrorV03
+export interface OfferProviderSuccessV03 {
+  request_id: string
+  protocol_version: "0.3"
+  language: string
+  offers: PartnerOfferV03[]
+}
+
+export type OfferProviderResponseV03 = OfferProviderSuccessV03 | ProtocolErrorV03

@@ -2,20 +2,32 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://agentoffernetwork.org/schema/offer-provider-response/v0.3",
   "title": "AgentOffer OfferProvider Response Schema v0.3",
-  "description": "Adopted Provider success payload or channel error envelope.",
+  "description": "Adopted Partner supply success payload or channel error envelope. AON resolves Partner source identities and creates the public Query response separately.",
   "oneOf": [
-    {"$ref": "https://agentoffernetwork.org/schema/offer-query-response/v0.3"},
+    {"$ref": "#/$defs/successEnvelope"},
     {"$ref": "#/$defs/errorEnvelope"}
   ],
   "$defs": {
+    "successEnvelope": {
+      "type": "object",
+      "description": "Partner-authored supply response for one AON OfferProvider request.",
+      "required": ["request_id", "protocol_version", "language", "offers"],
+      "properties": {
+        "request_id": {"type": "string", "format": "uuid", "description": "Exact request_id from the OfferProvider request."},
+        "protocol_version": {"const": "0.3", "description": "Transport protocol line selected for this Partner response."},
+        "language": {"type": "string", "minLength": 2, "maxLength": 64, "pattern": "^[A-Za-z]{2,3}(?:-[A-Za-z]{3}){0,3}(?:-[A-Za-z]{4})?(?:-(?:[A-Za-z]{2}|[0-9]{3}))?(?:-(?:[A-Za-z0-9]{5,8}|[0-9][A-Za-z0-9]{3}))*(?:-[0-9A-WY-Za-wy-z](?:-[A-Za-z0-9]{2,8})+)*(?:-[Xx](?:-[A-Za-z0-9]{1,8})+)?$", "description": "Language of Partner-authored user-facing response content under the final-v0.3 language profile."},
+        "offers": {"type": "array", "items": {"$ref": "https://agentoffernetwork.org/schema/offer-partner/v0.3"}, "description": "Partner supply Offers. Each uses source_offer_id and never contains AON offer_id, offer_instance_id, or match_reason."}
+      },
+      "additionalProperties": false
+    },
     "errorEnvelope": {
       "type": "object",
       "required": ["code", "message", "data", "extra"],
       "properties": {
-        "code": {"type": "string", "enum": ["BAD_REQUEST", "UNAUTHORIZED", "FORBIDDEN", "RATE_LIMITED", "INTERNAL_ERROR"]},
-        "message": {"type": "string"},
-        "data": {"type": "object", "maxProperties": 0, "additionalProperties": false},
-        "extra": {"type": "object", "additionalProperties": true}
+        "code": {"type": "string", "enum": ["BAD_REQUEST", "UNAUTHORIZED", "FORBIDDEN", "RATE_LIMITED", "INTERNAL_ERROR"], "description": "Stable machine-readable Partner channel error class."},
+        "message": {"type": "string", "description": "Human-readable error summary intended for integration diagnostics."},
+        "data": {"type": "object", "maxProperties": 0, "additionalProperties": false, "description": "Reserved empty data object for the v0.3 Partner error envelope."},
+        "extra": {"type": "object", "additionalProperties": true, "description": "Optional deployment-specific diagnostic metadata; it must not redefine code semantics."}
       },
       "additionalProperties": false
     }
