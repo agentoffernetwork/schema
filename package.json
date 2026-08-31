@@ -1,0 +1,15 @@
+{
+  "name": "@agentoffer/schema",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "test": "npm run test:contract-ci",
+    "test:contract-ci": "node scripts/validate-v1-contract.mjs && npm run typecheck",
+    "typecheck": "tsc --noEmit --strict --module ESNext --moduleResolution bundler v1.0/types/*.ts"
+  },
+  "devDependencies": {
+    "ajv": "8.18.0",
+    "ajv-formats": "3.0.1",
+    "typescript": "5.9.3"
+  }
+}

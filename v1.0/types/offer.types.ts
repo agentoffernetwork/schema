@@ -1,4 +1,4 @@
-import type { GoalEventNameV10 } from "./goal-event-name-v1.0.types"
+import type { GoalEventNameV10 } from "./goal-event-name.types"
 
 export type CategoryId = string
 

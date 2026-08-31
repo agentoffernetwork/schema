@@ -1,4 +1,4 @@
-import type { OfferV10 } from "./offer-v1.0.types"
+import type { OfferV10 } from "./offer.types"
 
 type AtLeastOne<T, Keys extends keyof T = keyof T> = Keys extends keyof T
   ? Required<Pick<T, Keys>> & Partial<Omit<T, Keys>>
