@@ -1,6 +1,6 @@
-import type { GoalEventNameV10 } from './goal-event-name-v1.0.types'
+import type { GoalEventNameV10 } from './goal-event-name.types'
 
-export type { GoalEventNameV10 } from './goal-event-name-v1.0.types'
+export type { GoalEventNameV10 } from './goal-event-name.types'
 
 export type ProviderPostbackAttributionV10 =
   | { aon_click_id: string; aon_tracking_id?: never; offer_instance_id?: never }
