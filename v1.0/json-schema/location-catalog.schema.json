@@ -1,0 +1,56 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://agentoffernetwork.org/schema/location-catalog/v1",
+  "title": "AON Full Location Catalog v1",
+  "type": "object",
+  "required": [
+    "version",
+    "source_name",
+    "source_file",
+    "source_file_date",
+    "source_sha256",
+    "generated_at",
+    "record_count",
+    "locations"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "version": {"const": "v1"},
+    "source_name": {"const": "google-ads-geotargets"},
+    "source_file": {"type": "string", "minLength": 1},
+    "source_file_date": {"type": "string", "pattern": "^\\d{4}-\\d{2}-\\d{2}$"},
+    "source_sha256": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
+    "generated_at": {"type": "string", "format": "date-time"},
+    "record_count": {"type": "integer", "minimum": 1},
+    "locations": {
+      "type": "array",
+      "minItems": 1,
+      "items": {"$ref": "#/$defs/location"}
+    }
+  },
+  "$defs": {
+    "location": {
+      "type": "object",
+      "required": [
+        "location_id",
+        "name",
+        "canonical_name",
+        "country_code",
+        "target_type",
+        "source_parent_location_id",
+        "parent_location_id"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "location_id": {"type": "string", "pattern": "^[0-9]+$"},
+        "name": {"type": "string", "minLength": 1},
+        "canonical_name": {"type": "string", "minLength": 1},
+        "country_code": {"type": "string", "pattern": "^[A-Z]{2}$"},
+        "target_type": {"type": "string", "minLength": 1},
+        "source_parent_location_id": {"type": ["string", "null"], "pattern": "^[0-9]+$"},
+        "parent_location_id": {"type": ["string", "null"], "pattern": "^[0-9]+$"},
+        "unresolved_source_parent_location_id": {"type": "string", "pattern": "^[0-9]+$"}
+      }
+    }
+  }
+}

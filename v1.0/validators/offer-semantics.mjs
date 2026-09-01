@@ -1,5 +1,5 @@
 import { aonTaxonomyV1Resolver } from "../taxonomy/aon-taxonomy-v1-resolver.mjs"
-import { getLocationById } from "../helpers/location-helpers.mjs"
+import { isFullLocationCatalogV1Member } from "../helpers/full-location-catalog-v1.mjs"
 
 const EMPTY_REASONS = new Set([
   "frequency_capped",
@@ -19,6 +19,7 @@ const BCP_47_LANGUAGE_TAG = /^[A-Za-z]{2,3}(?:-[A-Za-z]{3}){0,3}(?:-[A-Za-z]{4})
 const DECIMAL_AMOUNT = /^(?:0|[1-9][0-9]{0,11})(?:\.[0-9]{1,6})?$/
 const DISPLAY_PATTERN_TOKENS = new Set(["${type}", "${value}", "${unit}"])
 const FORBIDDEN_ACTION_SCHEMES = new Set(["javascript:", "data:", "vbscript:", "file:"])
+const SHORT_DESCRIPTION_SEGMENTER = new Intl.Segmenter("und", { granularity: "word" })
 
 function semanticError(code, instancePath, message) {
   return { code, instancePath, message }
@@ -45,6 +46,20 @@ function hasUniqueLanguageExtensionSingletons(value) {
     seen.add(subtag)
   }
   return true
+}
+
+function validateShortDescription(value, errors) {
+  if (typeof value !== "string") return
+  const normalized = value.normalize("NFC").trim()
+  if (normalized.length === 0) {
+    errors.push(semanticError("short_description_blank", "/offer_info/short_description", "short_description must not be blank after NFC normalization and trimming"))
+    return
+  }
+  let wordLikeCount = 0
+  for (const segment of SHORT_DESCRIPTION_SEGMENTER.segment(normalized)) {
+    if (segment.isWordLike) wordLikeCount += 1
+  }
+  if (wordLikeCount > 50) errors.push(semanticError("short_description_word_limit", "/offer_info/short_description", "short_description must contain at most 50 word-like segments after NFC normalization and trimming"))
 }
 
 function parseAbsoluteUri(value) {
@@ -117,6 +132,8 @@ function validateOfferCommonV10Semantics(offer, errors) {
   if (offer?.content_language !== undefined && (typeof offer.content_language !== "string" || !BCP_47_LANGUAGE_TAG.test(offer.content_language) || !hasUniqueLanguageExtensionSingletons(offer.content_language))) {
     errors.push(semanticError("language_bcp47", "/content_language", "content_language must be a BCP-47 language tag"))
   }
+
+  validateShortDescription(offer?.offer_info?.short_description, errors)
 
   const goals = offer?.goals
   if (Array.isArray(goals)) {
@@ -207,8 +224,8 @@ export function validatePartnerOfferV10Semantics(offer) {
           if (Object.hasOwn(rule?.geo ?? {}, key) && (!Array.isArray(rule.geo[key]) || rule.geo[key].length === 0)) errors.push(semanticError("targeting_nonempty", `${rulePath}/geo/${key}`, `targeting.geo.${key} must not be empty`))
           if (Array.isArray(rule?.geo?.[key])) {
             rule.geo[key].forEach((location, locationIndex) => {
-              if (typeof location?.location_id === "string" && /^[0-9]+$/.test(location.location_id) && getLocationById(location.location_id) === null) {
-                errors.push(semanticError("location_registry_membership", `${rulePath}/geo/${key}/${locationIndex}/location_id`, "location_id must exist in AON Location Registry v1"))
+              if (!isFullLocationCatalogV1Member(location?.location_id)) {
+                errors.push(semanticError("location_registry_membership", `${rulePath}/geo/${key}/${locationIndex}/location_id`, "location_id must be a numeric ACTIVE entry in AON Full Location Catalog v1"))
               }
             })
           }

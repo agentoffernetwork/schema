@@ -16,6 +16,7 @@
       "required": ["title", "category", "description"],
       "properties": {
         "title": {"type": "string", "minLength": 1, "maxLength": 200, "description": "Short user-facing name used to identify the Offer in a result, card, or other presentation."},
+        "short_description": {"type": "string", "maxLength": 500, "description": "Optional compact user-facing Offer overview for result cards and previews. It does not replace the required description or convey AON ranking or per-request matching rationale; semantic validation rejects blank content and limits it to 50 Unicode word-like segments."},
         "offer_type": {"type": "string", "enum": ["physical_product", "digital_goods", "content", "online_service", "offline_service"], "description": "High-level class of what is offered. It supports presentation and product understanding; it is not the executable consumer action."},
         "category": {"$ref": "#/$defs/category", "description": "Primary AON Taxonomy v1 classification for the Offer."},
         "secondary_category_ids": {"type": "array", "minItems": 1, "maxItems": 5, "uniqueItems": true, "items": {"$ref": "#/$defs/categoryId"}, "description": "Optional additional AON Taxonomy v1 classifications. When present the array is non-empty; entries add descriptive coverage and must remain distinct from the primary category and from one another under semantic validation."},

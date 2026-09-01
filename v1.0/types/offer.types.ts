@@ -26,6 +26,7 @@ export interface OfferV10 {
 
 export interface OfferInfoV10 {
   title: string
+  short_description?: string
   offer_type?: OfferType
   category: { id: CategoryId }
   secondary_category_ids?: CategoryId[]

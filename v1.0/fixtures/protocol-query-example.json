@@ -28,6 +28,7 @@
         "version": "3.0",
         "offer_info": {
           "title": "Hotel near Union Square",
+          "short_description": "Quiet, walkable hotel near Union Square.",
           "category": {"id": "travel_tourism.accommodations.hotels_motels_resorts.hotels"},
           "description": "A quiet hotel with walkable access to Union Square.",
           "recommendation_reason": "Matches your request for a quiet, walkable stay."
