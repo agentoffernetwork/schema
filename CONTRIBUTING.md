@@ -32,7 +32,9 @@ This repository owns the machine-readable contracts for AgentOffer Protocol: JSO
 git clone https://github.com/agentoffernetwork/schema.git
 cd schema
 
-# Run the checked-in Protocol v0.2 contract suite
+# Use the repository's Node.js 24 runtime (for example, `nvm use`).
+
+# Run the checked-in Protocol v1.0 contract suite
 npm ci --ignore-scripts
 npm run test:contract-ci
 ```

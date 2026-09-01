@@ -2,6 +2,10 @@
   "name": "@agentoffer/schema",
   "private": true,
   "type": "module",
+  "engines": {
+    "node": ">=24 <25",
+    "npm": ">=11 <12"
+  },
   "scripts": {
     "test": "npm run test:contract-ci",
     "test:contract-ci": "node scripts/validate-v1-contract.mjs && npm run typecheck",
