@@ -1,0 +1,226 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://agentoffernetwork.org/schema/offer-profile-registry/v1.0",
+  "title": "AgentOffer Supply Offer Profile Registry v1.0",
+  "description": "Closed registry for stable v1.0 supply Offer profiles. Generic Offers omit offer_info.details; registered profiles carry their domain facts only in details.data.",
+  "$defs": {
+    "supplyDetails": {
+      "type": "object",
+      "description": "Closed supply-profile envelope. profile selects exactly one registered closed data shape.",
+      "required": ["profile", "data"],
+      "properties": {
+        "profile": {
+          "type": "string",
+          "enum": ["flight", "hotel_rate"],
+          "description": "Registered supply Offer profile identifier in the stable v1.0 registry."
+        },
+        "data": {
+          "type": "object",
+          "description": "Closed domain facts for the selected registered profile."
+        }
+      },
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {"properties": {"profile": {"const": "flight"}}, "required": ["profile"]},
+          "then": {"properties": {"data": {"$ref": "#/$defs/flightData"}}}
+        },
+        {
+          "if": {"properties": {"profile": {"const": "hotel_rate"}}, "required": ["profile"]},
+          "then": {"properties": {"data": {"$ref": "#/$defs/hotelRateData"}}}
+        }
+      ]
+    },
+    "flightData": {
+      "type": "object",
+      "description": "Closed public facts for one priced air itinerary and its traveller composition.",
+      "required": ["trip_type", "travelers", "legs"],
+      "properties": {
+        "trip_type": {
+          "type": "string",
+          "enum": ["one_way", "round_trip", "multi_city"],
+          "description": "Declared itinerary topology; semantic validation binds it to the number of legs."
+        },
+        "travelers": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 3,
+          "items": {"$ref": "#/$defs/traveler"},
+          "description": "Non-empty traveller counts grouped by traveller type. Each type may occur at most once under semantic validation."
+        },
+        "legs": {
+          "type": "array",
+          "minItems": 1,
+          "items": {"$ref": "#/$defs/flightLeg"},
+          "description": "Ordered itinerary legs. Each leg contains one or more ordered flight segments."
+        }
+      },
+      "additionalProperties": false
+    },
+    "traveler": {
+      "type": "object",
+      "description": "A positive count for one traveller type; individual identity and age are not public profile facts.",
+      "required": ["type", "count"],
+      "properties": {
+        "type": {
+          "type": "string",
+          "enum": ["adult", "child", "infant"],
+          "description": "Traveller type used to state the priced traveller composition."
+        },
+        "count": {
+          "type": "integer",
+          "minimum": 1,
+          "description": "Positive number of travellers of this type included in the stated itinerary price."
+        }
+      },
+      "additionalProperties": false
+    },
+    "flightLeg": {
+      "type": "object",
+      "description": "One ordered flight leg made up of one or more contiguous flight segments.",
+      "required": ["segments"],
+      "properties": {
+        "segments": {
+          "type": "array",
+          "minItems": 1,
+          "items": {"$ref": "#/$defs/flightSegment"},
+          "description": "Ordered segments for this leg. Semantic validation requires adjacent arrival and departure continuity."
+        }
+      },
+      "additionalProperties": false
+    },
+    "flightSegment": {
+      "type": "object",
+      "description": "Closed public facts for one marketed flight segment.",
+      "required": ["departure", "arrival", "marketing_carrier", "flight_number", "cabin_class"],
+      "properties": {
+        "departure": {"$ref": "#/$defs/flightEndpoint", "description": "Scheduled departure airport and timestamp for this segment."},
+        "arrival": {"$ref": "#/$defs/flightEndpoint", "description": "Scheduled arrival airport and timestamp for this segment."},
+        "marketing_carrier": {
+          "type": "object",
+          "description": "Carrier marketing this flight under the displayed flight number.",
+          "required": ["code"],
+          "properties": {
+            "code": {
+              "type": "string",
+              "pattern": "^[A-Z0-9]{2}$",
+              "description": "Two-character uppercase marketing carrier code; registry membership is not asserted by this profile."
+            }
+          },
+          "additionalProperties": false
+        },
+        "flight_number": {
+          "type": "string",
+          "pattern": "^[0-9]{1,4}[A-Z]?$",
+          "description": "Carrier-local flight number without the marketing-carrier prefix."
+        },
+        "cabin_class": {
+          "type": "string",
+          "enum": ["economy", "premium_economy", "business", "first"],
+          "description": "Public cabin class for this segment."
+        }
+      },
+      "additionalProperties": false
+    },
+    "flightEndpoint": {
+      "type": "object",
+      "description": "Airport and offset-bearing scheduled timestamp at one end of a flight segment.",
+      "required": ["airport_code", "at"],
+      "properties": {
+        "airport_code": {
+          "type": "string",
+          "pattern": "^[A-Z]{3}$",
+          "description": "Three-letter uppercase airport code; airport-registry membership is outside this profile."
+        },
+        "at": {
+          "type": "string",
+          "format": "date-time",
+          "description": "RFC 3339 scheduled timestamp including an explicit UTC offset."
+        }
+      },
+      "additionalProperties": false
+    },
+    "hotelRateData": {
+      "type": "object",
+      "description": "Closed public facts for a hotel reference starting nightly price. This profile never asserts a confirmed inventory allocation or total-stay price.",
+      "required": ["rate", "property"],
+      "properties": {
+        "rate": {
+          "type": "object",
+          "description": "Closed price-nature declaration for the hotel rate profile.",
+          "required": ["kind"],
+          "properties": {
+            "kind": {
+              "const": "reference_starting_nightly",
+              "description": "The price is a source-observed single-night reference or starting price, not a booking, inventory, room-allocation, or total-stay assertion."
+            }
+          },
+          "additionalProperties": false
+        },
+        "property": {
+          "type": "object",
+          "description": "Identified hotel property and its public location facts.",
+          "required": ["name", "location"],
+          "properties": {
+            "name": {"type": "string", "minLength": 1, "maxLength": 300, "description": "Non-empty source-provided hotel property name."},
+            "location": {"$ref": "#/$defs/hotelLocation", "description": "Public AON location reference, country, and optional source-provided display facts for the property."},
+            "property_type": {"type": "string", "minLength": 1, "maxLength": 80, "description": "Optional source-provided property type when known."},
+            "star_rating": {"type": ["string", "number"], "minLength": 1, "maximum": 5, "description": "Optional source-provided property star rating when known. String values preserve existing source formatting; numeric values must be from 1 through 5."}
+          },
+          "additionalProperties": false
+        },
+        "stay": {
+          "type": "object",
+          "description": "Optional stay facts. Omit the entire object when dates are unknown; when supplied both dates are required.",
+          "required": ["check_in", "check_out"],
+          "properties": {
+            "check_in": {"type": "string", "format": "date", "description": "Known local check-in calendar date; never a default or inferred placeholder."},
+            "check_out": {"type": "string", "format": "date", "description": "Known local check-out calendar date; semantic validation requires it to be after check_in."},
+            "occupancy": {"$ref": "#/$defs/hotelOccupancy", "description": "Optional known search or booking occupancy. Omit it instead of inventing room or guest counts."}
+          },
+          "additionalProperties": false
+        },
+        "room": {
+          "type": "object",
+          "description": "Optional room facts. Omit the entire object when the room type is unknown.",
+          "required": ["name"],
+          "properties": {
+            "name": {"type": "string", "minLength": 1, "maxLength": 300, "description": "Non-empty source-provided room name when the room is known."},
+            "room_id": {"type": "string", "minLength": 1, "maxLength": 256, "description": "Optional opaque source room identifier when it is safe to disclose."},
+            "bedding": {"type": "array", "minItems": 1, "maxItems": 8, "items": {"type": "string", "minLength": 1, "maxLength": 100}, "description": "Optional non-empty source-provided bedding descriptions."},
+            "max_occupancy": {"type": "integer", "minimum": 1, "description": "Optional maximum room occupancy when known."},
+            "room_type_guaranteed": {"type": "boolean", "description": "Optional source assertion that the named room type is guaranteed."}
+          },
+          "additionalProperties": false
+        }
+      },
+      "additionalProperties": false
+    },
+    "hotelLocation": {
+      "type": "object",
+      "description": "Public hotel-property location. location_id is an AON Full Location Catalog v1 string identifier checked semantically; country_code is independently supplied rather than inferred. Source display facts remain nested under location to match existing supply adapters.",
+      "required": ["location_id", "country_code"],
+      "properties": {
+        "location_id": {"type": "string", "pattern": "^[0-9]+$", "description": "Numeric-string identifier that must be an active AON Full Location Catalog v1 member under semantic validation."},
+        "country_code": {"type": "string", "pattern": "^[A-Z]{2}$", "description": "Uppercase two-letter ISO 3166-1 alpha-2 country or territory code supplied by the source."},
+        "city": {"type": "string", "minLength": 1, "maxLength": 200, "description": "Optional source-provided city display name when known."},
+        "address": {"type": "string", "minLength": 1, "maxLength": 500, "description": "Optional source-provided property address when known."},
+        "latitude": {"type": ["string", "number"], "minimum": -90, "maximum": 90, "description": "Optional WGS-84 latitude when supplied by the source. String values preserve existing adapter payloads; numeric values must be from -90 through 90."},
+        "longitude": {"type": ["string", "number"], "minimum": -180, "maximum": 180, "description": "Optional WGS-84 longitude when supplied by the source. String values preserve existing adapter payloads; numeric values must be from -180 through 180."},
+        "timezone": {"type": "string", "minLength": 1, "maxLength": 64, "description": "Optional source-provided IANA-style property timezone when known."}
+      },
+      "additionalProperties": false
+    },
+    "hotelOccupancy": {
+      "type": "object",
+      "description": "Known aggregate occupancy for a hotel stay. It does not imply a per-room allocation.",
+      "required": ["rooms", "adults"],
+      "properties": {
+        "rooms": {"type": "integer", "minimum": 1, "description": "Positive number of rooms when known."},
+        "adults": {"type": "integer", "minimum": 1, "description": "Positive number of adult guests when known."},
+        "children_ages": {"type": "array", "minItems": 1, "maxItems": 12, "items": {"type": "integer", "minimum": 0, "maximum": 17}, "description": "Optional ages of known child guests. Omit when there are no children or their ages are unknown."}
+      },
+      "additionalProperties": false
+    }
+  }
+}

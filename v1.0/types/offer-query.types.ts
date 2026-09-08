@@ -1,4 +1,4 @@
-import type { OfferV10 } from "./offer.types"
+import type { GenericOfferV10 } from "./offer.types"
 import type { PartnerOfferV10 } from "./offer-partner.types"
 
 type AtLeastOne<T, Keys extends keyof T = keyof T> = Keys extends keyof T
@@ -52,7 +52,7 @@ export interface OfferQueryResponseV10 {
   request_id: string
   protocol_version: "1.0"
   language: string
-  offers: OfferV10[]
+  offers: GenericOfferV10[]
   engagement?: EngagementV10
   hooks?: HookV10[]
   empty_reason?: EmptyReasonV10

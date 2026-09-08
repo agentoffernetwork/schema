@@ -31,7 +31,11 @@
           "short_description": "Quiet, walkable hotel near Union Square.",
           "category": {"id": "travel_tourism.accommodations.hotels_motels_resorts.hotels"},
           "description": "A quiet hotel with walkable access to Union Square.",
-          "recommendation_reason": "Matches your request for a quiet, walkable stay."
+          "recommendation_reason": "Matches your request for a quiet, walkable stay.",
+          "commercial": {
+            "price": {"amount": "99.00", "currency": "USD", "unit": "night"},
+            "display_price": {"amount": "718.42", "currency": "CNY"}
+          }
         },
         "entity": {"id": "example-hotels", "name": "Example Hotels", "type": "merchant"},
         "listing_source": {

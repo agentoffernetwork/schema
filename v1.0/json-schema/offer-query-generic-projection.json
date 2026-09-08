@@ -1,0 +1,63 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://agentoffernetwork.org/schema/offer-query-generic-projection/v1.0",
+  "title": "AgentOffer Query Generic Offer Projection Schema v1.0",
+  "description": "Generic Query Offer projection. It permits the optional closed display_price response presentation while rejecting supply-profile details, original-price tax status, and quote observations.",
+  "allOf": [
+    {"$ref": "https://agentoffernetwork.org/schema/offer/v1.0"},
+    {
+      "not": {
+        "type": "object",
+        "required": ["offer_info"],
+        "properties": {
+          "offer_info": {
+            "type": "object",
+            "required": ["details"]
+          }
+        }
+      }
+    },
+    {
+      "not": {
+        "type": "object",
+        "required": ["offer_info"],
+        "properties": {
+          "offer_info": {
+            "type": "object",
+            "required": ["commercial"],
+            "properties": {
+              "commercial": {
+                "type": "object",
+                "required": ["quote"]
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "not": {
+        "type": "object",
+        "required": ["offer_info"],
+        "properties": {
+          "offer_info": {
+            "type": "object",
+            "required": ["commercial"],
+            "properties": {
+              "commercial": {
+                "type": "object",
+                "required": ["price"],
+                "properties": {
+                  "price": {
+                    "type": "object",
+                    "required": ["tax_status"]
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  ]
+}

@@ -1,4 +1,4 @@
-import type { OfferV10 } from "./offer.types"
+import type { CommercialInfoV10, OfferInfoV10, OfferV10 } from "./offer.types"
 
 type AtLeastOne<T, Keys extends keyof T = keyof T> = Keys extends keyof T
   ? Required<Pick<T, Keys>> & Partial<Omit<T, Keys>>
@@ -6,11 +6,18 @@ type AtLeastOne<T, Keys extends keyof T = keyof T> = Keys extends keyof T
 
 type NonEmptyArray<T> = [T, ...T[]]
 
-export interface PartnerOfferV10 extends Omit<OfferV10, "offer_id" | "offer_instance_id" | "match_reason"> {
+export interface PartnerOfferV10 extends Omit<OfferV10, "offer_id" | "offer_instance_id" | "match_reason" | "offer_info"> {
   source_offer_id: string
+  offer_info: PartnerOfferInfoV10
   targeting?: NonEmptyArray<TargetingRuleV10>
   conversion_rule?: ConversionRuleV10
 }
+
+export interface PartnerOfferInfoV10 extends Omit<OfferInfoV10, "commercial"> {
+  commercial?: PartnerCommercialInfoV10
+}
+
+export type PartnerCommercialInfoV10 = Omit<CommercialInfoV10, "display_price">
 
 export type TargetingRuleV10 = AtLeastOne<{
   geo: AtLeastOne<{ include: NonEmptyArray<LocationTargetV10>; exclude: NonEmptyArray<LocationTargetV10> }>

@@ -17,6 +17,8 @@ const QUERY_HELPER_PATHS = new Set([
 
 const BCP_47_LANGUAGE_TAG = /^[A-Za-z]{2,3}(?:-[A-Za-z]{3}){0,3}(?:-[A-Za-z]{4})?(?:-(?:[A-Za-z]{2}|[0-9]{3}))?(?:-(?:[A-Za-z0-9]{5,8}|[0-9][A-Za-z0-9]{3}))*(?:-[0-9A-WY-Za-wy-z](?:-[A-Za-z0-9]{2,8})+)*(?:-[Xx](?:-[A-Za-z0-9]{1,8})+)?$/
 const DECIMAL_AMOUNT = /^(?:0|[1-9][0-9]{0,11})(?:\.[0-9]{1,6})?$/
+const ZERO_DECIMAL_AMOUNT = /^0(?:\.0{1,6})?$/
+const CURRENCY_CODE = /^[A-Z]{3}$/
 const DISPLAY_PATTERN_TOKENS = new Set(["${type}", "${value}", "${unit}"])
 const FORBIDDEN_ACTION_SCHEMES = new Set(["javascript:", "data:", "vbscript:", "file:"])
 const SHORT_DESCRIPTION_SEGMENTER = new Intl.Segmenter("und", { granularity: "word" })
@@ -128,6 +130,211 @@ function validateOfferTaxonomy(offer, errors) {
   }
 }
 
+function isNonBlankString(value) {
+  return typeof value === "string" && value.trim().length > 0
+}
+
+function isAfter(left, right) {
+  const leftTime = typeof left === "string" ? Date.parse(left) : Number.NaN
+  const rightTime = typeof right === "string" ? Date.parse(right) : Number.NaN
+  return !Number.isNaN(leftTime) && !Number.isNaN(rightTime) && leftTime > rightTime
+}
+
+function isSameOrAfter(left, right) {
+  const leftTime = typeof left === "string" ? Date.parse(left) : Number.NaN
+  const rightTime = typeof right === "string" ? Date.parse(right) : Number.NaN
+  return !Number.isNaN(leftTime) && !Number.isNaN(rightTime) && leftTime >= rightTime
+}
+
+function validateDisplayPriceSemantics(offer, errors) {
+  const commercial = offer?.offer_info?.commercial
+  if (!isPlainObject(commercial) || !Object.hasOwn(commercial, "display_price")) return
+
+  const path = "/offer_info/commercial/display_price"
+  const displayPrice = commercial.display_price
+  if (!isPlainObject(displayPrice)) {
+    errors.push(semanticError("display_price_type", path, "display_price must be a closed object containing amount and currency"))
+    return
+  }
+
+  for (const property of Object.keys(displayPrice)) {
+    if (!["amount", "currency"].includes(property)) {
+      errors.push(semanticError("display_price_unknown_property", `${path}/${property}`, "display_price permits only amount and currency"))
+    }
+  }
+
+  const hasAmount = Object.hasOwn(displayPrice, "amount")
+  const hasCurrency = Object.hasOwn(displayPrice, "currency")
+  if (!hasAmount) errors.push(semanticError("display_price_required", `${path}/amount`, "display_price.amount is required when display_price is present"))
+  if (!hasCurrency) errors.push(semanticError("display_price_required", `${path}/currency`, "display_price.currency is required when display_price is present"))
+
+  const amount = displayPrice.amount
+  const currency = displayPrice.currency
+  const amountHasValidType = typeof amount === "string"
+  const currencyHasValidType = typeof currency === "string"
+  const amountHasValidFormat = amountHasValidType && DECIMAL_AMOUNT.test(amount)
+  const currencyHasValidFormat = currencyHasValidType && CURRENCY_CODE.test(currency)
+  if (hasAmount && !amountHasValidType) {
+    errors.push(semanticError("display_price_amount_type", `${path}/amount`, "display_price.amount must be a string"))
+  } else if (hasAmount && !amountHasValidFormat) {
+    errors.push(semanticError("display_price_amount_format", `${path}/amount`, "display_price.amount must be a non-negative canonical decimal with at most twelve integer digits and six fractional digits"))
+  }
+  if (hasCurrency && !currencyHasValidType) {
+    errors.push(semanticError("display_price_currency_type", `${path}/currency`, "display_price.currency must be a string"))
+  } else if (hasCurrency && !currencyHasValidFormat) {
+    errors.push(semanticError("display_price_currency_format", `${path}/currency`, "display_price.currency must be three uppercase ASCII letters"))
+  }
+
+  const price = commercial.price
+  if (!isPlainObject(price)) {
+    errors.push(semanticError("display_price_requires_price", "/offer_info/commercial/price", "display_price requires commercial.price"))
+    return
+  }
+
+  if (currencyHasValidFormat && typeof price.currency === "string" && CURRENCY_CODE.test(price.currency) && currency === price.currency) {
+    errors.push(semanticError("display_price_currency_same_as_price", `${path}/currency`, "display_price.currency must differ from commercial.price.currency"))
+  }
+
+  if (!amountHasValidFormat || typeof price.amount !== "string" || !DECIMAL_AMOUNT.test(price.amount)) return
+  const sourceIsZero = ZERO_DECIMAL_AMOUNT.test(price.amount)
+  const displayIsZero = ZERO_DECIMAL_AMOUNT.test(amount)
+  if (sourceIsZero && !displayIsZero) {
+    errors.push(semanticError("display_price_zero_mismatch", `${path}/amount`, "a zero original price requires a zero display_price amount"))
+  } else if (!sourceIsZero && displayIsZero) {
+    errors.push(semanticError("display_price_paid_zero", `${path}/amount`, "a positive original price requires a positive display_price amount"))
+  }
+}
+
+function validateQuoteSemantics(commercial, errors) {
+  if (!isPlainObject(commercial) || !Object.hasOwn(commercial, "quote")) return
+  if (!isPlainObject(commercial.price)) {
+    errors.push(semanticError("quote_requires_price", "/offer_info/commercial/quote", "quote requires commercial.price"))
+    return
+  }
+  const quote = commercial.quote
+  if (isPlainObject(quote) && isSameOrAfter(quote.observed_at, quote.valid_until)) {
+    errors.push(semanticError("quote_window_order", "/offer_info/commercial/quote/valid_until", "quote.valid_until must be later than quote.observed_at"))
+  }
+}
+
+function validateProfileCommercial(offer, profile, errors) {
+  const commercial = offer?.offer_info?.commercial
+  const price = commercial?.price
+  const quote = commercial?.quote
+  if (!isPlainObject(commercial) || !isPlainObject(price) || !Object.hasOwn(price, "amount") || !Object.hasOwn(price, "currency")) {
+    errors.push(semanticError("profile_price_required", "/offer_info/commercial/price", `${profile} requires commercial.price.amount and commercial.price.currency`))
+  }
+  if (!isPlainObject(price) || !Object.hasOwn(price, "tax_status")) {
+    errors.push(semanticError("profile_tax_status_required", "/offer_info/commercial/price/tax_status", `${profile} requires commercial.price.tax_status`))
+  }
+  if (!isPlainObject(quote) || !Object.hasOwn(quote, "observed_at")) {
+    errors.push(semanticError("profile_quote_required", "/offer_info/commercial/quote/observed_at", `${profile} requires commercial.quote.observed_at`))
+  }
+}
+
+function validateProfileBaseOffer(offer, profile, categoryId, errors) {
+  if (offer?.offer_info?.offer_type !== "offline_service") {
+    errors.push(semanticError("profile_offer_type", "/offer_info/offer_type", `${profile} requires offer_type offline_service`))
+  }
+  if (offer?.offer_info?.category?.id !== categoryId) {
+    errors.push(semanticError("profile_category", "/offer_info/category/id", `${profile} requires exact category ${categoryId}`))
+  }
+  if (offer?.action?.consumer_action !== "book") {
+    errors.push(semanticError("profile_book_action", "/action/consumer_action", `${profile} requires action.consumer_action book`))
+  }
+  validateProfileCommercial(offer, profile, errors)
+}
+
+function validateFlightProfile(offer, data, errors) {
+  validateProfileBaseOffer(offer, "flight", "travel_tourism.air_travel.airline_tickets_fares_flights", errors)
+  if (!isPlainObject(data)) return
+
+  const legs = data.legs
+  const expectedLegCount = data.trip_type === "one_way" ? 1 : data.trip_type === "round_trip" ? 2 : undefined
+  if (expectedLegCount !== undefined && Array.isArray(legs) && legs.length !== expectedLegCount) {
+    errors.push(semanticError("flight_trip_type_legs", "/offer_info/details/data/legs", `${data.trip_type} requires exactly ${expectedLegCount} legs`))
+  }
+  if (data.trip_type === "multi_city" && Array.isArray(legs) && legs.length < 2) {
+    errors.push(semanticError("flight_trip_type_legs", "/offer_info/details/data/legs", "multi_city requires at least two legs"))
+  }
+
+  if (Array.isArray(data.travelers)) {
+    const travelerTypes = new Set()
+    data.travelers.forEach((traveler, index) => {
+      const path = `/offer_info/details/data/travelers/${index}/type`
+      if (travelerTypes.has(traveler?.type)) errors.push(semanticError("flight_traveler_type_unique", path, "each flight traveler type may occur at most once"))
+      travelerTypes.add(traveler?.type)
+    })
+  }
+
+  if (!Array.isArray(legs)) return
+  legs.forEach((leg, legIndex) => {
+    const segments = leg?.segments
+    if (!Array.isArray(segments)) return
+    segments.forEach((segment, segmentIndex) => {
+      const path = `/offer_info/details/data/legs/${legIndex}/segments/${segmentIndex}`
+      if (isSameOrAfter(segment?.departure?.at, segment?.arrival?.at)) {
+        errors.push(semanticError("flight_segment_time_order", `${path}/arrival/at`, "flight segment arrival.at must be later than departure.at"))
+      }
+      if (segmentIndex === 0) return
+      const previous = segments[segmentIndex - 1]
+      if (previous?.arrival?.airport_code !== segment?.departure?.airport_code) {
+        errors.push(semanticError("flight_segment_airport_continuity", `${path}/departure/airport_code`, "each flight segment departure airport must equal the preceding segment arrival airport"))
+      }
+      if (isAfter(previous?.arrival?.at, segment?.departure?.at)) {
+        errors.push(semanticError("flight_segment_time_continuity", `${path}/departure/at`, "each flight segment departure.at must not be earlier than the preceding segment arrival.at"))
+      }
+    })
+  })
+}
+
+function validateHotelRateProfile(offer, data, errors) {
+  validateProfileBaseOffer(offer, "hotel_rate", "travel_tourism.accommodations.hotels_motels_resorts.hotels", errors)
+  const price = offer?.offer_info?.commercial?.price
+  if (price?.unit !== "night") {
+    errors.push(semanticError("hotel_rate_price_unit", "/offer_info/commercial/price/unit", "hotel_rate requires commercial.price.unit night"))
+  }
+  if (!isPlainObject(data)) return
+  if (data?.rate?.kind !== "reference_starting_nightly") {
+    errors.push(semanticError("hotel_rate_kind", "/offer_info/details/data/rate/kind", "hotel_rate must declare rate.kind reference_starting_nightly"))
+  }
+
+  const property = data.property
+  if (!isNonBlankString(property?.name)) {
+    errors.push(semanticError("hotel_property_name", "/offer_info/details/data/property/name", "hotel_rate property.name must be non-blank"))
+  }
+  const locationId = property?.location?.location_id
+  if (!isFullLocationCatalogV1Member(locationId)) {
+    errors.push(semanticError("hotel_location_registry_membership", "/offer_info/details/data/property/location/location_id", "hotel_rate property.location.location_id must be an active AON Full Location Catalog v1 member"))
+  }
+
+  const stay = data.stay
+  if (isPlainObject(stay) && isSameOrAfter(stay.check_in, stay.check_out)) {
+    errors.push(semanticError("hotel_stay_date_order", "/offer_info/details/data/stay/check_out", "hotel_rate stay.check_out must be later than stay.check_in"))
+  }
+  if (isPlainObject(data.room) && !isNonBlankString(data.room.name)) {
+    errors.push(semanticError("hotel_room_name", "/offer_info/details/data/room/name", "hotel_rate room.name must be non-blank when room is supplied"))
+  }
+}
+
+function validateSupplyOfferProfile(offer, errors) {
+  const details = offer?.offer_info?.details
+  if (details === undefined) return
+  if (!isPlainObject(details)) {
+    errors.push(semanticError("profile_envelope", "/offer_info/details", "details must be a registered closed profile envelope"))
+    return
+  }
+  if (details.profile === "flight") {
+    validateFlightProfile(offer, details.data, errors)
+    return
+  }
+  if (details.profile === "hotel_rate") {
+    validateHotelRateProfile(offer, details.data, errors)
+    return
+  }
+  errors.push(semanticError("profile_registry", "/offer_info/details/profile", "details.profile must be registered in the v1.0 supply profile registry"))
+}
+
 function validateOfferCommonV10Semantics(offer, errors) {
   if (offer?.content_language !== undefined && (typeof offer.content_language !== "string" || !BCP_47_LANGUAGE_TAG.test(offer.content_language) || !hasUniqueLanguageExtensionSingletons(offer.content_language))) {
     errors.push(semanticError("language_bcp47", "/content_language", "content_language must be a BCP-47 language tag"))
@@ -168,6 +375,8 @@ function validateOfferCommonV10Semantics(offer, errors) {
   if (price?.amount !== undefined && (typeof price.amount !== "string" || !DECIMAL_AMOUNT.test(price.amount))) {
     errors.push(semanticError("price_decimal", "/offer_info/commercial/price/amount", "price amount must be a canonical decimal string"))
   }
+  validateDisplayPriceSemantics(offer, errors)
+  validateQuoteSemantics(offer?.offer_info?.commercial, errors)
   if (offer?.entity?.website !== undefined && !isAbsoluteHttpsUrl(offer.entity.website)) {
     errors.push(semanticError("resource_https", "/entity/website", "entity.website must be an absolute HTTPS URL without userinfo"))
   }
@@ -187,6 +396,7 @@ function validateOfferCommonV10Semantics(offer, errors) {
   }
 
   validateOfferTaxonomy(offer, errors)
+  validateSupplyOfferProfile(offer, errors)
 }
 
 export function validatePublicOfferV10Semantics(offer) {
@@ -211,6 +421,9 @@ export function validatePartnerOfferV10Semantics(offer) {
   if (Object.hasOwn(offer, "offer_id")) errors.push(semanticError("aon_projection_field", "/offer_id", "offer_id is assigned by AON after resolving source_offer_id"))
   if (Object.hasOwn(offer, "offer_instance_id")) errors.push(semanticError("aon_projection_field", "/offer_instance_id", "offer_instance_id is assigned only when AON creates a public response dispatch"))
   if (Object.hasOwn(offer, "match_reason")) errors.push(semanticError("aon_projection_field", "/match_reason", "match_reason is authored only by AON for a public Query response"))
+  if (isPlainObject(offer?.offer_info?.commercial) && Object.hasOwn(offer.offer_info.commercial, "display_price")) {
+    errors.push(semanticError("aon_projection_field", "/offer_info/commercial/display_price", "display_price is authored only by AON for a public Query response"))
+  }
   if (Object.hasOwn(offer ?? {}, "targeting")) {
     if (!Array.isArray(offer.targeting) || offer.targeting.length === 0) {
       errors.push(semanticError("targeting_nonempty", "/targeting", "targeting must contain at least one non-empty rule when supplied"))
@@ -303,6 +516,10 @@ export function validateOfferQueryResponseV10Semantics(response, request = {}) {
   if (Object.hasOwn(response, "decision_factors")) errors.push("decision_factors is not defined in v1.0")
   if (response.engagement && Object.hasOwn(response.engagement, "query_helper")) errors.push("query_helper is item-level only")
   if (response.language !== undefined && (typeof response.language !== "string" || !BCP_47_LANGUAGE_TAG.test(response.language) || !hasUniqueLanguageExtensionSingletons(response.language))) errors.push("language must use the stable-v1.0 language-tag profile")
+  for (const [index, offer] of (response.offers ?? []).entries()) {
+    const projection = validateQueryGenericOfferV10Semantics(offer)
+    for (const error of projection.errors) errors.push(`offers.${index}${error.instancePath}: ${error.message}`)
+  }
   const followupTopics = response.engagement?.followup_topics ?? []
   for (let index = 1; index < followupTopics.length; index += 1) {
     if (followupTopics[index - 1]?.confidence < followupTopics[index]?.confidence) errors.push("followup_topics must be ordered by descending confidence")
@@ -312,6 +529,25 @@ export function validateOfferQueryResponseV10Semantics(response, request = {}) {
     if (!offerIds.has(hook?.subject_offer_id)) errors.push(`hooks.${index}.subject_offer_id must reference a returned Offer`)
     const previousRequestId = request.context?.session?.previous_request_id
     if (!previousRequestId || hook?.baseline_request_id !== previousRequestId) errors.push(`hooks.${index}.baseline_request_id must match context.session.previous_request_id`)
+  }
+  return { valid: errors.length === 0, errors }
+}
+
+export function validateQueryGenericOfferV10Semantics(offer) {
+  const rootError = validateOfferRoot(offer)
+  if (rootError) return { valid: false, errors: [rootError] }
+  const errors = []
+  validateDisplayPriceSemantics(offer, errors)
+  const offerInfo = offer.offer_info
+  if (isPlainObject(offerInfo) && Object.hasOwn(offerInfo, "details")) {
+    errors.push(semanticError("query_projection_supply_extension", "/offer_info/details", "current Query Generic projection must not include offer_info.details"))
+  }
+  const commercial = offerInfo?.commercial
+  if (isPlainObject(commercial) && Object.hasOwn(commercial, "quote")) {
+    errors.push(semanticError("query_projection_supply_extension", "/offer_info/commercial/quote", "current Query Generic projection must not include commercial.quote"))
+  }
+  if (isPlainObject(commercial?.price) && Object.hasOwn(commercial.price, "tax_status")) {
+    errors.push(semanticError("query_projection_supply_extension", "/offer_info/commercial/price/tax_status", "current Query Generic projection must not include commercial.price.tax_status"))
   }
   return { valid: errors.length === 0, errors }
 }

@@ -1,0 +1,98 @@
+{
+  "public_flight": {
+    "offer_id": "019f5f65-dbc1-7c3c-9ef9-9d6d2d8ae101",
+    "offer_instance_id": "019f5f65-dbc1-7c3c-9ef9-9d6d2d8ae102",
+    "version": "3.0",
+    "offer_info": {
+      "title": "San Francisco to Tokyo economy fare",
+      "offer_type": "offline_service",
+      "category": {"id": "travel_tourism.air_travel.airline_tickets_fares_flights"},
+      "description": "One adult economy itinerary from San Francisco to Tokyo.",
+      "commercial": {
+        "price": {"amount": "912.40", "currency": "USD", "tax_status": "included"},
+        "quote": {"observed_at": "2026-09-04T09:00:00Z", "valid_until": "2026-09-04T10:00:00Z"}
+      },
+      "details": {
+        "profile": "flight",
+        "data": {
+          "trip_type": "one_way",
+          "travelers": [{"type": "adult", "count": 1}],
+          "legs": [
+            {
+              "segments": [
+                {
+                  "departure": {"airport_code": "SFO", "at": "2026-10-12T12:30:00-07:00"},
+                  "arrival": {"airport_code": "NRT", "at": "2026-10-13T16:25:00+09:00"},
+                  "marketing_carrier": {"code": "UA"},
+                  "flight_number": "837",
+                  "cabin_class": "economy"
+                }
+              ]
+            }
+          ]
+        }
+      }
+    },
+    "entity": {"id": "carrier-ua", "name": "Example Air"},
+    "action": {"type": "open_url", "consumer_action": "book", "payload": {"url": "https://example.com/flights/sfo-nrt"}},
+    "goals": [{"event": "booking", "pricing": {"model": "cpa", "amount": "10", "currency": "USD"}}]
+  },
+  "public_hotel_reference": {
+    "offer_id": "019f5f65-dbc1-7c3c-9ef9-9d6d2d8ae201",
+    "offer_instance_id": "019f5f65-dbc1-7c3c-9ef9-9d6d2d8ae202",
+    "version": "3.0",
+    "offer_info": {
+      "title": "Central Tokyo Hotel from CNY 788 per night",
+      "offer_type": "offline_service",
+      "category": {"id": "travel_tourism.accommodations.hotels_motels_resorts.hotels"},
+      "description": "Source-observed starting nightly price for Central Tokyo Hotel.",
+      "commercial": {
+        "price": {"amount": "788.00", "currency": "CNY", "unit": "night", "tax_status": "unknown"},
+        "quote": {"observed_at": "2026-09-04T09:00:00Z"}
+      },
+      "details": {
+        "profile": "hotel_rate",
+        "data": {
+          "rate": {"kind": "reference_starting_nightly"},
+          "property": {
+            "name": "Central Tokyo Hotel",
+            "star_rating": "4",
+            "location": {
+              "location_id": "1009317",
+              "country_code": "JP",
+              "city": "Tokyo",
+              "address": "1 Chome Marunouchi, Chiyoda City",
+              "latitude": "35.681236",
+              "longitude": 139.767125,
+              "timezone": "Asia/Tokyo"
+            }
+          }
+        }
+      }
+    },
+    "entity": {"id": "ctrip-example", "name": "Example Travel"},
+    "action": {"type": "open_url", "consumer_action": "book", "payload": {"url": "https://example.com/hotels/central-tokyo"}},
+    "goals": [{"event": "booking", "pricing": {"model": "cpa", "amount": "10", "currency": "USD"}}]
+  },
+  "query_generic_response": {
+    "request_id": "019f5f65-dbc1-7c3c-9ef9-9d6d2d8ae301",
+    "protocol_version": "1.0",
+    "language": "en-US",
+    "offers": [
+      {
+        "offer_id": "019f5f65-dbc1-7c3c-9ef9-9d6d2d8ae302",
+        "offer_instance_id": "019f5f65-dbc1-7c3c-9ef9-9d6d2d8ae303",
+        "version": "3.0",
+        "offer_info": {
+          "title": "Example hotel offer",
+          "category": {"id": "travel_tourism.accommodations.hotels_motels_resorts.hotels"},
+          "description": "A generic hotel offer projection.",
+          "commercial": {"price": {"amount": "788.00", "currency": "CNY", "unit": "night"}}
+        },
+        "entity": {"id": "example-travel", "name": "Example Travel"},
+        "action": {"type": "open_url", "consumer_action": "book", "payload": {"url": "https://example.com/hotels"}},
+        "goals": [{"event": "booking", "pricing": {"model": "cpa", "amount": "10", "currency": "USD"}}]
+      }
+    ]
+  }
+}
