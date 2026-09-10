@@ -21,8 +21,9 @@
             {
               "segments": [
                 {
-                  "departure": {"airport_code": "SFO", "at": "2026-10-12T12:30:00-07:00"},
-                  "arrival": {"airport_code": "NRT", "at": "2026-10-13T16:25:00+09:00"},
+                  "departure": {"airport_code": "SFO", "local_at": "2026-10-12T12:30:00"},
+                  "arrival": {"airport_code": "NRT", "local_at": "2026-10-13T16:25:00"},
+                  "duration_minutes": 715,
                   "marketing_carrier": {"code": "UA"},
                   "flight_number": "837",
                   "cabin_class": "economy"

@@ -55,6 +55,7 @@ export interface FlightOfferDataV10 {
     segments: Array<{
       departure: FlightEndpointV10
       arrival: FlightEndpointV10
+      duration_minutes: number
       marketing_carrier: { code: string }
       flight_number: string
       cabin_class: "economy" | "premium_economy" | "business" | "first"
@@ -64,7 +65,7 @@ export interface FlightOfferDataV10 {
 
 export interface FlightEndpointV10 {
   airport_code: string
-  at: string
+  local_at: string
 }
 
 export interface HotelRateOfferDetailsV10 {

@@ -22,6 +22,7 @@ const CURRENCY_CODE = /^[A-Z]{3}$/
 const DISPLAY_PATTERN_TOKENS = new Set(["${type}", "${value}", "${unit}"])
 const FORBIDDEN_ACTION_SCHEMES = new Set(["javascript:", "data:", "vbscript:", "file:"])
 const SHORT_DESCRIPTION_SEGMENTER = new Intl.Segmenter("und", { granularity: "word" })
+const LOCAL_DATE_TIME = /^(\d{4})-(\d{2})-(\d{2})T(\d{2}):(\d{2}):(\d{2})$/
 
 function semanticError(code, instancePath, message) {
   return { code, instancePath, message }
@@ -144,6 +145,27 @@ function isSameOrAfter(left, right) {
   const leftTime = typeof left === "string" ? Date.parse(left) : Number.NaN
   const rightTime = typeof right === "string" ? Date.parse(right) : Number.NaN
   return !Number.isNaN(leftTime) && !Number.isNaN(rightTime) && leftTime >= rightTime
+}
+
+function isValidLocalDateTime(value) {
+  if (typeof value !== "string") return false
+  const match = LOCAL_DATE_TIME.exec(value)
+  if (!match) return false
+  const [, yearText, monthText, dayText, hourText, minuteText, secondText] = match
+  const year = Number(yearText)
+  const month = Number(monthText)
+  const day = Number(dayText)
+  const hour = Number(hourText)
+  const minute = Number(minuteText)
+  const second = Number(secondText)
+  if (year < 1 || month < 1 || month > 12 || hour > 23 || minute > 59 || second > 59) return false
+  const leapYear = year % 4 === 0 && (year % 100 !== 0 || year % 400 === 0)
+  const daysInMonth = [31, leapYear ? 29 : 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
+  return day >= 1 && day <= daysInMonth[month - 1]
+}
+
+function isLocalAfter(left, right) {
+  return isValidLocalDateTime(left) && isValidLocalDateTime(right) && left > right
 }
 
 function validateDisplayPriceSemantics(offer, errors) {
@@ -273,16 +295,18 @@ function validateFlightProfile(offer, data, errors) {
     if (!Array.isArray(segments)) return
     segments.forEach((segment, segmentIndex) => {
       const path = `/offer_info/details/data/legs/${legIndex}/segments/${segmentIndex}`
-      if (isSameOrAfter(segment?.departure?.at, segment?.arrival?.at)) {
-        errors.push(semanticError("flight_segment_time_order", `${path}/arrival/at`, "flight segment arrival.at must be later than departure.at"))
+      for (const endpointName of ["departure", "arrival"]) {
+        if (!isValidLocalDateTime(segment?.[endpointName]?.local_at)) {
+          errors.push(semanticError("flight_local_time_invalid", `${path}/${endpointName}/local_at`, `flight segment ${endpointName}.local_at must be a real airport-local calendar date-time in YYYY-MM-DDTHH:mm:ss form`))
+        }
       }
       if (segmentIndex === 0) return
       const previous = segments[segmentIndex - 1]
-      if (previous?.arrival?.airport_code !== segment?.departure?.airport_code) {
+      const sameConnectingAirport = previous?.arrival?.airport_code === segment?.departure?.airport_code
+      if (!sameConnectingAirport) {
         errors.push(semanticError("flight_segment_airport_continuity", `${path}/departure/airport_code`, "each flight segment departure airport must equal the preceding segment arrival airport"))
-      }
-      if (isAfter(previous?.arrival?.at, segment?.departure?.at)) {
-        errors.push(semanticError("flight_segment_time_continuity", `${path}/departure/at`, "each flight segment departure.at must not be earlier than the preceding segment arrival.at"))
+      } else if (isLocalAfter(previous?.arrival?.local_at, segment?.departure?.local_at)) {
+        errors.push(semanticError("flight_segment_time_continuity", `${path}/departure/local_at`, "at a connecting airport, each flight segment departure.local_at must not be earlier than the preceding segment arrival.local_at"))
       }
     })
   })
