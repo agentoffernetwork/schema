@@ -53,6 +53,11 @@ transaction-authoritative data. Run structural validation before the v1.0
 semantic validator; a present invalid object is a contract error, not a signal
 to fall back to the original price.
 
+Flight Profile schedules preserve source facts: endpoints use airport-local
+`local_at` values in `YYYY-MM-DDTHH:mm:ss` form without offsets, and every
+segment requires positive source-provided `duration_minutes`. Producers do not
+need an airport-timezone table and must not use an LLM to invent timezone data.
+
 ## Provenance
 
 Earlier releases remain available from immutable refs for audit and recovery.
