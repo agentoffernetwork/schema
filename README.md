@@ -14,6 +14,8 @@ deployment or runtime availability.
 
 - [Offer schema](v1.0/json-schema/offer-schema.json)
 - [Query request schema](v1.0/json-schema/offer-query-schema.json)
+- [Query response schema](v1.0/json-schema/offer-query-response.json)
+- [Query TypeScript projection](v1.0/types/offer-query.types.ts)
 - [Provider request schema](v1.0/json-schema/offer-provider-request.json)
 - [Provider Postback schema](v1.0/json-schema/postback-partner-payload.json)
 - [Agent Postback schema](v1.0/json-schema/postback-agent-payload.json)
@@ -57,6 +59,35 @@ Flight Profile schedules preserve source facts: endpoints use airport-local
 `local_at` values in `YYYY-MM-DDTHH:mm:ss` form without offsets, and every
 segment requires positive source-provided `duration_minutes`. Producers do not
 need an airport-timezone table and must not use an LLM to invent timezone data.
+
+## Query alternative Offers
+
+An optional `alternative_offers` response array carries 1–3 closed
+`{basis, selection_reason, offer}` items only when main `offers` is empty and
+`empty_reason` is `below_relevance_threshold` or `no_material`. Initial `basis`
+is only `regional_popularity`. Omit the array when unavailable; null, an empty
+array and coexistence with nonempty main results are invalid.
+
+Every nested Offer reuses the complete Generic projection but prohibits
+`match_reason` in both thinking modes. Required `selection_reason` is 1–500
+Unicode code points, contains a character outside ECMAScript `\s`, and is
+retained with `thinking_mode=false`. Static `recommendation_reason` is not its
+substitute. Stable `offer_id` values are unique, regardless of dispatch identity,
+reason wording, or equivalent UUID casing.
+
+Run the Query response JSON Schema, then
+`validateOfferQueryResponseV10Semantics(response, request)` from the Offer
+semantic validator. Paired validation rejects alternatives for `placement_id`
+or `test_mode=true`; response-only validation does not certify route eligibility.
+Real internal gates, explicit constraints, actual same-country popularity and
+truthful explanations remain producer obligations; fixtures are not evidence
+of those facts. Hooks continue to reference main Offers only.
+
+Requests, exact selector `1.0`, Offer marker `"3.0"`, and `force_offer` are
+unchanged. Old no-extension responses remain valid, but old closed readers may
+reject new fields and permissive readers may discard them. Consumer adaptation
+must precede producer enablement; protocol assets do not certify service, SDK,
+or Agent deployment. See the [Query specification](https://github.com/agentoffernetwork/protocol/blob/main/v1.0/specs/query-api.md#optional-alternative-offers).
 
 ## Provenance
 
