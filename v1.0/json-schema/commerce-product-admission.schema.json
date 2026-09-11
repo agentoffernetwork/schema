@@ -1,0 +1,121 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://agentoffernetwork.org/schema/commerce-product-admission/v1",
+  "title": "Commerce Taxonomy Admission Evidence Input v1",
+  "type": "object",
+  "required": ["schema_version", "feature_id", "candidate_registry_digest", "planning_catalog_sha256", "source_snapshot_digest", "canonicalization", "digest_algorithm", "export_digest", "records"],
+  "properties": {
+    "schema_version": {"const": "commerce-taxonomy-admission-input-v1"},
+    "feature_id": {"const": "PROTO-F260909053820-Commerce-Taxonomy-Expansion"},
+    "candidate_registry_digest": {"$ref": "#/$defs/sha256"},
+    "planning_catalog_sha256": {"$ref": "#/$defs/sha256"},
+    "source_snapshot_digest": {"$ref": "#/$defs/sha256"},
+    "canonicalization": {"const": "aon-canonical-json-v1"},
+    "digest_algorithm": {"const": "sha256"},
+    "export_digest": {"$ref": "#/$defs/sha256"},
+    "records": {"type": "array", "items": {"$ref": "#/$defs/record"}}
+  },
+  "additionalProperties": false,
+  "$defs": {
+    "sha256": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
+    "opaqueHash": {"type": "string", "pattern": "^sha256:[a-f0-9]{64}$"},
+    "categoryId": {"type": "string", "pattern": "^[a-z0-9]+(?:_[a-z0-9]+)*(?:\\.[a-z0-9]+(?:_[a-z0-9]+)*)*$"},
+    "positiveSample": {
+      "type": "object",
+      "required": ["sample_key", "provider_or_source_hash", "merchant_hash", "external_offer_or_product_hash", "hash_salt_version", "upstream_namespace", "raw_breadcrumb", "current_aon_category_id", "problem_type"],
+      "properties": {
+        "sample_key": {"$ref": "#/$defs/opaqueHash"},
+        "provider_or_source_hash": {"$ref": "#/$defs/opaqueHash"},
+        "merchant_hash": {"$ref": "#/$defs/opaqueHash"},
+        "external_offer_or_product_hash": {"$ref": "#/$defs/opaqueHash"},
+        "hash_salt_version": {"type": "string", "minLength": 1},
+        "upstream_namespace": {"type": "string", "minLength": 1},
+        "raw_breadcrumb": {"type": "string", "minLength": 1},
+        "current_aon_category_id": {"$ref": "#/$defs/categoryId"},
+        "problem_type": {"enum": ["wrong", "broad", "missing"]}
+      },
+      "additionalProperties": false
+    },
+    "hardNegative": {
+      "type": "object",
+      "required": ["sample_key", "nearest_competing_category_id", "exclusion_reason"],
+      "properties": {
+        "sample_key": {"$ref": "#/$defs/opaqueHash"},
+        "nearest_competing_category_id": {"$ref": "#/$defs/categoryId"},
+        "exclusion_reason": {"type": "string", "minLength": 1}
+      },
+      "additionalProperties": false
+    },
+    "signoff": {
+      "type": "object",
+      "required": ["role", "reviewer", "identity_provider", "approval_ref", "signed_content_digest", "reviewed_at"],
+      "properties": {
+        "role": {"enum": ["protocol_taxonomy_owner", "offer_supply_evidence_owner"]},
+        "reviewer": {"type": "string", "minLength": 1},
+        "identity_provider": {"type": "string", "minLength": 1},
+        "approval_ref": {"type": "string", "minLength": 1},
+        "signed_content_digest": {"$ref": "#/$defs/sha256"},
+        "reviewed_at": {"type": "string", "minLength": 1}
+      },
+      "additionalProperties": false
+    },
+    "decomposition": {
+      "type": "object",
+      "required": ["targets", "match_rules", "exclude_rules", "comparison_dimensions", "precedence", "residual_fallback_category_id"],
+      "properties": {
+        "targets": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/categoryId"}},
+        "match_rules": {"type": "array", "minItems": 1, "items": {"type": "string", "minLength": 1}},
+        "exclude_rules": {"type": "array", "minItems": 1, "items": {"type": "string", "minLength": 1}},
+        "comparison_dimensions": {"type": "array", "minItems": 1, "items": {"type": "string", "minLength": 1}},
+        "precedence": {"type": "string", "minLength": 1},
+        "residual_fallback_category_id": {"$ref": "#/$defs/categoryId"}
+      },
+      "additionalProperties": false
+    },
+    "record": {
+      "type": "object",
+      "required": ["evidence_id", "candidate_category_id", "generated_at", "positive_samples", "hard_negatives", "cohort", "boundary_review", "decomposition", "content_digest", "signoffs"],
+      "properties": {
+        "evidence_id": {"type": "string", "pattern": "^commerce-evidence:.+:v?[0-9]+$"},
+        "candidate_category_id": {"$ref": "#/$defs/categoryId"},
+        "generated_at": {"type": "string", "minLength": 1},
+        "positive_samples": {"type": "array", "items": {"$ref": "#/$defs/positiveSample"}},
+        "hard_negatives": {"type": "array", "items": {"$ref": "#/$defs/hardNegative"}},
+        "cohort": {
+          "type": "object",
+          "required": ["total", "wrong", "broad", "missing", "source_breadcrumb_counts"],
+          "properties": {
+            "total": {"type": "integer", "minimum": 0},
+            "wrong": {"type": "integer", "minimum": 0},
+            "broad": {"type": "integer", "minimum": 0},
+            "missing": {"type": "integer", "minimum": 0},
+            "source_breadcrumb_counts": {"type": "object", "minProperties": 1, "additionalProperties": {"type": "integer", "minimum": 0}}
+          },
+          "additionalProperties": false
+        },
+        "boundary_review": {
+          "type": "object",
+          "required": ["primary_rule", "category_vs_attribute", "comparison_dimensions"],
+          "properties": {
+            "primary_rule": {"type": "string", "minLength": 1},
+            "category_vs_attribute": {"type": "string", "minLength": 1},
+            "comparison_dimensions": {"type": "array", "minItems": 1, "items": {"type": "string", "minLength": 1}}
+          },
+          "additionalProperties": false
+        },
+        "decomposition": {"oneOf": [{"$ref": "#/$defs/decomposition"}, {"type": "null"}]},
+        "content_digest": {"$ref": "#/$defs/sha256"},
+        "signoffs": {
+          "type": "object",
+          "required": ["protocol", "supply"],
+          "properties": {
+            "protocol": {"$ref": "#/$defs/signoff"},
+            "supply": {"$ref": "#/$defs/signoff"}
+          },
+          "additionalProperties": false
+        }
+      },
+      "additionalProperties": false
+    }
+  }
+}

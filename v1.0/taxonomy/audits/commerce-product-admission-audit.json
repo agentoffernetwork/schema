@@ -1,0 +1,1931 @@
+{
+  "schema_version": "commerce-taxonomy-admission-audit-v1",
+  "feature_id": "PROTO-F260909053820-Commerce-Taxonomy-Expansion",
+  "projection_kind": "FoundationProjection",
+  "candidate_facts_digest": "b9eff7535f4758dee499839c4a420adad4877491e471f93d55324594703369b1",
+  "candidate_registry_digest": "22f92f810856a1ae7df8d5f3ec2cd67a590e834deda6174dfcc9351bd9286f51",
+  "metadata_digest": "ce7c546975cd2e213c27c97c9a3adc733524adb218e3c4f19ec4993d573e98ad",
+  "source_mapping_digest": "8a2b14007a64aa69a34464c5bfd2718c96a3ba498d35e5b0aa4533cf6a83a518",
+  "source_snapshot_digest": "2ce8f58e0b3587fe09e62b5935053d8b7747192cb12a5ffc5d04c7edc2643011",
+  "evidence_export_digest": null,
+  "scan_roots": [
+    "taxonomy/commerce-product-candidates-v1.json",
+    "taxonomy/source-mappings/warehouse-commerce-v1.json",
+    "taxonomy/evidence/commerce-product-admission-v1.json"
+  ],
+  "candidate_count": 272,
+  "admitted_count": 0,
+  "deferred_count": 272,
+  "public_delta": {
+    "changed": false,
+    "node_count": 515,
+    "tree_digest": "89962555f76a41af9c2b6d213dd0241c28214d50ec8185af9d2efb0fe28934b2"
+  },
+  "decisions": [
+    {
+      "category_id": "arts_entertainment.movies_films.film_video_media",
+      "tier": "decomposition",
+      "status": "deferred",
+      "reason": "EVIDENCE_RECORD_MISSING",
+      "evidence": null
+    },
+    {
+      "category_id": "arts_entertainment.music_audio.musical_instruments",
+      "tier": "decomposition",
+      "status": "deferred",
+      "reason": "EVIDENCE_RECORD_MISSING",
+      "evidence": null
+    },
+    {
+      "category_id": "arts_entertainment.music_audio.musical_instruments.musical_instrument_accessories",
+      "tier": "decomposition",
+      "status": "deferred",
+      "reason": "EVIDENCE_RECORD_MISSING",
+      "evidence": null
+    },
+    {
+      "category_id": "arts_entertainment.music_audio.recorded_music",
+      "tier": "decomposition",
+      "status": "deferred",
+      "reason": "EVIDENCE_RECORD_MISSING",
+      "evidence": null
+    },
+    {
+      "category_id": "automotive.vehicle_parts_accessories.automotive_batteries",
+      "tier": "decomposition",
+      "status": "deferred",
+      "reason": "EVIDENCE_RECORD_MISSING",
+      "evidence": null
+    },
+    {
+      "category_id": "automotive.vehicle_parts_accessories.automotive_lighting_electrical_parts",
+      "tier": "decomposition",
+      "status": "deferred",
+      "reason": "EVIDENCE_RECORD_MISSING",
+      "evidence": null
+    },
+    {
+      "category_id": "automotive.vehicle_parts_accessories.automotive_oils_fluids",
+      "tier": "decomposition",
+      "status": "deferred",
+      "reason": "EVIDENCE_RECORD_MISSING",
+      "evidence": null
+    },
+    {
+      "category_id": "automotive.vehicle_parts_accessories.brake_parts",
+      "tier": "decomposition",
+      "status": "deferred",
+      "reason": "EVIDENCE_RECORD_MISSING",
+      "evidence": null
+    },
+    {
+      "category_id": "automotive.vehicle_parts_accessories.cooling_climate_control_parts",
+      "tier": "decomposition",
+      "status": "deferred",
+      "reason": "EVIDENCE_RECORD_MISSING",
+      "evidence": null
+    },
+    {
+      "category_id": "automotive.vehicle_parts_accessories.electric_vehicle_charging_equipment",
+      "tier": "decomposition",
+      "status": "deferred",
+      "reason": "EVIDENCE_RECORD_MISSING",
+      "evidence": null
+    },
+    {
+      "category_id": "automotive.vehicle_parts_accessories.emergency_roadside_equipment",
+      "tier": "decomposition",
+      "status": "deferred",
+      "reason": "EVIDENCE_RECORD_MISSING",
+      "evidence": null
+    },
+    {
+      "category_id": "automotive.vehicle_parts_accessories.engine_powertrain_parts",
+      "tier": "decomposition",
+      "status": "deferred",
+      "reason": "EVIDENCE_RECORD_MISSING",
+      "evidence": null
+    },
+    {
+      "category_id": "automotive.vehicle_parts_accessories.exhaust_emissions_parts",
+      "tier": "decomposition",
+      "status": "deferred",
+      "reason": "EVIDENCE_RECORD_MISSING",
+      "evidence": null
+    },
+    {
+      "category_id": "automotive.vehicle_parts_accessories.routine_maintenance_parts",
+      "tier": "decomposition",
+      "status": "deferred",
+      "reason": "EVIDENCE_RECORD_MISSING",
+      "evidence": null
+    },
+    {
+      "category_id": "automotive.vehicle_parts_accessories.steering_suspension_parts",
+      "tier": "decomposition",
+      "status": "deferred",
+      "reason": "EVIDENCE_RECORD_MISSING",
+      "evidence": null
+    },
+    {
+      "category_id": "automotive.vehicle_parts_accessories.towing_cargo_trailer_accessories",
+      "tier": "decomposition",
+      "status": "deferred",
+      "reason": "EVIDENCE_RECORD_MISSING",
+      "evidence": null
+    },
+    {
+      "category_id": "automotive.vehicle_parts_accessories.vehicle_exterior_accessories",
+      "tier": "decomposition",
+      "status": "deferred",
+      "reason": "EVIDENCE_RECORD_MISSING",
+      "evidence": null
+    },
+    {
+      "category_id": "automotive.vehicle_parts_accessories.vehicle_interior_accessories",
+      "tier": "decomposition",
+      "status": "deferred",
+      "reason": "EVIDENCE_RECORD_MISSING",
+      "evidence": null
+    },
+    {
+      "category_id": "automotive.vehicle_parts_accessories.vehicle_maintenance_detailing_supplies",
+      "tier": "decomposition",
+      "status": "deferred",
+      "reason": "EVIDENCE_RECORD_MISSING",
+      "evidence": null
+    },
+    {
+      "category_id": "beauty_personal_care.hair_care.hair_color",
+      "tier": "decomposition",
+      "status": "deferred",
+      "reason": "EVIDENCE_RECORD_MISSING",
+      "evidence": null
+    },
+    {
+      "category_id": "beauty_personal_care.hair_care.hair_styling_products",
+      "tier": "decomposition",
+      "status": "deferred",
+      "reason": "EVIDENCE_RECORD_MISSING",
+      "evidence": null
+    },
+    {
+      "category_id": "beauty_personal_care.hair_care.hair_treatments_masks",
+      "tier": "decomposition",
+      "status": "deferred",
+      "reason": "EVIDENCE_RECORD_MISSING",
+      "evidence": null
+    },
+    {
+      "category_id": "beauty_personal_care.hygiene_toiletries.bath_products",
+      "tier": "decomposition",
+      "status": "deferred",
+      "reason": "EVIDENCE_RECORD_MISSING",
+      "evidence": null
+    },
+    {
+      "category_id": "beauty_personal_care.make_up_cosmetics.eye_brow_makeup",
+      "tier": "decomposition",
+      "status": "deferred",
+      "reason": "EVIDENCE_RECORD_MISSING",
+      "evidence": null
+    },
+    {
+      "category_id": "beauty_personal_care.make_up_cosmetics.face_makeup",
+      "tier": "decomposition",
+      "status": "deferred",
+      "reason": "EVIDENCE_RECORD_MISSING",
+      "evidence": null
+    },
+    {
+      "category_id": "beauty_personal_care.make_up_cosmetics.lip_makeup",
+      "tier": "decomposition",
+      "status": "deferred",
+      "reason": "EVIDENCE_RECORD_MISSING",
+      "evidence": null
+    },
+    {
+      "category_id": "beauty_personal_care.make_up_cosmetics.makeup_brushes_applicators",
+      "tier": "decomposition",
+      "status": "deferred",
+      "reason": "EVIDENCE_RECORD_MISSING",
+      "evidence": null
+    },
+    {
+      "category_id": "beauty_personal_care.make_up_cosmetics.nail_cosmetics",
+      "tier": "decomposition",
+      "status": "deferred",
+      "reason": "EVIDENCE_RECORD_MISSING",
+      "evidence": null
+    },
+    {
+      "category_id": "beauty_personal_care.oral_care.dental_floss_interdental_care",
+      "tier": "decomposition",
+      "status": "deferred",
+      "reason": "EVIDENCE_RECORD_MISSING",
+      "evidence": null
+    },
+    {
+      "category_id": "beauty_personal_care.oral_care.mouthwash_breath_care",
+      "tier": "decomposition",
+      "status": "deferred",
+      "reason": "EVIDENCE_RECORD_MISSING",
+      "evidence": null
+    },
+    {
+      "category_id": "beauty_personal_care.oral_care.toothbrushes",
+      "tier": "decomposition",
+      "status": "deferred",
+      "reason": "EVIDENCE_RECORD_MISSING",
+      "evidence": null
+    },
+    {
+      "category_id": "beauty_personal_care.oral_care.toothpaste",
+      "tier": "decomposition",
+      "status": "deferred",
+      "reason": "EVIDENCE_RECORD_MISSING",
+      "evidence": null
+    },
+    {
+      "category_id": "beauty_personal_care.personal_care_appliances",
+      "tier": "decomposition",
+      "status": "deferred",
+      "reason": "EVIDENCE_RECORD_MISSING",
+      "evidence": null
+    },
+    {
+      "category_id": "beauty_personal_care.personal_care_appliances.beauty_skin_care_devices",
+      "tier": "decomposition",
+      "status": "deferred",
+      "reason": "EVIDENCE_RECORD_MISSING",
+      "evidence": null
+    },
+    {
+      "category_id": "beauty_personal_care.personal_care_appliances.hair_dryers",
+      "tier": "decomposition",
+      "status": "deferred",
+      "reason": "EVIDENCE_RECORD_MISSING",
+      "evidence": null
+    },
+    {
+      "category_id": "beauty_personal_care.personal_care_appliances.hair_removal_devices",
+      "tier": "decomposition",
+      "status": "deferred",
+      "reason": "EVIDENCE_RECORD_MISSING",
+      "evidence": null
+    },
+    {
+      "category_id": "beauty_personal_care.personal_care_appliances.hair_styling_appliances",
+      "tier": "decomposition",
+      "status": "deferred",
+      "reason": "EVIDENCE_RECORD_MISSING",
+      "evidence": null
+    },
+    {
+      "category_id": "beauty_personal_care.shaving_grooming.electric_shavers_trimmers",
+      "tier": "decomposition",
+      "status": "deferred",
+      "reason": "EVIDENCE_RECORD_MISSING",
+      "evidence": null
+    },
+    {
+      "category_id": "beauty_personal_care.shaving_grooming.razors_replacement_blades",
+      "tier": "decomposition",
+      "status": "deferred",
+      "reason": "EVIDENCE_RECORD_MISSING",
+      "evidence": null
+    },
+    {
+      "category_id": "beauty_personal_care.shaving_grooming.shaving_preparations",
+      "tier": "decomposition",
+      "status": "deferred",
+      "reason": "EVIDENCE_RECORD_MISSING",
+      "evidence": null
+    },
+    {
+      "category_id": "beauty_personal_care.skin_care.body_exfoliants",
+      "tier": "decomposition",
+      "status": "deferred",
+      "reason": "EVIDENCE_RECORD_MISSING",
+      "evidence": null
+    },
+    {
+      "category_id": "beauty_personal_care.skin_care.body_moisturizers",
+      "tier": "decomposition",
+      "status": "deferred",
+      "reason": "EVIDENCE_RECORD_MISSING",
+      "evidence": null
+    },
+    {
+      "category_id": "beauty_personal_care.skin_care.face_care.face_cleansers",
+      "tier": "decomposition",
+      "status": "deferred",
+      "reason": "EVIDENCE_RECORD_MISSING",
+      "evidence": null
+    },
+    {
+      "category_id": "beauty_personal_care.skin_care.face_care.face_masks",
+      "tier": "decomposition",
+      "status": "deferred",
+      "reason": "EVIDENCE_RECORD_MISSING",
+      "evidence": null
+    },
+    {
+      "category_id": "beauty_personal_care.skin_care.face_care.facial_moisturizers",
+      "tier": "decomposition",
+      "status": "deferred",
+      "reason": "EVIDENCE_RECORD_MISSING",
+      "evidence": null
+    },
+    {
+      "category_id": "beauty_personal_care.skin_care.face_care.facial_serums_treatments",
+      "tier": "decomposition",
+      "status": "deferred",
+      "reason": "EVIDENCE_RECORD_MISSING",
+      "evidence": null
+    },
+    {
+      "category_id": "beauty_personal_care.skin_care.face_care.facial_toners_mists",
+      "tier": "decomposition",
+      "status": "deferred",
+      "reason": "EVIDENCE_RECORD_MISSING",
+      "evidence": null
+    },
+    {
+      "category_id": "beauty_personal_care.skin_care.face_care.lip_care",
+      "tier": "decomposition",
+      "status": "deferred",
+      "reason": "EVIDENCE_RECORD_MISSING",
+      "evidence": null
+    },
+    {
+      "category_id": "business_industrial.building_construction_maintenance.hardware_tools_accessories.fasteners_fittings_mounts",
+      "tier": "direct_exact",
+      "status": "deferred",
+      "reason": "EVIDENCE_RECORD_MISSING",
+      "evidence": null
+    },
+    {
+      "category_id": "business_industrial.building_construction_maintenance.hardware_tools_accessories.hand_tools",
+      "tier": "decomposition",
+      "status": "deferred",
+      "reason": "EVIDENCE_RECORD_MISSING",
+      "evidence": null
+    },
+    {
+      "category_id": "business_industrial.building_construction_maintenance.hardware_tools_accessories.measuring_marking_tools",
+      "tier": "decomposition",
+      "status": "deferred",
+      "reason": "EVIDENCE_RECORD_MISSING",
+      "evidence": null
+    },
+    {
+      "category_id": "business_industrial.building_construction_maintenance.hardware_tools_accessories.safety_protective_equipment",
+      "tier": "decomposition",
+      "status": "deferred",
+      "reason": "EVIDENCE_RECORD_MISSING",
+      "evidence": null
+    },
+    {
+      "category_id": "business_industrial.office.office_paper_products",
+      "tier": "direct_exact",
+      "status": "deferred",
+      "reason": "EVIDENCE_RECORD_MISSING",
+      "evidence": null
+    },
+    {
+      "category_id": "business_industrial.office.printer_consumables_supplies",
+      "tier": "direct_exact",
+      "status": "deferred",
+      "reason": "EVIDENCE_RECORD_MISSING",
+      "evidence": null
+    },
+    {
+      "category_id": "business_industrial.office.writing_drawing_supplies",
+      "tier": "direct_exact",
+      "status": "deferred",
+      "reason": "EVIDENCE_RECORD_MISSING",
+      "evidence": null
+    },
+    {
+      "category_id": "computers_electronics.computers.computer_accessories.computer_connectivity_hubs",
+      "tier": "decomposition",
+      "status": "deferred",
+      "reason": "EVIDENCE_RECORD_MISSING",
+      "evidence": null
+    },
+    {
+      "category_id": "computers_electronics.computers.computer_accessories.computer_keyboards",
+      "tier": "decomposition",
+      "status": "deferred",
+      "reason": "EVIDENCE_RECORD_MISSING",
+      "evidence": null
+    },
+    {
+      "category_id": "computers_electronics.computers.computer_accessories.computer_mice",
+      "tier": "decomposition",
+      "status": "deferred",
+      "reason": "EVIDENCE_RECORD_MISSING",
+      "evidence": null
+    },
+    {
+      "category_id": "computers_electronics.computers.computer_accessories.docking_stations",
+      "tier": "decomposition",
+      "status": "deferred",
+      "reason": "EVIDENCE_RECORD_MISSING",
+      "evidence": null
+    },
+    {
+      "category_id": "computers_electronics.computers.computer_accessories.webcams",
+      "tier": "decomposition",
+      "status": "deferred",
+      "reason": "EVIDENCE_RECORD_MISSING",
+      "evidence": null
+    },
+    {
+      "category_id": "computers_electronics.computers.computer_systems_hardware.computer_components",
+      "tier": "decomposition",
+      "status": "deferred",
+      "reason": "EVIDENCE_RECORD_MISSING",
+      "evidence": null
+    },
+    {
+      "category_id": "computers_electronics.computers.computer_systems_hardware.computer_components.computer_cases",
+      "tier": "decomposition",
+      "status": "deferred",
+      "reason": "EVIDENCE_RECORD_MISSING",
+      "evidence": null
+    },
+    {
+      "category_id": "computers_electronics.computers.computer_systems_hardware.computer_components.computer_cooling_components",
+      "tier": "decomposition",
+      "status": "deferred",
+      "reason": "EVIDENCE_RECORD_MISSING",
+      "evidence": null
+    },
+    {
+      "category_id": "computers_electronics.computers.computer_systems_hardware.computer_components.computer_memory",
+      "tier": "decomposition",
+      "status": "deferred",
+      "reason": "EVIDENCE_RECORD_MISSING",
+      "evidence": null
+    },
+    {
+      "category_id": "computers_electronics.computers.computer_systems_hardware.computer_components.computer_power_supplies",
+      "tier": "decomposition",
+      "status": "deferred",
+      "reason": "EVIDENCE_RECORD_MISSING",
+      "evidence": null
+    },
+    {
+      "category_id": "computers_electronics.computers.computer_systems_hardware.computer_components.computer_processors",
+      "tier": "decomposition",
+      "status": "deferred",
+      "reason": "EVIDENCE_RECORD_MISSING",
+      "evidence": null
+    },
+    {
+      "category_id": "computers_electronics.computers.computer_systems_hardware.computer_components.graphics_cards",
+      "tier": "decomposition",
+      "status": "deferred",
+      "reason": "EVIDENCE_RECORD_MISSING",
+      "evidence": null
+    },
+    {
+      "category_id": "computers_electronics.computers.computer_systems_hardware.computer_components.motherboards",
+      "tier": "decomposition",
+      "status": "deferred",
+      "reason": "EVIDENCE_RECORD_MISSING",
+      "evidence": null
+    },
+    {
+      "category_id": "computers_electronics.computers.computer_systems_hardware.computer_monitors",
+      "tier": "direct_exact",
+      "status": "deferred",
+      "reason": "EVIDENCE_RECORD_MISSING",
+      "evidence": null
+    },
+    {
+      "category_id": "computers_electronics.computers.computer_systems_hardware.data_storage_devices",
+      "tier": "decomposition",
+      "status": "deferred",
+      "reason": "EVIDENCE_RECORD_MISSING",
+      "evidence": null
+    },
+    {
+      "category_id": "computers_electronics.computers.computer_systems_hardware.data_storage_devices.external_storage_drives",
+      "tier": "decomposition",
+      "status": "deferred",
+      "reason": "EVIDENCE_RECORD_MISSING",
+      "evidence": null
+    },
+    {
+      "category_id": "computers_electronics.computers.computer_systems_hardware.data_storage_devices.internal_storage_drives",
+      "tier": "decomposition",
+      "status": "deferred",
+      "reason": "EVIDENCE_RECORD_MISSING",
+      "evidence": null
+    },
+    {
+      "category_id": "computers_electronics.computers.computer_systems_hardware.data_storage_devices.memory_cards",
+      "tier": "decomposition",
+      "status": "deferred",
+      "reason": "EVIDENCE_RECORD_MISSING",
+      "evidence": null
+    },
+    {
+      "category_id": "computers_electronics.computers.computer_systems_hardware.data_storage_devices.network_attached_storage_devices",
+      "tier": "decomposition",
+      "status": "deferred",
+      "reason": "EVIDENCE_RECORD_MISSING",
+      "evidence": null
+    },
+    {
+      "category_id": "computers_electronics.computers.computer_systems_hardware.data_storage_devices.usb_flash_drives",
+      "tier": "decomposition",
+      "status": "deferred",
+      "reason": "EVIDENCE_RECORD_MISSING",
+      "evidence": null
+    },
+    {
+      "category_id": "computers_electronics.computers.computer_systems_hardware.desktop_computers",
+      "tier": "decomposition",
+      "status": "deferred",
+      "reason": "EVIDENCE_RECORD_MISSING",
+      "evidence": null
+    },
+    {
+      "category_id": "computers_electronics.computers.computer_systems_hardware.printers_scanners",
+      "tier": "decomposition",
+      "status": "deferred",
+      "reason": "EVIDENCE_RECORD_MISSING",
+      "evidence": null
+    },
+    {
+      "category_id": "computers_electronics.computers.computer_systems_hardware.printers_scanners.printers",
+      "tier": "decomposition",
+      "status": "deferred",
+      "reason": "EVIDENCE_RECORD_MISSING",
+      "evidence": null
+    },
+    {
+      "category_id": "computers_electronics.computers.computer_systems_hardware.printers_scanners.scanners",
+      "tier": "decomposition",
+      "status": "deferred",
+      "reason": "EVIDENCE_RECORD_MISSING",
+      "evidence": null
+    },
+    {
+      "category_id": "computers_electronics.computers.computer_systems_hardware.tablet_computers",
+      "tier": "decomposition",
+      "status": "deferred",
+      "reason": "EVIDENCE_RECORD_MISSING",
+      "evidence": null
+    },
+    {
+      "category_id": "computers_electronics.consumer_electronics.car_audio_video.dash_cameras",
+      "tier": "decomposition",
+      "status": "deferred",
+      "reason": "EVIDENCE_RECORD_MISSING",
+      "evidence": null
+    },
+    {
+      "category_id": "computers_electronics.consumer_electronics.consumer_electronic_accessories.device_cases_protectors",
+      "tier": "decomposition",
+      "status": "deferred",
+      "reason": "EVIDENCE_RECORD_MISSING",
+      "evidence": null
+    },
+    {
+      "category_id": "computers_electronics.consumer_electronics.consumer_electronic_accessories.device_chargers_power_adapters",
+      "tier": "decomposition",
+      "status": "deferred",
+      "reason": "EVIDENCE_RECORD_MISSING",
+      "evidence": null
+    },
+    {
+      "category_id": "computers_electronics.consumer_electronics.consumer_electronic_accessories.device_data_charging_cables",
+      "tier": "decomposition",
+      "status": "deferred",
+      "reason": "EVIDENCE_RECORD_MISSING",
+      "evidence": null
+    },
+    {
+      "category_id": "computers_electronics.consumer_electronics.consumer_electronic_accessories.mobile_device_mounts_stands",
+      "tier": "decomposition",
+      "status": "deferred",
+      "reason": "EVIDENCE_RECORD_MISSING",
+      "evidence": null
+    },
+    {
+      "category_id": "computers_electronics.consumer_electronics.consumer_electronic_accessories.power_banks",
+      "tier": "decomposition",
+      "status": "deferred",
+      "reason": "EVIDENCE_RECORD_MISSING",
+      "evidence": null
+    },
+    {
+      "category_id": "computers_electronics.consumer_electronics.headphones_earbuds",
+      "tier": "direct_exact",
+      "status": "deferred",
+      "reason": "EVIDENCE_RECORD_MISSING",
+      "evidence": null
+    },
+    {
+      "category_id": "computers_electronics.consumer_electronics.home_audio_video.projectors",
+      "tier": "decomposition",
+      "status": "deferred",
+      "reason": "EVIDENCE_RECORD_MISSING",
+      "evidence": null
+    },
+    {
+      "category_id": "computers_electronics.consumer_electronics.home_audio_video.streaming_media_players",
+      "tier": "decomposition",
+      "status": "deferred",
+      "reason": "EVIDENCE_RECORD_MISSING",
+      "evidence": null
+    },
+    {
+      "category_id": "computers_electronics.consumer_electronics.microphones",
+      "tier": "decomposition",
+      "status": "deferred",
+      "reason": "EVIDENCE_RECORD_MISSING",
+      "evidence": null
+    },
+    {
+      "category_id": "computers_electronics.consumer_electronics.portable_media_devices.e_readers",
+      "tier": "decomposition",
+      "status": "deferred",
+      "reason": "EVIDENCE_RECORD_MISSING",
+      "evidence": null
+    },
+    {
+      "category_id": "computers_electronics.consumer_electronics.smart_displays",
+      "tier": "decomposition",
+      "status": "deferred",
+      "reason": "EVIDENCE_RECORD_MISSING",
+      "evidence": null
+    },
+    {
+      "category_id": "computers_electronics.consumer_electronics.virtual_augmented_reality_headsets",
+      "tier": "decomposition",
+      "status": "deferred",
+      "reason": "EVIDENCE_RECORD_MISSING",
+      "evidence": null
+    },
+    {
+      "category_id": "computers_electronics.consumer_electronics.wearable_technology",
+      "tier": "decomposition",
+      "status": "deferred",
+      "reason": "EVIDENCE_RECORD_MISSING",
+      "evidence": null
+    },
+    {
+      "category_id": "computers_electronics.consumer_electronics.wearable_technology.fitness_trackers",
+      "tier": "decomposition",
+      "status": "deferred",
+      "reason": "EVIDENCE_RECORD_MISSING",
+      "evidence": null
+    },
+    {
+      "category_id": "computers_electronics.consumer_electronics.wearable_technology.smart_glasses",
+      "tier": "decomposition",
+      "status": "deferred",
+      "reason": "EVIDENCE_RECORD_MISSING",
+      "evidence": null
+    },
+    {
+      "category_id": "computers_electronics.consumer_electronics.wearable_technology.smart_rings",
+      "tier": "decomposition",
+      "status": "deferred",
+      "reason": "EVIDENCE_RECORD_MISSING",
+      "evidence": null
+    },
+    {
+      "category_id": "computers_electronics.consumer_electronics.wearable_technology.smartwatches",
+      "tier": "decomposition",
+      "status": "deferred",
+      "reason": "EVIDENCE_RECORD_MISSING",
+      "evidence": null
+    },
+    {
+      "category_id": "computers_electronics.consumer_electronics.wireless_devices.home_automation_hubs_controllers",
+      "tier": "decomposition",
+      "status": "deferred",
+      "reason": "EVIDENCE_RECORD_MISSING",
+      "evidence": null
+    },
+    {
+      "category_id": "family_community.baby_parenting_family.baby.baby_care_hygiene.baby_bathing_grooming_supplies",
+      "tier": "decomposition",
+      "status": "deferred",
+      "reason": "EVIDENCE_RECORD_MISSING",
+      "evidence": null
+    },
+    {
+      "category_id": "family_community.baby_parenting_family.baby.baby_care_hygiene.baby_diapering_toilet_training.baby_diapers",
+      "tier": "direct_exact",
+      "status": "deferred",
+      "reason": "EVIDENCE_RECORD_MISSING",
+      "evidence": null
+    },
+    {
+      "category_id": "family_community.baby_parenting_family.baby.baby_care_hygiene.baby_wipes",
+      "tier": "decomposition",
+      "status": "deferred",
+      "reason": "EVIDENCE_RECORD_MISSING",
+      "evidence": null
+    },
+    {
+      "category_id": "family_community.baby_parenting_family.baby.baby_carriers",
+      "tier": "decomposition",
+      "status": "deferred",
+      "reason": "EVIDENCE_RECORD_MISSING",
+      "evidence": null
+    },
+    {
+      "category_id": "family_community.baby_parenting_family.baby.baby_child_car_seats",
+      "tier": "decomposition",
+      "status": "deferred",
+      "reason": "EVIDENCE_RECORD_MISSING",
+      "evidence": null
+    },
+    {
+      "category_id": "family_community.baby_parenting_family.baby.baby_feeding.baby_bottles_feeding_accessories",
+      "tier": "decomposition",
+      "status": "deferred",
+      "reason": "EVIDENCE_RECORD_MISSING",
+      "evidence": null
+    },
+    {
+      "category_id": "family_community.baby_parenting_family.baby.baby_feeding.breastfeeding_nursing_supplies",
+      "tier": "decomposition",
+      "status": "deferred",
+      "reason": "EVIDENCE_RECORD_MISSING",
+      "evidence": null
+    },
+    {
+      "category_id": "family_community.baby_parenting_family.baby.baby_feeding.high_chairs_booster_seats",
+      "tier": "decomposition",
+      "status": "deferred",
+      "reason": "EVIDENCE_RECORD_MISSING",
+      "evidence": null
+    },
+    {
+      "category_id": "family_community.baby_parenting_family.baby.baby_feeding.infant_formula_baby_food",
+      "tier": "decomposition",
+      "status": "deferred",
+      "reason": "EVIDENCE_RECORD_MISSING",
+      "evidence": null
+    },
+    {
+      "category_id": "family_community.baby_parenting_family.baby.baby_monitors",
+      "tier": "decomposition",
+      "status": "deferred",
+      "reason": "EVIDENCE_RECORD_MISSING",
+      "evidence": null
+    },
+    {
+      "category_id": "family_community.baby_parenting_family.baby.baby_safety_childproofing_products",
+      "tier": "decomposition",
+      "status": "deferred",
+      "reason": "EVIDENCE_RECORD_MISSING",
+      "evidence": null
+    },
+    {
+      "category_id": "family_community.baby_parenting_family.baby.baby_strollers",
+      "tier": "decomposition",
+      "status": "deferred",
+      "reason": "EVIDENCE_RECORD_MISSING",
+      "evidence": null
+    },
+    {
+      "category_id": "family_community.baby_parenting_family.baby.cribs_bassinets_playards",
+      "tier": "decomposition",
+      "status": "deferred",
+      "reason": "EVIDENCE_RECORD_MISSING",
+      "evidence": null
+    },
+    {
+      "category_id": "fashion_apparel.belts",
+      "tier": "decomposition",
+      "status": "deferred",
+      "reason": "EVIDENCE_RECORD_MISSING",
+      "evidence": null
+    },
+    {
+      "category_id": "fashion_apparel.clothing.coats_jackets",
+      "tier": "decomposition",
+      "status": "deferred",
+      "reason": "EVIDENCE_RECORD_MISSING",
+      "evidence": null
+    },
+    {
+      "category_id": "fashion_apparel.clothing.dresses",
+      "tier": "decomposition",
+      "status": "deferred",
+      "reason": "EVIDENCE_RECORD_MISSING",
+      "evidence": null
+    },
+    {
+      "category_id": "fashion_apparel.clothing.jeans",
+      "tier": "decomposition",
+      "status": "deferred",
+      "reason": "EVIDENCE_RECORD_MISSING",
+      "evidence": null
+    },
+    {
+      "category_id": "fashion_apparel.clothing.pants_trousers",
+      "tier": "decomposition",
+      "status": "deferred",
+      "reason": "EVIDENCE_RECORD_MISSING",
+      "evidence": null
+    },
+    {
+      "category_id": "fashion_apparel.clothing.shirts_tops_blouses.hoodies_sweatshirts",
+      "tier": "decomposition",
+      "status": "deferred",
+      "reason": "EVIDENCE_RECORD_MISSING",
+      "evidence": null
+    },
+    {
+      "category_id": "fashion_apparel.clothing.shirts_tops_blouses.sweaters_cardigans",
+      "tier": "decomposition",
+      "status": "deferred",
+      "reason": "EVIDENCE_RECORD_MISSING",
+      "evidence": null
+    },
+    {
+      "category_id": "fashion_apparel.clothing.shirts_tops_blouses.woven_shirts_blouses",
+      "tier": "decomposition",
+      "status": "deferred",
+      "reason": "EVIDENCE_RECORD_MISSING",
+      "evidence": null
+    },
+    {
+      "category_id": "fashion_apparel.clothing.shorts",
+      "tier": "decomposition",
+      "status": "deferred",
+      "reason": "EVIDENCE_RECORD_MISSING",
+      "evidence": null
+    },
+    {
+      "category_id": "fashion_apparel.clothing.skirts",
+      "tier": "decomposition",
+      "status": "deferred",
+      "reason": "EVIDENCE_RECORD_MISSING",
+      "evidence": null
+    },
+    {
+      "category_id": "fashion_apparel.clothing.underwear.bras_bralettes",
+      "tier": "decomposition",
+      "status": "deferred",
+      "reason": "EVIDENCE_RECORD_MISSING",
+      "evidence": null
+    },
+    {
+      "category_id": "fashion_apparel.clothing.underwear.socks_hosiery",
+      "tier": "decomposition",
+      "status": "deferred",
+      "reason": "EVIDENCE_RECORD_MISSING",
+      "evidence": null
+    },
+    {
+      "category_id": "fashion_apparel.clothing.underwear.underpants_briefs",
+      "tier": "decomposition",
+      "status": "deferred",
+      "reason": "EVIDENCE_RECORD_MISSING",
+      "evidence": null
+    },
+    {
+      "category_id": "fashion_apparel.footwear.boots",
+      "tier": "decomposition",
+      "status": "deferred",
+      "reason": "EVIDENCE_RECORD_MISSING",
+      "evidence": null
+    },
+    {
+      "category_id": "fashion_apparel.footwear.casual_shoes",
+      "tier": "decomposition",
+      "status": "deferred",
+      "reason": "EVIDENCE_RECORD_MISSING",
+      "evidence": null
+    },
+    {
+      "category_id": "fashion_apparel.footwear.dress_shoes",
+      "tier": "decomposition",
+      "status": "deferred",
+      "reason": "EVIDENCE_RECORD_MISSING",
+      "evidence": null
+    },
+    {
+      "category_id": "fashion_apparel.footwear.sandals",
+      "tier": "decomposition",
+      "status": "deferred",
+      "reason": "EVIDENCE_RECORD_MISSING",
+      "evidence": null
+    },
+    {
+      "category_id": "fashion_apparel.footwear.slippers_house_shoes",
+      "tier": "decomposition",
+      "status": "deferred",
+      "reason": "EVIDENCE_RECORD_MISSING",
+      "evidence": null
+    },
+    {
+      "category_id": "fashion_apparel.gloves_mittens",
+      "tier": "decomposition",
+      "status": "deferred",
+      "reason": "EVIDENCE_RECORD_MISSING",
+      "evidence": null
+    },
+    {
+      "category_id": "fashion_apparel.hair_accessories",
+      "tier": "decomposition",
+      "status": "deferred",
+      "reason": "EVIDENCE_RECORD_MISSING",
+      "evidence": null
+    },
+    {
+      "category_id": "fashion_apparel.hats_caps",
+      "tier": "decomposition",
+      "status": "deferred",
+      "reason": "EVIDENCE_RECORD_MISSING",
+      "evidence": null
+    },
+    {
+      "category_id": "fashion_apparel.jewelry.bracelets_anklets",
+      "tier": "decomposition",
+      "status": "deferred",
+      "reason": "EVIDENCE_RECORD_MISSING",
+      "evidence": null
+    },
+    {
+      "category_id": "fashion_apparel.jewelry.earrings",
+      "tier": "decomposition",
+      "status": "deferred",
+      "reason": "EVIDENCE_RECORD_MISSING",
+      "evidence": null
+    },
+    {
+      "category_id": "fashion_apparel.jewelry.necklaces_pendants",
+      "tier": "decomposition",
+      "status": "deferred",
+      "reason": "EVIDENCE_RECORD_MISSING",
+      "evidence": null
+    },
+    {
+      "category_id": "fashion_apparel.jewelry.rings",
+      "tier": "decomposition",
+      "status": "deferred",
+      "reason": "EVIDENCE_RECORD_MISSING",
+      "evidence": null
+    },
+    {
+      "category_id": "fashion_apparel.jewelry.watches_watch_accessories.wristwatches",
+      "tier": "direct_exact",
+      "status": "deferred",
+      "reason": "EVIDENCE_RECORD_MISSING",
+      "evidence": null
+    },
+    {
+      "category_id": "fashion_apparel.neckwear",
+      "tier": "decomposition",
+      "status": "deferred",
+      "reason": "EVIDENCE_RECORD_MISSING",
+      "evidence": null
+    },
+    {
+      "category_id": "fashion_apparel.non_prescription_fashion_glasses",
+      "tier": "decomposition",
+      "status": "deferred",
+      "reason": "EVIDENCE_RECORD_MISSING",
+      "evidence": null
+    },
+    {
+      "category_id": "fashion_apparel.wallets_card_holders",
+      "tier": "decomposition",
+      "status": "deferred",
+      "reason": "EVIDENCE_RECORD_MISSING",
+      "evidence": null
+    },
+    {
+      "category_id": "food_grocery.beverages.non_alcoholic_beverages.bottled_water",
+      "tier": "decomposition",
+      "status": "deferred",
+      "reason": "EVIDENCE_RECORD_MISSING",
+      "evidence": null
+    },
+    {
+      "category_id": "food_grocery.food.canned_jarred_foods",
+      "tier": "decomposition",
+      "status": "deferred",
+      "reason": "EVIDENCE_RECORD_MISSING",
+      "evidence": null
+    },
+    {
+      "category_id": "food_grocery.food.condiments_spices",
+      "tier": "decomposition",
+      "status": "deferred",
+      "reason": "EVIDENCE_RECORD_MISSING",
+      "evidence": null
+    },
+    {
+      "category_id": "food_grocery.food.cooking_oils",
+      "tier": "decomposition",
+      "status": "deferred",
+      "reason": "EVIDENCE_RECORD_MISSING",
+      "evidence": null
+    },
+    {
+      "category_id": "food_grocery.food.dairy_non_dairy_alternatives.cheese",
+      "tier": "decomposition",
+      "status": "deferred",
+      "reason": "EVIDENCE_RECORD_MISSING",
+      "evidence": null
+    },
+    {
+      "category_id": "food_grocery.food.dairy_non_dairy_alternatives.milk_plant_based_milk",
+      "tier": "decomposition",
+      "status": "deferred",
+      "reason": "EVIDENCE_RECORD_MISSING",
+      "evidence": null
+    },
+    {
+      "category_id": "food_grocery.food.dairy_non_dairy_alternatives.yogurt_cultured_dairy",
+      "tier": "decomposition",
+      "status": "deferred",
+      "reason": "EVIDENCE_RECORD_MISSING",
+      "evidence": null
+    },
+    {
+      "category_id": "food_grocery.food.eggs_egg_products",
+      "tier": "decomposition",
+      "status": "deferred",
+      "reason": "EVIDENCE_RECORD_MISSING",
+      "evidence": null
+    },
+    {
+      "category_id": "food_grocery.food.food_spreads",
+      "tier": "decomposition",
+      "status": "deferred",
+      "reason": "EVIDENCE_RECORD_MISSING",
+      "evidence": null
+    },
+    {
+      "category_id": "food_grocery.food.fruits_vegetables",
+      "tier": "decomposition",
+      "status": "deferred",
+      "reason": "EVIDENCE_RECORD_MISSING",
+      "evidence": null
+    },
+    {
+      "category_id": "food_grocery.food.grains_rice_pasta",
+      "tier": "decomposition",
+      "status": "deferred",
+      "reason": "EVIDENCE_RECORD_MISSING",
+      "evidence": null
+    },
+    {
+      "category_id": "food_grocery.food.legumes_pulses",
+      "tier": "decomposition",
+      "status": "deferred",
+      "reason": "EVIDENCE_RECORD_MISSING",
+      "evidence": null
+    },
+    {
+      "category_id": "food_grocery.food.nuts_seeds_dried_fruit",
+      "tier": "decomposition",
+      "status": "deferred",
+      "reason": "EVIDENCE_RECORD_MISSING",
+      "evidence": null
+    },
+    {
+      "category_id": "food_grocery.food.prepared_meals_meal_kits",
+      "tier": "decomposition",
+      "status": "deferred",
+      "reason": "EVIDENCE_RECORD_MISSING",
+      "evidence": null
+    },
+    {
+      "category_id": "food_grocery.food.seafood",
+      "tier": "decomposition",
+      "status": "deferred",
+      "reason": "EVIDENCE_RECORD_MISSING",
+      "evidence": null
+    },
+    {
+      "category_id": "food_grocery.food.soups_broths_stocks",
+      "tier": "decomposition",
+      "status": "deferred",
+      "reason": "EVIDENCE_RECORD_MISSING",
+      "evidence": null
+    },
+    {
+      "category_id": "gifts_occasions.gifts.retail_gift_cards_vouchers",
+      "tier": "direct_exact",
+      "status": "deferred",
+      "reason": "EVIDENCE_RECORD_MISSING",
+      "evidence": null
+    },
+    {
+      "category_id": "health.condoms",
+      "tier": "decomposition",
+      "status": "deferred",
+      "reason": "EVIDENCE_RECORD_MISSING",
+      "evidence": null
+    },
+    {
+      "category_id": "health.health_conditions_concerns.vision.contact_lenses_accessories.contact_lens_care_supplies",
+      "tier": "decomposition",
+      "status": "deferred",
+      "reason": "EVIDENCE_RECORD_MISSING",
+      "evidence": null
+    },
+    {
+      "category_id": "health.health_conditions_concerns.vision.contact_lenses_accessories.contact_lenses",
+      "tier": "decomposition",
+      "status": "deferred",
+      "reason": "EVIDENCE_RECORD_MISSING",
+      "evidence": null
+    },
+    {
+      "category_id": "health.health_conditions_concerns.vision.prescription_eyeglasses",
+      "tier": "decomposition",
+      "status": "deferred",
+      "reason": "EVIDENCE_RECORD_MISSING",
+      "evidence": null
+    },
+    {
+      "category_id": "health.medical_devices_equipment_supplies.consumer_therapy_devices",
+      "tier": "decomposition",
+      "status": "deferred",
+      "reason": "EVIDENCE_RECORD_MISSING",
+      "evidence": null
+    },
+    {
+      "category_id": "health.medical_devices_equipment_supplies.diabetes_care_supplies",
+      "tier": "decomposition",
+      "status": "deferred",
+      "reason": "EVIDENCE_RECORD_MISSING",
+      "evidence": null
+    },
+    {
+      "category_id": "health.medical_devices_equipment_supplies.hearing_aids_assistive_listening_devices",
+      "tier": "decomposition",
+      "status": "deferred",
+      "reason": "EVIDENCE_RECORD_MISSING",
+      "evidence": null
+    },
+    {
+      "category_id": "health.medical_devices_equipment_supplies.incontinence_supplies",
+      "tier": "decomposition",
+      "status": "deferred",
+      "reason": "EVIDENCE_RECORD_MISSING",
+      "evidence": null
+    },
+    {
+      "category_id": "health.medical_devices_equipment_supplies.medical_diagnostic_equipment_monitoring_devices.blood_glucose_monitors",
+      "tier": "decomposition",
+      "status": "deferred",
+      "reason": "EVIDENCE_RECORD_MISSING",
+      "evidence": null
+    },
+    {
+      "category_id": "health.medical_devices_equipment_supplies.medical_diagnostic_equipment_monitoring_devices.blood_pressure_monitors",
+      "tier": "decomposition",
+      "status": "deferred",
+      "reason": "EVIDENCE_RECORD_MISSING",
+      "evidence": null
+    },
+    {
+      "category_id": "health.medical_devices_equipment_supplies.medical_diagnostic_equipment_monitoring_devices.body_composition_scales",
+      "tier": "decomposition",
+      "status": "deferred",
+      "reason": "EVIDENCE_RECORD_MISSING",
+      "evidence": null
+    },
+    {
+      "category_id": "health.medical_devices_equipment_supplies.medical_diagnostic_equipment_monitoring_devices.clinical_thermometers",
+      "tier": "decomposition",
+      "status": "deferred",
+      "reason": "EVIDENCE_RECORD_MISSING",
+      "evidence": null
+    },
+    {
+      "category_id": "health.medical_devices_equipment_supplies.medical_diagnostic_equipment_monitoring_devices.home_health_test_kits",
+      "tier": "decomposition",
+      "status": "deferred",
+      "reason": "EVIDENCE_RECORD_MISSING",
+      "evidence": null
+    },
+    {
+      "category_id": "health.medical_devices_equipment_supplies.medical_diagnostic_equipment_monitoring_devices.pulse_oximeters",
+      "tier": "decomposition",
+      "status": "deferred",
+      "reason": "EVIDENCE_RECORD_MISSING",
+      "evidence": null
+    },
+    {
+      "category_id": "health.medical_devices_equipment_supplies.mobility_equipment_accessories.mobility_aids",
+      "tier": "decomposition",
+      "status": "deferred",
+      "reason": "EVIDENCE_RECORD_MISSING",
+      "evidence": null
+    },
+    {
+      "category_id": "health.medical_devices_equipment_supplies.orthopedic_braces_supports",
+      "tier": "decomposition",
+      "status": "deferred",
+      "reason": "EVIDENCE_RECORD_MISSING",
+      "evidence": null
+    },
+    {
+      "category_id": "health.medical_devices_equipment_supplies.respiratory_care_devices_supplies",
+      "tier": "decomposition",
+      "status": "deferred",
+      "reason": "EVIDENCE_RECORD_MISSING",
+      "evidence": null
+    },
+    {
+      "category_id": "health.personal_lubricants",
+      "tier": "decomposition",
+      "status": "deferred",
+      "reason": "EVIDENCE_RECORD_MISSING",
+      "evidence": null
+    },
+    {
+      "category_id": "health.pharmacy.drugs_medications.non_prescription_medicines",
+      "tier": "direct_exact",
+      "status": "deferred",
+      "reason": "EVIDENCE_RECORD_MISSING",
+      "evidence": null
+    },
+    {
+      "category_id": "hobbies_games_leisure.antiques_collectibles.collectibles",
+      "tier": "decomposition",
+      "status": "deferred",
+      "reason": "EVIDENCE_RECORD_MISSING",
+      "evidence": null
+    },
+    {
+      "category_id": "hobbies_games_leisure.camping_outdoor_recreation.camping_equipment",
+      "tier": "decomposition",
+      "status": "deferred",
+      "reason": "EVIDENCE_RECORD_MISSING",
+      "evidence": null
+    },
+    {
+      "category_id": "hobbies_games_leisure.camping_outdoor_recreation.climbing.climbing_equipment",
+      "tier": "decomposition",
+      "status": "deferred",
+      "reason": "EVIDENCE_RECORD_MISSING",
+      "evidence": null
+    },
+    {
+      "category_id": "hobbies_games_leisure.camping_outdoor_recreation.hiking.hiking_equipment",
+      "tier": "decomposition",
+      "status": "deferred",
+      "reason": "EVIDENCE_RECORD_MISSING",
+      "evidence": null
+    },
+    {
+      "category_id": "hobbies_games_leisure.pets_animals.pet_food_supplies.pet_beds_furniture",
+      "tier": "decomposition",
+      "status": "deferred",
+      "reason": "EVIDENCE_RECORD_MISSING",
+      "evidence": null
+    },
+    {
+      "category_id": "hobbies_games_leisure.pets_animals.pet_food_supplies.pet_carriers_crates_travel_supplies",
+      "tier": "decomposition",
+      "status": "deferred",
+      "reason": "EVIDENCE_RECORD_MISSING",
+      "evidence": null
+    },
+    {
+      "category_id": "hobbies_games_leisure.pets_animals.pet_food_supplies.pet_collars_harnesses_leashes",
+      "tier": "decomposition",
+      "status": "deferred",
+      "reason": "EVIDENCE_RECORD_MISSING",
+      "evidence": null
+    },
+    {
+      "category_id": "hobbies_games_leisure.pets_animals.pet_food_supplies.pet_feeding_watering_supplies",
+      "tier": "decomposition",
+      "status": "deferred",
+      "reason": "EVIDENCE_RECORD_MISSING",
+      "evidence": null
+    },
+    {
+      "category_id": "hobbies_games_leisure.pets_animals.pet_food_supplies.pet_food_treats.pet_food",
+      "tier": "decomposition",
+      "status": "deferred",
+      "reason": "EVIDENCE_RECORD_MISSING",
+      "evidence": null
+    },
+    {
+      "category_id": "hobbies_games_leisure.pets_animals.pet_food_supplies.pet_food_treats.pet_treats_chews",
+      "tier": "decomposition",
+      "status": "deferred",
+      "reason": "EVIDENCE_RECORD_MISSING",
+      "evidence": null
+    },
+    {
+      "category_id": "hobbies_games_leisure.pets_animals.pet_food_supplies.pet_grooming_supplies",
+      "tier": "decomposition",
+      "status": "deferred",
+      "reason": "EVIDENCE_RECORD_MISSING",
+      "evidence": null
+    },
+    {
+      "category_id": "hobbies_games_leisure.pets_animals.pet_food_supplies.pet_litter_housebreaking_supplies",
+      "tier": "decomposition",
+      "status": "deferred",
+      "reason": "EVIDENCE_RECORD_MISSING",
+      "evidence": null
+    },
+    {
+      "category_id": "hobbies_games_leisure.pets_animals.pet_food_supplies.pet_toys",
+      "tier": "decomposition",
+      "status": "deferred",
+      "reason": "EVIDENCE_RECORD_MISSING",
+      "evidence": null
+    },
+    {
+      "category_id": "hobbies_games_leisure.toys_games.games.video_games_consoles_accessories.game_controllers",
+      "tier": "decomposition",
+      "status": "deferred",
+      "reason": "EVIDENCE_RECORD_MISSING",
+      "evidence": null
+    },
+    {
+      "category_id": "hobbies_games_leisure.toys_games.toys.electronic_interactive_toys",
+      "tier": "decomposition",
+      "status": "deferred",
+      "reason": "EVIDENCE_RECORD_MISSING",
+      "evidence": null
+    },
+    {
+      "category_id": "hobbies_games_leisure.toys_games.toys.infant_toddler_toys",
+      "tier": "decomposition",
+      "status": "deferred",
+      "reason": "EVIDENCE_RECORD_MISSING",
+      "evidence": null
+    },
+    {
+      "category_id": "hobbies_games_leisure.toys_games.toys.musical_toys",
+      "tier": "decomposition",
+      "status": "deferred",
+      "reason": "EVIDENCE_RECORD_MISSING",
+      "evidence": null
+    },
+    {
+      "category_id": "hobbies_games_leisure.toys_games.toys.outdoor_ride_on_toys",
+      "tier": "decomposition",
+      "status": "deferred",
+      "reason": "EVIDENCE_RECORD_MISSING",
+      "evidence": null
+    },
+    {
+      "category_id": "hobbies_games_leisure.toys_games.toys.plush_toys",
+      "tier": "decomposition",
+      "status": "deferred",
+      "reason": "EVIDENCE_RECORD_MISSING",
+      "evidence": null
+    },
+    {
+      "category_id": "hobbies_games_leisure.toys_games.toys.pretend_play_role_play_toys",
+      "tier": "decomposition",
+      "status": "deferred",
+      "reason": "EVIDENCE_RECORD_MISSING",
+      "evidence": null
+    },
+    {
+      "category_id": "hobbies_games_leisure.toys_games.toys.toy_vehicles",
+      "tier": "decomposition",
+      "status": "deferred",
+      "reason": "EVIDENCE_RECORD_MISSING",
+      "evidence": null
+    },
+    {
+      "category_id": "home_garden.bathroom_supplies",
+      "tier": "decomposition",
+      "status": "deferred",
+      "reason": "EVIDENCE_RECORD_MISSING",
+      "evidence": null
+    },
+    {
+      "category_id": "home_garden.bathroom_supplies.bath_towels_mats",
+      "tier": "decomposition",
+      "status": "deferred",
+      "reason": "EVIDENCE_RECORD_MISSING",
+      "evidence": null
+    },
+    {
+      "category_id": "home_garden.bathroom_supplies.bathroom_accessories",
+      "tier": "decomposition",
+      "status": "deferred",
+      "reason": "EVIDENCE_RECORD_MISSING",
+      "evidence": null
+    },
+    {
+      "category_id": "home_garden.bathroom_supplies.faucets_shower_fixtures",
+      "tier": "decomposition",
+      "status": "deferred",
+      "reason": "EVIDENCE_RECORD_MISSING",
+      "evidence": null
+    },
+    {
+      "category_id": "home_garden.bathroom_supplies.toilets_bidets",
+      "tier": "decomposition",
+      "status": "deferred",
+      "reason": "EVIDENCE_RECORD_MISSING",
+      "evidence": null
+    },
+    {
+      "category_id": "home_garden.bedding_linens.bed_pillows",
+      "tier": "decomposition",
+      "status": "deferred",
+      "reason": "EVIDENCE_RECORD_MISSING",
+      "evidence": null
+    },
+    {
+      "category_id": "home_garden.bedding_linens.blankets_throws",
+      "tier": "decomposition",
+      "status": "deferred",
+      "reason": "EVIDENCE_RECORD_MISSING",
+      "evidence": null
+    },
+    {
+      "category_id": "home_garden.bedding_linens.duvets_comforters_quilts",
+      "tier": "decomposition",
+      "status": "deferred",
+      "reason": "EVIDENCE_RECORD_MISSING",
+      "evidence": null
+    },
+    {
+      "category_id": "home_garden.bedding_linens.sheets_pillowcases",
+      "tier": "decomposition",
+      "status": "deferred",
+      "reason": "EVIDENCE_RECORD_MISSING",
+      "evidence": null
+    },
+    {
+      "category_id": "home_garden.home_appliances.climate_air_treatment_appliances",
+      "tier": "direct_exact",
+      "status": "deferred",
+      "reason": "EVIDENCE_RECORD_MISSING",
+      "evidence": null
+    },
+    {
+      "category_id": "home_garden.home_appliances.irons_garment_steamers",
+      "tier": "decomposition",
+      "status": "deferred",
+      "reason": "EVIDENCE_RECORD_MISSING",
+      "evidence": null
+    },
+    {
+      "category_id": "home_garden.home_appliances.major_kitchen_appliances.cooktops",
+      "tier": "decomposition",
+      "status": "deferred",
+      "reason": "EVIDENCE_RECORD_MISSING",
+      "evidence": null
+    },
+    {
+      "category_id": "home_garden.home_appliances.major_kitchen_appliances.dishwashers",
+      "tier": "decomposition",
+      "status": "deferred",
+      "reason": "EVIDENCE_RECORD_MISSING",
+      "evidence": null
+    },
+    {
+      "category_id": "home_garden.home_appliances.major_kitchen_appliances.ranges_ovens",
+      "tier": "decomposition",
+      "status": "deferred",
+      "reason": "EVIDENCE_RECORD_MISSING",
+      "evidence": null
+    },
+    {
+      "category_id": "home_garden.home_appliances.major_kitchen_appliances.refrigeration_appliances",
+      "tier": "direct_exact",
+      "status": "deferred",
+      "reason": "EVIDENCE_RECORD_MISSING",
+      "evidence": null
+    },
+    {
+      "category_id": "home_garden.home_appliances.powered_floor_cleaners",
+      "tier": "decomposition",
+      "status": "deferred",
+      "reason": "EVIDENCE_RECORD_MISSING",
+      "evidence": null
+    },
+    {
+      "category_id": "home_garden.home_appliances.small_kitchen_appliances",
+      "tier": "decomposition",
+      "status": "deferred",
+      "reason": "EVIDENCE_RECORD_MISSING",
+      "evidence": null
+    },
+    {
+      "category_id": "home_garden.home_appliances.small_kitchen_appliances.blenders_food_processors_mixers",
+      "tier": "decomposition",
+      "status": "deferred",
+      "reason": "EVIDENCE_RECORD_MISSING",
+      "evidence": null
+    },
+    {
+      "category_id": "home_garden.home_appliances.small_kitchen_appliances.coffee_tea_makers",
+      "tier": "decomposition",
+      "status": "deferred",
+      "reason": "EVIDENCE_RECORD_MISSING",
+      "evidence": null
+    },
+    {
+      "category_id": "home_garden.home_appliances.small_kitchen_appliances.countertop_cooking_appliances",
+      "tier": "decomposition",
+      "status": "deferred",
+      "reason": "EVIDENCE_RECORD_MISSING",
+      "evidence": null
+    },
+    {
+      "category_id": "home_garden.home_appliances.small_kitchen_appliances.electric_kettles",
+      "tier": "decomposition",
+      "status": "deferred",
+      "reason": "EVIDENCE_RECORD_MISSING",
+      "evidence": null
+    },
+    {
+      "category_id": "home_garden.home_appliances.small_kitchen_appliances.microwave_ovens",
+      "tier": "decomposition",
+      "status": "deferred",
+      "reason": "EVIDENCE_RECORD_MISSING",
+      "evidence": null
+    },
+    {
+      "category_id": "home_garden.home_appliances.small_kitchen_appliances.rice_multi_cookers",
+      "tier": "decomposition",
+      "status": "deferred",
+      "reason": "EVIDENCE_RECORD_MISSING",
+      "evidence": null
+    },
+    {
+      "category_id": "home_garden.home_furniture.beds_bed_frames",
+      "tier": "decomposition",
+      "status": "deferred",
+      "reason": "EVIDENCE_RECORD_MISSING",
+      "evidence": null
+    },
+    {
+      "category_id": "home_garden.home_furniture.cabinets_shelving_storage_furniture",
+      "tier": "decomposition",
+      "status": "deferred",
+      "reason": "EVIDENCE_RECORD_MISSING",
+      "evidence": null
+    },
+    {
+      "category_id": "home_garden.home_furniture.chairs_seating",
+      "tier": "decomposition",
+      "status": "deferred",
+      "reason": "EVIDENCE_RECORD_MISSING",
+      "evidence": null
+    },
+    {
+      "category_id": "home_garden.home_furniture.desks_workstations",
+      "tier": "decomposition",
+      "status": "deferred",
+      "reason": "EVIDENCE_RECORD_MISSING",
+      "evidence": null
+    },
+    {
+      "category_id": "home_garden.home_furniture.sofas_loveseats",
+      "tier": "decomposition",
+      "status": "deferred",
+      "reason": "EVIDENCE_RECORD_MISSING",
+      "evidence": null
+    },
+    {
+      "category_id": "home_garden.home_furniture.tables",
+      "tier": "decomposition",
+      "status": "deferred",
+      "reason": "EVIDENCE_RECORD_MISSING",
+      "evidence": null
+    },
+    {
+      "category_id": "home_garden.home_heating_cooling.thermostats",
+      "tier": "decomposition",
+      "status": "deferred",
+      "reason": "EVIDENCE_RECORD_MISSING",
+      "evidence": null
+    },
+    {
+      "category_id": "home_garden.home_improvement_maintenance.smart_plugs",
+      "tier": "decomposition",
+      "status": "deferred",
+      "reason": "EVIDENCE_RECORD_MISSING",
+      "evidence": null
+    },
+    {
+      "category_id": "home_garden.home_improvement_maintenance.wall_switches_dimmers",
+      "tier": "decomposition",
+      "status": "deferred",
+      "reason": "EVIDENCE_RECORD_MISSING",
+      "evidence": null
+    },
+    {
+      "category_id": "home_garden.home_safety_security.door_locks",
+      "tier": "decomposition",
+      "status": "deferred",
+      "reason": "EVIDENCE_RECORD_MISSING",
+      "evidence": null
+    },
+    {
+      "category_id": "home_garden.home_safety_security.home_alarm_systems_sirens",
+      "tier": "decomposition",
+      "status": "deferred",
+      "reason": "EVIDENCE_RECORD_MISSING",
+      "evidence": null
+    },
+    {
+      "category_id": "home_garden.home_safety_security.home_security_sensors",
+      "tier": "decomposition",
+      "status": "deferred",
+      "reason": "EVIDENCE_RECORD_MISSING",
+      "evidence": null
+    },
+    {
+      "category_id": "home_garden.home_safety_security.home_security_sensors.smoke_carbon_monoxide_detectors",
+      "tier": "decomposition",
+      "status": "deferred",
+      "reason": "EVIDENCE_RECORD_MISSING",
+      "evidence": null
+    },
+    {
+      "category_id": "home_garden.home_safety_security.home_security_sensors.water_leak_detectors",
+      "tier": "decomposition",
+      "status": "deferred",
+      "reason": "EVIDENCE_RECORD_MISSING",
+      "evidence": null
+    },
+    {
+      "category_id": "home_garden.home_safety_security.safes_lockboxes",
+      "tier": "decomposition",
+      "status": "deferred",
+      "reason": "EVIDENCE_RECORD_MISSING",
+      "evidence": null
+    },
+    {
+      "category_id": "home_garden.home_safety_security.security_cameras",
+      "tier": "decomposition",
+      "status": "deferred",
+      "reason": "EVIDENCE_RECORD_MISSING",
+      "evidence": null
+    },
+    {
+      "category_id": "home_garden.home_safety_security.video_doorbells",
+      "tier": "decomposition",
+      "status": "deferred",
+      "reason": "EVIDENCE_RECORD_MISSING",
+      "evidence": null
+    },
+    {
+      "category_id": "home_garden.household_supplies.home_storage_organization",
+      "tier": "decomposition",
+      "status": "deferred",
+      "reason": "EVIDENCE_RECORD_MISSING",
+      "evidence": null
+    },
+    {
+      "category_id": "home_garden.household_supplies.home_storage_organization.closet_garment_storage",
+      "tier": "decomposition",
+      "status": "deferred",
+      "reason": "EVIDENCE_RECORD_MISSING",
+      "evidence": null
+    },
+    {
+      "category_id": "home_garden.household_supplies.home_storage_organization.hooks_racks_hangers",
+      "tier": "decomposition",
+      "status": "deferred",
+      "reason": "EVIDENCE_RECORD_MISSING",
+      "evidence": null
+    },
+    {
+      "category_id": "home_garden.household_supplies.home_storage_organization.laundry_hampers_baskets",
+      "tier": "decomposition",
+      "status": "deferred",
+      "reason": "EVIDENCE_RECORD_MISSING",
+      "evidence": null
+    },
+    {
+      "category_id": "home_garden.household_supplies.home_storage_organization.storage_boxes_bins",
+      "tier": "decomposition",
+      "status": "deferred",
+      "reason": "EVIDENCE_RECORD_MISSING",
+      "evidence": null
+    },
+    {
+      "category_id": "home_garden.household_supplies.household_cleaning_tools_accessories",
+      "tier": "decomposition",
+      "status": "deferred",
+      "reason": "EVIDENCE_RECORD_MISSING",
+      "evidence": null
+    },
+    {
+      "category_id": "home_garden.kitchen_dining.bakeware",
+      "tier": "decomposition",
+      "status": "deferred",
+      "reason": "EVIDENCE_RECORD_MISSING",
+      "evidence": null
+    },
+    {
+      "category_id": "home_garden.kitchen_dining.cooking_utensils",
+      "tier": "decomposition",
+      "status": "deferred",
+      "reason": "EVIDENCE_RECORD_MISSING",
+      "evidence": null
+    },
+    {
+      "category_id": "home_garden.kitchen_dining.cookware",
+      "tier": "decomposition",
+      "status": "deferred",
+      "reason": "EVIDENCE_RECORD_MISSING",
+      "evidence": null
+    },
+    {
+      "category_id": "home_garden.kitchen_dining.dinnerware",
+      "tier": "decomposition",
+      "status": "deferred",
+      "reason": "EVIDENCE_RECORD_MISSING",
+      "evidence": null
+    },
+    {
+      "category_id": "home_garden.kitchen_dining.drinkware",
+      "tier": "decomposition",
+      "status": "deferred",
+      "reason": "EVIDENCE_RECORD_MISSING",
+      "evidence": null
+    },
+    {
+      "category_id": "home_garden.kitchen_dining.flatware",
+      "tier": "decomposition",
+      "status": "deferred",
+      "reason": "EVIDENCE_RECORD_MISSING",
+      "evidence": null
+    },
+    {
+      "category_id": "home_garden.kitchen_dining.kitchen_knives_cutting_tools",
+      "tier": "decomposition",
+      "status": "deferred",
+      "reason": "EVIDENCE_RECORD_MISSING",
+      "evidence": null
+    },
+    {
+      "category_id": "home_garden.lights_lighting.indoor_lighting_fixtures",
+      "tier": "decomposition",
+      "status": "deferred",
+      "reason": "EVIDENCE_RECORD_MISSING",
+      "evidence": null
+    },
+    {
+      "category_id": "home_garden.lights_lighting.lamps",
+      "tier": "decomposition",
+      "status": "deferred",
+      "reason": "EVIDENCE_RECORD_MISSING",
+      "evidence": null
+    },
+    {
+      "category_id": "home_garden.lights_lighting.light_bulbs",
+      "tier": "decomposition",
+      "status": "deferred",
+      "reason": "EVIDENCE_RECORD_MISSING",
+      "evidence": null
+    },
+    {
+      "category_id": "home_garden.lights_lighting.outdoor_lighting",
+      "tier": "decomposition",
+      "status": "deferred",
+      "reason": "EVIDENCE_RECORD_MISSING",
+      "evidence": null
+    },
+    {
+      "category_id": "home_garden.yard_garden_patio.gardening_supplies",
+      "tier": "decomposition",
+      "status": "deferred",
+      "reason": "EVIDENCE_RECORD_MISSING",
+      "evidence": null
+    },
+    {
+      "category_id": "home_garden.yard_garden_patio.gardening_supplies.growing_media_plant_food",
+      "tier": "decomposition",
+      "status": "deferred",
+      "reason": "EVIDENCE_RECORD_MISSING",
+      "evidence": null
+    },
+    {
+      "category_id": "home_garden.yard_garden_patio.gardening_supplies.pots_planters",
+      "tier": "decomposition",
+      "status": "deferred",
+      "reason": "EVIDENCE_RECORD_MISSING",
+      "evidence": null
+    },
+    {
+      "category_id": "home_garden.yard_garden_patio.gardening_supplies.seeds_live_plants",
+      "tier": "decomposition",
+      "status": "deferred",
+      "reason": "EVIDENCE_RECORD_MISSING",
+      "evidence": null
+    },
+    {
+      "category_id": "home_garden.yard_garden_patio.gardening_supplies.watering_garden_tools",
+      "tier": "decomposition",
+      "status": "deferred",
+      "reason": "EVIDENCE_RECORD_MISSING",
+      "evidence": null
+    },
+    {
+      "category_id": "internet_telecom.telephony.mobile_phones_accessories.mobile_phone_batteries",
+      "tier": "decomposition",
+      "status": "deferred",
+      "reason": "EVIDENCE_RECORD_MISSING",
+      "evidence": null
+    },
+    {
+      "category_id": "internet_telecom.telephony.mobile_phones_accessories.mobile_phone_cases_covers",
+      "tier": "decomposition",
+      "status": "deferred",
+      "reason": "EVIDENCE_RECORD_MISSING",
+      "evidence": null
+    },
+    {
+      "category_id": "internet_telecom.telephony.mobile_phones_accessories.mobile_phone_replacement_parts",
+      "tier": "decomposition",
+      "status": "deferred",
+      "reason": "EVIDENCE_RECORD_MISSING",
+      "evidence": null
+    },
+    {
+      "category_id": "internet_telecom.telephony.mobile_phones_accessories.mobile_phone_screen_protectors",
+      "tier": "decomposition",
+      "status": "deferred",
+      "reason": "EVIDENCE_RECORD_MISSING",
+      "evidence": null
+    },
+    {
+      "category_id": "news_books_publications.books_literature.printed_books",
+      "tier": "decomposition",
+      "status": "deferred",
+      "reason": "EVIDENCE_RECORD_MISSING",
+      "evidence": null
+    },
+    {
+      "category_id": "sports_fitness.boating_water_recreation.fishing.fishing_equipment",
+      "tier": "decomposition",
+      "status": "deferred",
+      "reason": "EVIDENCE_RECORD_MISSING",
+      "evidence": null
+    },
+    {
+      "category_id": "sports_fitness.sporting_goods.fitness_training_equipment",
+      "tier": "decomposition",
+      "status": "deferred",
+      "reason": "EVIDENCE_RECORD_MISSING",
+      "evidence": null
+    },
+    {
+      "category_id": "sports_fitness.sporting_goods.sports_protective_equipment",
+      "tier": "decomposition",
+      "status": "deferred",
+      "reason": "EVIDENCE_RECORD_MISSING",
+      "evidence": null
+    },
+    {
+      "category_id": "sports_fitness.sporting_goods.swimming_water_sports_equipment",
+      "tier": "decomposition",
+      "status": "deferred",
+      "reason": "EVIDENCE_RECORD_MISSING",
+      "evidence": null
+    },
+    {
+      "category_id": "sports_fitness.sporting_goods.team_court_sports_equipment",
+      "tier": "decomposition",
+      "status": "deferred",
+      "reason": "EVIDENCE_RECORD_MISSING",
+      "evidence": null
+    },
+    {
+      "category_id": "sports_fitness.sports.winter_sports.winter_sports_equipment",
+      "tier": "decomposition",
+      "status": "deferred",
+      "reason": "EVIDENCE_RECORD_MISSING",
+      "evidence": null
+    },
+    {
+      "category_id": "travel_tourism.luggage.backpacks_functional_bags",
+      "tier": "decomposition",
+      "status": "deferred",
+      "reason": "EVIDENCE_RECORD_MISSING",
+      "evidence": null
+    }
+  ],
+  "semantic_digest": "ad18a5bfa76d0d52190e95c601a9499312163d0ca8dcbbc4e27dad985c9a39e7"
+}

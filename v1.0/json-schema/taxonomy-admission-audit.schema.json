@@ -1,0 +1,64 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://agentoffernetwork.org/schema/taxonomy-admission-audit/v1",
+  "title": "Commerce Taxonomy Admission Audit v1",
+  "type": "object",
+  "required": ["schema_version", "feature_id", "projection_kind", "candidate_facts_digest", "candidate_registry_digest", "metadata_digest", "source_mapping_digest", "source_snapshot_digest", "evidence_export_digest", "scan_roots", "candidate_count", "admitted_count", "deferred_count", "public_delta", "decisions", "semantic_digest"],
+  "properties": {
+    "schema_version": {"const": "commerce-taxonomy-admission-audit-v1"},
+    "feature_id": {"const": "PROTO-F260909053820-Commerce-Taxonomy-Expansion"},
+    "projection_kind": {"enum": ["FoundationProjection", "TestProjection", "PublishableAdmission"]},
+    "candidate_facts_digest": {"$ref": "#/$defs/sha256"},
+    "candidate_registry_digest": {"$ref": "#/$defs/sha256"},
+    "metadata_digest": {"$ref": "#/$defs/sha256"},
+    "source_mapping_digest": {"$ref": "#/$defs/sha256"},
+    "source_snapshot_digest": {"$ref": "#/$defs/sha256"},
+    "evidence_export_digest": {"oneOf": [{"$ref": "#/$defs/sha256"}, {"type": "null"}]},
+    "scan_roots": {"type": "array", "minItems": 1, "items": {"type": "string", "pattern": "^[^/][^\\\\]*$"}},
+    "candidate_count": {"const": 272},
+    "admitted_count": {"type": "integer", "minimum": 0, "maximum": 272},
+    "deferred_count": {"type": "integer", "minimum": 0, "maximum": 272},
+    "public_delta": {
+      "type": "object",
+      "required": ["changed", "node_count", "tree_digest"],
+      "properties": {
+        "changed": {"type": "boolean"},
+        "node_count": {"type": "integer", "minimum": 515, "maximum": 787},
+        "tree_digest": {"$ref": "#/$defs/sha256"}
+      },
+      "additionalProperties": false
+    },
+    "decisions": {"type": "array", "minItems": 272, "maxItems": 272, "items": {"$ref": "#/$defs/decision"}},
+    "semantic_digest": {"$ref": "#/$defs/sha256"}
+  },
+  "additionalProperties": false,
+  "$defs": {
+    "sha256": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
+    "categoryId": {"type": "string", "pattern": "^[a-z0-9]+(?:_[a-z0-9]+)*(?:\\.[a-z0-9]+(?:_[a-z0-9]+)*)*$"},
+    "decision": {
+      "type": "object",
+      "required": ["category_id", "tier", "status", "reason", "evidence"],
+      "properties": {
+        "category_id": {"$ref": "#/$defs/categoryId"},
+        "tier": {"enum": ["direct_exact", "decomposition"]},
+        "status": {"enum": ["admitted", "deferred"]},
+        "reason": {"type": "string", "pattern": "^[A-Z][A-Z0-9_]+$"},
+        "evidence": {
+          "oneOf": [
+            {
+              "type": "object",
+              "required": ["evidence_id", "content_digest"],
+              "properties": {
+                "evidence_id": {"type": "string", "minLength": 1},
+                "content_digest": {"$ref": "#/$defs/sha256"}
+              },
+              "additionalProperties": false
+            },
+            {"type": "null"}
+          ]
+        }
+      },
+      "additionalProperties": false
+    }
+  }
+}

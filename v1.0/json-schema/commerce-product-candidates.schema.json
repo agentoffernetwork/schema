@@ -1,0 +1,87 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://agentoffernetwork.org/schema/commerce-product-candidates/v1",
+  "title": "Commerce Product Candidate Registry v1",
+  "type": "object",
+  "required": ["schema_version", "feature_id", "baseline_digest", "metadata_digest", "source_snapshot_digest", "planning_source", "candidate_count", "provenance_counts", "candidate_facts_digest", "registry_digest", "candidates"],
+  "properties": {
+    "schema_version": {"const": "commerce-product-candidates-v1"},
+    "feature_id": {"const": "PROTO-F260909053820-Commerce-Taxonomy-Expansion"},
+    "baseline_digest": {"$ref": "#/$defs/sha256"},
+    "metadata_digest": {"$ref": "#/$defs/sha256"},
+    "source_snapshot_digest": {"const": "2ce8f58e0b3587fe09e62b5935053d8b7747192cb12a5ffc5d04c7edc2643011"},
+    "planning_source": {
+      "type": "object",
+      "required": ["filename", "sha256"],
+      "properties": {
+        "filename": {"const": "COMMERCE-CANDIDATE-CATALOG.md"},
+        "sha256": {"$ref": "#/$defs/sha256"}
+      },
+      "additionalProperties": false
+    },
+    "candidate_count": {"const": 272},
+    "provenance_counts": {
+      "type": "object",
+      "required": ["WAREHOUSE_DERIVED", "WS_GAP"],
+      "properties": {
+        "WAREHOUSE_DERIVED": {"const": 182},
+        "WS_GAP": {"const": 90}
+      },
+      "additionalProperties": false
+    },
+    "candidate_facts_digest": {"$ref": "#/$defs/sha256"},
+    "registry_digest": {"$ref": "#/$defs/sha256"},
+    "candidates": {"type": "array", "minItems": 272, "maxItems": 272, "items": {"$ref": "#/$defs/candidate"}}
+  },
+  "additionalProperties": false,
+  "$defs": {
+    "sha256": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
+    "categoryId": {"type": "string", "pattern": "^[a-z0-9]+(?:_[a-z0-9]+)*(?:\\.[a-z0-9]+(?:_[a-z0-9]+)*)*$"},
+    "evidenceRef": {
+      "type": "object",
+      "required": ["evidence_id", "content_digest"],
+      "properties": {
+        "evidence_id": {"type": "string", "minLength": 1},
+        "content_digest": {"$ref": "#/$defs/sha256"}
+      },
+      "additionalProperties": false
+    },
+    "admission": {
+      "type": "object",
+      "required": ["category_id", "tier", "status", "reason", "evidence"],
+      "properties": {
+        "category_id": {"$ref": "#/$defs/categoryId"},
+        "tier": {"enum": ["direct_exact", "decomposition"]},
+        "status": {"enum": ["admitted", "deferred"]},
+        "reason": {"type": "string", "pattern": "^[A-Z][A-Z0-9_]+$"},
+        "evidence": {"oneOf": [{"$ref": "#/$defs/evidenceRef"}, {"type": "null"}]}
+      },
+      "additionalProperties": false
+    },
+    "candidate": {
+      "type": "object",
+      "required": ["category_id", "name", "parent_id", "level", "domain", "provenance", "semantic_role", "boundary_fingerprint", "lifecycle", "admission"],
+      "properties": {
+        "category_id": {"$ref": "#/$defs/categoryId"},
+        "name": {"type": "string", "minLength": 1},
+        "parent_id": {"$ref": "#/$defs/categoryId"},
+        "level": {"type": "integer", "minimum": 2, "maximum": 6},
+        "domain": {"type": "string", "minLength": 1},
+        "provenance": {
+          "type": "object",
+          "required": ["kind", "references"],
+          "properties": {
+            "kind": {"enum": ["WAREHOUSE_DERIVED", "WS_GAP"]},
+            "references": {"type": "array", "minItems": 1, "items": {"type": "string", "minLength": 1}, "uniqueItems": true}
+          },
+          "additionalProperties": false
+        },
+        "semantic_role": {"enum": ["exact", "broad_fallback", "split_target"]},
+        "boundary_fingerprint": {"$ref": "#/$defs/sha256"},
+        "lifecycle": {"const": {"status": "candidate", "replacement_category_id": null}},
+        "admission": {"$ref": "#/$defs/admission"}
+      },
+      "additionalProperties": false
+    }
+  }
+}

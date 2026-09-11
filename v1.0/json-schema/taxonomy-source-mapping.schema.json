@@ -1,0 +1,103 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://agentoffernetwork.org/schema/taxonomy-source-mapping/v1",
+  "title": "AON Taxonomy Source Mapping v1",
+  "type": "object",
+  "required": ["schema_version", "mapping_version", "lifecycle_status", "source", "taxonomy", "candidate_registry", "mapping_digest", "mappings"],
+  "properties": {
+    "schema_version": {"const": "taxonomy-source-mapping-v1"},
+    "mapping_version": {"const": "warehouse-commerce-v1"},
+    "lifecycle_status": {"enum": ["current", "superseded"]},
+    "source": {"$ref": "#/$defs/sourceEnvelope"},
+    "taxonomy": {
+      "type": "object",
+      "required": ["version", "baseline_digest", "metadata_digest"],
+      "properties": {
+        "version": {"const": "v1"},
+        "baseline_digest": {"$ref": "#/$defs/sha256"},
+        "metadata_digest": {"$ref": "#/$defs/sha256"}
+      },
+      "additionalProperties": false
+    },
+    "candidate_registry": {
+      "type": "object",
+      "required": ["version", "digest"],
+      "properties": {
+        "version": {"const": "commerce-product-candidates-v1"},
+        "digest": {"$ref": "#/$defs/sha256"}
+      },
+      "additionalProperties": false
+    },
+    "mapping_digest": {"$ref": "#/$defs/sha256"},
+    "mappings": {"type": "array", "minItems": 90, "maxItems": 90, "items": {"$ref": "#/$defs/mapping"}}
+  },
+  "additionalProperties": false,
+  "$defs": {
+    "sha256": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
+    "categoryId": {"type": "string", "pattern": "^[a-z0-9]+(?:_[a-z0-9]+)*(?:\\.[a-z0-9]+(?:_[a-z0-9]+)*)*$"},
+    "sourceEnvelope": {
+      "type": "object",
+      "required": ["namespace", "filename", "schema_version", "observed_date", "row_count", "scoped_row_count", "sha256"],
+      "properties": {
+        "namespace": {"const": "warehouse"},
+        "filename": {"const": "categories.csv"},
+        "schema_version": {"const": "code,parent_code,definition,aliases,status"},
+        "observed_date": {"type": "string", "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}$"},
+        "row_count": {"const": 226},
+        "scoped_row_count": {"const": 90},
+        "sha256": {"const": "2ce8f58e0b3587fe09e62b5935053d8b7747192cb12a5ffc5d04c7edc2643011"}
+      },
+      "additionalProperties": false
+    },
+    "sourceRecord": {
+      "type": "object",
+      "required": ["code", "parent_code", "definition", "aliases", "status"],
+      "properties": {
+        "code": {"type": "string", "pattern": "^commerce(?:\\.[a-z0-9_]+)*$"},
+        "parent_code": {"oneOf": [{"type": "string", "pattern": "^commerce(?:\\.[a-z0-9_]+)*$"}, {"type": "null"}]},
+        "definition": {"type": "string", "minLength": 1},
+        "aliases": {"type": "array", "items": {"type": "string", "minLength": 1}, "uniqueItems": true},
+        "status": {"const": "ACTIVE"}
+      },
+      "additionalProperties": false
+    },
+    "target": {
+      "type": "object",
+      "required": ["category_id", "status", "boundary_fingerprint"],
+      "properties": {
+        "category_id": {"$ref": "#/$defs/categoryId"},
+        "status": {"enum": ["existing", "admitted", "deferred", "deprecated", "replaced"]},
+        "boundary_fingerprint": {"$ref": "#/$defs/sha256"}
+      },
+      "additionalProperties": false
+    },
+    "decomposition": {
+      "type": "object",
+      "required": ["match_conditions", "exclusions", "comparison_dimensions", "precedence", "residual_fallback_id"],
+      "properties": {
+        "match_conditions": {"type": "array", "minItems": 1, "items": {"type": "string", "minLength": 1}},
+        "exclusions": {"type": "array", "minItems": 1, "items": {"type": "string", "minLength": 1}},
+        "comparison_dimensions": {"type": "array", "minItems": 1, "items": {"type": "string", "minLength": 1}},
+        "precedence": {"type": "string", "minLength": 1},
+        "residual_fallback_id": {"oneOf": [{"$ref": "#/$defs/categoryId"}, {"type": "null"}]}
+      },
+      "additionalProperties": false
+    },
+    "mapping": {
+      "type": "object",
+      "required": ["source", "action", "match_kind", "existing_target_ids", "candidate_category_ids", "residual_fallback_id", "decomposition", "boundary", "targets"],
+      "properties": {
+        "source": {"$ref": "#/$defs/sourceRecord"},
+        "action": {"enum": ["REUSE_EXACT", "ADD_CHILD", "RETAIN_CONTAINER", "SPLIT_TARGETS", "SOURCE_ONLY", "OUT_OF_SCOPE_SERVICE", "MAP_PLATFORM_SERVICE"]},
+        "match_kind": {"enum": ["exact", "broad_fallback", "decomposition", "source_only", "excluded_service", "platform"]},
+        "existing_target_ids": {"type": "array", "items": {"$ref": "#/$defs/categoryId"}, "uniqueItems": true},
+        "candidate_category_ids": {"type": "array", "items": {"$ref": "#/$defs/categoryId"}, "uniqueItems": true},
+        "residual_fallback_id": {"oneOf": [{"$ref": "#/$defs/categoryId"}, {"type": "null"}]},
+        "decomposition": {"oneOf": [{"$ref": "#/$defs/decomposition"}, {"type": "null"}]},
+        "boundary": {"type": "string", "minLength": 1},
+        "targets": {"type": "array", "items": {"$ref": "#/$defs/target"}, "uniqueItems": true}
+      },
+      "additionalProperties": false
+    }
+  }
+}

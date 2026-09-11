@@ -1,0 +1,64 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://agentoffernetwork.org/schema/taxonomy-metadata/v1",
+  "title": "AON Taxonomy v1 Canonical Metadata",
+  "type": "object",
+  "required": ["schema_version", "taxonomy_version", "baseline_digest", "record_count", "metadata_digest", "records"],
+  "properties": {
+    "schema_version": {"const": "aon-taxonomy-metadata-v1"},
+    "taxonomy_version": {"const": "v1"},
+    "baseline_digest": {"$ref": "#/$defs/sha256"},
+    "source_metadata_digest": {"$ref": "#/$defs/sha256"},
+    "record_count": {"type": "integer", "minimum": 515, "maximum": 787},
+    "metadata_digest": {"$ref": "#/$defs/sha256"},
+    "records": {"type": "array", "minItems": 515, "maxItems": 787, "items": {"$ref": "#/$defs/record"}}
+  },
+  "additionalProperties": false,
+  "$defs": {
+    "sha256": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
+    "categoryId": {"type": "string", "pattern": "^[a-z0-9]+(?:_[a-z0-9]+)*(?:\\.[a-z0-9]+(?:_[a-z0-9]+)*)*$"},
+    "nonEmptyStrings": {"type": "array", "minItems": 1, "items": {"type": "string", "minLength": 1}},
+    "record": {
+      "type": "object",
+      "required": ["category_id", "name", "definition", "aliases", "examples", "subject", "boundary", "semantic_role", "lifecycle"],
+      "properties": {
+        "category_id": {"$ref": "#/$defs/categoryId"},
+        "name": {"type": "string", "minLength": 1},
+        "definition": {"type": "string", "minLength": 16},
+        "aliases": {"type": "array", "items": {"type": "string", "minLength": 1}, "uniqueItems": true},
+        "examples": {
+          "type": "object",
+          "required": ["positive", "negative"],
+          "properties": {
+            "positive": {"type": "array", "minItems": 2, "items": {"type": "string", "minLength": 1}},
+            "negative": {"type": "array", "minItems": 2, "items": {"type": "string", "minLength": 1}}
+          },
+          "additionalProperties": false
+        },
+        "subject": {"enum": ["physical", "digital", "platform", "service"]},
+        "boundary": {
+          "type": "object",
+          "required": ["include", "exclude", "primary_rule", "residual_rule"],
+          "properties": {
+            "include": {"$ref": "#/$defs/nonEmptyStrings"},
+            "exclude": {"$ref": "#/$defs/nonEmptyStrings"},
+            "primary_rule": {"type": "string", "minLength": 1},
+            "residual_rule": {"type": "string", "minLength": 1}
+          },
+          "additionalProperties": false
+        },
+        "semantic_role": {"enum": ["exact", "broad_fallback", "container", "split_anchor", "platform"]},
+        "lifecycle": {
+          "type": "object",
+          "required": ["status", "replacement_category_id"],
+          "properties": {
+            "status": {"enum": ["current", "deprecated"]},
+            "replacement_category_id": {"oneOf": [{"$ref": "#/$defs/categoryId"}, {"type": "null"}]}
+          },
+          "additionalProperties": false
+        }
+      },
+      "additionalProperties": false
+    }
+  }
+}

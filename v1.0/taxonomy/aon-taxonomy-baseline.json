@@ -1,0 +1,3614 @@
+{
+  "schema_version": "aon-taxonomy-baseline-v1",
+  "taxonomy_version": "v1",
+  "node_count": 515,
+  "tree_digest": "89962555f76a41af9c2b6d213dd0241c28214d50ec8185af9d2efb0fe28934b2",
+  "baseline_digest": "c780b40af38c942b15f4ffead7106eeceb7704f6011c309725934ecd28d2d7c0",
+  "nodes": [
+    {
+      "category_id": "fashion_apparel",
+      "name": "Apparel",
+      "slug": "fashion_apparel",
+      "parent_id": null,
+      "level": 1
+    },
+    {
+      "category_id": "fashion_apparel.clothing",
+      "name": "Clothing",
+      "slug": "clothing",
+      "parent_id": "fashion_apparel",
+      "level": 2
+    },
+    {
+      "category_id": "fashion_apparel.clothing.children_s_clothing",
+      "name": "Children's Clothing",
+      "slug": "children_s_clothing",
+      "parent_id": "fashion_apparel.clothing",
+      "level": 3
+    },
+    {
+      "category_id": "fashion_apparel.clothing.formal_wear",
+      "name": "Formal Wear",
+      "slug": "formal_wear",
+      "parent_id": "fashion_apparel.clothing",
+      "level": 3
+    },
+    {
+      "category_id": "fashion_apparel.clothing.men_s_clothing",
+      "name": "Men's Clothing",
+      "slug": "men_s_clothing",
+      "parent_id": "fashion_apparel.clothing",
+      "level": 3
+    },
+    {
+      "category_id": "fashion_apparel.clothing.plus_size_clothing",
+      "name": "Plus Size Clothing",
+      "slug": "plus_size_clothing",
+      "parent_id": "fashion_apparel.clothing",
+      "level": 3
+    },
+    {
+      "category_id": "fashion_apparel.clothing.shirts_tops_blouses",
+      "name": "Shirts, Tops & Blouses",
+      "slug": "shirts_tops_blouses",
+      "parent_id": "fashion_apparel.clothing",
+      "level": 3
+    },
+    {
+      "category_id": "fashion_apparel.clothing.shirts_tops_blouses.jerseys_knit_shirts",
+      "name": "Jerseys & Knit Shirts",
+      "slug": "jerseys_knit_shirts",
+      "parent_id": "fashion_apparel.clothing.shirts_tops_blouses",
+      "level": 4
+    },
+    {
+      "category_id": "fashion_apparel.clothing.sleepwear",
+      "name": "Sleepwear",
+      "slug": "sleepwear",
+      "parent_id": "fashion_apparel.clothing",
+      "level": 3
+    },
+    {
+      "category_id": "fashion_apparel.clothing.swimwear",
+      "name": "Swimwear",
+      "slug": "swimwear",
+      "parent_id": "fashion_apparel.clothing",
+      "level": 3
+    },
+    {
+      "category_id": "fashion_apparel.clothing.underwear",
+      "name": "Underwear",
+      "slug": "underwear",
+      "parent_id": "fashion_apparel.clothing",
+      "level": 3
+    },
+    {
+      "category_id": "fashion_apparel.clothing.women_s_clothing",
+      "name": "Women's Clothing",
+      "slug": "women_s_clothing",
+      "parent_id": "fashion_apparel.clothing",
+      "level": 3
+    },
+    {
+      "category_id": "fashion_apparel.footwear",
+      "name": "Footwear",
+      "slug": "footwear",
+      "parent_id": "fashion_apparel",
+      "level": 2
+    },
+    {
+      "category_id": "fashion_apparel.footwear.athletic_shoes",
+      "name": "Athletic Shoes",
+      "slug": "athletic_shoes",
+      "parent_id": "fashion_apparel.footwear",
+      "level": 3
+    },
+    {
+      "category_id": "fashion_apparel.handbags_purses",
+      "name": "Handbags & Purses",
+      "slug": "handbags_purses",
+      "parent_id": "fashion_apparel",
+      "level": 2
+    },
+    {
+      "category_id": "fashion_apparel.jewelry",
+      "name": "Jewelry",
+      "slug": "jewelry",
+      "parent_id": "fashion_apparel",
+      "level": 2
+    },
+    {
+      "category_id": "fashion_apparel.jewelry.watches_watch_accessories",
+      "name": "Watches & Watch Accessories",
+      "slug": "watches_watch_accessories",
+      "parent_id": "fashion_apparel.jewelry",
+      "level": 3
+    },
+    {
+      "category_id": "fashion_apparel.sunglasses",
+      "name": "Sunglasses",
+      "slug": "sunglasses",
+      "parent_id": "fashion_apparel",
+      "level": 2
+    },
+    {
+      "category_id": "arts_entertainment",
+      "name": "Arts & Entertainment",
+      "slug": "arts_entertainment",
+      "parent_id": null,
+      "level": 1
+    },
+    {
+      "category_id": "arts_entertainment.arts_entertainment_awards",
+      "name": "Arts & Entertainment Awards",
+      "slug": "arts_entertainment_awards",
+      "parent_id": "arts_entertainment",
+      "level": 2
+    },
+    {
+      "category_id": "arts_entertainment.entertainment_industry",
+      "name": "Entertainment Industry",
+      "slug": "entertainment_industry",
+      "parent_id": "arts_entertainment",
+      "level": 2
+    },
+    {
+      "category_id": "arts_entertainment.entertainment_industry.film_tv_industry",
+      "name": "Film & TV Industry",
+      "slug": "film_tv_industry",
+      "parent_id": "arts_entertainment.entertainment_industry",
+      "level": 3
+    },
+    {
+      "category_id": "arts_entertainment.events_shows_cultural_attractions",
+      "name": "Events, Shows & Cultural Attractions",
+      "slug": "events_shows_cultural_attractions",
+      "parent_id": "arts_entertainment",
+      "level": 2
+    },
+    {
+      "category_id": "arts_entertainment.events_shows_cultural_attractions.ticket_sales_exchanges",
+      "name": "Ticket Sales & Exchanges",
+      "slug": "ticket_sales_exchanges",
+      "parent_id": "arts_entertainment.events_shows_cultural_attractions",
+      "level": 3
+    },
+    {
+      "category_id": "arts_entertainment.fantasy_sports",
+      "name": "Fantasy Sports",
+      "slug": "fantasy_sports",
+      "parent_id": "arts_entertainment",
+      "level": 2
+    },
+    {
+      "category_id": "arts_entertainment.fun_trivia",
+      "name": "Fun & Trivia",
+      "slug": "fun_trivia",
+      "parent_id": "arts_entertainment",
+      "level": 2
+    },
+    {
+      "category_id": "arts_entertainment.fun_trivia.fun_tests_silly_surveys",
+      "name": "Fun Tests & Silly Surveys",
+      "slug": "fun_tests_silly_surveys",
+      "parent_id": "arts_entertainment.fun_trivia",
+      "level": 3
+    },
+    {
+      "category_id": "arts_entertainment.humor_jokes",
+      "name": "Humor & Jokes",
+      "slug": "humor_jokes",
+      "parent_id": "arts_entertainment",
+      "level": 2
+    },
+    {
+      "category_id": "arts_entertainment.movies_films",
+      "name": "Movies & Films",
+      "slug": "movies_films",
+      "parent_id": "arts_entertainment",
+      "level": 2
+    },
+    {
+      "category_id": "arts_entertainment.movies_films.horror_films",
+      "name": "Horror Films",
+      "slug": "horror_films",
+      "parent_id": "arts_entertainment.movies_films",
+      "level": 3
+    },
+    {
+      "category_id": "arts_entertainment.music_audio",
+      "name": "Music & Audio",
+      "slug": "music_audio",
+      "parent_id": "arts_entertainment",
+      "level": 2
+    },
+    {
+      "category_id": "arts_entertainment.music_audio.music_streams_downloads",
+      "name": "Music Streams & Downloads",
+      "slug": "music_streams_downloads",
+      "parent_id": "arts_entertainment.music_audio",
+      "level": 3
+    },
+    {
+      "category_id": "arts_entertainment.music_audio.radio",
+      "name": "Radio",
+      "slug": "radio",
+      "parent_id": "arts_entertainment.music_audio",
+      "level": 3
+    },
+    {
+      "category_id": "arts_entertainment.offbeat",
+      "name": "Offbeat",
+      "slug": "offbeat",
+      "parent_id": "arts_entertainment",
+      "level": 2
+    },
+    {
+      "category_id": "arts_entertainment.offbeat.edgy_bizarre",
+      "name": "Edgy & Bizarre",
+      "slug": "edgy_bizarre",
+      "parent_id": "arts_entertainment.offbeat",
+      "level": 3
+    },
+    {
+      "category_id": "arts_entertainment.sports_event_tickets_ticketing_services",
+      "name": "Sports Event Tickets & Ticketing Services",
+      "slug": "sports_event_tickets_ticketing_services",
+      "parent_id": "arts_entertainment",
+      "level": 2
+    },
+    {
+      "category_id": "arts_entertainment.tv_video",
+      "name": "TV & Video",
+      "slug": "tv_video",
+      "parent_id": "arts_entertainment",
+      "level": 2
+    },
+    {
+      "category_id": "arts_entertainment.tv_video.tv_broadcasting",
+      "name": "TV Broadcasting",
+      "slug": "tv_broadcasting",
+      "parent_id": "arts_entertainment.tv_video",
+      "level": 3
+    },
+    {
+      "category_id": "arts_entertainment.tv_video.tv_shows_programs",
+      "name": "TV Shows & Programs",
+      "slug": "tv_shows_programs",
+      "parent_id": "arts_entertainment.tv_video",
+      "level": 3
+    },
+    {
+      "category_id": "arts_entertainment.tv_video.tv_shows_programs.tv_cartoons",
+      "name": "TV Cartoons",
+      "slug": "tv_cartoons",
+      "parent_id": "arts_entertainment.tv_video.tv_shows_programs",
+      "level": 4
+    },
+    {
+      "category_id": "arts_entertainment.visual_art_design",
+      "name": "Visual Art & Design",
+      "slug": "visual_art_design",
+      "parent_id": "arts_entertainment",
+      "level": 2
+    },
+    {
+      "category_id": "arts_entertainment.adult_entertainment",
+      "name": "Adult Entertainment",
+      "slug": "adult_entertainment",
+      "parent_id": "arts_entertainment",
+      "level": 2
+    },
+    {
+      "category_id": "arts_entertainment.short_drama",
+      "name": "Short Drama",
+      "slug": "short_drama",
+      "parent_id": "arts_entertainment",
+      "level": 2
+    },
+    {
+      "category_id": "arts_entertainment.igaming",
+      "name": "iGaming",
+      "slug": "igaming",
+      "parent_id": "arts_entertainment",
+      "level": 2
+    },
+    {
+      "category_id": "automotive",
+      "name": "Autos & Vehicles",
+      "slug": "automotive",
+      "parent_id": null,
+      "level": 1
+    },
+    {
+      "category_id": "automotive.boats_watercraft",
+      "name": "Boats & Watercraft",
+      "slug": "boats_watercraft",
+      "parent_id": "automotive",
+      "level": 2
+    },
+    {
+      "category_id": "automotive.driving_instruction_driver_education",
+      "name": "Driving Instruction & Driver Education",
+      "slug": "driving_instruction_driver_education",
+      "parent_id": "automotive",
+      "level": 2
+    },
+    {
+      "category_id": "automotive.motor_vehicles",
+      "name": "Motor Vehicles",
+      "slug": "motor_vehicles",
+      "parent_id": "automotive",
+      "level": 2
+    },
+    {
+      "category_id": "automotive.motor_vehicles.campers_rvs",
+      "name": "Campers & RVs",
+      "slug": "campers_rvs",
+      "parent_id": "automotive.motor_vehicles",
+      "level": 3
+    },
+    {
+      "category_id": "automotive.motor_vehicles.cars_trucks",
+      "name": "Cars & Trucks",
+      "slug": "cars_trucks",
+      "parent_id": "automotive.motor_vehicles",
+      "level": 3
+    },
+    {
+      "category_id": "automotive.motor_vehicles.cars_trucks.hybrid_alternative_vehicles",
+      "name": "Hybrid & Alternative Vehicles",
+      "slug": "hybrid_alternative_vehicles",
+      "parent_id": "automotive.motor_vehicles.cars_trucks",
+      "level": 4
+    },
+    {
+      "category_id": "automotive.motor_vehicles.motorcycles",
+      "name": "Motorcycles",
+      "slug": "motorcycles",
+      "parent_id": "automotive.motor_vehicles",
+      "level": 3
+    },
+    {
+      "category_id": "automotive.motor_vehicles.used_motor_vehicles",
+      "name": "Used Motor Vehicles",
+      "slug": "used_motor_vehicles",
+      "parent_id": "automotive.motor_vehicles",
+      "level": 3
+    },
+    {
+      "category_id": "automotive.vehicle_dealers",
+      "name": "Vehicle Dealers",
+      "slug": "vehicle_dealers",
+      "parent_id": "automotive",
+      "level": 2
+    },
+    {
+      "category_id": "automotive.vehicle_dealers.boat_yacht_sales_brokers",
+      "name": "Boat & Yacht Sales & Brokers",
+      "slug": "boat_yacht_sales_brokers",
+      "parent_id": "automotive.vehicle_dealers",
+      "level": 3
+    },
+    {
+      "category_id": "automotive.vehicle_dealers.car_dealers",
+      "name": "Car Dealers",
+      "slug": "car_dealers",
+      "parent_id": "automotive.vehicle_dealers",
+      "level": 3
+    },
+    {
+      "category_id": "automotive.vehicle_parts_accessories",
+      "name": "Vehicle Parts & Accessories",
+      "slug": "vehicle_parts_accessories",
+      "parent_id": "automotive",
+      "level": 2
+    },
+    {
+      "category_id": "automotive.vehicle_parts_accessories.car_parts_accessories",
+      "name": "Car Parts & Accessories",
+      "slug": "car_parts_accessories",
+      "parent_id": "automotive.vehicle_parts_accessories",
+      "level": 3
+    },
+    {
+      "category_id": "automotive.vehicle_parts_accessories.vehicle_tires_tire_parts",
+      "name": "Vehicle Tires & Tire Parts",
+      "slug": "vehicle_tires_tire_parts",
+      "parent_id": "automotive.vehicle_parts_accessories",
+      "level": 3
+    },
+    {
+      "category_id": "automotive.vehicle_repair_maintenance",
+      "name": "Vehicle Repair & Maintenance",
+      "slug": "vehicle_repair_maintenance",
+      "parent_id": "automotive",
+      "level": 2
+    },
+    {
+      "category_id": "beauty_personal_care",
+      "name": "Beauty & Personal Care",
+      "slug": "beauty_personal_care",
+      "parent_id": null,
+      "level": 1
+    },
+    {
+      "category_id": "beauty_personal_care.anti_aging",
+      "name": "Anti-Aging",
+      "slug": "anti_aging",
+      "parent_id": "beauty_personal_care",
+      "level": 2
+    },
+    {
+      "category_id": "beauty_personal_care.body_art",
+      "name": "Body Art",
+      "slug": "body_art",
+      "parent_id": "beauty_personal_care",
+      "level": 2
+    },
+    {
+      "category_id": "beauty_personal_care.hair_care",
+      "name": "Hair Care",
+      "slug": "hair_care",
+      "parent_id": "beauty_personal_care",
+      "level": 2
+    },
+    {
+      "category_id": "beauty_personal_care.hair_care.shampoos_conditioners",
+      "name": "Shampoos & Conditioners",
+      "slug": "shampoos_conditioners",
+      "parent_id": "beauty_personal_care.hair_care",
+      "level": 3
+    },
+    {
+      "category_id": "beauty_personal_care.hygiene_toiletries",
+      "name": "Hygiene & Toiletries",
+      "slug": "hygiene_toiletries",
+      "parent_id": "beauty_personal_care",
+      "level": 2
+    },
+    {
+      "category_id": "beauty_personal_care.hygiene_toiletries.antiperspirants_deodorants_body_spray",
+      "name": "Antiperspirants, Deodorants & Body Spray",
+      "slug": "antiperspirants_deodorants_body_spray",
+      "parent_id": "beauty_personal_care.hygiene_toiletries",
+      "level": 3
+    },
+    {
+      "category_id": "beauty_personal_care.hygiene_toiletries.feminine_hygiene_products",
+      "name": "Feminine Hygiene Products",
+      "slug": "feminine_hygiene_products",
+      "parent_id": "beauty_personal_care.hygiene_toiletries",
+      "level": 3
+    },
+    {
+      "category_id": "beauty_personal_care.make_up_cosmetics",
+      "name": "Make-Up & Cosmetics",
+      "slug": "make_up_cosmetics",
+      "parent_id": "beauty_personal_care",
+      "level": 2
+    },
+    {
+      "category_id": "beauty_personal_care.oral_care",
+      "name": "Oral Care",
+      "slug": "oral_care",
+      "parent_id": "beauty_personal_care",
+      "level": 2
+    },
+    {
+      "category_id": "beauty_personal_care.perfumes_fragrances",
+      "name": "Perfumes & Fragrances",
+      "slug": "perfumes_fragrances",
+      "parent_id": "beauty_personal_care",
+      "level": 2
+    },
+    {
+      "category_id": "beauty_personal_care.shaving_grooming",
+      "name": "Shaving & Grooming",
+      "slug": "shaving_grooming",
+      "parent_id": "beauty_personal_care",
+      "level": 2
+    },
+    {
+      "category_id": "beauty_personal_care.skin_care",
+      "name": "Skin Care",
+      "slug": "skin_care",
+      "parent_id": "beauty_personal_care",
+      "level": 2
+    },
+    {
+      "category_id": "beauty_personal_care.skin_care.face_care",
+      "name": "Face Care",
+      "slug": "face_care",
+      "parent_id": "beauty_personal_care.skin_care",
+      "level": 3
+    },
+    {
+      "category_id": "beauty_personal_care.skin_care.hand_body_soaps_cleansers",
+      "name": "Hand & Body Soaps & Cleansers",
+      "slug": "hand_body_soaps_cleansers",
+      "parent_id": "beauty_personal_care.skin_care",
+      "level": 3
+    },
+    {
+      "category_id": "beauty_personal_care.spa_medical_spa",
+      "name": "Spa & Medical Spa",
+      "slug": "spa_medical_spa",
+      "parent_id": "beauty_personal_care",
+      "level": 2
+    },
+    {
+      "category_id": "beauty_personal_care.tanning_sun_care",
+      "name": "Tanning & Sun Care",
+      "slug": "tanning_sun_care",
+      "parent_id": "beauty_personal_care",
+      "level": 2
+    },
+    {
+      "category_id": "business_industrial",
+      "name": "Business & Industrial",
+      "slug": "business_industrial",
+      "parent_id": null,
+      "level": 1
+    },
+    {
+      "category_id": "business_industrial.building_construction_maintenance",
+      "name": "Building Construction & Maintenance",
+      "slug": "building_construction_maintenance",
+      "parent_id": "business_industrial",
+      "level": 2
+    },
+    {
+      "category_id": "business_industrial.building_construction_maintenance.building_materials_supplies",
+      "name": "Building Materials & Supplies",
+      "slug": "building_materials_supplies",
+      "parent_id": "business_industrial.building_construction_maintenance",
+      "level": 3
+    },
+    {
+      "category_id": "business_industrial.building_construction_maintenance.commercial_general_contracting",
+      "name": "Commercial & General Contracting",
+      "slug": "commercial_general_contracting",
+      "parent_id": "business_industrial.building_construction_maintenance",
+      "level": 3
+    },
+    {
+      "category_id": "business_industrial.building_construction_maintenance.hardware_tools_accessories",
+      "name": "Hardware Tools & Accessories",
+      "slug": "hardware_tools_accessories",
+      "parent_id": "business_industrial.building_construction_maintenance",
+      "level": 3
+    },
+    {
+      "category_id": "business_industrial.building_construction_maintenance.hardware_tools_accessories.power_tools",
+      "name": "Power Tools",
+      "slug": "power_tools",
+      "parent_id": "business_industrial.building_construction_maintenance.hardware_tools_accessories",
+      "level": 4
+    },
+    {
+      "category_id": "business_industrial.building_construction_maintenance.hvac_climate_control",
+      "name": "HVAC & Climate Control",
+      "slug": "hvac_climate_control",
+      "parent_id": "business_industrial.building_construction_maintenance",
+      "level": 3
+    },
+    {
+      "category_id": "business_industrial.chemical_industry",
+      "name": "Chemical Industry",
+      "slug": "chemical_industry",
+      "parent_id": "business_industrial",
+      "level": 2
+    },
+    {
+      "category_id": "business_industrial.commercial_industrial_printing",
+      "name": "Commercial & Industrial Printing",
+      "slug": "commercial_industrial_printing",
+      "parent_id": "business_industrial",
+      "level": 2
+    },
+    {
+      "category_id": "business_industrial.design_engineering",
+      "name": "Design & Engineering",
+      "slug": "design_engineering",
+      "parent_id": "business_industrial",
+      "level": 2
+    },
+    {
+      "category_id": "business_industrial.energy_industry",
+      "name": "Energy Industry",
+      "slug": "energy_industry",
+      "parent_id": "business_industrial",
+      "level": 2
+    },
+    {
+      "category_id": "business_industrial.energy_industry.oil_gas",
+      "name": "Oil & Gas",
+      "slug": "oil_gas",
+      "parent_id": "business_industrial.energy_industry",
+      "level": 3
+    },
+    {
+      "category_id": "business_industrial.energy_industry.renewable_alternative_energy",
+      "name": "Renewable & Alternative Energy",
+      "slug": "renewable_alternative_energy",
+      "parent_id": "business_industrial.energy_industry",
+      "level": 3
+    },
+    {
+      "category_id": "business_industrial.food_service_industry",
+      "name": "Food Service Industry",
+      "slug": "food_service_industry",
+      "parent_id": "business_industrial",
+      "level": 2
+    },
+    {
+      "category_id": "business_industrial.industrial_goods_manufacturing",
+      "name": "Industrial Goods & Manufacturing",
+      "slug": "industrial_goods_manufacturing",
+      "parent_id": "business_industrial",
+      "level": 2
+    },
+    {
+      "category_id": "business_industrial.industrial_goods_manufacturing.industrial_electronics",
+      "name": "Industrial Electronics",
+      "slug": "industrial_electronics",
+      "parent_id": "business_industrial.industrial_goods_manufacturing",
+      "level": 3
+    },
+    {
+      "category_id": "business_industrial.industrial_goods_manufacturing.plant_facility",
+      "name": "Plant & Facility",
+      "slug": "plant_facility",
+      "parent_id": "business_industrial.industrial_goods_manufacturing",
+      "level": 3
+    },
+    {
+      "category_id": "business_industrial.office",
+      "name": "Office",
+      "slug": "office",
+      "parent_id": "business_industrial",
+      "level": 2
+    },
+    {
+      "category_id": "business_industrial.office.office_appliances",
+      "name": "Office Appliances",
+      "slug": "office_appliances",
+      "parent_id": "business_industrial.office",
+      "level": 3
+    },
+    {
+      "category_id": "business_industrial.office_facilities_management",
+      "name": "Office & Facilities Management",
+      "slug": "office_facilities_management",
+      "parent_id": "business_industrial",
+      "level": 2
+    },
+    {
+      "category_id": "business_industrial.scientific_equipment_services",
+      "name": "Scientific Equipment & Services",
+      "slug": "scientific_equipment_services",
+      "parent_id": "business_industrial",
+      "level": 2
+    },
+    {
+      "category_id": "business_industrial.security_equipment_services",
+      "name": "Security Equipment & Services",
+      "slug": "security_equipment_services",
+      "parent_id": "business_industrial",
+      "level": 2
+    },
+    {
+      "category_id": "business_industrial.security_equipment_services.guns_firearms",
+      "name": "Guns & Firearms",
+      "slug": "guns_firearms",
+      "parent_id": "business_industrial.security_equipment_services",
+      "level": 3
+    },
+    {
+      "category_id": "business_industrial.security_equipment_services.security_weapons",
+      "name": "Security Weapons",
+      "slug": "security_weapons",
+      "parent_id": "business_industrial.security_equipment_services",
+      "level": 3
+    },
+    {
+      "category_id": "computers_electronics",
+      "name": "Computers & Consumer Electronics",
+      "slug": "computers_electronics",
+      "parent_id": null,
+      "level": 1
+    },
+    {
+      "category_id": "computers_electronics.computers",
+      "name": "Computers",
+      "slug": "computers",
+      "parent_id": "computers_electronics",
+      "level": 2
+    },
+    {
+      "category_id": "computers_electronics.computers.computer_accessories",
+      "name": "Computer Accessories",
+      "slug": "computer_accessories",
+      "parent_id": "computers_electronics.computers",
+      "level": 3
+    },
+    {
+      "category_id": "computers_electronics.computers.computer_systems_hardware",
+      "name": "Computer Systems & Hardware",
+      "slug": "computer_systems_hardware",
+      "parent_id": "computers_electronics.computers",
+      "level": 3
+    },
+    {
+      "category_id": "computers_electronics.computers.computer_systems_hardware.computer_networking_devices",
+      "name": "Computer Networking Devices",
+      "slug": "computer_networking_devices",
+      "parent_id": "computers_electronics.computers.computer_systems_hardware",
+      "level": 4
+    },
+    {
+      "category_id": "computers_electronics.computers.computer_systems_hardware.laptop_computers",
+      "name": "Laptop Computers",
+      "slug": "laptop_computers",
+      "parent_id": "computers_electronics.computers.computer_systems_hardware",
+      "level": 4
+    },
+    {
+      "category_id": "computers_electronics.computers.software",
+      "name": "Software",
+      "slug": "software",
+      "parent_id": "computers_electronics.computers",
+      "level": 3
+    },
+    {
+      "category_id": "computers_electronics.computers.software.business_productivity_software",
+      "name": "Business & Productivity Software",
+      "slug": "business_productivity_software",
+      "parent_id": "computers_electronics.computers.software",
+      "level": 4
+    },
+    {
+      "category_id": "computers_electronics.computers.software.business_productivity_software.business_management_software",
+      "name": "Business Management Software",
+      "slug": "business_management_software",
+      "parent_id": "computers_electronics.computers.software.business_productivity_software",
+      "level": 5
+    },
+    {
+      "category_id": "computers_electronics.computers.software.business_productivity_software.business_management_software.project_management_software",
+      "name": "Project Management Software",
+      "slug": "project_management_software",
+      "parent_id": "computers_electronics.computers.software.business_productivity_software.business_management_software",
+      "level": 6
+    },
+    {
+      "category_id": "computers_electronics.computers.software.educational_software",
+      "name": "Educational Software",
+      "slug": "educational_software",
+      "parent_id": "computers_electronics.computers.software",
+      "level": 4
+    },
+    {
+      "category_id": "computers_electronics.computers.software.graphics_multimedia_software",
+      "name": "Graphics & Multimedia Software",
+      "slug": "graphics_multimedia_software",
+      "parent_id": "computers_electronics.computers.software",
+      "level": 4
+    },
+    {
+      "category_id": "computers_electronics.computers.software.graphics_multimedia_software.photo_software",
+      "name": "Photo Software",
+      "slug": "photo_software",
+      "parent_id": "computers_electronics.computers.software.graphics_multimedia_software",
+      "level": 5
+    },
+    {
+      "category_id": "computers_electronics.computers.software.internet_software_web_apps",
+      "name": "Internet Software & Web Apps",
+      "slug": "internet_software_web_apps",
+      "parent_id": "computers_electronics.computers.software",
+      "level": 4
+    },
+    {
+      "category_id": "computers_electronics.computers.software.internet_software_web_apps.network_security_software",
+      "name": "Network Security Software",
+      "slug": "network_security_software",
+      "parent_id": "computers_electronics.computers.software.internet_software_web_apps",
+      "level": 5
+    },
+    {
+      "category_id": "computers_electronics.computers.software.internet_software_web_apps.network_security_software.anti_virus_software",
+      "name": "Anti-Virus Software",
+      "slug": "anti_virus_software",
+      "parent_id": "computers_electronics.computers.software.internet_software_web_apps.network_security_software",
+      "level": 6
+    },
+    {
+      "category_id": "computers_electronics.computers.software.internet_software_web_apps.screensavers_digital_wallpaper",
+      "name": "Screensavers & Digital Wallpaper",
+      "slug": "screensavers_digital_wallpaper",
+      "parent_id": "computers_electronics.computers.software.internet_software_web_apps",
+      "level": 5
+    },
+    {
+      "category_id": "computers_electronics.computers.software.internet_software_web_apps.web_browsers",
+      "name": "Web Browsers",
+      "slug": "web_browsers",
+      "parent_id": "computers_electronics.computers.software.internet_software_web_apps",
+      "level": 5
+    },
+    {
+      "category_id": "computers_electronics.consumer_electronics",
+      "name": "Consumer Electronics",
+      "slug": "consumer_electronics",
+      "parent_id": "computers_electronics",
+      "level": 2
+    },
+    {
+      "category_id": "computers_electronics.consumer_electronics.car_audio_video",
+      "name": "Car Audio & Video",
+      "slug": "car_audio_video",
+      "parent_id": "computers_electronics.consumer_electronics",
+      "level": 3
+    },
+    {
+      "category_id": "computers_electronics.consumer_electronics.consumer_electronic_accessories",
+      "name": "Consumer Electronic Accessories",
+      "slug": "consumer_electronic_accessories",
+      "parent_id": "computers_electronics.consumer_electronics",
+      "level": 3
+    },
+    {
+      "category_id": "computers_electronics.consumer_electronics.gps_navigation",
+      "name": "GPS & Navigation",
+      "slug": "gps_navigation",
+      "parent_id": "computers_electronics.consumer_electronics",
+      "level": 3
+    },
+    {
+      "category_id": "computers_electronics.consumer_electronics.home_audio_video",
+      "name": "Home Audio & Video",
+      "slug": "home_audio_video",
+      "parent_id": "computers_electronics.consumer_electronics",
+      "level": 3
+    },
+    {
+      "category_id": "computers_electronics.consumer_electronics.home_audio_video.speakers",
+      "name": "Speakers",
+      "slug": "speakers",
+      "parent_id": "computers_electronics.consumer_electronics.home_audio_video",
+      "level": 4
+    },
+    {
+      "category_id": "computers_electronics.consumer_electronics.home_audio_video.televisions",
+      "name": "Televisions",
+      "slug": "televisions",
+      "parent_id": "computers_electronics.consumer_electronics.home_audio_video",
+      "level": 4
+    },
+    {
+      "category_id": "computers_electronics.consumer_electronics.portable_media_devices",
+      "name": "Portable Media Devices",
+      "slug": "portable_media_devices",
+      "parent_id": "computers_electronics.consumer_electronics",
+      "level": 3
+    },
+    {
+      "category_id": "computers_electronics.consumer_electronics.wireless_devices",
+      "name": "Wireless Devices",
+      "slug": "wireless_devices",
+      "parent_id": "computers_electronics.consumer_electronics",
+      "level": 3
+    },
+    {
+      "category_id": "dining_nightlife",
+      "name": "Dining & Nightlife",
+      "slug": "dining_nightlife",
+      "parent_id": null,
+      "level": 1
+    },
+    {
+      "category_id": "dining_nightlife.dining_nightlife_reviews_guides_listings",
+      "name": "Dining & Nightlife Reviews, Guides & Listings",
+      "slug": "dining_nightlife_reviews_guides_listings",
+      "parent_id": "dining_nightlife",
+      "level": 2
+    },
+    {
+      "category_id": "dining_nightlife.nightclubs_bars_music_clubs",
+      "name": "Nightclubs, Bars & Music Clubs",
+      "slug": "nightclubs_bars_music_clubs",
+      "parent_id": "dining_nightlife",
+      "level": 2
+    },
+    {
+      "category_id": "dining_nightlife.restaurants",
+      "name": "Restaurants",
+      "slug": "restaurants",
+      "parent_id": "dining_nightlife",
+      "level": 2
+    },
+    {
+      "category_id": "dining_nightlife.restaurants.dine_in_restaurants",
+      "name": "Dine-In Restaurants",
+      "slug": "dine_in_restaurants",
+      "parent_id": "dining_nightlife.restaurants",
+      "level": 3
+    },
+    {
+      "category_id": "dining_nightlife.restaurants.fast_food_restaurants",
+      "name": "Fast Food Restaurants",
+      "slug": "fast_food_restaurants",
+      "parent_id": "dining_nightlife.restaurants",
+      "level": 3
+    },
+    {
+      "category_id": "dining_nightlife.restaurants.pizzerias_pizza_delivery",
+      "name": "Pizzerias & Pizza Delivery",
+      "slug": "pizzerias_pizza_delivery",
+      "parent_id": "dining_nightlife.restaurants",
+      "level": 3
+    },
+    {
+      "category_id": "e_commerce_marketplace",
+      "name": "E-commerce & Marketplace",
+      "slug": "e_commerce_marketplace",
+      "parent_id": null,
+      "level": 1
+    },
+    {
+      "category_id": "e_commerce_marketplace.comprehensive_e_commerce_platform",
+      "name": "Comprehensive E-commerce Platform",
+      "slug": "comprehensive_e_commerce_platform",
+      "parent_id": "e_commerce_marketplace",
+      "level": 2
+    },
+    {
+      "category_id": "e_commerce_marketplace.comprehensive_e_commerce_platform.b2c_marketplace",
+      "name": "B2C Marketplace",
+      "slug": "b2c_marketplace",
+      "parent_id": "e_commerce_marketplace.comprehensive_e_commerce_platform",
+      "level": 3
+    },
+    {
+      "category_id": "family_community",
+      "name": "Family & Community",
+      "slug": "family_community",
+      "parent_id": null,
+      "level": 1
+    },
+    {
+      "category_id": "family_community.alcohol_substance_abuse",
+      "name": "Alcohol & Substance Abuse",
+      "slug": "alcohol_substance_abuse",
+      "parent_id": "family_community",
+      "level": 2
+    },
+    {
+      "category_id": "family_community.baby_parenting_family",
+      "name": "Baby, Parenting & Family",
+      "slug": "baby_parenting_family",
+      "parent_id": "family_community",
+      "level": 2
+    },
+    {
+      "category_id": "family_community.baby_parenting_family.baby",
+      "name": "Baby",
+      "slug": "baby",
+      "parent_id": "family_community.baby_parenting_family",
+      "level": 3
+    },
+    {
+      "category_id": "family_community.baby_parenting_family.baby.baby_care_hygiene",
+      "name": "Baby Care & Hygiene",
+      "slug": "baby_care_hygiene",
+      "parent_id": "family_community.baby_parenting_family.baby",
+      "level": 4
+    },
+    {
+      "category_id": "family_community.baby_parenting_family.baby.baby_care_hygiene.baby_diapering_toilet_training",
+      "name": "Baby Diapering & Toilet Training",
+      "slug": "baby_diapering_toilet_training",
+      "parent_id": "family_community.baby_parenting_family.baby.baby_care_hygiene",
+      "level": 5
+    },
+    {
+      "category_id": "family_community.baby_parenting_family.baby.baby_feeding",
+      "name": "Baby Feeding",
+      "slug": "baby_feeding",
+      "parent_id": "family_community.baby_parenting_family.baby",
+      "level": 4
+    },
+    {
+      "category_id": "family_community.baby_parenting_family.parenting_family",
+      "name": "Parenting & Family",
+      "slug": "parenting_family",
+      "parent_id": "family_community.baby_parenting_family",
+      "level": 3
+    },
+    {
+      "category_id": "family_community.baby_parenting_family.parenting_family.maternity_new_parent",
+      "name": "Maternity & New Parent",
+      "slug": "maternity_new_parent",
+      "parent_id": "family_community.baby_parenting_family.parenting_family",
+      "level": 4
+    },
+    {
+      "category_id": "family_community.faith_belief",
+      "name": "Faith & Belief",
+      "slug": "faith_belief",
+      "parent_id": "family_community",
+      "level": 2
+    },
+    {
+      "category_id": "family_community.faith_belief.astrology_horoscopes",
+      "name": "Astrology & Horoscopes",
+      "slug": "astrology_horoscopes",
+      "parent_id": "family_community.faith_belief",
+      "level": 3
+    },
+    {
+      "category_id": "family_community.faith_belief.buddhism",
+      "name": "Buddhism",
+      "slug": "buddhism",
+      "parent_id": "family_community.faith_belief",
+      "level": 3
+    },
+    {
+      "category_id": "family_community.faith_belief.christianity",
+      "name": "Christianity",
+      "slug": "christianity",
+      "parent_id": "family_community.faith_belief",
+      "level": 3
+    },
+    {
+      "category_id": "family_community.faith_belief.hinduism",
+      "name": "Hinduism",
+      "slug": "hinduism",
+      "parent_id": "family_community.faith_belief",
+      "level": 3
+    },
+    {
+      "category_id": "family_community.faith_belief.islam",
+      "name": "Islam",
+      "slug": "islam",
+      "parent_id": "family_community.faith_belief",
+      "level": 3
+    },
+    {
+      "category_id": "family_community.faith_belief.judaism",
+      "name": "Judaism",
+      "slug": "judaism",
+      "parent_id": "family_community.faith_belief",
+      "level": 3
+    },
+    {
+      "category_id": "family_community.faith_belief.occult_paranormal",
+      "name": "Occult & Paranormal",
+      "slug": "occult_paranormal",
+      "parent_id": "family_community.faith_belief",
+      "level": 3
+    },
+    {
+      "category_id": "family_community.faith_belief.occult_paranormal.psychics_fortune_telling",
+      "name": "Psychics & Fortune Telling",
+      "slug": "psychics_fortune_telling",
+      "parent_id": "family_community.faith_belief.occult_paranormal",
+      "level": 4
+    },
+    {
+      "category_id": "family_community.faith_belief.scientology",
+      "name": "Scientology",
+      "slug": "scientology",
+      "parent_id": "family_community.faith_belief",
+      "level": 3
+    },
+    {
+      "category_id": "family_community.romance_relationships",
+      "name": "Romance & Relationships",
+      "slug": "romance_relationships",
+      "parent_id": "family_community",
+      "level": 2
+    },
+    {
+      "category_id": "family_community.romance_relationships.divorce_separation",
+      "name": "Divorce & Separation",
+      "slug": "divorce_separation",
+      "parent_id": "family_community.romance_relationships",
+      "level": 3
+    },
+    {
+      "category_id": "family_community.social_issues_advocacy",
+      "name": "Social Issues & Advocacy",
+      "slug": "social_issues_advocacy",
+      "parent_id": "family_community",
+      "level": 2
+    },
+    {
+      "category_id": "family_community.social_issues_advocacy.animal_rights_activism",
+      "name": "Animal Rights Activism",
+      "slug": "animal_rights_activism",
+      "parent_id": "family_community.social_issues_advocacy",
+      "level": 3
+    },
+    {
+      "category_id": "family_community.social_issues_advocacy.environmental_activism",
+      "name": "Environmental Activism",
+      "slug": "environmental_activism",
+      "parent_id": "family_community.social_issues_advocacy",
+      "level": 3
+    },
+    {
+      "category_id": "family_community.social_issues_advocacy.reproductive_rights",
+      "name": "Reproductive Rights",
+      "slug": "reproductive_rights",
+      "parent_id": "family_community.social_issues_advocacy",
+      "level": 3
+    },
+    {
+      "category_id": "family_community.social_issues_advocacy.work_labor_issues",
+      "name": "Work & Labor Issues",
+      "slug": "work_labor_issues",
+      "parent_id": "family_community.social_issues_advocacy",
+      "level": 3
+    },
+    {
+      "category_id": "finance",
+      "name": "Finance",
+      "slug": "finance",
+      "parent_id": null,
+      "level": 1
+    },
+    {
+      "category_id": "finance.accounting_auditing",
+      "name": "Accounting & Auditing",
+      "slug": "accounting_auditing",
+      "parent_id": "finance",
+      "level": 2
+    },
+    {
+      "category_id": "finance.accounting_auditing.tax_preparation_planning",
+      "name": "Tax Preparation & Planning",
+      "slug": "tax_preparation_planning",
+      "parent_id": "finance.accounting_auditing",
+      "level": 3
+    },
+    {
+      "category_id": "finance.banking",
+      "name": "Banking",
+      "slug": "banking",
+      "parent_id": "finance",
+      "level": 2
+    },
+    {
+      "category_id": "finance.banking.debit_check_cards",
+      "name": "Debit & Check Cards",
+      "slug": "debit_check_cards",
+      "parent_id": "finance.banking",
+      "level": 3
+    },
+    {
+      "category_id": "finance.banking.fixed_deposit_accounts_certificates",
+      "name": "Fixed Deposit Accounts & Certificates",
+      "slug": "fixed_deposit_accounts_certificates",
+      "parent_id": "finance.banking",
+      "level": 3
+    },
+    {
+      "category_id": "finance.banking.online_banking",
+      "name": "Online Banking",
+      "slug": "online_banking",
+      "parent_id": "finance.banking",
+      "level": 3
+    },
+    {
+      "category_id": "finance.banking.private_banking",
+      "name": "Private Banking",
+      "slug": "private_banking",
+      "parent_id": "finance.banking",
+      "level": 3
+    },
+    {
+      "category_id": "finance.business_finance",
+      "name": "Business Finance",
+      "slug": "business_finance",
+      "parent_id": "finance",
+      "level": 2
+    },
+    {
+      "category_id": "finance.business_news_media",
+      "name": "Business News & Media",
+      "slug": "business_news_media",
+      "parent_id": "finance",
+      "level": 2
+    },
+    {
+      "category_id": "finance.credit_lending",
+      "name": "Credit & Lending",
+      "slug": "credit_lending",
+      "parent_id": "finance",
+      "level": 2
+    },
+    {
+      "category_id": "finance.credit_lending.credit_cards",
+      "name": "Credit Cards",
+      "slug": "credit_cards",
+      "parent_id": "finance.credit_lending",
+      "level": 3
+    },
+    {
+      "category_id": "finance.credit_lending.credit_reports_reporting_services",
+      "name": "Credit Reports & Reporting Services",
+      "slug": "credit_reports_reporting_services",
+      "parent_id": "finance.credit_lending",
+      "level": 3
+    },
+    {
+      "category_id": "finance.credit_lending.debt_management_consolidation",
+      "name": "Debt Management & Consolidation",
+      "slug": "debt_management_consolidation",
+      "parent_id": "finance.credit_lending",
+      "level": 3
+    },
+    {
+      "category_id": "finance.credit_lending.loans",
+      "name": "Loans",
+      "slug": "loans",
+      "parent_id": "finance.credit_lending",
+      "level": 3
+    },
+    {
+      "category_id": "finance.credit_lending.loans.auto_financing",
+      "name": "Auto Financing",
+      "slug": "auto_financing",
+      "parent_id": "finance.credit_lending.loans",
+      "level": 4
+    },
+    {
+      "category_id": "finance.credit_lending.loans.commercial_lending",
+      "name": "Commercial Lending",
+      "slug": "commercial_lending",
+      "parent_id": "finance.credit_lending.loans",
+      "level": 4
+    },
+    {
+      "category_id": "finance.credit_lending.loans.home_loans_mortgages",
+      "name": "Home Loans & Mortgages",
+      "slug": "home_loans_mortgages",
+      "parent_id": "finance.credit_lending.loans",
+      "level": 4
+    },
+    {
+      "category_id": "finance.credit_lending.loans.home_loans_mortgages.buy_to_let_mortgages",
+      "name": "Buy-To-Let Mortgages",
+      "slug": "buy_to_let_mortgages",
+      "parent_id": "finance.credit_lending.loans.home_loans_mortgages",
+      "level": 5
+    },
+    {
+      "category_id": "finance.credit_lending.loans.home_loans_mortgages.fixed_rate_mortgages",
+      "name": "Fixed Rate Mortgages",
+      "slug": "fixed_rate_mortgages",
+      "parent_id": "finance.credit_lending.loans.home_loans_mortgages",
+      "level": 5
+    },
+    {
+      "category_id": "finance.credit_lending.loans.home_loans_mortgages.government_mortgages",
+      "name": "Government Mortgages",
+      "slug": "government_mortgages",
+      "parent_id": "finance.credit_lending.loans.home_loans_mortgages",
+      "level": 5
+    },
+    {
+      "category_id": "finance.credit_lending.loans.home_loans_mortgages.home_equity_loans_lines_of_credit",
+      "name": "Home Equity Loans & Lines of Credit",
+      "slug": "home_equity_loans_lines_of_credit",
+      "parent_id": "finance.credit_lending.loans.home_loans_mortgages",
+      "level": 5
+    },
+    {
+      "category_id": "finance.credit_lending.loans.home_loans_mortgages.home_refinancing_loans",
+      "name": "Home Refinancing Loans",
+      "slug": "home_refinancing_loans",
+      "parent_id": "finance.credit_lending.loans.home_loans_mortgages",
+      "level": 5
+    },
+    {
+      "category_id": "finance.credit_lending.loans.home_loans_mortgages.interest_only_mortgages",
+      "name": "Interest Only Mortgages",
+      "slug": "interest_only_mortgages",
+      "parent_id": "finance.credit_lending.loans.home_loans_mortgages",
+      "level": 5
+    },
+    {
+      "category_id": "finance.credit_lending.loans.personal_lending_borrowing",
+      "name": "Personal Lending & Borrowing",
+      "slug": "personal_lending_borrowing",
+      "parent_id": "finance.credit_lending.loans",
+      "level": 4
+    },
+    {
+      "category_id": "finance.credit_lending.loans.personal_lending_borrowing.payday_emergency_loans",
+      "name": "Payday & Emergency Loans",
+      "slug": "payday_emergency_loans",
+      "parent_id": "finance.credit_lending.loans.personal_lending_borrowing",
+      "level": 5
+    },
+    {
+      "category_id": "finance.credit_lending.loans.personal_lending_borrowing.personal_loans_lines_of_credit",
+      "name": "Personal Loans & Lines of Credit",
+      "slug": "personal_loans_lines_of_credit",
+      "parent_id": "finance.credit_lending.loans.personal_lending_borrowing",
+      "level": 5
+    },
+    {
+      "category_id": "finance.credit_lending.loans.personal_lending_borrowing.title_loans",
+      "name": "Title Loans",
+      "slug": "title_loans",
+      "parent_id": "finance.credit_lending.loans.personal_lending_borrowing",
+      "level": 5
+    },
+    {
+      "category_id": "finance.credit_lending.loans.unsecured_credit_lending",
+      "name": "Unsecured Credit & Lending",
+      "slug": "unsecured_credit_lending",
+      "parent_id": "finance.credit_lending.loans",
+      "level": 4
+    },
+    {
+      "category_id": "finance.financial_planning_management",
+      "name": "Financial Planning & Management",
+      "slug": "financial_planning_management",
+      "parent_id": "finance",
+      "level": 2
+    },
+    {
+      "category_id": "finance.grants_scholarships_financial_aid",
+      "name": "Grants, Scholarships & Financial Aid",
+      "slug": "grants_scholarships_financial_aid",
+      "parent_id": "finance",
+      "level": 2
+    },
+    {
+      "category_id": "finance.grants_scholarships_financial_aid.student_loans",
+      "name": "Student Loans",
+      "slug": "student_loans",
+      "parent_id": "finance.grants_scholarships_financial_aid",
+      "level": 3
+    },
+    {
+      "category_id": "finance.insurance",
+      "name": "Insurance",
+      "slug": "insurance",
+      "parent_id": "finance",
+      "level": 2
+    },
+    {
+      "category_id": "finance.insurance.health_insurance",
+      "name": "Health Insurance",
+      "slug": "health_insurance",
+      "parent_id": "finance.insurance",
+      "level": 3
+    },
+    {
+      "category_id": "finance.insurance.life_insurance",
+      "name": "Life Insurance",
+      "slug": "life_insurance",
+      "parent_id": "finance.insurance",
+      "level": 3
+    },
+    {
+      "category_id": "finance.insurance.property_insurance",
+      "name": "Property Insurance",
+      "slug": "property_insurance",
+      "parent_id": "finance.insurance",
+      "level": 3
+    },
+    {
+      "category_id": "finance.insurance.vehicle_insurance",
+      "name": "Vehicle Insurance",
+      "slug": "vehicle_insurance",
+      "parent_id": "finance.insurance",
+      "level": 3
+    },
+    {
+      "category_id": "finance.investing",
+      "name": "Investing",
+      "slug": "investing",
+      "parent_id": "finance",
+      "level": 2
+    },
+    {
+      "category_id": "finance.investing.brokerages_day_trading",
+      "name": "Brokerages & Day Trading",
+      "slug": "brokerages_day_trading",
+      "parent_id": "finance.investing",
+      "level": 3
+    },
+    {
+      "category_id": "finance.investing.currencies_foreign_exchange",
+      "name": "Currencies & Foreign Exchange",
+      "slug": "currencies_foreign_exchange",
+      "parent_id": "finance.investing",
+      "level": 3
+    },
+    {
+      "category_id": "finance.investing.crypto_and_digital_assets",
+      "name": "Crypto & Digital Assets",
+      "slug": "crypto_and_digital_assets",
+      "parent_id": "finance.investing",
+      "level": 3
+    },
+    {
+      "category_id": "finance.investing.investor_relations_venture_capital",
+      "name": "Investor Relations & Venture Capital",
+      "slug": "investor_relations_venture_capital",
+      "parent_id": "finance.investing",
+      "level": 3
+    },
+    {
+      "category_id": "finance.investing.mutual_funds",
+      "name": "Mutual Funds",
+      "slug": "mutual_funds",
+      "parent_id": "finance.investing",
+      "level": 3
+    },
+    {
+      "category_id": "finance.investing.real_estate_investments",
+      "name": "Real Estate Investments",
+      "slug": "real_estate_investments",
+      "parent_id": "finance.investing",
+      "level": 3
+    },
+    {
+      "category_id": "finance.investing.retirement_investments",
+      "name": "Retirement Investments",
+      "slug": "retirement_investments",
+      "parent_id": "finance.investing",
+      "level": 3
+    },
+    {
+      "category_id": "finance.investing.retirement_investments.401_k_s",
+      "name": "401(K)s",
+      "slug": "401_k_s",
+      "parent_id": "finance.investing.retirement_investments",
+      "level": 4
+    },
+    {
+      "category_id": "finance.investing.retirement_investments.iras",
+      "name": "IRAs",
+      "slug": "iras",
+      "parent_id": "finance.investing.retirement_investments",
+      "level": 4
+    },
+    {
+      "category_id": "finance.investing.securities",
+      "name": "Securities",
+      "slug": "securities",
+      "parent_id": "finance.investing",
+      "level": 3
+    },
+    {
+      "category_id": "finance.investing.securities.stocks",
+      "name": "Stocks",
+      "slug": "stocks",
+      "parent_id": "finance.investing.securities",
+      "level": 4
+    },
+    {
+      "category_id": "finance.investing.spread_betting",
+      "name": "Spread Betting",
+      "slug": "spread_betting",
+      "parent_id": "finance.investing",
+      "level": 3
+    },
+    {
+      "category_id": "finance.money_transfer_wire_services",
+      "name": "Money Transfer & Wire Services",
+      "slug": "money_transfer_wire_services",
+      "parent_id": "finance",
+      "level": 2
+    },
+    {
+      "category_id": "food_grocery",
+      "name": "Food & Groceries",
+      "slug": "food_grocery",
+      "parent_id": null,
+      "level": 1
+    },
+    {
+      "category_id": "food_grocery.beverages",
+      "name": "Beverages",
+      "slug": "beverages",
+      "parent_id": "food_grocery",
+      "level": 2
+    },
+    {
+      "category_id": "food_grocery.beverages.alcoholic_beverages",
+      "name": "Alcoholic Beverages",
+      "slug": "alcoholic_beverages",
+      "parent_id": "food_grocery.beverages",
+      "level": 3
+    },
+    {
+      "category_id": "food_grocery.beverages.alcoholic_beverages.beer",
+      "name": "Beer",
+      "slug": "beer",
+      "parent_id": "food_grocery.beverages.alcoholic_beverages",
+      "level": 4
+    },
+    {
+      "category_id": "food_grocery.beverages.alcoholic_beverages.liquor",
+      "name": "Liquor",
+      "slug": "liquor",
+      "parent_id": "food_grocery.beverages.alcoholic_beverages",
+      "level": 4
+    },
+    {
+      "category_id": "food_grocery.beverages.alcoholic_beverages.wine",
+      "name": "Wine",
+      "slug": "wine",
+      "parent_id": "food_grocery.beverages.alcoholic_beverages",
+      "level": 4
+    },
+    {
+      "category_id": "food_grocery.beverages.non_alcoholic_beverages",
+      "name": "Non-Alcoholic Beverages",
+      "slug": "non_alcoholic_beverages",
+      "parent_id": "food_grocery.beverages",
+      "level": 3
+    },
+    {
+      "category_id": "food_grocery.beverages.non_alcoholic_beverages.coffee",
+      "name": "Coffee",
+      "slug": "coffee",
+      "parent_id": "food_grocery.beverages.non_alcoholic_beverages",
+      "level": 4
+    },
+    {
+      "category_id": "food_grocery.beverages.non_alcoholic_beverages.energy_drinks",
+      "name": "Energy Drinks",
+      "slug": "energy_drinks",
+      "parent_id": "food_grocery.beverages.non_alcoholic_beverages",
+      "level": 4
+    },
+    {
+      "category_id": "food_grocery.beverages.non_alcoholic_beverages.juice",
+      "name": "Juice",
+      "slug": "juice",
+      "parent_id": "food_grocery.beverages.non_alcoholic_beverages",
+      "level": 4
+    },
+    {
+      "category_id": "food_grocery.beverages.non_alcoholic_beverages.soft_drinks",
+      "name": "Soft Drinks",
+      "slug": "soft_drinks",
+      "parent_id": "food_grocery.beverages.non_alcoholic_beverages",
+      "level": 4
+    },
+    {
+      "category_id": "food_grocery.beverages.non_alcoholic_beverages.sports_drinks",
+      "name": "Sports Drinks",
+      "slug": "sports_drinks",
+      "parent_id": "food_grocery.beverages.non_alcoholic_beverages",
+      "level": 4
+    },
+    {
+      "category_id": "food_grocery.beverages.non_alcoholic_beverages.tea",
+      "name": "Tea",
+      "slug": "tea",
+      "parent_id": "food_grocery.beverages.non_alcoholic_beverages",
+      "level": 4
+    },
+    {
+      "category_id": "food_grocery.food",
+      "name": "Food",
+      "slug": "food",
+      "parent_id": "food_grocery",
+      "level": 2
+    },
+    {
+      "category_id": "food_grocery.food.baked_goods",
+      "name": "Baked Goods",
+      "slug": "baked_goods",
+      "parent_id": "food_grocery.food",
+      "level": 3
+    },
+    {
+      "category_id": "food_grocery.food.baking_ingredients",
+      "name": "Baking Ingredients",
+      "slug": "baking_ingredients",
+      "parent_id": "food_grocery.food",
+      "level": 3
+    },
+    {
+      "category_id": "food_grocery.food.breakfast_foods",
+      "name": "Breakfast Foods",
+      "slug": "breakfast_foods",
+      "parent_id": "food_grocery.food",
+      "level": 3
+    },
+    {
+      "category_id": "food_grocery.food.breakfast_foods.breakfast_cereals",
+      "name": "Breakfast Cereals",
+      "slug": "breakfast_cereals",
+      "parent_id": "food_grocery.food.breakfast_foods",
+      "level": 4
+    },
+    {
+      "category_id": "food_grocery.food.candy_gum_mints",
+      "name": "Candy, Gum & Mints",
+      "slug": "candy_gum_mints",
+      "parent_id": "food_grocery.food",
+      "level": 3
+    },
+    {
+      "category_id": "food_grocery.food.dairy_non_dairy_alternatives",
+      "name": "Dairy & Non-Dairy Alternatives",
+      "slug": "dairy_non_dairy_alternatives",
+      "parent_id": "food_grocery.food",
+      "level": 3
+    },
+    {
+      "category_id": "food_grocery.food.desserts",
+      "name": "Desserts",
+      "slug": "desserts",
+      "parent_id": "food_grocery.food",
+      "level": 3
+    },
+    {
+      "category_id": "food_grocery.food.frozen_foods",
+      "name": "Frozen Foods",
+      "slug": "frozen_foods",
+      "parent_id": "food_grocery.food",
+      "level": 3
+    },
+    {
+      "category_id": "food_grocery.food.meat_poultry",
+      "name": "Meat & Poultry",
+      "slug": "meat_poultry",
+      "parent_id": "food_grocery.food",
+      "level": 3
+    },
+    {
+      "category_id": "food_grocery.food.sauces",
+      "name": "Sauces",
+      "slug": "sauces",
+      "parent_id": "food_grocery.food",
+      "level": 3
+    },
+    {
+      "category_id": "food_grocery.food.snack_foods",
+      "name": "Snack Foods",
+      "slug": "snack_foods",
+      "parent_id": "food_grocery.food",
+      "level": 3
+    },
+    {
+      "category_id": "food_grocery.online_grocery_shopping_grocery_delivery",
+      "name": "Online Grocery Shopping & Grocery Delivery",
+      "slug": "online_grocery_shopping_grocery_delivery",
+      "parent_id": "food_grocery",
+      "level": 2
+    },
+    {
+      "category_id": "food_grocery.tobacco_vaping_products",
+      "name": "Tobacco & Vaping Products",
+      "slug": "tobacco_vaping_products",
+      "parent_id": "food_grocery",
+      "level": 2
+    },
+    {
+      "category_id": "health",
+      "name": "Health",
+      "slug": "health",
+      "parent_id": null,
+      "level": 1
+    },
+    {
+      "category_id": "health.biotech_pharmaceutical",
+      "name": "Biotech & Pharmaceutical",
+      "slug": "biotech_pharmaceutical",
+      "parent_id": "health",
+      "level": 2
+    },
+    {
+      "category_id": "health.biotech_pharmaceutical.gene_research",
+      "name": "Gene Research",
+      "slug": "gene_research",
+      "parent_id": "health.biotech_pharmaceutical",
+      "level": 3
+    },
+    {
+      "category_id": "health.health_care_services",
+      "name": "Health Care Services",
+      "slug": "health_care_services",
+      "parent_id": "health",
+      "level": 2
+    },
+    {
+      "category_id": "health.health_care_services.alternative_natural_medicine",
+      "name": "Alternative & Natural Medicine",
+      "slug": "alternative_natural_medicine",
+      "parent_id": "health.health_care_services",
+      "level": 3
+    },
+    {
+      "category_id": "health.health_care_services.alternative_natural_medicine.chiropractors_chiropractic",
+      "name": "Chiropractors & Chiropractic",
+      "slug": "chiropractors_chiropractic",
+      "parent_id": "health.health_care_services.alternative_natural_medicine",
+      "level": 4
+    },
+    {
+      "category_id": "health.health_care_services.alternative_natural_medicine.cleansing_detoxification",
+      "name": "Cleansing & Detoxification",
+      "slug": "cleansing_detoxification",
+      "parent_id": "health.health_care_services.alternative_natural_medicine",
+      "level": 4
+    },
+    {
+      "category_id": "health.health_care_services.hospitals_health_clinics",
+      "name": "Hospitals & Health Clinics",
+      "slug": "hospitals_health_clinics",
+      "parent_id": "health.health_care_services",
+      "level": 3
+    },
+    {
+      "category_id": "health.health_care_services.laboratory_testing_medical_diagnostic_services",
+      "name": "Laboratory Testing & Medical Diagnostic Services",
+      "slug": "laboratory_testing_medical_diagnostic_services",
+      "parent_id": "health.health_care_services",
+      "level": 3
+    },
+    {
+      "category_id": "health.health_care_services.mental_health_services",
+      "name": "Mental Health Services",
+      "slug": "mental_health_services",
+      "parent_id": "health.health_care_services",
+      "level": 3
+    },
+    {
+      "category_id": "health.health_care_services.orthopedics_sports_medicine",
+      "name": "Orthopedics & Sports Medicine",
+      "slug": "orthopedics_sports_medicine",
+      "parent_id": "health.health_care_services",
+      "level": 3
+    },
+    {
+      "category_id": "health.health_care_services.physical_rehabilitation",
+      "name": "Physical Rehabilitation",
+      "slug": "physical_rehabilitation",
+      "parent_id": "health.health_care_services",
+      "level": 3
+    },
+    {
+      "category_id": "health.health_care_services.plastic_surgery",
+      "name": "Plastic Surgery",
+      "slug": "plastic_surgery",
+      "parent_id": "health.health_care_services",
+      "level": 3
+    },
+    {
+      "category_id": "health.health_care_services.plastic_surgery.cosmetic_aesthetic_plastic_surgery",
+      "name": "Cosmetic & Aesthetic Plastic Surgery",
+      "slug": "cosmetic_aesthetic_plastic_surgery",
+      "parent_id": "health.health_care_services.plastic_surgery",
+      "level": 4
+    },
+    {
+      "category_id": "health.health_care_services.vision_services",
+      "name": "Vision Services",
+      "slug": "vision_services",
+      "parent_id": "health.health_care_services",
+      "level": 3
+    },
+    {
+      "category_id": "health.health_care_services.wellness_therapy_massage",
+      "name": "Wellness Therapy & Massage",
+      "slug": "wellness_therapy_massage",
+      "parent_id": "health.health_care_services",
+      "level": 3
+    },
+    {
+      "category_id": "health.health_conditions_concerns",
+      "name": "Health Conditions & Concerns",
+      "slug": "health_conditions_concerns",
+      "parent_id": "health",
+      "level": 2
+    },
+    {
+      "category_id": "health.health_conditions_concerns.aids_hiv",
+      "name": "AIDS & HIV",
+      "slug": "aids_hiv",
+      "parent_id": "health.health_conditions_concerns",
+      "level": 3
+    },
+    {
+      "category_id": "health.health_conditions_concerns.allergy_sinus",
+      "name": "Allergy & Sinus",
+      "slug": "allergy_sinus",
+      "parent_id": "health.health_conditions_concerns",
+      "level": 3
+    },
+    {
+      "category_id": "health.health_conditions_concerns.allergy_sinus.air_cleaners_filters",
+      "name": "Air Cleaners & Filters",
+      "slug": "air_cleaners_filters",
+      "parent_id": "health.health_conditions_concerns.allergy_sinus",
+      "level": 4
+    },
+    {
+      "category_id": "health.health_conditions_concerns.arthritis",
+      "name": "Arthritis",
+      "slug": "arthritis",
+      "parent_id": "health.health_conditions_concerns",
+      "level": 3
+    },
+    {
+      "category_id": "health.health_conditions_concerns.blood_sugar_diabetes",
+      "name": "Blood Sugar & Diabetes",
+      "slug": "blood_sugar_diabetes",
+      "parent_id": "health.health_conditions_concerns",
+      "level": 3
+    },
+    {
+      "category_id": "health.health_conditions_concerns.cancer_cancer_treatment",
+      "name": "Cancer & Cancer Treatment",
+      "slug": "cancer_cancer_treatment",
+      "parent_id": "health.health_conditions_concerns",
+      "level": 3
+    },
+    {
+      "category_id": "health.health_conditions_concerns.cold_sores",
+      "name": "Cold Sores",
+      "slug": "cold_sores",
+      "parent_id": "health.health_conditions_concerns",
+      "level": 3
+    },
+    {
+      "category_id": "health.health_conditions_concerns.dental_health",
+      "name": "Dental Health",
+      "slug": "dental_health",
+      "parent_id": "health.health_conditions_concerns",
+      "level": 3
+    },
+    {
+      "category_id": "health.health_conditions_concerns.digestive_health_disorders",
+      "name": "Digestive Health & Disorders",
+      "slug": "digestive_health_disorders",
+      "parent_id": "health.health_conditions_concerns",
+      "level": 3
+    },
+    {
+      "category_id": "health.health_conditions_concerns.eating_disorders",
+      "name": "Eating Disorders",
+      "slug": "eating_disorders",
+      "parent_id": "health.health_conditions_concerns",
+      "level": 3
+    },
+    {
+      "category_id": "health.health_conditions_concerns.geriatrics_aging",
+      "name": "Geriatrics & Aging",
+      "slug": "geriatrics_aging",
+      "parent_id": "health.health_conditions_concerns",
+      "level": 3
+    },
+    {
+      "category_id": "health.health_conditions_concerns.geriatrics_aging.alzheimer_s_disease",
+      "name": "Alzheimer's Disease",
+      "slug": "alzheimer_s_disease",
+      "parent_id": "health.health_conditions_concerns.geriatrics_aging",
+      "level": 4
+    },
+    {
+      "category_id": "health.health_conditions_concerns.headache_pain_management",
+      "name": "Headache & Pain Management",
+      "slug": "headache_pain_management",
+      "parent_id": "health.health_conditions_concerns",
+      "level": 3
+    },
+    {
+      "category_id": "health.health_conditions_concerns.hearing_loss",
+      "name": "Hearing Loss",
+      "slug": "hearing_loss",
+      "parent_id": "health.health_conditions_concerns",
+      "level": 3
+    },
+    {
+      "category_id": "health.health_conditions_concerns.heart_health",
+      "name": "Heart Health",
+      "slug": "heart_health",
+      "parent_id": "health.health_conditions_concerns",
+      "level": 3
+    },
+    {
+      "category_id": "health.health_conditions_concerns.heart_health.high_blood_pressure",
+      "name": "High Blood Pressure",
+      "slug": "high_blood_pressure",
+      "parent_id": "health.health_conditions_concerns.heart_health",
+      "level": 4
+    },
+    {
+      "category_id": "health.health_conditions_concerns.heart_health.high_cholesterol",
+      "name": "High Cholesterol",
+      "slug": "high_cholesterol",
+      "parent_id": "health.health_conditions_concerns.heart_health",
+      "level": 4
+    },
+    {
+      "category_id": "health.health_conditions_concerns.hemorrhoids",
+      "name": "Hemorrhoids",
+      "slug": "hemorrhoids",
+      "parent_id": "health.health_conditions_concerns",
+      "level": 3
+    },
+    {
+      "category_id": "health.health_conditions_concerns.hepatitis",
+      "name": "Hepatitis",
+      "slug": "hepatitis",
+      "parent_id": "health.health_conditions_concerns",
+      "level": 3
+    },
+    {
+      "category_id": "health.health_conditions_concerns.infectious_diseases_viruses",
+      "name": "Infectious Diseases & Viruses",
+      "slug": "infectious_diseases_viruses",
+      "parent_id": "health.health_conditions_concerns",
+      "level": 3
+    },
+    {
+      "category_id": "health.health_conditions_concerns.learning_developmental_disabilities",
+      "name": "Learning & Developmental Disabilities",
+      "slug": "learning_developmental_disabilities",
+      "parent_id": "health.health_conditions_concerns",
+      "level": 3
+    },
+    {
+      "category_id": "health.health_conditions_concerns.men_s_health",
+      "name": "Men's Health",
+      "slug": "men_s_health",
+      "parent_id": "health.health_conditions_concerns",
+      "level": 3
+    },
+    {
+      "category_id": "health.health_conditions_concerns.mental_health",
+      "name": "Mental Health",
+      "slug": "mental_health",
+      "parent_id": "health.health_conditions_concerns",
+      "level": 3
+    },
+    {
+      "category_id": "health.health_conditions_concerns.neurological_conditions",
+      "name": "Neurological Conditions",
+      "slug": "neurological_conditions",
+      "parent_id": "health.health_conditions_concerns",
+      "level": 3
+    },
+    {
+      "category_id": "health.health_conditions_concerns.skin_conditions_skin_health",
+      "name": "Skin Conditions & Skin Health",
+      "slug": "skin_conditions_skin_health",
+      "parent_id": "health.health_conditions_concerns",
+      "level": 3
+    },
+    {
+      "category_id": "health.health_conditions_concerns.skin_conditions_skin_health.acne",
+      "name": "Acne",
+      "slug": "acne",
+      "parent_id": "health.health_conditions_concerns.skin_conditions_skin_health",
+      "level": 4
+    },
+    {
+      "category_id": "health.health_conditions_concerns.skin_conditions_skin_health.warts",
+      "name": "Warts",
+      "slug": "warts",
+      "parent_id": "health.health_conditions_concerns.skin_conditions_skin_health",
+      "level": 4
+    },
+    {
+      "category_id": "health.health_conditions_concerns.smoking_smoking_cessation",
+      "name": "Smoking & Smoking Cessation",
+      "slug": "smoking_smoking_cessation",
+      "parent_id": "health.health_conditions_concerns",
+      "level": 3
+    },
+    {
+      "category_id": "health.health_conditions_concerns.vision",
+      "name": "Vision",
+      "slug": "vision",
+      "parent_id": "health.health_conditions_concerns",
+      "level": 3
+    },
+    {
+      "category_id": "health.health_conditions_concerns.vision.contact_lenses_accessories",
+      "name": "Contact Lenses & Accessories",
+      "slug": "contact_lenses_accessories",
+      "parent_id": "health.health_conditions_concerns.vision",
+      "level": 4
+    },
+    {
+      "category_id": "health.health_conditions_concerns.vision.eyeglass_frames",
+      "name": "Eyeglass Frames",
+      "slug": "eyeglass_frames",
+      "parent_id": "health.health_conditions_concerns.vision",
+      "level": 4
+    },
+    {
+      "category_id": "health.health_conditions_concerns.weight_loss_products",
+      "name": "Weight Loss Products",
+      "slug": "weight_loss_products",
+      "parent_id": "health.health_conditions_concerns",
+      "level": 3
+    },
+    {
+      "category_id": "health.health_conditions_concerns.weight_loss_products.weight_loss_drugs_medications",
+      "name": "Weight Loss Drugs & Medications",
+      "slug": "weight_loss_drugs_medications",
+      "parent_id": "health.health_conditions_concerns.weight_loss_products",
+      "level": 4
+    },
+    {
+      "category_id": "health.health_conditions_concerns.weight_loss_products.weight_loss_supplements",
+      "name": "Weight Loss Supplements",
+      "slug": "weight_loss_supplements",
+      "parent_id": "health.health_conditions_concerns.weight_loss_products",
+      "level": 4
+    },
+    {
+      "category_id": "health.medical_devices_equipment_supplies",
+      "name": "Medical Devices, Equipment & Supplies",
+      "slug": "medical_devices_equipment_supplies",
+      "parent_id": "health",
+      "level": 2
+    },
+    {
+      "category_id": "health.medical_devices_equipment_supplies.first_aid_supplies",
+      "name": "First Aid Supplies",
+      "slug": "first_aid_supplies",
+      "parent_id": "health.medical_devices_equipment_supplies",
+      "level": 3
+    },
+    {
+      "category_id": "health.medical_devices_equipment_supplies.medical_diagnostic_equipment_monitoring_devices",
+      "name": "Medical Diagnostic Equipment & Monitoring Devices",
+      "slug": "medical_diagnostic_equipment_monitoring_devices",
+      "parent_id": "health.medical_devices_equipment_supplies",
+      "level": 3
+    },
+    {
+      "category_id": "health.medical_devices_equipment_supplies.mobility_equipment_accessories",
+      "name": "Mobility Equipment & Accessories",
+      "slug": "mobility_equipment_accessories",
+      "parent_id": "health.medical_devices_equipment_supplies",
+      "level": 3
+    },
+    {
+      "category_id": "health.nutrition_dieting",
+      "name": "Nutrition & Dieting",
+      "slug": "nutrition_dieting",
+      "parent_id": "health",
+      "level": 2
+    },
+    {
+      "category_id": "health.nutrition_dieting.diets_diet_programs",
+      "name": "Diets & Diet Programs",
+      "slug": "diets_diet_programs",
+      "parent_id": "health.nutrition_dieting",
+      "level": 3
+    },
+    {
+      "category_id": "health.pharmacy",
+      "name": "Pharmacy",
+      "slug": "pharmacy",
+      "parent_id": "health",
+      "level": 2
+    },
+    {
+      "category_id": "health.pharmacy.drugs_medications",
+      "name": "Drugs & Medications",
+      "slug": "drugs_medications",
+      "parent_id": "health.pharmacy",
+      "level": 3
+    },
+    {
+      "category_id": "health.pharmacy.vitamins_supplements",
+      "name": "Vitamins & Supplements",
+      "slug": "vitamins_supplements",
+      "parent_id": "health.pharmacy",
+      "level": 3
+    },
+    {
+      "category_id": "health.pharmacy.vitamins_supplements.multi_vitamins",
+      "name": "Multi-Vitamins",
+      "slug": "multi_vitamins",
+      "parent_id": "health.pharmacy.vitamins_supplements",
+      "level": 4
+    },
+    {
+      "category_id": "health.pharmacy.vitamins_supplements.sports_nutrition_supplements",
+      "name": "Sports Nutrition Supplements",
+      "slug": "sports_nutrition_supplements",
+      "parent_id": "health.pharmacy.vitamins_supplements",
+      "level": 4
+    },
+    {
+      "category_id": "health.professional_medical_resources",
+      "name": "Professional Medical Resources",
+      "slug": "professional_medical_resources",
+      "parent_id": "health",
+      "level": 2
+    },
+    {
+      "category_id": "health.professional_medical_resources.medical_research",
+      "name": "Medical Research",
+      "slug": "medical_research",
+      "parent_id": "health.professional_medical_resources",
+      "level": 3
+    },
+    {
+      "category_id": "health.professional_medical_resources.professional_health_care_education",
+      "name": "Professional Health Care Education",
+      "slug": "professional_health_care_education",
+      "parent_id": "health.professional_medical_resources",
+      "level": 3
+    },
+    {
+      "category_id": "hobbies_games_leisure",
+      "name": "Hobbies, Games & Leisure",
+      "slug": "hobbies_games_leisure",
+      "parent_id": null,
+      "level": 1
+    },
+    {
+      "category_id": "hobbies_games_leisure.ancestry_genealogy",
+      "name": "Ancestry & Genealogy",
+      "slug": "ancestry_genealogy",
+      "parent_id": "hobbies_games_leisure",
+      "level": 2
+    },
+    {
+      "category_id": "hobbies_games_leisure.antiques_collectibles",
+      "name": "Antiques & Collectibles",
+      "slug": "antiques_collectibles",
+      "parent_id": "hobbies_games_leisure",
+      "level": 2
+    },
+    {
+      "category_id": "hobbies_games_leisure.arts_crafts",
+      "name": "Arts & Crafts",
+      "slug": "arts_crafts",
+      "parent_id": "hobbies_games_leisure",
+      "level": 2
+    },
+    {
+      "category_id": "hobbies_games_leisure.arts_crafts.fiber_craft",
+      "name": "Fiber Craft",
+      "slug": "fiber_craft",
+      "parent_id": "hobbies_games_leisure.arts_crafts",
+      "level": 3
+    },
+    {
+      "category_id": "hobbies_games_leisure.camping_outdoor_recreation",
+      "name": "Camping & Outdoor Recreation",
+      "slug": "camping_outdoor_recreation",
+      "parent_id": "hobbies_games_leisure",
+      "level": 2
+    },
+    {
+      "category_id": "hobbies_games_leisure.camping_outdoor_recreation.climbing",
+      "name": "Climbing",
+      "slug": "climbing",
+      "parent_id": "hobbies_games_leisure.camping_outdoor_recreation",
+      "level": 3
+    },
+    {
+      "category_id": "hobbies_games_leisure.camping_outdoor_recreation.hiking",
+      "name": "Hiking",
+      "slug": "hiking",
+      "parent_id": "hobbies_games_leisure.camping_outdoor_recreation",
+      "level": 3
+    },
+    {
+      "category_id": "hobbies_games_leisure.camping_outdoor_recreation.multi_tools_pocket_knives",
+      "name": "Multi-tools & Pocket Knives",
+      "slug": "multi_tools_pocket_knives",
+      "parent_id": "hobbies_games_leisure.camping_outdoor_recreation",
+      "level": 3
+    },
+    {
+      "category_id": "hobbies_games_leisure.cooking",
+      "name": "Cooking",
+      "slug": "cooking",
+      "parent_id": "hobbies_games_leisure",
+      "level": 2
+    },
+    {
+      "category_id": "hobbies_games_leisure.cooking.cuisines",
+      "name": "Cuisines",
+      "slug": "cuisines",
+      "parent_id": "hobbies_games_leisure.cooking",
+      "level": 3
+    },
+    {
+      "category_id": "hobbies_games_leisure.cooking.recipes",
+      "name": "Recipes",
+      "slug": "recipes",
+      "parent_id": "hobbies_games_leisure.cooking",
+      "level": 3
+    },
+    {
+      "category_id": "hobbies_games_leisure.gardening",
+      "name": "Gardening",
+      "slug": "gardening",
+      "parent_id": "hobbies_games_leisure",
+      "level": 2
+    },
+    {
+      "category_id": "hobbies_games_leisure.gardening.garden_structures",
+      "name": "Garden Structures",
+      "slug": "garden_structures",
+      "parent_id": "hobbies_games_leisure.gardening",
+      "level": 3
+    },
+    {
+      "category_id": "hobbies_games_leisure.gardening.trees_plants_shrubs",
+      "name": "Trees, Plants & Shrubs",
+      "slug": "trees_plants_shrubs",
+      "parent_id": "hobbies_games_leisure.gardening",
+      "level": 3
+    },
+    {
+      "category_id": "hobbies_games_leisure.leisure_gambling",
+      "name": "Leisure Gambling",
+      "slug": "leisure_gambling",
+      "parent_id": "hobbies_games_leisure",
+      "level": 2
+    },
+    {
+      "category_id": "hobbies_games_leisure.leisure_gambling.poker_casino_games",
+      "name": "Poker & Casino Games",
+      "slug": "poker_casino_games",
+      "parent_id": "hobbies_games_leisure.leisure_gambling",
+      "level": 3
+    },
+    {
+      "category_id": "hobbies_games_leisure.pets_animals",
+      "name": "Pets & Animals",
+      "slug": "pets_animals",
+      "parent_id": "hobbies_games_leisure",
+      "level": 2
+    },
+    {
+      "category_id": "hobbies_games_leisure.pets_animals.pet_breeding",
+      "name": "Pet Breeding",
+      "slug": "pet_breeding",
+      "parent_id": "hobbies_games_leisure.pets_animals",
+      "level": 3
+    },
+    {
+      "category_id": "hobbies_games_leisure.pets_animals.pet_food_supplies",
+      "name": "Pet Food & Supplies",
+      "slug": "pet_food_supplies",
+      "parent_id": "hobbies_games_leisure.pets_animals",
+      "level": 3
+    },
+    {
+      "category_id": "hobbies_games_leisure.pets_animals.pet_food_supplies.flea_tick_control_products",
+      "name": "Flea & Tick Control Products",
+      "slug": "flea_tick_control_products",
+      "parent_id": "hobbies_games_leisure.pets_animals.pet_food_supplies",
+      "level": 4
+    },
+    {
+      "category_id": "hobbies_games_leisure.pets_animals.pet_food_supplies.pet_food_treats",
+      "name": "Pet Food & Treats",
+      "slug": "pet_food_treats",
+      "parent_id": "hobbies_games_leisure.pets_animals.pet_food_supplies",
+      "level": 4
+    },
+    {
+      "category_id": "hobbies_games_leisure.pets_animals.pet_food_supplies.pet_medications",
+      "name": "Pet Medications",
+      "slug": "pet_medications",
+      "parent_id": "hobbies_games_leisure.pets_animals.pet_food_supplies",
+      "level": 4
+    },
+    {
+      "category_id": "hobbies_games_leisure.photo_video",
+      "name": "Photo & Video",
+      "slug": "photo_video",
+      "parent_id": "hobbies_games_leisure",
+      "level": 2
+    },
+    {
+      "category_id": "hobbies_games_leisure.photo_video.digital_cameras",
+      "name": "Digital Cameras",
+      "slug": "digital_cameras",
+      "parent_id": "hobbies_games_leisure.photo_video",
+      "level": 3
+    },
+    {
+      "category_id": "hobbies_games_leisure.photo_video.photo_video_accessories",
+      "name": "Photo & Video Accessories",
+      "slug": "photo_video_accessories",
+      "parent_id": "hobbies_games_leisure.photo_video",
+      "level": 3
+    },
+    {
+      "category_id": "hobbies_games_leisure.photo_video.photographic_digital_arts",
+      "name": "Photographic & Digital Arts",
+      "slug": "photographic_digital_arts",
+      "parent_id": "hobbies_games_leisure.photo_video",
+      "level": 3
+    },
+    {
+      "category_id": "hobbies_games_leisure.photo_video.video_cameras_camcorders",
+      "name": "Video Cameras & Camcorders",
+      "slug": "video_cameras_camcorders",
+      "parent_id": "hobbies_games_leisure.photo_video",
+      "level": 3
+    },
+    {
+      "category_id": "hobbies_games_leisure.prizes_competitions",
+      "name": "Prizes & Competitions",
+      "slug": "prizes_competitions",
+      "parent_id": "hobbies_games_leisure",
+      "level": 2
+    },
+    {
+      "category_id": "hobbies_games_leisure.prizes_competitions.sweepstakes_product_promotions_giveaways",
+      "name": "Sweepstakes, Product Promotions & Giveaways",
+      "slug": "sweepstakes_product_promotions_giveaways",
+      "parent_id": "hobbies_games_leisure.prizes_competitions",
+      "level": 3
+    },
+    {
+      "category_id": "hobbies_games_leisure.toys_games",
+      "name": "Toys & Games",
+      "slug": "toys_games",
+      "parent_id": "hobbies_games_leisure",
+      "level": 2
+    },
+    {
+      "category_id": "hobbies_games_leisure.toys_games.games",
+      "name": "Games",
+      "slug": "games",
+      "parent_id": "hobbies_games_leisure.toys_games",
+      "level": 3
+    },
+    {
+      "category_id": "hobbies_games_leisure.toys_games.games.arcade_coin_op_games",
+      "name": "Arcade & Coin-Op Games",
+      "slug": "arcade_coin_op_games",
+      "parent_id": "hobbies_games_leisure.toys_games.games",
+      "level": 4
+    },
+    {
+      "category_id": "hobbies_games_leisure.toys_games.games.board_games",
+      "name": "Board Games",
+      "slug": "board_games",
+      "parent_id": "hobbies_games_leisure.toys_games.games",
+      "level": 4
+    },
+    {
+      "category_id": "hobbies_games_leisure.toys_games.games.card_games",
+      "name": "Card Games",
+      "slug": "card_games",
+      "parent_id": "hobbies_games_leisure.toys_games.games",
+      "level": 4
+    },
+    {
+      "category_id": "hobbies_games_leisure.toys_games.games.children_s_games_activities",
+      "name": "Children's Games & Activities",
+      "slug": "children_s_games_activities",
+      "parent_id": "hobbies_games_leisure.toys_games.games",
+      "level": 4
+    },
+    {
+      "category_id": "hobbies_games_leisure.toys_games.games.online_games_puzzles",
+      "name": "Online Games & Puzzles",
+      "slug": "online_games_puzzles",
+      "parent_id": "hobbies_games_leisure.toys_games.games",
+      "level": 4
+    },
+    {
+      "category_id": "hobbies_games_leisure.toys_games.games.online_games_puzzles.massive_multiplayer_online_games",
+      "name": "Massive Multiplayer Online Games",
+      "slug": "massive_multiplayer_online_games",
+      "parent_id": "hobbies_games_leisure.toys_games.games.online_games_puzzles",
+      "level": 5
+    },
+    {
+      "category_id": "hobbies_games_leisure.toys_games.games.puzzles_brainteasers",
+      "name": "Puzzles & Brainteasers",
+      "slug": "puzzles_brainteasers",
+      "parent_id": "hobbies_games_leisure.toys_games.games",
+      "level": 4
+    },
+    {
+      "category_id": "hobbies_games_leisure.toys_games.games.roleplaying_games",
+      "name": "Roleplaying Games",
+      "slug": "roleplaying_games",
+      "parent_id": "hobbies_games_leisure.toys_games.games",
+      "level": 4
+    },
+    {
+      "category_id": "hobbies_games_leisure.toys_games.games.strategy_games",
+      "name": "Strategy Games",
+      "slug": "strategy_games",
+      "parent_id": "hobbies_games_leisure.toys_games.games",
+      "level": 4
+    },
+    {
+      "category_id": "hobbies_games_leisure.toys_games.games.video_games_consoles_accessories",
+      "name": "Video Games, Consoles & Accessories",
+      "slug": "video_games_consoles_accessories",
+      "parent_id": "hobbies_games_leisure.toys_games.games",
+      "level": 4
+    },
+    {
+      "category_id": "hobbies_games_leisure.toys_games.games.video_games_consoles_accessories.computer_video_games",
+      "name": "Computer & Video Games",
+      "slug": "computer_video_games",
+      "parent_id": "hobbies_games_leisure.toys_games.games.video_games_consoles_accessories",
+      "level": 5
+    },
+    {
+      "category_id": "hobbies_games_leisure.toys_games.games.video_games_consoles_accessories.computer_video_games.action_platform_games",
+      "name": "Action & Platform Games",
+      "slug": "action_platform_games",
+      "parent_id": "hobbies_games_leisure.toys_games.games.video_games_consoles_accessories.computer_video_games",
+      "level": 6
+    },
+    {
+      "category_id": "hobbies_games_leisure.toys_games.games.video_games_consoles_accessories.computer_video_games.adventure_games",
+      "name": "Adventure Games",
+      "slug": "adventure_games",
+      "parent_id": "hobbies_games_leisure.toys_games.games.video_games_consoles_accessories.computer_video_games",
+      "level": 6
+    },
+    {
+      "category_id": "hobbies_games_leisure.toys_games.games.video_games_consoles_accessories.computer_video_games.casual_games",
+      "name": "Casual Games",
+      "slug": "casual_games",
+      "parent_id": "hobbies_games_leisure.toys_games.games.video_games_consoles_accessories.computer_video_games",
+      "level": 6
+    },
+    {
+      "category_id": "hobbies_games_leisure.toys_games.games.video_games_consoles_accessories.computer_video_games.driving_racing_games",
+      "name": "Driving & Racing Games",
+      "slug": "driving_racing_games",
+      "parent_id": "hobbies_games_leisure.toys_games.games.video_games_consoles_accessories.computer_video_games",
+      "level": 6
+    },
+    {
+      "category_id": "hobbies_games_leisure.toys_games.games.video_games_consoles_accessories.computer_video_games.family_children_s_games",
+      "name": "Family & Children's Games",
+      "slug": "family_children_s_games",
+      "parent_id": "hobbies_games_leisure.toys_games.games.video_games_consoles_accessories.computer_video_games",
+      "level": 6
+    },
+    {
+      "category_id": "hobbies_games_leisure.toys_games.games.video_games_consoles_accessories.computer_video_games.music_dance_games",
+      "name": "Music & Dance Games",
+      "slug": "music_dance_games",
+      "parent_id": "hobbies_games_leisure.toys_games.games.video_games_consoles_accessories.computer_video_games",
+      "level": 6
+    },
+    {
+      "category_id": "hobbies_games_leisure.toys_games.games.video_games_consoles_accessories.computer_video_games.shooter_games",
+      "name": "Shooter Games",
+      "slug": "shooter_games",
+      "parent_id": "hobbies_games_leisure.toys_games.games.video_games_consoles_accessories.computer_video_games",
+      "level": 6
+    },
+    {
+      "category_id": "hobbies_games_leisure.toys_games.games.video_games_consoles_accessories.computer_video_games.simulation_games",
+      "name": "Simulation Games",
+      "slug": "simulation_games",
+      "parent_id": "hobbies_games_leisure.toys_games.games.video_games_consoles_accessories.computer_video_games",
+      "level": 6
+    },
+    {
+      "category_id": "hobbies_games_leisure.toys_games.games.video_games_consoles_accessories.computer_video_games.sports_games",
+      "name": "Sports Games",
+      "slug": "sports_games",
+      "parent_id": "hobbies_games_leisure.toys_games.games.video_games_consoles_accessories.computer_video_games",
+      "level": 6
+    },
+    {
+      "category_id": "hobbies_games_leisure.toys_games.games.video_games_consoles_accessories.video_game_consoles",
+      "name": "Video Game Consoles",
+      "slug": "video_game_consoles",
+      "parent_id": "hobbies_games_leisure.toys_games.games.video_games_consoles_accessories",
+      "level": 5
+    },
+    {
+      "category_id": "hobbies_games_leisure.toys_games.games.word_games",
+      "name": "Word Games",
+      "slug": "word_games",
+      "parent_id": "hobbies_games_leisure.toys_games.games",
+      "level": 4
+    },
+    {
+      "category_id": "hobbies_games_leisure.toys_games.toys",
+      "name": "Toys",
+      "slug": "toys",
+      "parent_id": "hobbies_games_leisure.toys_games",
+      "level": 3
+    },
+    {
+      "category_id": "hobbies_games_leisure.toys_games.toys.action_figures",
+      "name": "Action Figures",
+      "slug": "action_figures",
+      "parent_id": "hobbies_games_leisure.toys_games.toys",
+      "level": 4
+    },
+    {
+      "category_id": "hobbies_games_leisure.toys_games.toys.building_toys",
+      "name": "Building Toys",
+      "slug": "building_toys",
+      "parent_id": "hobbies_games_leisure.toys_games.toys",
+      "level": 4
+    },
+    {
+      "category_id": "hobbies_games_leisure.toys_games.toys.children_s_dolls_dress_up_toys_costumes",
+      "name": "Children's Dolls, Dress-Up Toys & Costumes",
+      "slug": "children_s_dolls_dress_up_toys_costumes",
+      "parent_id": "hobbies_games_leisure.toys_games.toys",
+      "level": 4
+    },
+    {
+      "category_id": "hobbies_games_leisure.toys_games.toys.educational_toys",
+      "name": "Educational Toys",
+      "slug": "educational_toys",
+      "parent_id": "hobbies_games_leisure.toys_games.toys",
+      "level": 4
+    },
+    {
+      "category_id": "hobbies_games_leisure.toys_games.toys.radio_controlled_toys_accessories",
+      "name": "Radio Controlled Toys & Accessories",
+      "slug": "radio_controlled_toys_accessories",
+      "parent_id": "hobbies_games_leisure.toys_games.toys",
+      "level": 4
+    },
+    {
+      "category_id": "home_garden",
+      "name": "Home & Garden",
+      "slug": "home_garden",
+      "parent_id": null,
+      "level": 1
+    },
+    {
+      "category_id": "home_garden.bedding_linens",
+      "name": "Bedding & Linens",
+      "slug": "bedding_linens",
+      "parent_id": "home_garden",
+      "level": 2
+    },
+    {
+      "category_id": "home_garden.home_appliances",
+      "name": "Home Appliances",
+      "slug": "home_appliances",
+      "parent_id": "home_garden",
+      "level": 2
+    },
+    {
+      "category_id": "home_garden.home_appliances.home_appliance_service_repair",
+      "name": "Home Appliance Service & Repair",
+      "slug": "home_appliance_service_repair",
+      "parent_id": "home_garden.home_appliances",
+      "level": 3
+    },
+    {
+      "category_id": "home_garden.home_appliances.major_kitchen_appliances",
+      "name": "Major Kitchen Appliances",
+      "slug": "major_kitchen_appliances",
+      "parent_id": "home_garden.home_appliances",
+      "level": 3
+    },
+    {
+      "category_id": "home_garden.home_appliances.vacuum_cleaners_accessories",
+      "name": "Vacuum Cleaners & Accessories",
+      "slug": "vacuum_cleaners_accessories",
+      "parent_id": "home_garden.home_appliances",
+      "level": 3
+    },
+    {
+      "category_id": "home_garden.home_appliances.washers_dryers",
+      "name": "Washers & Dryers",
+      "slug": "washers_dryers",
+      "parent_id": "home_garden.home_appliances",
+      "level": 3
+    },
+    {
+      "category_id": "home_garden.home_decor_interior_decorating",
+      "name": "Home Decor & Interior Decorating",
+      "slug": "home_decor_interior_decorating",
+      "parent_id": "home_garden",
+      "level": 2
+    },
+    {
+      "category_id": "home_garden.home_furniture",
+      "name": "Home Furniture",
+      "slug": "home_furniture",
+      "parent_id": "home_garden",
+      "level": 2
+    },
+    {
+      "category_id": "home_garden.home_furniture.mattresses",
+      "name": "Mattresses",
+      "slug": "mattresses",
+      "parent_id": "home_garden.home_furniture",
+      "level": 3
+    },
+    {
+      "category_id": "home_garden.home_heating_cooling",
+      "name": "Home Heating & Cooling",
+      "slug": "home_heating_cooling",
+      "parent_id": "home_garden",
+      "level": 2
+    },
+    {
+      "category_id": "home_garden.home_improvement_maintenance",
+      "name": "Home Improvement & Maintenance",
+      "slug": "home_improvement_maintenance",
+      "parent_id": "home_garden",
+      "level": 2
+    },
+    {
+      "category_id": "home_garden.home_safety_security",
+      "name": "Home Safety & Security",
+      "slug": "home_safety_security",
+      "parent_id": "home_garden",
+      "level": 2
+    },
+    {
+      "category_id": "home_garden.household_supplies",
+      "name": "Household Supplies",
+      "slug": "household_supplies",
+      "parent_id": "home_garden",
+      "level": 2
+    },
+    {
+      "category_id": "home_garden.household_supplies.food_wraps_food_storage",
+      "name": "Food Wraps & Food Storage",
+      "slug": "food_wraps_food_storage",
+      "parent_id": "home_garden.household_supplies",
+      "level": 3
+    },
+    {
+      "category_id": "home_garden.household_supplies.household_cleaning_products",
+      "name": "Household Cleaning Products",
+      "slug": "household_cleaning_products",
+      "parent_id": "home_garden.household_supplies",
+      "level": 3
+    },
+    {
+      "category_id": "home_garden.household_supplies.household_cleaning_products.air_fresheners_deodorizers",
+      "name": "Air Fresheners & Deodorizers",
+      "slug": "air_fresheners_deodorizers",
+      "parent_id": "home_garden.household_supplies.household_cleaning_products",
+      "level": 4
+    },
+    {
+      "category_id": "home_garden.household_supplies.household_cleaning_products.dish_detergents",
+      "name": "Dish Detergents",
+      "slug": "dish_detergents",
+      "parent_id": "home_garden.household_supplies.household_cleaning_products",
+      "level": 4
+    },
+    {
+      "category_id": "home_garden.household_supplies.household_cleaning_products.laundry_detergents",
+      "name": "Laundry Detergents",
+      "slug": "laundry_detergents",
+      "parent_id": "home_garden.household_supplies.household_cleaning_products",
+      "level": 4
+    },
+    {
+      "category_id": "home_garden.household_supplies.paper_towels_household_paper_products",
+      "name": "Paper Towels & Household Paper Products",
+      "slug": "paper_towels_household_paper_products",
+      "parent_id": "home_garden.household_supplies",
+      "level": 3
+    },
+    {
+      "category_id": "home_garden.kitchen_dining",
+      "name": "Kitchen & Dining",
+      "slug": "kitchen_dining",
+      "parent_id": "home_garden",
+      "level": 2
+    },
+    {
+      "category_id": "home_garden.lights_lighting",
+      "name": "Lights & Lighting",
+      "slug": "lights_lighting",
+      "parent_id": "home_garden",
+      "level": 2
+    },
+    {
+      "category_id": "home_garden.residential_cleaning",
+      "name": "Residential Cleaning",
+      "slug": "residential_cleaning",
+      "parent_id": "home_garden",
+      "level": 2
+    },
+    {
+      "category_id": "home_garden.water_filters",
+      "name": "Water Filters",
+      "slug": "water_filters",
+      "parent_id": "home_garden",
+      "level": 2
+    },
+    {
+      "category_id": "home_garden.yard_garden_patio",
+      "name": "Yard, Garden & Patio",
+      "slug": "yard_garden_patio",
+      "parent_id": "home_garden",
+      "level": 2
+    },
+    {
+      "category_id": "home_garden.yard_garden_patio.outdoor_cooking_equipment_accessories",
+      "name": "Outdoor Cooking Equipment & Accessories",
+      "slug": "outdoor_cooking_equipment_accessories",
+      "parent_id": "home_garden.yard_garden_patio",
+      "level": 3
+    },
+    {
+      "category_id": "home_garden.yard_garden_patio.pest_weed_control",
+      "name": "Pest & Weed Control",
+      "slug": "pest_weed_control",
+      "parent_id": "home_garden.yard_garden_patio",
+      "level": 3
+    },
+    {
+      "category_id": "internet_telecom",
+      "name": "Internet & Telecom",
+      "slug": "internet_telecom",
+      "parent_id": null,
+      "level": 1
+    },
+    {
+      "category_id": "internet_telecom.cable_tv",
+      "name": "Cable TV",
+      "slug": "cable_tv",
+      "parent_id": "internet_telecom",
+      "level": 2
+    },
+    {
+      "category_id": "internet_telecom.internet_online_services",
+      "name": "Internet & Online Services",
+      "slug": "internet_online_services",
+      "parent_id": "internet_telecom",
+      "level": 2
+    },
+    {
+      "category_id": "internet_telecom.internet_online_services.domain_names_domain_name_registration",
+      "name": "Domain Names & Domain Name Registration",
+      "slug": "domain_names_domain_name_registration",
+      "parent_id": "internet_telecom.internet_online_services",
+      "level": 3
+    },
+    {
+      "category_id": "internet_telecom.internet_online_services.email_messaging",
+      "name": "Email & Messaging",
+      "slug": "email_messaging",
+      "parent_id": "internet_telecom.internet_online_services",
+      "level": 3
+    },
+    {
+      "category_id": "internet_telecom.internet_online_services.internet_service_plans",
+      "name": "Internet Service Plans",
+      "slug": "internet_service_plans",
+      "parent_id": "internet_telecom.internet_online_services",
+      "level": 3
+    },
+    {
+      "category_id": "internet_telecom.internet_online_services.people_search",
+      "name": "People Search",
+      "slug": "people_search",
+      "parent_id": "internet_telecom.internet_online_services",
+      "level": 3
+    },
+    {
+      "category_id": "internet_telecom.internet_online_services.rss_feeds_aggregators",
+      "name": "RSS Feeds & Aggregators",
+      "slug": "rss_feeds_aggregators",
+      "parent_id": "internet_telecom.internet_online_services",
+      "level": 3
+    },
+    {
+      "category_id": "internet_telecom.internet_online_services.social_networks_online_communities",
+      "name": "Social Networks & Online Communities",
+      "slug": "social_networks_online_communities",
+      "parent_id": "internet_telecom.internet_online_services",
+      "level": 3
+    },
+    {
+      "category_id": "internet_telecom.internet_online_services.web_design_development",
+      "name": "Web Design & Development",
+      "slug": "web_design_development",
+      "parent_id": "internet_telecom.internet_online_services",
+      "level": 3
+    },
+    {
+      "category_id": "internet_telecom.internet_online_services.web_hosting",
+      "name": "Web Hosting",
+      "slug": "web_hosting",
+      "parent_id": "internet_telecom.internet_online_services",
+      "level": 3
+    },
+    {
+      "category_id": "internet_telecom.internet_online_services.web_portals",
+      "name": "Web Portals",
+      "slug": "web_portals",
+      "parent_id": "internet_telecom.internet_online_services",
+      "level": 3
+    },
+    {
+      "category_id": "internet_telecom.satellite_tv",
+      "name": "Satellite TV",
+      "slug": "satellite_tv",
+      "parent_id": "internet_telecom",
+      "level": 2
+    },
+    {
+      "category_id": "internet_telecom.telephony",
+      "name": "Telephony",
+      "slug": "telephony",
+      "parent_id": "internet_telecom",
+      "level": 2
+    },
+    {
+      "category_id": "internet_telecom.telephony.mobile_phones_accessories",
+      "name": "Mobile Phones & Accessories",
+      "slug": "mobile_phones_accessories",
+      "parent_id": "internet_telecom.telephony",
+      "level": 3
+    },
+    {
+      "category_id": "internet_telecom.telephony.mobile_phones_accessories.mobile_phones",
+      "name": "Mobile Phones",
+      "slug": "mobile_phones",
+      "parent_id": "internet_telecom.telephony.mobile_phones_accessories",
+      "level": 4
+    },
+    {
+      "category_id": "internet_telecom.telephony.phone_plans",
+      "name": "Phone Plans",
+      "slug": "phone_plans",
+      "parent_id": "internet_telecom.telephony",
+      "level": 3
+    },
+    {
+      "category_id": "internet_telecom.telephony.phone_plans.mobile_phone_plans",
+      "name": "Mobile Phone Plans",
+      "slug": "mobile_phone_plans",
+      "parent_id": "internet_telecom.telephony.phone_plans",
+      "level": 4
+    },
+    {
+      "category_id": "jobs_education",
+      "name": "Jobs & Education",
+      "slug": "jobs_education",
+      "parent_id": null,
+      "level": 1
+    },
+    {
+      "category_id": "jobs_education.education_training",
+      "name": "Education & Training",
+      "slug": "education_training",
+      "parent_id": "jobs_education",
+      "level": 2
+    },
+    {
+      "category_id": "jobs_education.education_training.colleges_universities_post_secondary_education",
+      "name": "Colleges, Universities & Post-Secondary Education",
+      "slug": "colleges_universities_post_secondary_education",
+      "parent_id": "jobs_education.education_training",
+      "level": 3
+    },
+    {
+      "category_id": "jobs_education.education_training.colleges_universities_post_secondary_education.graduate_programs",
+      "name": "Graduate Programs",
+      "slug": "graduate_programs",
+      "parent_id": "jobs_education.education_training.colleges_universities_post_secondary_education",
+      "level": 4
+    },
+    {
+      "category_id": "jobs_education.education_training.language_education",
+      "name": "Language Education",
+      "slug": "language_education",
+      "parent_id": "jobs_education.education_training",
+      "level": 3
+    },
+    {
+      "category_id": "jobs_education.education_training.music_education_instruction",
+      "name": "Music Education & Instruction",
+      "slug": "music_education_instruction",
+      "parent_id": "jobs_education.education_training",
+      "level": 3
+    },
+    {
+      "category_id": "jobs_education.education_training.online_education_degree_programs",
+      "name": "Online Education & Degree Programs",
+      "slug": "online_education_degree_programs",
+      "parent_id": "jobs_education.education_training",
+      "level": 3
+    },
+    {
+      "category_id": "jobs_education.education_training.standardized_admissions_tests",
+      "name": "Standardized & Admissions Tests",
+      "slug": "standardized_admissions_tests",
+      "parent_id": "jobs_education.education_training",
+      "level": 3
+    },
+    {
+      "category_id": "jobs_education.education_training.training_certification",
+      "name": "Training & Certification",
+      "slug": "training_certification",
+      "parent_id": "jobs_education.education_training",
+      "level": 3
+    },
+    {
+      "category_id": "jobs_education.education_training.tutoring_services",
+      "name": "Tutoring Services",
+      "slug": "tutoring_services",
+      "parent_id": "jobs_education.education_training",
+      "level": 3
+    },
+    {
+      "category_id": "jobs_education.education_training.vocational_training_trade_schools",
+      "name": "Vocational Training & Trade Schools",
+      "slug": "vocational_training_trade_schools",
+      "parent_id": "jobs_education.education_training",
+      "level": 3
+    },
+    {
+      "category_id": "jobs_education.job_listings",
+      "name": "Job Listings",
+      "slug": "job_listings",
+      "parent_id": "jobs_education",
+      "level": 2
+    },
+    {
+      "category_id": "law_government",
+      "name": "Law & Government",
+      "slug": "law_government",
+      "parent_id": null,
+      "level": 1
+    },
+    {
+      "category_id": "law_government.legal",
+      "name": "Legal",
+      "slug": "legal",
+      "parent_id": "law_government",
+      "level": 2
+    },
+    {
+      "category_id": "law_government.legal.attorneys_law_firms",
+      "name": "Attorneys & Law Firms",
+      "slug": "attorneys_law_firms",
+      "parent_id": "law_government.legal",
+      "level": 3
+    },
+    {
+      "category_id": "law_government.legal.immigration_law",
+      "name": "Immigration Law",
+      "slug": "immigration_law",
+      "parent_id": "law_government.legal",
+      "level": 3
+    },
+    {
+      "category_id": "law_government.military",
+      "name": "Military",
+      "slug": "military",
+      "parent_id": "law_government",
+      "level": 2
+    },
+    {
+      "category_id": "law_government.public_services",
+      "name": "Public Services",
+      "slug": "public_services",
+      "parent_id": "law_government",
+      "level": 2
+    },
+    {
+      "category_id": "law_government.public_services.public_utilities",
+      "name": "Public Utilities",
+      "slug": "public_utilities",
+      "parent_id": "law_government.public_services",
+      "level": 3
+    },
+    {
+      "category_id": "mobile_utilities",
+      "name": "Mobile App Utilities",
+      "slug": "mobile_utilities",
+      "parent_id": null,
+      "level": 1
+    },
+    {
+      "category_id": "mobile_utilities.flashlight_apps",
+      "name": "Flashlight Apps",
+      "slug": "flashlight_apps",
+      "parent_id": "mobile_utilities",
+      "level": 2
+    },
+    {
+      "category_id": "mobile_utilities.location_tracking_apps",
+      "name": "Location Tracking Apps",
+      "slug": "location_tracking_apps",
+      "parent_id": "mobile_utilities",
+      "level": 2
+    },
+    {
+      "category_id": "mobile_utilities.mobile_screen_app_locks",
+      "name": "Mobile Screen & App Locks",
+      "slug": "mobile_screen_app_locks",
+      "parent_id": "mobile_utilities",
+      "level": 2
+    },
+    {
+      "category_id": "mobile_utilities.mobile_system_management_apps",
+      "name": "Mobile System Management Apps",
+      "slug": "mobile_system_management_apps",
+      "parent_id": "mobile_utilities",
+      "level": 2
+    },
+    {
+      "category_id": "mobile_utilities.mobile_system_management_apps.battery_management_apps",
+      "name": "Battery Management Apps",
+      "slug": "battery_management_apps",
+      "parent_id": "mobile_utilities.mobile_system_management_apps",
+      "level": 3
+    },
+    {
+      "category_id": "mobile_utilities.mobile_system_management_apps.file_manager_apps",
+      "name": "File Manager Apps",
+      "slug": "file_manager_apps",
+      "parent_id": "mobile_utilities.mobile_system_management_apps",
+      "level": 3
+    },
+    {
+      "category_id": "mobile_utilities.mobile_system_management_apps.mobile_task_app_management",
+      "name": "Mobile Task & App Management",
+      "slug": "mobile_task_app_management",
+      "parent_id": "mobile_utilities.mobile_system_management_apps",
+      "level": 3
+    },
+    {
+      "category_id": "mobile_utilities.network_connectivity_apps",
+      "name": "Network Connectivity Apps",
+      "slug": "network_connectivity_apps",
+      "parent_id": "mobile_utilities",
+      "level": 2
+    },
+    {
+      "category_id": "news_books_publications",
+      "name": "News, Books & Publications",
+      "slug": "news_books_publications",
+      "parent_id": null,
+      "level": 1
+    },
+    {
+      "category_id": "news_books_publications.books_literature",
+      "name": "Books & Literature",
+      "slug": "books_literature",
+      "parent_id": "news_books_publications",
+      "level": 2
+    },
+    {
+      "category_id": "news_books_publications.books_literature.audiobooks",
+      "name": "Audiobooks",
+      "slug": "audiobooks",
+      "parent_id": "news_books_publications.books_literature",
+      "level": 3
+    },
+    {
+      "category_id": "news_books_publications.books_literature.book_retailers",
+      "name": "Book Retailers",
+      "slug": "book_retailers",
+      "parent_id": "news_books_publications.books_literature",
+      "level": 3
+    },
+    {
+      "category_id": "news_books_publications.books_literature.e_books",
+      "name": "E-Books",
+      "slug": "e_books",
+      "parent_id": "news_books_publications.books_literature",
+      "level": 3
+    },
+    {
+      "category_id": "news_books_publications.celebrities_entertainment_news",
+      "name": "Celebrities & Entertainment News",
+      "slug": "celebrities_entertainment_news",
+      "parent_id": "news_books_publications",
+      "level": 2
+    },
+    {
+      "category_id": "news_books_publications.newspapers",
+      "name": "Newspapers",
+      "slug": "newspapers",
+      "parent_id": "news_books_publications",
+      "level": 2
+    },
+    {
+      "category_id": "news_books_publications.reference_materials_resources",
+      "name": "Reference Materials & Resources",
+      "slug": "reference_materials_resources",
+      "parent_id": "news_books_publications",
+      "level": 2
+    },
+    {
+      "category_id": "news_books_publications.reference_materials_resources.public_records",
+      "name": "Public Records",
+      "slug": "public_records",
+      "parent_id": "news_books_publications.reference_materials_resources",
+      "level": 3
+    },
+    {
+      "category_id": "news_books_publications.reference_materials_resources.translation",
+      "name": "Translation",
+      "slug": "translation",
+      "parent_id": "news_books_publications.reference_materials_resources",
+      "level": 3
+    },
+    {
+      "category_id": "news_books_publications.weather",
+      "name": "Weather",
+      "slug": "weather",
+      "parent_id": "news_books_publications",
+      "level": 2
+    },
+    {
+      "category_id": "gifts_occasions",
+      "name": "Occasions & Gifts",
+      "slug": "gifts_occasions",
+      "parent_id": null,
+      "level": 1
+    },
+    {
+      "category_id": "gifts_occasions.cards_greetings",
+      "name": "Cards & Greetings",
+      "slug": "cards_greetings",
+      "parent_id": "gifts_occasions",
+      "level": 2
+    },
+    {
+      "category_id": "gifts_occasions.flower_arrangements",
+      "name": "Flower Arrangements",
+      "slug": "flower_arrangements",
+      "parent_id": "gifts_occasions",
+      "level": 2
+    },
+    {
+      "category_id": "gifts_occasions.gifts",
+      "name": "Gifts",
+      "slug": "gifts",
+      "parent_id": "gifts_occasions",
+      "level": 2
+    },
+    {
+      "category_id": "gifts_occasions.holidays_seasonal_events",
+      "name": "Holidays & Seasonal Events",
+      "slug": "holidays_seasonal_events",
+      "parent_id": "gifts_occasions",
+      "level": 2
+    },
+    {
+      "category_id": "gifts_occasions.holidays_seasonal_events.halloween_october_31st",
+      "name": "Halloween & October 31st",
+      "slug": "halloween_october_31st",
+      "parent_id": "gifts_occasions.holidays_seasonal_events",
+      "level": 3
+    },
+    {
+      "category_id": "gifts_occasions.parties_party_supplies",
+      "name": "Parties & Party Supplies",
+      "slug": "parties_party_supplies",
+      "parent_id": "gifts_occasions",
+      "level": 2
+    },
+    {
+      "category_id": "gifts_occasions.special_occasions",
+      "name": "Special Occasions",
+      "slug": "special_occasions",
+      "parent_id": "gifts_occasions",
+      "level": 2
+    },
+    {
+      "category_id": "gifts_occasions.special_occasions.funerals_bereavement",
+      "name": "Funerals & Bereavement",
+      "slug": "funerals_bereavement",
+      "parent_id": "gifts_occasions.special_occasions",
+      "level": 3
+    },
+    {
+      "category_id": "gifts_occasions.special_occasions.weddings",
+      "name": "Weddings",
+      "slug": "weddings",
+      "parent_id": "gifts_occasions.special_occasions",
+      "level": 3
+    },
+    {
+      "category_id": "real_estate",
+      "name": "Real Estate",
+      "slug": "real_estate",
+      "parent_id": null,
+      "level": 1
+    },
+    {
+      "category_id": "real_estate.property_development",
+      "name": "Property Development",
+      "slug": "property_development",
+      "parent_id": "real_estate",
+      "level": 2
+    },
+    {
+      "category_id": "real_estate.real_estate_agents_brokerages",
+      "name": "Real Estate Agents & Brokerages",
+      "slug": "real_estate_agents_brokerages",
+      "parent_id": "real_estate",
+      "level": 2
+    },
+    {
+      "category_id": "real_estate.real_estate_listings",
+      "name": "Real Estate Listings",
+      "slug": "real_estate_listings",
+      "parent_id": "real_estate",
+      "level": 2
+    },
+    {
+      "category_id": "real_estate.real_estate_listings.rental_listings",
+      "name": "Rental Listings",
+      "slug": "rental_listings",
+      "parent_id": "real_estate.real_estate_listings",
+      "level": 3
+    },
+    {
+      "category_id": "real_estate.relocation_household_moving",
+      "name": "Relocation & Household Moving",
+      "slug": "relocation_household_moving",
+      "parent_id": "real_estate",
+      "level": 2
+    },
+    {
+      "category_id": "sports_fitness",
+      "name": "Sports & Fitness",
+      "slug": "sports_fitness",
+      "parent_id": null,
+      "level": 1
+    },
+    {
+      "category_id": "sports_fitness.boating_water_recreation",
+      "name": "Boating & Water Recreation",
+      "slug": "boating_water_recreation",
+      "parent_id": "sports_fitness",
+      "level": 2
+    },
+    {
+      "category_id": "sports_fitness.boating_water_recreation.fishing",
+      "name": "Fishing",
+      "slug": "fishing",
+      "parent_id": "sports_fitness.boating_water_recreation",
+      "level": 3
+    },
+    {
+      "category_id": "sports_fitness.fitness",
+      "name": "Fitness",
+      "slug": "fitness",
+      "parent_id": "sports_fitness",
+      "level": 2
+    },
+    {
+      "category_id": "sports_fitness.fitness.fitness_classes_instruction",
+      "name": "Fitness Classes & Instruction",
+      "slug": "fitness_classes_instruction",
+      "parent_id": "sports_fitness.fitness",
+      "level": 3
+    },
+    {
+      "category_id": "sports_fitness.fitness.gyms_gym_memberships",
+      "name": "Gyms & Gym Memberships",
+      "slug": "gyms_gym_memberships",
+      "parent_id": "sports_fitness.fitness",
+      "level": 3
+    },
+    {
+      "category_id": "sports_fitness.fitness.personal_training",
+      "name": "Personal Training",
+      "slug": "personal_training",
+      "parent_id": "sports_fitness.fitness",
+      "level": 3
+    },
+    {
+      "category_id": "sports_fitness.sporting_goods",
+      "name": "Sporting Goods",
+      "slug": "sporting_goods",
+      "parent_id": "sports_fitness",
+      "level": 2
+    },
+    {
+      "category_id": "sports_fitness.sporting_goods.airsoft_equipment",
+      "name": "Airsoft Equipment",
+      "slug": "airsoft_equipment",
+      "parent_id": "sports_fitness.sporting_goods",
+      "level": 3
+    },
+    {
+      "category_id": "sports_fitness.sporting_goods.bicycles_accessories",
+      "name": "Bicycles & Accessories",
+      "slug": "bicycles_accessories",
+      "parent_id": "sports_fitness.sporting_goods",
+      "level": 3
+    },
+    {
+      "category_id": "sports_fitness.sporting_goods.golf_equipment",
+      "name": "Golf Equipment",
+      "slug": "golf_equipment",
+      "parent_id": "sports_fitness.sporting_goods",
+      "level": 3
+    },
+    {
+      "category_id": "sports_fitness.sporting_goods.sports_equipment_rental_services",
+      "name": "Sports Equipment Rental Services",
+      "slug": "sports_equipment_rental_services",
+      "parent_id": "sports_fitness.sporting_goods",
+      "level": 3
+    },
+    {
+      "category_id": "sports_fitness.sports",
+      "name": "Sports",
+      "slug": "sports",
+      "parent_id": "sports_fitness",
+      "level": 2
+    },
+    {
+      "category_id": "sports_fitness.sports.american_football",
+      "name": "American Football",
+      "slug": "american_football",
+      "parent_id": "sports_fitness.sports",
+      "level": 3
+    },
+    {
+      "category_id": "sports_fitness.sports.baseball",
+      "name": "Baseball",
+      "slug": "baseball",
+      "parent_id": "sports_fitness.sports",
+      "level": 3
+    },
+    {
+      "category_id": "sports_fitness.sports.basketball",
+      "name": "Basketball",
+      "slug": "basketball",
+      "parent_id": "sports_fitness.sports",
+      "level": 3
+    },
+    {
+      "category_id": "sports_fitness.sports.combat_sports",
+      "name": "Combat Sports",
+      "slug": "combat_sports",
+      "parent_id": "sports_fitness.sports",
+      "level": 3
+    },
+    {
+      "category_id": "sports_fitness.sports.hockey",
+      "name": "Hockey",
+      "slug": "hockey",
+      "parent_id": "sports_fitness.sports",
+      "level": 3
+    },
+    {
+      "category_id": "sports_fitness.sports.hunting_shooting",
+      "name": "Hunting & Shooting",
+      "slug": "hunting_shooting",
+      "parent_id": "sports_fitness.sports",
+      "level": 3
+    },
+    {
+      "category_id": "sports_fitness.sports.soccer",
+      "name": "Soccer",
+      "slug": "soccer",
+      "parent_id": "sports_fitness.sports",
+      "level": 3
+    },
+    {
+      "category_id": "sports_fitness.sports.winter_sports",
+      "name": "Winter Sports",
+      "slug": "winter_sports",
+      "parent_id": "sports_fitness.sports",
+      "level": 3
+    },
+    {
+      "category_id": "sports_fitness.sports_fitness_apparel",
+      "name": "Sports & Fitness Apparel",
+      "slug": "sports_fitness_apparel",
+      "parent_id": "sports_fitness",
+      "level": 2
+    },
+    {
+      "category_id": "sports_fitness.sports_fan_gear_apparel",
+      "name": "Sports Fan Gear & Apparel",
+      "slug": "sports_fan_gear_apparel",
+      "parent_id": "sports_fitness",
+      "level": 2
+    },
+    {
+      "category_id": "sports_fitness.sports_fan_gear_apparel.sports_team_jerseys",
+      "name": "Sports Team Jerseys",
+      "slug": "sports_team_jerseys",
+      "parent_id": "sports_fitness.sports_fan_gear_apparel",
+      "level": 3
+    },
+    {
+      "category_id": "travel_tourism",
+      "name": "Travel & Tourism",
+      "slug": "travel_tourism",
+      "parent_id": null,
+      "level": 1
+    },
+    {
+      "category_id": "travel_tourism.accommodations",
+      "name": "Accommodations",
+      "slug": "accommodations",
+      "parent_id": "travel_tourism",
+      "level": 2
+    },
+    {
+      "category_id": "travel_tourism.accommodations.hotels_motels_resorts",
+      "name": "Hotels, Motels & Resorts",
+      "slug": "hotels_motels_resorts",
+      "parent_id": "travel_tourism.accommodations",
+      "level": 3
+    },
+    {
+      "category_id": "travel_tourism.accommodations.hotels_motels_resorts.hotels",
+      "name": "Hotels",
+      "slug": "hotels",
+      "parent_id": "travel_tourism.accommodations.hotels_motels_resorts",
+      "level": 4
+    },
+    {
+      "category_id": "travel_tourism.accommodations.hotels_motels_resorts.resorts",
+      "name": "Resorts",
+      "slug": "resorts",
+      "parent_id": "travel_tourism.accommodations.hotels_motels_resorts",
+      "level": 4
+    },
+    {
+      "category_id": "travel_tourism.accommodations.vacation_rentals",
+      "name": "Vacation Rentals",
+      "slug": "vacation_rentals",
+      "parent_id": "travel_tourism.accommodations",
+      "level": 3
+    },
+    {
+      "category_id": "travel_tourism.air_travel",
+      "name": "Air Travel",
+      "slug": "air_travel",
+      "parent_id": "travel_tourism",
+      "level": 2
+    },
+    {
+      "category_id": "travel_tourism.air_travel.airline_tickets_fares_flights",
+      "name": "Airline Tickets, Fares & Flights",
+      "slug": "airline_tickets_fares_flights",
+      "parent_id": "travel_tourism.air_travel",
+      "level": 3
+    },
+    {
+      "category_id": "travel_tourism.cruises_cruise_services",
+      "name": "Cruises & Cruise Services",
+      "slug": "cruises_cruise_services",
+      "parent_id": "travel_tourism",
+      "level": 2
+    },
+    {
+      "category_id": "travel_tourism.last_minute_travel",
+      "name": "Last Minute Travel",
+      "slug": "last_minute_travel",
+      "parent_id": "travel_tourism",
+      "level": 2
+    },
+    {
+      "category_id": "travel_tourism.luggage",
+      "name": "Luggage",
+      "slug": "luggage",
+      "parent_id": "travel_tourism",
+      "level": 2
+    },
+    {
+      "category_id": "travel_tourism.specialty_travel",
+      "name": "Specialty Travel",
+      "slug": "specialty_travel",
+      "parent_id": "travel_tourism",
+      "level": 2
+    },
+    {
+      "category_id": "travel_tourism.tourist_attractions_destinations",
+      "name": "Tourist Attractions & Destinations",
+      "slug": "tourist_attractions_destinations",
+      "parent_id": "travel_tourism",
+      "level": 2
+    },
+    {
+      "category_id": "travel_tourism.tourist_attractions_destinations.theme_parks",
+      "name": "Theme Parks",
+      "slug": "theme_parks",
+      "parent_id": "travel_tourism.tourist_attractions_destinations",
+      "level": 3
+    },
+    {
+      "category_id": "travel_tourism.transportation_excursions",
+      "name": "Transportation & Excursions",
+      "slug": "transportation_excursions",
+      "parent_id": "travel_tourism",
+      "level": 2
+    },
+    {
+      "category_id": "travel_tourism.transportation_excursions.bus_rail_services",
+      "name": "Bus & Rail Services",
+      "slug": "bus_rail_services",
+      "parent_id": "travel_tourism.transportation_excursions",
+      "level": 3
+    },
+    {
+      "category_id": "travel_tourism.transportation_excursions.bus_rail_services.bus_services",
+      "name": "Bus Services",
+      "slug": "bus_services",
+      "parent_id": "travel_tourism.transportation_excursions.bus_rail_services",
+      "level": 4
+    },
+    {
+      "category_id": "travel_tourism.transportation_excursions.bus_rail_services.rail_services",
+      "name": "Rail Services",
+      "slug": "rail_services",
+      "parent_id": "travel_tourism.transportation_excursions.bus_rail_services",
+      "level": 4
+    },
+    {
+      "category_id": "travel_tourism.transportation_excursions.car_rental_services",
+      "name": "Car Rental Services",
+      "slug": "car_rental_services",
+      "parent_id": "travel_tourism.transportation_excursions",
+      "level": 3
+    },
+    {
+      "category_id": "travel_tourism.transportation_excursions.taxi_services",
+      "name": "Taxi Services",
+      "slug": "taxi_services",
+      "parent_id": "travel_tourism.transportation_excursions",
+      "level": 3
+    },
+    {
+      "category_id": "travel_tourism.travel_booking_services",
+      "name": "Travel Booking Services",
+      "slug": "travel_booking_services",
+      "parent_id": "travel_tourism",
+      "level": 2
+    },
+    {
+      "category_id": "travel_tourism.travel_media_publications",
+      "name": "Travel Media & Publications",
+      "slug": "travel_media_publications",
+      "parent_id": "travel_tourism",
+      "level": 2
+    },
+    {
+      "category_id": "travel_tourism.vacation_packages",
+      "name": "Vacation Packages",
+      "slug": "vacation_packages",
+      "parent_id": "travel_tourism",
+      "level": 2
+    },
+    {
+      "category_id": "others",
+      "name": "Others",
+      "slug": "others",
+      "parent_id": null,
+      "level": 1
+    }
+  ]
+}

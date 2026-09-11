@@ -1,0 +1,37 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://agentoffernetwork.org/schema/taxonomy-baseline/v1",
+  "title": "AON Taxonomy v1 Immutable Baseline",
+  "type": "object",
+  "required": ["schema_version", "taxonomy_version", "node_count", "tree_digest", "baseline_digest", "nodes"],
+  "properties": {
+    "schema_version": {"const": "aon-taxonomy-baseline-v1"},
+    "taxonomy_version": {"const": "v1"},
+    "node_count": {"const": 515},
+    "tree_digest": {"$ref": "#/$defs/sha256"},
+    "baseline_digest": {"$ref": "#/$defs/sha256"},
+    "nodes": {
+      "type": "array",
+      "minItems": 515,
+      "maxItems": 515,
+      "items": {"$ref": "#/$defs/node"}
+    }
+  },
+  "additionalProperties": false,
+  "$defs": {
+    "sha256": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
+    "categoryId": {"type": "string", "pattern": "^[a-z0-9]+(?:_[a-z0-9]+)*(?:\\.[a-z0-9]+(?:_[a-z0-9]+)*)*$"},
+    "node": {
+      "type": "object",
+      "required": ["category_id", "name", "slug", "parent_id", "level"],
+      "properties": {
+        "category_id": {"$ref": "#/$defs/categoryId"},
+        "name": {"type": "string", "minLength": 1},
+        "slug": {"type": "string", "pattern": "^[a-z0-9]+(?:_[a-z0-9]+)*$"},
+        "parent_id": {"oneOf": [{"$ref": "#/$defs/categoryId"}, {"type": "null"}]},
+        "level": {"type": "integer", "minimum": 1, "maximum": 6}
+      },
+      "additionalProperties": false
+    }
+  }
+}
