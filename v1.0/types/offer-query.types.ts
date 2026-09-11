@@ -53,9 +53,16 @@ export interface OfferQueryResponseV10 {
   protocol_version: "1.0"
   language: string
   offers: GenericOfferV10[]
+  alternative_offers?: AlternativeOfferV10[]
   engagement?: EngagementV10
   hooks?: HookV10[]
   empty_reason?: EmptyReasonV10
+}
+
+export interface AlternativeOfferV10 {
+  basis: "regional_popularity"
+  selection_reason: string
+  offer: Omit<GenericOfferV10, "match_reason"> & { match_reason?: never }
 }
 
 export type EmptyReasonV10 =

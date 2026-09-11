@@ -544,6 +544,51 @@ export function validateOfferQueryResponseV10Semantics(response, request = {}) {
     const projection = validateQueryGenericOfferV10Semantics(offer)
     for (const error of projection.errors) errors.push(`offers.${index}${error.instancePath}: ${error.message}`)
   }
+  if (Object.hasOwn(response, "alternative_offers")) {
+    if (!Array.isArray(response.offers) || response.offers.length !== 0) {
+      errors.push("alternative_offers requires an empty offers array")
+    }
+    if (!["below_relevance_threshold", "no_material"].includes(response.empty_reason)) {
+      errors.push("alternative_offers requires empty_reason below_relevance_threshold or no_material")
+    }
+    if (Object.hasOwn(request, "placement_id")) errors.push("alternative_offers must be omitted for placement_id requests")
+    if (request.test_mode === true) errors.push("alternative_offers must be omitted when test_mode is true")
+    const alternatives = response.alternative_offers
+    if (!Array.isArray(alternatives)) {
+      errors.push("alternative_offers must be an array containing 1–3 entries")
+    } else {
+      if (alternatives.length < 1 || alternatives.length > 3) errors.push("alternative_offers must contain 1–3 entries")
+      const alternativeOfferIds = new Set()
+      for (const [index, alternative] of alternatives.entries()) {
+        const path = `alternative_offers.${index}`
+        if (!isPlainObject(alternative)) {
+          errors.push(`${path} must be a plain object`)
+          continue
+        }
+        for (const key of ["basis", "selection_reason", "offer"]) {
+          if (!Object.hasOwn(alternative, key)) errors.push(`${path}.${key} is required`)
+        }
+        for (const key of Object.keys(alternative)) {
+          if (!["basis", "selection_reason", "offer"].includes(key)) errors.push(`${path}.${key} is not defined in v1.0`)
+        }
+        if (alternative.basis !== "regional_popularity") errors.push(`${path}.basis must be regional_popularity`)
+        const reason = alternative.selection_reason
+        if (typeof reason !== "string" || !/\S/u.test(reason) || [...reason].length > 500) {
+          errors.push(`${path}.selection_reason must contain 1–500 Unicode code points and at least one non-whitespace character under ECMAScript whitespace rules`)
+        }
+        const offer = alternative.offer
+        const projection = validateQueryGenericOfferV10Semantics(offer)
+        for (const error of projection.errors) errors.push(`${path}.offer${error.instancePath}: ${error.message}`)
+        if (!isPlainObject(offer)) continue
+        if (Object.hasOwn(offer, "match_reason")) errors.push(`${path}.offer.match_reason must be omitted for alternatives`)
+        if (typeof offer.offer_id === "string") {
+          const stableOfferId = offer.offer_id.toLowerCase()
+          if (alternativeOfferIds.has(stableOfferId)) errors.push(`${path}.offer.offer_id must be unique across alternative_offers regardless of UUID casing or dispatch identity`)
+          alternativeOfferIds.add(stableOfferId)
+        }
+      }
+    }
+  }
   const followupTopics = response.engagement?.followup_topics ?? []
   for (let index = 1; index < followupTopics.length; index += 1) {
     if (followupTopics[index - 1]?.confidence < followupTopics[index]?.confidence) errors.push("followup_topics must be ordered by descending confidence")

@@ -10,6 +10,7 @@
     "protocol_version": {"const": "1.0", "description": "Transport protocol line used to produce this response. It is distinct from offers[].version, which is the Offer document-model lineage."},
     "language": {"type": "string", "minLength": 2, "maxLength": 64, "pattern": "^[A-Za-z]{2,3}(?:-[A-Za-z]{3}){0,3}(?:-[A-Za-z]{4})?(?:-(?:[A-Za-z]{2}|[0-9]{3}))?(?:-(?:[A-Za-z0-9]{5,8}|[0-9][A-Za-z0-9]{3}))*(?:-[0-9A-WY-Za-wy-z](?:-[A-Za-z0-9]{2,8})+)*(?:-[Xx](?:-[A-Za-z0-9]{1,8})+)?$", "description": "Language selected for user-facing response content under the stable-v1.0 language-tag profile. It does not itself express user eligibility or Partner targeting."},
     "offers": {"type": "array", "items": {"$ref": "https://agentoffernetwork.org/schema/offer-query-generic-projection/v1.0"}, "description": "Current Generic Offer projections in descending selection order for this Query. Supply profile details, price tax status, and quote observations are intentionally excluded until a separately certified runtime projection rollout. Earlier entries have higher selection priority under the producer's declared matching policy; order is not stable or comparable across separate requests. When empty, empty_reason is required."},
+    "alternative_offers": {"type": "array", "minItems": 1, "maxItems": 3, "items": {"$ref": "#/$defs/alternativeOffer"}, "description": "Optional independent alternatives after the complete main Query chain, including force_offer, returns no offers. Stable offer_id values must be unique, regardless of UUID casing or dispatch identity. Omit this field when no eligible alternative exists. These entries do not count as main Query matches or hook subjects; regional popularity and eligibility require producer evidence."},
     "engagement": {"$ref": "#/$defs/engagement", "description": "Optional user-facing suggestions for refining the current intent or exploring an adjacent topic. It does not change the returned Offer payloads."},
     "hooks": {"type": "array", "minItems": 1, "maxItems": 10, "items": {"$ref": "#/$defs/hook"}, "description": "Optional non-empty change cues comparing one returned Offer with an explicit previous Query baseline. Hooks are response content, not callback registrations, watch state, or delivery guarantees."},
     "empty_reason": {"type": "string", "enum": ["frequency_capped", "below_relevance_threshold", "scene_suppressed", "no_material", "consent_missing"], "description": "Required primary explanation for an empty offers array and omitted otherwise. When several causes apply, precedence is consent_missing, scene_suppressed, frequency_capped, no_material, then below_relevance_threshold."}
@@ -23,9 +24,35 @@
     {
       "if": {"type": "object", "properties": {"offers": {"type": "array", "minItems": 1, "description": "Conditional branch that identifies a non-empty Offer result."}}},
       "then": {"not": {"required": ["empty_reason"]}}
+    },
+    {
+      "if": {"required": ["alternative_offers"]},
+      "then": {
+        "required": ["offers", "empty_reason"],
+        "properties": {
+          "offers": {"type": "array", "maxItems": 0, "description": "Alternatives are allowed only when the final main Query result is empty."},
+          "empty_reason": {"enum": ["below_relevance_threshold", "no_material"], "description": "Only these public empty reasons permit alternatives; actual internal causes and all producer gates must also allow them."}
+        }
+      }
     }
   ],
   "$defs": {
+    "alternativeOffer": {
+      "type": "object",
+      "description": "One independently disclosed regional-popularity alternative, not a claim of matching the current Query.",
+      "required": ["basis", "selection_reason", "offer"],
+      "properties": {
+        "basis": {"type": "string", "const": "regional_popularity", "description": "Selection is based on genuine popularity in the user's country, with evidence owned by the producer; this value alone does not prove that evidence."},
+        "selection_reason": {"type": "string", "minLength": 1, "maxLength": 500, "pattern": "\\S", "description": "Explanation of this alternative selection in response.language, using 1–500 Unicode code points and at least one character outside ECMAScript whitespace (\\s). Required even when thinking_mode is false. It must not claim a direct Query match or be replaced by a static Partner recommendation_reason."},
+        "offer": {
+          "type": "object",
+          "$ref": "https://agentoffernetwork.org/schema/offer-query-generic-projection/v1.0",
+          "not": {"required": ["match_reason"]},
+          "description": "Complete existing Generic Query projection, including dispatch identity and action, with match_reason always omitted for alternatives."
+        }
+      },
+      "additionalProperties": false
+    },
     "engagement": {"type": "object", "minProperties": 1, "description": "Optional non-empty guidance that helps the user continue the current decision journey.", "properties": {"refinements": {"type": "array", "minItems": 1, "maxItems": 3, "items": {"$ref": "#/$defs/refinement"}, "description": "Non-empty suggestions that narrow or clarify the current Query intent."}, "followup_topics": {"type": "array", "minItems": 1, "maxItems": 2, "items": {"$ref": "#/$defs/followupTopic"}, "description": "Non-empty adjacent-topic suggestions ordered by descending confidence within this response."}}, "additionalProperties": false},
     "refinement": {"type": "object", "description": "One user-facing suggestion for narrowing the current Query.", "required": ["label", "query_helper"], "properties": {"label": {"type": "string", "minLength": 1, "maxLength": 160, "description": "Short user-facing label for the refinement."}, "query_helper": {"$ref": "#/$defs/queryHelper", "description": "Structured request patch to apply if the user selects the refinement."}, "speak": {"type": "string", "minLength": 1, "maxLength": 500, "description": "Optional non-empty longer phrasing suitable for voice or conversational presentation."}}, "additionalProperties": false},
     "followupTopic": {"type": "object", "description": "One user-facing suggestion for exploring a related topic.", "required": ["label", "basis", "query_helper", "confidence"], "properties": {"label": {"type": "string", "minLength": 1, "maxLength": 160, "description": "Short user-facing label for the related topic."}, "basis": {"type": "string", "enum": ["category_complement", "sequential_journey", "problem_to_product", "comparison_alternative", "user_interest", "seasonal"], "description": "Declared relationship between the follow-up topic and the current Query; each value has a normative definition in the field-semantics glossary."}, "query_helper": {"$ref": "#/$defs/queryHelper", "description": "Structured non-destructive partial update to apply if the user selects the follow-up topic."}, "confidence": {"type": "number", "minimum": 0, "maximum": 1, "description": "Producer-normalized relevance estimate for this follow-up. Values are comparable only among followup_topics in this response, are ordered descending, and are neither calibrated probabilities nor cross-producer scores."}}, "additionalProperties": false},
