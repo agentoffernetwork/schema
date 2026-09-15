@@ -37,6 +37,36 @@ Read the integration guides in the
 Canonical payloads are published in the
 [examples repository](https://github.com/agentoffernetwork/examples).
 
+## Taxonomy definitions and downstream adoption
+
+The definition-first AON Taxonomy v1 expansion preserves all 515 existing ids
+and adds 272 definitions for 787 canonical ids. The tree and canonical metadata
+define category semantics independently of product admission. Earlier candidate
+records remain deferred in their evidence history; that status does not make
+the corresponding ids unusable in the expanded definition release.
+
+Generated candidate source outputs are the
+[definition manifest](v1.0/taxonomy/aon-taxonomy-definition.json),
+[definition crosswalk](v1.0/taxonomy/source-mappings/warehouse-aon-definition.json),
+and [comparison table](v1.0/taxonomy/source-mappings/warehouse-aon-definition.md).
+These links identify release target paths, not proof of completed public
+publication. The ordinary protected protocol release publishes committed
+definitions independently of downstream product validation. Pin the matching
+immutable release
+manifest when consuming the tree, metadata, resolver, and definition mappings.
+`definition_status=defined` describes semantic definitions; the definition
+digest and source commit bound by the outer protected release establish release
+identity. The status itself does not assert publication or runtime support.
+
+Runtime and classifier support, warehouse adaptation, historical backfill, and
+product admission belong to a separate downstream Plan. A canonical id does
+not certify product classification accuracy or activation eligibility. Preserve
+product/platform/service and attribute boundaries, use a broad parent when
+Offer evidence cannot support a narrower id, and evaluate primary and secondary
+category subtree matching against the same pinned snapshot. See the
+[category taxonomy](https://github.com/agentoffernetwork/protocol/blob/main/v1.0/specs/category-taxonomy.md)
+for the classification and downstream boundaries.
+
 ## Supply and Query boundaries
 
 The canonical Offer and Partner/Provider supply carriers may include the
