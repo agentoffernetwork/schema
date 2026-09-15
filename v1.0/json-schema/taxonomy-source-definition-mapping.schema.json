@@ -8,7 +8,6 @@
     "source",
     "source_mapping_digest",
     "taxonomy_tree_digest",
-    "product_validation_registry_digest",
     "mappings",
     "mapping_digest"
   ],
@@ -23,9 +22,6 @@
       "$ref": "#/$defs/sha256"
     },
     "taxonomy_tree_digest": {
-      "$ref": "#/$defs/sha256"
-    },
-    "product_validation_registry_digest": {
       "$ref": "#/$defs/sha256"
     },
     "mappings": {
@@ -135,10 +131,7 @@
       "required": [
         "category_id",
         "boundary_fingerprint",
-        "definition_status",
-        "definition_origin",
-        "product_validation_status",
-        "runtime_support_status"
+        "definition_origin"
       ],
       "properties": {
         "category_id": {
@@ -147,24 +140,11 @@
         "boundary_fingerprint": {
           "$ref": "#/$defs/sha256"
         },
-        "definition_status": {
-          "const": "defined"
-        },
         "definition_origin": {
           "enum": [
             "baseline",
             "candidate"
           ]
-        },
-        "product_validation_status": {
-          "enum": [
-            "admitted",
-            "deferred",
-            "not_assessed"
-          ]
-        },
-        "runtime_support_status": {
-          "const": "not_asserted"
         }
       },
       "additionalProperties": false

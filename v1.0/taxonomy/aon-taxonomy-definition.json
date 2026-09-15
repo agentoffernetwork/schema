@@ -287,9 +287,9 @@
     "taxonomy": "01c9956800878c1b38a8a32f0760bc8a95710113d5468195828a4054bad4e4f0",
     "public_metadata": "a38181b4bb235412b93049475a1d16edc82c26e207aabb53bfc2f7463cb74369",
     "source_mapping": "8a2b14007a64aa69a34464c5bfd2718c96a3ba498d35e5b0aa4533cf6a83a518",
-    "definition_mapping": "6ff26a0e4b882a987d3fc94e55a018771344f816a46868e4be9b78055b3e5384"
+    "definition_mapping": "d59e9d179106321d9342bb15ebdca0cf5ba027f1fba6e0f567205dec7e2b148f"
   },
   "product_validation_status": "independent",
   "runtime_support_status": "not_asserted",
-  "definition_digest": "af46a0a389ed2f508b90352426c3672550a70767b809cb82add76d667f98ccbd"
+  "definition_digest": "049a85a15ad165007036d1a9733357a1c991c16ea132874c719637aa22c9df61"
 }
