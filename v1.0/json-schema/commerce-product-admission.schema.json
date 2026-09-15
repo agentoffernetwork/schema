@@ -74,7 +74,7 @@
     },
     "record": {
       "type": "object",
-      "required": ["evidence_id", "candidate_category_id", "generated_at", "positive_samples", "hard_negatives", "cohort", "boundary_review", "decomposition", "content_digest", "signoffs"],
+      "required": ["evidence_id", "candidate_category_id", "generated_at", "positive_samples", "hard_negatives", "cohort", "boundary_review", "decomposition", "content_digest"],
       "properties": {
         "evidence_id": {"type": "string", "pattern": "^commerce-evidence:.+:v?[0-9]+$"},
         "candidate_category_id": {"$ref": "#/$defs/categoryId"},
@@ -107,7 +107,7 @@
         "content_digest": {"$ref": "#/$defs/sha256"},
         "signoffs": {
           "type": "object",
-          "required": ["protocol", "supply"],
+          "required": ["protocol"],
           "properties": {
             "protocol": {"$ref": "#/$defs/signoff"},
             "supply": {"$ref": "#/$defs/signoff"}

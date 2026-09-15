@@ -3,9 +3,9 @@
   "$id": "https://agentoffernetwork.org/schema/taxonomy-admission-audit/v1",
   "title": "Commerce Taxonomy Admission Audit v1",
   "type": "object",
-  "required": ["schema_version", "feature_id", "projection_kind", "candidate_facts_digest", "candidate_registry_digest", "metadata_digest", "source_mapping_digest", "source_snapshot_digest", "evidence_export_digest", "scan_roots", "candidate_count", "admitted_count", "deferred_count", "public_delta", "decisions", "semantic_digest"],
+  "required": ["schema_version", "feature_id", "projection_kind", "candidate_facts_digest", "candidate_registry_digest", "metadata_digest", "source_mapping_digest", "source_snapshot_digest", "scan_roots", "candidate_count", "admitted_count", "deferred_count", "public_delta", "decisions", "semantic_digest"],
   "properties": {
-    "schema_version": {"const": "commerce-taxonomy-admission-audit-v1"},
+    "schema_version": {"enum": ["commerce-taxonomy-admission-audit-v1", "commerce-taxonomy-admission-audit-v2"]},
     "feature_id": {"const": "PROTO-F260909053820-Commerce-Taxonomy-Expansion"},
     "projection_kind": {"enum": ["FoundationProjection", "TestProjection", "PublishableAdmission"]},
     "candidate_facts_digest": {"$ref": "#/$defs/sha256"},
@@ -14,6 +14,8 @@
     "source_mapping_digest": {"$ref": "#/$defs/sha256"},
     "source_snapshot_digest": {"$ref": "#/$defs/sha256"},
     "evidence_export_digest": {"oneOf": [{"$ref": "#/$defs/sha256"}, {"type": "null"}]},
+    "publication_identity": {"$ref": "#/$defs/publicationIdentity"},
+    "evidence_summary_digest": {"$ref": "#/$defs/sha256"},
     "scan_roots": {"type": "array", "minItems": 1, "items": {"type": "string", "pattern": "^[^/][^\\\\]*$"}},
     "candidate_count": {"const": 272},
     "admitted_count": {"type": "integer", "minimum": 0, "maximum": 272},
@@ -31,9 +33,67 @@
     "decisions": {"type": "array", "minItems": 272, "maxItems": 272, "items": {"$ref": "#/$defs/decision"}},
     "semantic_digest": {"$ref": "#/$defs/sha256"}
   },
+  "allOf": [{
+    "if": {"properties": {"schema_version": {"const": "commerce-taxonomy-admission-audit-v2"}}, "required": ["schema_version"]},
+    "then": {
+      "required": ["publication_identity", "evidence_summary_digest"],
+      "not": {"required": ["evidence_export_digest"]},
+      "properties": {
+        "admitted_count": {"minimum": 1},
+        "scan_roots": {
+          "const": [
+            "taxonomy/commerce-product-candidates-v1.json",
+            "taxonomy/source-mappings/warehouse-commerce-v1.json",
+            "taxonomy/commerce-product-admission-summary-v1.json"
+          ]
+        },
+        "decisions": {"items": {"$ref": "#/$defs/publicDecision"}}
+      }
+    },
+    "else": {
+      "required": ["evidence_export_digest"],
+      "not": {"anyOf": [{"required": ["publication_identity"]}, {"required": ["evidence_summary_digest"]}]},
+      "properties": {
+        "admitted_count": {"const": 0},
+        "evidence_export_digest": {"type": "null"},
+        "decisions": {"items": {"$ref": "#/$defs/foundationDecision"}}
+      }
+    }
+  }],
   "additionalProperties": false,
   "$defs": {
     "sha256": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
+    "publicationIdentity": {
+      "type": "object",
+      "required": ["release_id", "source_commit"],
+      "properties": {
+        "release_id": {"type": "string", "pattern": "^protocol-v1\\.0\\.0-r[1-9][0-9]*$"},
+        "source_commit": {"type": "string", "pattern": "^[a-f0-9]{40}$"}
+      },
+      "additionalProperties": false
+    },
+    "foundationDecision": {
+      "allOf": [
+        {"$ref": "#/$defs/decision"},
+        {"properties": {"status": {"const": "deferred"}, "evidence": {"type": "null"}}}
+      ]
+    },
+    "publicDecision": {
+      "allOf": [
+        {"$ref": "#/$defs/decision"},
+        {
+          "if": {"properties": {"status": {"const": "admitted"}}},
+          "then": {"properties": {"evidence": {"$ref": "#/$defs/publicEvidenceRef"}}},
+          "else": {"properties": {"evidence": {"type": "null"}}}
+        }
+      ]
+    },
+    "publicEvidenceRef": {
+      "type": "object",
+      "required": ["evidence_summary_digest"],
+      "properties": {"evidence_summary_digest": {"$ref": "#/$defs/sha256"}},
+      "additionalProperties": false
+    },
     "categoryId": {"type": "string", "pattern": "^[a-z0-9]+(?:_[a-z0-9]+)*(?:\\.[a-z0-9]+(?:_[a-z0-9]+)*)*$"},
     "decision": {
       "type": "object",
@@ -54,6 +114,7 @@
               },
               "additionalProperties": false
             },
+            {"$ref": "#/$defs/publicEvidenceRef"},
             {"type": "null"}
           ]
         }

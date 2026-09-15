@@ -5,7 +5,8 @@
   "type": "object",
   "required": ["schema_version", "feature_id", "baseline_digest", "metadata_digest", "source_snapshot_digest", "planning_source", "candidate_count", "provenance_counts", "candidate_facts_digest", "registry_digest", "candidates"],
   "properties": {
-    "schema_version": {"const": "commerce-product-candidates-v1"},
+    "schema_version": {"enum": ["commerce-product-candidates-v1", "commerce-product-candidates-v2"]},
+    "publication_identity": {"$ref": "#/$defs/publicationIdentity"},
     "feature_id": {"const": "PROTO-F260909053820-Commerce-Taxonomy-Expansion"},
     "baseline_digest": {"$ref": "#/$defs/sha256"},
     "metadata_digest": {"$ref": "#/$defs/sha256"},
@@ -33,9 +34,29 @@
     "registry_digest": {"$ref": "#/$defs/sha256"},
     "candidates": {"type": "array", "minItems": 272, "maxItems": 272, "items": {"$ref": "#/$defs/candidate"}}
   },
+  "allOf": [{
+    "if": {"properties": {"schema_version": {"const": "commerce-product-candidates-v2"}}, "required": ["schema_version"]},
+    "then": {
+      "required": ["publication_identity"],
+      "properties": {"candidates": {"items": {"properties": {"admission": {"$ref": "#/$defs/publicAdmission"}}}}}
+    },
+    "else": {
+      "not": {"required": ["publication_identity"]},
+      "properties": {"candidates": {"items": {"properties": {"admission": {"$ref": "#/$defs/foundationAdmission"}}}}}
+    }
+  }],
   "additionalProperties": false,
   "$defs": {
     "sha256": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
+    "publicationIdentity": {
+      "type": "object",
+      "required": ["release_id", "source_commit"],
+      "properties": {
+        "release_id": {"type": "string", "pattern": "^protocol-v1\\.0\\.0-r[1-9][0-9]*$"},
+        "source_commit": {"type": "string", "pattern": "^[a-f0-9]{40}$"}
+      },
+      "additionalProperties": false
+    },
     "categoryId": {"type": "string", "pattern": "^[a-z0-9]+(?:_[a-z0-9]+)*(?:\\.[a-z0-9]+(?:_[a-z0-9]+)*)*$"},
     "evidenceRef": {
       "type": "object",
@@ -54,9 +75,37 @@
         "tier": {"enum": ["direct_exact", "decomposition"]},
         "status": {"enum": ["admitted", "deferred"]},
         "reason": {"type": "string", "pattern": "^[A-Z][A-Z0-9_]+$"},
-        "evidence": {"oneOf": [{"$ref": "#/$defs/evidenceRef"}, {"type": "null"}]}
+        "evidence": {
+          "oneOf": [
+            {"$ref": "#/$defs/evidenceRef"},
+            {"$ref": "#/$defs/publicEvidenceRef"},
+            {"type": "null"}
+          ]
+        }
       },
       "additionalProperties": false
+    },
+    "publicEvidenceRef": {
+      "type": "object",
+      "required": ["evidence_summary_digest"],
+      "properties": {"evidence_summary_digest": {"$ref": "#/$defs/sha256"}},
+      "additionalProperties": false
+    },
+    "foundationAdmission": {
+      "allOf": [
+        {"$ref": "#/$defs/admission"},
+        {"properties": {"status": {"const": "deferred"}, "evidence": {"type": "null"}}}
+      ]
+    },
+    "publicAdmission": {
+      "allOf": [
+        {"$ref": "#/$defs/admission"},
+        {
+          "if": {"properties": {"status": {"const": "admitted"}}},
+          "then": {"properties": {"evidence": {"$ref": "#/$defs/publicEvidenceRef"}}},
+          "else": {"properties": {"evidence": {"type": "null"}}}
+        }
+      ]
     },
     "candidate": {
       "type": "object",

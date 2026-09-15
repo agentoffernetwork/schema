@@ -22,6 +22,15 @@
             "children": [
               {
                 "name": "Jerseys & Knit Shirts"
+              },
+              {
+                "name": "Hoodies & Sweatshirts"
+              },
+              {
+                "name": "Sweaters & Cardigans"
+              },
+              {
+                "name": "Woven Shirts & Blouses"
               }
             ]
           },
@@ -32,10 +41,39 @@
             "name": "Swimwear"
           },
           {
-            "name": "Underwear"
+            "name": "Underwear",
+            "children": [
+              {
+                "name": "Bras & Bralettes"
+              },
+              {
+                "name": "Socks & Hosiery"
+              },
+              {
+                "name": "Underpants & Briefs"
+              }
+            ]
           },
           {
             "name": "Women's Clothing"
+          },
+          {
+            "name": "Coats & Jackets"
+          },
+          {
+            "name": "Dresses"
+          },
+          {
+            "name": "Jeans"
+          },
+          {
+            "name": "Pants & Trousers"
+          },
+          {
+            "name": "Shorts"
+          },
+          {
+            "name": "Skirts"
           }
         ]
       },
@@ -44,6 +82,21 @@
         "children": [
           {
             "name": "Athletic Shoes"
+          },
+          {
+            "name": "Boots"
+          },
+          {
+            "name": "Casual Shoes"
+          },
+          {
+            "name": "Dress Shoes"
+          },
+          {
+            "name": "Sandals"
+          },
+          {
+            "name": "Slippers & House Shoes"
           }
         ]
       },
@@ -54,12 +107,50 @@
         "name": "Jewelry",
         "children": [
           {
-            "name": "Watches & Watch Accessories"
+            "name": "Watches & Watch Accessories",
+            "children": [
+              {
+                "name": "Wristwatches"
+              }
+            ]
+          },
+          {
+            "name": "Bracelets & Anklets"
+          },
+          {
+            "name": "Earrings"
+          },
+          {
+            "name": "Necklaces & Pendants"
+          },
+          {
+            "name": "Rings"
           }
         ]
       },
       {
         "name": "Sunglasses"
+      },
+      {
+        "name": "Belts"
+      },
+      {
+        "name": "Gloves & Mittens"
+      },
+      {
+        "name": "Hair Accessories"
+      },
+      {
+        "name": "Hats & Caps"
+      },
+      {
+        "name": "Neckwear"
+      },
+      {
+        "name": "Non-Prescription Fashion Glasses"
+      },
+      {
+        "name": "Wallets & Card Holders"
       }
     ]
   },
@@ -104,6 +195,9 @@
         "children": [
           {
             "name": "Horror Films"
+          },
+          {
+            "name": "Film & Video Media"
           }
         ]
       },
@@ -115,6 +209,17 @@
           },
           {
             "name": "Radio"
+          },
+          {
+            "name": "Musical Instruments",
+            "children": [
+              {
+                "name": "Musical Instrument Accessories"
+              }
+            ]
+          },
+          {
+            "name": "Recorded Music"
           }
         ]
       },
@@ -211,6 +316,51 @@
           },
           {
             "name": "Vehicle Tires & Tire Parts"
+          },
+          {
+            "name": "Automotive Batteries"
+          },
+          {
+            "name": "Automotive Lighting & Electrical Parts"
+          },
+          {
+            "name": "Automotive Oils & Fluids"
+          },
+          {
+            "name": "Brake Parts"
+          },
+          {
+            "name": "Cooling & Climate Control Parts"
+          },
+          {
+            "name": "Electric Vehicle Charging Equipment"
+          },
+          {
+            "name": "Emergency & Roadside Equipment"
+          },
+          {
+            "name": "Engine & Powertrain Parts"
+          },
+          {
+            "name": "Exhaust & Emissions Parts"
+          },
+          {
+            "name": "Routine Maintenance Parts"
+          },
+          {
+            "name": "Steering & Suspension Parts"
+          },
+          {
+            "name": "Towing, Cargo & Trailer Accessories"
+          },
+          {
+            "name": "Vehicle Exterior Accessories"
+          },
+          {
+            "name": "Vehicle Interior Accessories"
+          },
+          {
+            "name": "Vehicle Maintenance & Detailing Supplies"
           }
         ]
       },
@@ -233,6 +383,15 @@
         "children": [
           {
             "name": "Shampoos & Conditioners"
+          },
+          {
+            "name": "Hair Color"
+          },
+          {
+            "name": "Hair Styling Products"
+          },
+          {
+            "name": "Hair Treatments & Masks"
           }
         ]
       },
@@ -244,29 +403,100 @@
           },
           {
             "name": "Feminine Hygiene Products"
+          },
+          {
+            "name": "Bath Products"
           }
         ]
       },
       {
-        "name": "Make-Up & Cosmetics"
+        "name": "Make-Up & Cosmetics",
+        "children": [
+          {
+            "name": "Eye & Brow Makeup"
+          },
+          {
+            "name": "Face Makeup"
+          },
+          {
+            "name": "Lip Makeup"
+          },
+          {
+            "name": "Makeup Brushes & Applicators"
+          },
+          {
+            "name": "Nail Cosmetics"
+          }
+        ]
       },
       {
-        "name": "Oral Care"
+        "name": "Oral Care",
+        "children": [
+          {
+            "name": "Dental Floss & Interdental Care"
+          },
+          {
+            "name": "Mouthwash & Breath Care"
+          },
+          {
+            "name": "Toothbrushes"
+          },
+          {
+            "name": "Toothpaste"
+          }
+        ]
       },
       {
         "name": "Perfumes & Fragrances"
       },
       {
-        "name": "Shaving & Grooming"
+        "name": "Shaving & Grooming",
+        "children": [
+          {
+            "name": "Electric Shavers & Trimmers"
+          },
+          {
+            "name": "Razors & Replacement Blades"
+          },
+          {
+            "name": "Shaving Preparations"
+          }
+        ]
       },
       {
         "name": "Skin Care",
         "children": [
           {
-            "name": "Face Care"
+            "name": "Face Care",
+            "children": [
+              {
+                "name": "Face Cleansers"
+              },
+              {
+                "name": "Face Masks"
+              },
+              {
+                "name": "Facial Moisturizers"
+              },
+              {
+                "name": "Facial Serums & Treatments"
+              },
+              {
+                "name": "Facial Toners & Mists"
+              },
+              {
+                "name": "Lip Care"
+              }
+            ]
           },
           {
             "name": "Hand & Body Soaps & Cleansers"
+          },
+          {
+            "name": "Body Exfoliants"
+          },
+          {
+            "name": "Body Moisturizers"
           }
         ]
       },
@@ -275,6 +505,23 @@
       },
       {
         "name": "Tanning & Sun Care"
+      },
+      {
+        "name": "Personal Care Appliances",
+        "children": [
+          {
+            "name": "Beauty Skin Care Devices"
+          },
+          {
+            "name": "Hair Dryers"
+          },
+          {
+            "name": "Hair Removal Devices"
+          },
+          {
+            "name": "Hair Styling Appliances"
+          }
+        ]
       }
     ]
   },
@@ -295,6 +542,18 @@
             "children": [
               {
                 "name": "Power Tools"
+              },
+              {
+                "name": "Fasteners, Fittings & Mounts"
+              },
+              {
+                "name": "Hand Tools"
+              },
+              {
+                "name": "Measuring & Marking Tools"
+              },
+              {
+                "name": "Safety & Protective Equipment"
               }
             ]
           },
@@ -342,6 +601,15 @@
         "children": [
           {
             "name": "Office Appliances"
+          },
+          {
+            "name": "Office Paper Products"
+          },
+          {
+            "name": "Printer Consumables & Supplies"
+          },
+          {
+            "name": "Writing & Drawing Supplies"
           }
         ]
       },
@@ -371,7 +639,24 @@
         "name": "Computers",
         "children": [
           {
-            "name": "Computer Accessories"
+            "name": "Computer Accessories",
+            "children": [
+              {
+                "name": "Computer Connectivity Hubs"
+              },
+              {
+                "name": "Computer Keyboards"
+              },
+              {
+                "name": "Computer Mice"
+              },
+              {
+                "name": "Docking Stations"
+              },
+              {
+                "name": "Webcams"
+              }
+            ]
           },
           {
             "name": "Computer Systems & Hardware",
@@ -381,6 +666,72 @@
               },
               {
                 "name": "Laptop Computers"
+              },
+              {
+                "name": "Computer Components",
+                "children": [
+                  {
+                    "name": "Computer Cases"
+                  },
+                  {
+                    "name": "Computer Cooling Components"
+                  },
+                  {
+                    "name": "Computer Memory"
+                  },
+                  {
+                    "name": "Computer Power Supplies"
+                  },
+                  {
+                    "name": "Computer Processors"
+                  },
+                  {
+                    "name": "Graphics Cards"
+                  },
+                  {
+                    "name": "Motherboards"
+                  }
+                ]
+              },
+              {
+                "name": "Computer Monitors"
+              },
+              {
+                "name": "Data Storage Devices",
+                "children": [
+                  {
+                    "name": "External Storage Drives"
+                  },
+                  {
+                    "name": "Internal Storage Drives"
+                  },
+                  {
+                    "name": "Memory Cards"
+                  },
+                  {
+                    "name": "Network Attached Storage Devices"
+                  },
+                  {
+                    "name": "USB Flash Drives"
+                  }
+                ]
+              },
+              {
+                "name": "Desktop Computers"
+              },
+              {
+                "name": "Printers & Scanners",
+                "children": [
+                  {
+                    "name": "Printers"
+                  },
+                  {
+                    "name": "Scanners"
+                  }
+                ]
+              },
+              {
+                "name": "Tablet Computers"
               }
             ]
           },
@@ -438,10 +789,32 @@
         "name": "Consumer Electronics",
         "children": [
           {
-            "name": "Car Audio & Video"
+            "name": "Car Audio & Video",
+            "children": [
+              {
+                "name": "Dash Cameras"
+              }
+            ]
           },
           {
-            "name": "Consumer Electronic Accessories"
+            "name": "Consumer Electronic Accessories",
+            "children": [
+              {
+                "name": "Device Cases & Protectors"
+              },
+              {
+                "name": "Device Chargers & Power Adapters"
+              },
+              {
+                "name": "Device Data & Charging Cables"
+              },
+              {
+                "name": "Mobile Device Mounts & Stands"
+              },
+              {
+                "name": "Power Banks"
+              }
+            ]
           },
           {
             "name": "GPS & Navigation"
@@ -454,14 +827,59 @@
               },
               {
                 "name": "Televisions"
+              },
+              {
+                "name": "Projectors"
+              },
+              {
+                "name": "Streaming Media Players"
               }
             ]
           },
           {
-            "name": "Portable Media Devices"
+            "name": "Portable Media Devices",
+            "children": [
+              {
+                "name": "E-Readers"
+              }
+            ]
           },
           {
-            "name": "Wireless Devices"
+            "name": "Wireless Devices",
+            "children": [
+              {
+                "name": "Home Automation Hubs & Controllers"
+              }
+            ]
+          },
+          {
+            "name": "Headphones & Earbuds"
+          },
+          {
+            "name": "Microphones"
+          },
+          {
+            "name": "Smart Displays"
+          },
+          {
+            "name": "Virtual & Augmented Reality Headsets"
+          },
+          {
+            "name": "Wearable Technology",
+            "children": [
+              {
+                "name": "Fitness Trackers"
+              },
+              {
+                "name": "Smart Glasses"
+              },
+              {
+                "name": "Smart Rings"
+              },
+              {
+                "name": "Smartwatches"
+              }
+            ]
           }
         ]
       }
@@ -521,12 +939,55 @@
                 "name": "Baby Care & Hygiene",
                 "children": [
                   {
-                    "name": "Baby Diapering & Toilet Training"
+                    "name": "Baby Diapering & Toilet Training",
+                    "children": [
+                      {
+                        "name": "Baby Diapers"
+                      }
+                    ]
+                  },
+                  {
+                    "name": "Baby Bathing & Grooming Supplies"
+                  },
+                  {
+                    "name": "Baby Wipes"
                   }
                 ]
               },
               {
-                "name": "Baby Feeding"
+                "name": "Baby Feeding",
+                "children": [
+                  {
+                    "name": "Baby Bottles & Feeding Accessories"
+                  },
+                  {
+                    "name": "Breastfeeding & Nursing Supplies"
+                  },
+                  {
+                    "name": "High Chairs & Booster Seats"
+                  },
+                  {
+                    "name": "Infant Formula & Baby Food"
+                  }
+                ]
+              },
+              {
+                "name": "Baby Carriers"
+              },
+              {
+                "name": "Baby & Child Car Seats"
+              },
+              {
+                "name": "Baby Monitors"
+              },
+              {
+                "name": "Baby Safety & Childproofing Products"
+              },
+              {
+                "name": "Baby Strollers"
+              },
+              {
+                "name": "Cribs, Bassinets & Playards"
               }
             ]
           },
@@ -818,6 +1279,9 @@
               },
               {
                 "name": "Tea"
+              },
+              {
+                "name": "Bottled Water"
               }
             ]
           }
@@ -844,7 +1308,18 @@
             "name": "Candy, Gum & Mints"
           },
           {
-            "name": "Dairy & Non-Dairy Alternatives"
+            "name": "Dairy & Non-Dairy Alternatives",
+            "children": [
+              {
+                "name": "Cheese"
+              },
+              {
+                "name": "Milk & Plant-Based Milk"
+              },
+              {
+                "name": "Yogurt & Cultured Dairy"
+              }
+            ]
           },
           {
             "name": "Desserts"
@@ -860,6 +1335,42 @@
           },
           {
             "name": "Snack Foods"
+          },
+          {
+            "name": "Canned & Jarred Foods"
+          },
+          {
+            "name": "Condiments & Spices"
+          },
+          {
+            "name": "Cooking Oils"
+          },
+          {
+            "name": "Eggs & Egg Products"
+          },
+          {
+            "name": "Food Spreads"
+          },
+          {
+            "name": "Fruits & Vegetables"
+          },
+          {
+            "name": "Grains, Rice & Pasta"
+          },
+          {
+            "name": "Legumes & Pulses"
+          },
+          {
+            "name": "Nuts, Seeds & Dried Fruit"
+          },
+          {
+            "name": "Prepared Meals & Meal Kits"
+          },
+          {
+            "name": "Seafood"
+          },
+          {
+            "name": "Soups, Broths & Stocks"
           }
         ]
       },
@@ -1026,10 +1537,21 @@
             "name": "Vision",
             "children": [
               {
-                "name": "Contact Lenses & Accessories"
+                "name": "Contact Lenses & Accessories",
+                "children": [
+                  {
+                    "name": "Contact Lens Care Supplies"
+                  },
+                  {
+                    "name": "Contact Lenses"
+                  }
+                ]
               },
               {
                 "name": "Eyeglass Frames"
+              },
+              {
+                "name": "Prescription Eyeglasses"
               }
             ]
           },
@@ -1053,10 +1575,53 @@
             "name": "First Aid Supplies"
           },
           {
-            "name": "Medical Diagnostic Equipment & Monitoring Devices"
+            "name": "Medical Diagnostic Equipment & Monitoring Devices",
+            "children": [
+              {
+                "name": "Blood Glucose Monitors"
+              },
+              {
+                "name": "Blood Pressure Monitors"
+              },
+              {
+                "name": "Body Composition Scales"
+              },
+              {
+                "name": "Clinical Thermometers"
+              },
+              {
+                "name": "Home Health Test Kits"
+              },
+              {
+                "name": "Pulse Oximeters"
+              }
+            ]
           },
           {
-            "name": "Mobility Equipment & Accessories"
+            "name": "Mobility Equipment & Accessories",
+            "children": [
+              {
+                "name": "Mobility Aids"
+              }
+            ]
+          },
+          {
+            "name": "Consumer Therapy Devices"
+          },
+          {
+            "name": "Diabetes Care Supplies"
+          },
+          {
+            "name": "Hearing Aids & Assistive Listening Devices"
+          },
+          {
+            "name": "Incontinence Supplies"
+          },
+          {
+            "name": "Orthopedic Braces & Supports"
+          },
+          {
+            "name": "Respiratory Care Devices & Supplies"
           }
         ]
       },
@@ -1072,7 +1637,12 @@
         "name": "Pharmacy",
         "children": [
           {
-            "name": "Drugs & Medications"
+            "name": "Drugs & Medications",
+            "children": [
+              {
+                "name": "Non-Prescription Medicines"
+              }
+            ]
           },
           {
             "name": "Vitamins & Supplements",
@@ -1097,6 +1667,12 @@
             "name": "Professional Health Care Education"
           }
         ]
+      },
+      {
+        "name": "Condoms"
+      },
+      {
+        "name": "Personal Lubricants"
       }
     ]
   },
@@ -1107,7 +1683,12 @@
         "name": "Ancestry & Genealogy"
       },
       {
-        "name": "Antiques & Collectibles"
+        "name": "Antiques & Collectibles",
+        "children": [
+          {
+            "name": "Collectibles"
+          }
+        ]
       },
       {
         "name": "Arts & Crafts",
@@ -1121,13 +1702,26 @@
         "name": "Camping & Outdoor Recreation",
         "children": [
           {
-            "name": "Climbing"
+            "name": "Climbing",
+            "children": [
+              {
+                "name": "Climbing Equipment"
+              }
+            ]
           },
           {
-            "name": "Hiking"
+            "name": "Hiking",
+            "children": [
+              {
+                "name": "Hiking Equipment"
+              }
+            ]
           },
           {
             "name": "Multi-tools & Pocket Knives"
+          },
+          {
+            "name": "Camping Equipment"
           }
         ]
       },
@@ -1174,10 +1768,39 @@
                 "name": "Flea & Tick Control Products"
               },
               {
-                "name": "Pet Food & Treats"
+                "name": "Pet Food & Treats",
+                "children": [
+                  {
+                    "name": "Pet Food"
+                  },
+                  {
+                    "name": "Pet Treats & Chews"
+                  }
+                ]
               },
               {
                 "name": "Pet Medications"
+              },
+              {
+                "name": "Pet Beds & Furniture"
+              },
+              {
+                "name": "Pet Carriers, Crates & Travel Supplies"
+              },
+              {
+                "name": "Pet Collars, Harnesses & Leashes"
+              },
+              {
+                "name": "Pet Feeding & Watering Supplies"
+              },
+              {
+                "name": "Pet Grooming Supplies"
+              },
+              {
+                "name": "Pet Litter & Housebreaking Supplies"
+              },
+              {
+                "name": "Pet Toys"
               }
             ]
           }
@@ -1280,6 +1903,9 @@
                   },
                   {
                     "name": "Video Game Consoles"
+                  },
+                  {
+                    "name": "Game Controllers"
                   }
                 ]
               },
@@ -1305,6 +1931,27 @@
               },
               {
                 "name": "Radio Controlled Toys & Accessories"
+              },
+              {
+                "name": "Electronic & Interactive Toys"
+              },
+              {
+                "name": "Infant & Toddler Toys"
+              },
+              {
+                "name": "Musical Toys"
+              },
+              {
+                "name": "Outdoor & Ride-On Toys"
+              },
+              {
+                "name": "Plush Toys"
+              },
+              {
+                "name": "Pretend Play & Role Play Toys"
+              },
+              {
+                "name": "Toy Vehicles"
               }
             ]
           }
@@ -1316,7 +1963,21 @@
     "name": "Home & Garden",
     "children": [
       {
-        "name": "Bedding & Linens"
+        "name": "Bedding & Linens",
+        "children": [
+          {
+            "name": "Bed Pillows"
+          },
+          {
+            "name": "Blankets & Throws"
+          },
+          {
+            "name": "Duvets, Comforters & Quilts"
+          },
+          {
+            "name": "Sheets & Pillowcases"
+          }
+        ]
       },
       {
         "name": "Home Appliances",
@@ -1325,13 +1986,59 @@
             "name": "Home Appliance Service & Repair"
           },
           {
-            "name": "Major Kitchen Appliances"
+            "name": "Major Kitchen Appliances",
+            "children": [
+              {
+                "name": "Cooktops"
+              },
+              {
+                "name": "Dishwashers"
+              },
+              {
+                "name": "Ranges & Ovens"
+              },
+              {
+                "name": "Refrigeration Appliances"
+              }
+            ]
           },
           {
             "name": "Vacuum Cleaners & Accessories"
           },
           {
             "name": "Washers & Dryers"
+          },
+          {
+            "name": "Climate & Air Treatment Appliances"
+          },
+          {
+            "name": "Irons & Garment Steamers"
+          },
+          {
+            "name": "Powered Floor Cleaners"
+          },
+          {
+            "name": "Small Kitchen Appliances",
+            "children": [
+              {
+                "name": "Blenders, Food Processors & Mixers"
+              },
+              {
+                "name": "Coffee & Tea Makers"
+              },
+              {
+                "name": "Countertop Cooking Appliances"
+              },
+              {
+                "name": "Electric Kettles"
+              },
+              {
+                "name": "Microwave Ovens"
+              },
+              {
+                "name": "Rice & Multi-Cookers"
+              }
+            ]
           }
         ]
       },
@@ -1343,17 +2050,76 @@
         "children": [
           {
             "name": "Mattresses"
+          },
+          {
+            "name": "Beds & Bed Frames"
+          },
+          {
+            "name": "Cabinets, Shelving & Storage Furniture"
+          },
+          {
+            "name": "Chairs & Seating"
+          },
+          {
+            "name": "Desks & Workstations"
+          },
+          {
+            "name": "Sofas & Loveseats"
+          },
+          {
+            "name": "Tables"
           }
         ]
       },
       {
-        "name": "Home Heating & Cooling"
+        "name": "Home Heating & Cooling",
+        "children": [
+          {
+            "name": "Thermostats"
+          }
+        ]
       },
       {
-        "name": "Home Improvement & Maintenance"
+        "name": "Home Improvement & Maintenance",
+        "children": [
+          {
+            "name": "Smart Plugs"
+          },
+          {
+            "name": "Wall Switches & Dimmers"
+          }
+        ]
       },
       {
-        "name": "Home Safety & Security"
+        "name": "Home Safety & Security",
+        "children": [
+          {
+            "name": "Door Locks"
+          },
+          {
+            "name": "Home Alarm Systems & Sirens"
+          },
+          {
+            "name": "Home Security Sensors",
+            "children": [
+              {
+                "name": "Smoke & Carbon Monoxide Detectors"
+              },
+              {
+                "name": "Water Leak Detectors"
+              }
+            ]
+          },
+          {
+            "name": "Safes & Lockboxes"
+          },
+          {
+            "name": "Security Cameras"
+          },
+          {
+            "name": "Video Doorbells"
+          }
+        ]
       },
       {
         "name": "Household Supplies",
@@ -1377,14 +2143,71 @@
           },
           {
             "name": "Paper Towels & Household Paper Products"
+          },
+          {
+            "name": "Home Storage & Organization",
+            "children": [
+              {
+                "name": "Closet & Garment Storage"
+              },
+              {
+                "name": "Hooks, Racks & Hangers"
+              },
+              {
+                "name": "Laundry Hampers & Baskets"
+              },
+              {
+                "name": "Storage Boxes & Bins"
+              }
+            ]
+          },
+          {
+            "name": "Household Cleaning Tools & Accessories"
           }
         ]
       },
       {
-        "name": "Kitchen & Dining"
+        "name": "Kitchen & Dining",
+        "children": [
+          {
+            "name": "Bakeware"
+          },
+          {
+            "name": "Cooking Utensils"
+          },
+          {
+            "name": "Cookware"
+          },
+          {
+            "name": "Dinnerware"
+          },
+          {
+            "name": "Drinkware"
+          },
+          {
+            "name": "Flatware"
+          },
+          {
+            "name": "Kitchen Knives & Cutting Tools"
+          }
+        ]
       },
       {
-        "name": "Lights & Lighting"
+        "name": "Lights & Lighting",
+        "children": [
+          {
+            "name": "Indoor Lighting Fixtures"
+          },
+          {
+            "name": "Lamps"
+          },
+          {
+            "name": "Light Bulbs"
+          },
+          {
+            "name": "Outdoor Lighting"
+          }
+        ]
       },
       {
         "name": "Residential Cleaning"
@@ -1400,6 +2223,40 @@
           },
           {
             "name": "Pest & Weed Control"
+          },
+          {
+            "name": "Gardening Supplies",
+            "children": [
+              {
+                "name": "Growing Media & Plant Food"
+              },
+              {
+                "name": "Pots & Planters"
+              },
+              {
+                "name": "Seeds & Live Plants"
+              },
+              {
+                "name": "Watering & Garden Tools"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "Bathroom Supplies",
+        "children": [
+          {
+            "name": "Bath Towels & Mats"
+          },
+          {
+            "name": "Bathroom Accessories"
+          },
+          {
+            "name": "Faucets & Shower Fixtures"
+          },
+          {
+            "name": "Toilets & Bidets"
           }
         ]
       }
@@ -1454,6 +2311,18 @@
             "children": [
               {
                 "name": "Mobile Phones"
+              },
+              {
+                "name": "Mobile Phone Batteries"
+              },
+              {
+                "name": "Mobile Phone Cases & Covers"
+              },
+              {
+                "name": "Mobile Phone Replacement Parts"
+              },
+              {
+                "name": "Mobile Phone Screen Protectors"
               }
             ]
           },
@@ -1583,6 +2452,9 @@
           },
           {
             "name": "E-Books"
+          },
+          {
+            "name": "Printed Books"
           }
         ]
       },
@@ -1618,7 +2490,12 @@
         "name": "Flower Arrangements"
       },
       {
-        "name": "Gifts"
+        "name": "Gifts",
+        "children": [
+          {
+            "name": "Retail Gift Cards & Vouchers"
+          }
+        ]
       },
       {
         "name": "Holidays & Seasonal Events",
@@ -1673,7 +2550,12 @@
         "name": "Boating & Water Recreation",
         "children": [
           {
-            "name": "Fishing"
+            "name": "Fishing",
+            "children": [
+              {
+                "name": "Fishing Equipment"
+              }
+            ]
           }
         ]
       },
@@ -1705,6 +2587,18 @@
           },
           {
             "name": "Sports Equipment Rental Services"
+          },
+          {
+            "name": "Fitness & Training Equipment"
+          },
+          {
+            "name": "Sports Protective Equipment"
+          },
+          {
+            "name": "Swimming & Water Sports Equipment"
+          },
+          {
+            "name": "Team & Court Sports Equipment"
           }
         ]
       },
@@ -1733,7 +2627,12 @@
             "name": "Soccer"
           },
           {
-            "name": "Winter Sports"
+            "name": "Winter Sports",
+            "children": [
+              {
+                "name": "Winter Sports Equipment"
+              }
+            ]
           }
         ]
       },
@@ -1787,7 +2686,12 @@
         "name": "Last Minute Travel"
       },
       {
-        "name": "Luggage"
+        "name": "Luggage",
+        "children": [
+          {
+            "name": "Backpacks & Functional Bags"
+          }
+        ]
       },
       {
         "name": "Specialty Travel"

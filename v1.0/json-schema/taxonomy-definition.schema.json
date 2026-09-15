@@ -1,0 +1,108 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://agentoffernetwork.org/schema/taxonomy-definition/v1",
+  "title": "AON Taxonomy Definition v1",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "taxonomy_version",
+    "definition_status",
+    "publication_binding",
+    "baseline_node_count",
+    "added_definition_count",
+    "node_count",
+    "added_category_ids",
+    "component_digests",
+    "product_validation_status",
+    "runtime_support_status",
+    "definition_digest"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "aon-taxonomy-definition-v1"
+    },
+    "taxonomy_version": {
+      "const": "v1"
+    },
+    "definition_status": {
+      "const": "defined"
+    },
+    "publication_binding": {
+      "const": "committed_protocol_release"
+    },
+    "baseline_node_count": {
+      "const": 515
+    },
+    "added_definition_count": {
+      "const": 272
+    },
+    "node_count": {
+      "const": 787
+    },
+    "added_category_ids": {
+      "type": "array",
+      "minItems": 272,
+      "maxItems": 272,
+      "uniqueItems": true,
+      "items": {
+        "$ref": "#/$defs/categoryId"
+      }
+    },
+    "component_digests": {
+      "type": "object",
+      "required": [
+        "baseline",
+        "source_metadata",
+        "candidate_facts",
+        "taxonomy",
+        "public_metadata",
+        "source_mapping",
+        "definition_mapping"
+      ],
+      "properties": {
+        "baseline": {
+          "$ref": "#/$defs/sha256"
+        },
+        "source_metadata": {
+          "$ref": "#/$defs/sha256"
+        },
+        "candidate_facts": {
+          "$ref": "#/$defs/sha256"
+        },
+        "taxonomy": {
+          "$ref": "#/$defs/sha256"
+        },
+        "public_metadata": {
+          "$ref": "#/$defs/sha256"
+        },
+        "source_mapping": {
+          "$ref": "#/$defs/sha256"
+        },
+        "definition_mapping": {
+          "$ref": "#/$defs/sha256"
+        }
+      },
+      "additionalProperties": false
+    },
+    "product_validation_status": {
+      "const": "independent"
+    },
+    "runtime_support_status": {
+      "const": "not_asserted"
+    },
+    "definition_digest": {
+      "$ref": "#/$defs/sha256"
+    }
+  },
+  "additionalProperties": false,
+  "$defs": {
+    "sha256": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "categoryId": {
+      "type": "string",
+      "pattern": "^[a-z0-9]+(?:_[a-z0-9]+)*(?:\\.[a-z0-9]+(?:_[a-z0-9]+)*)*$"
+    }
+  }
+}
