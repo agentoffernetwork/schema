@@ -52,33 +52,17 @@
       "type": "object",
       "required": [
         "baseline",
-        "source_metadata",
-        "candidate_facts",
         "taxonomy",
-        "public_metadata",
-        "source_mapping",
-        "definition_mapping"
+        "public_metadata"
       ],
       "properties": {
         "baseline": {
-          "$ref": "#/$defs/sha256"
-        },
-        "source_metadata": {
-          "$ref": "#/$defs/sha256"
-        },
-        "candidate_facts": {
           "$ref": "#/$defs/sha256"
         },
         "taxonomy": {
           "$ref": "#/$defs/sha256"
         },
         "public_metadata": {
-          "$ref": "#/$defs/sha256"
-        },
-        "source_mapping": {
-          "$ref": "#/$defs/sha256"
-        },
-        "definition_mapping": {
           "$ref": "#/$defs/sha256"
         }
       },

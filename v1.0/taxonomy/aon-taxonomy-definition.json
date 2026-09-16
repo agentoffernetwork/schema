@@ -282,14 +282,10 @@
   ],
   "component_digests": {
     "baseline": "c780b40af38c942b15f4ffead7106eeceb7704f6011c309725934ecd28d2d7c0",
-    "source_metadata": "ce7c546975cd2e213c27c97c9a3adc733524adb218e3c4f19ec4993d573e98ad",
-    "candidate_facts": "b9eff7535f4758dee499839c4a420adad4877491e471f93d55324594703369b1",
     "taxonomy": "01c9956800878c1b38a8a32f0760bc8a95710113d5468195828a4054bad4e4f0",
-    "public_metadata": "a38181b4bb235412b93049475a1d16edc82c26e207aabb53bfc2f7463cb74369",
-    "source_mapping": "8a2b14007a64aa69a34464c5bfd2718c96a3ba498d35e5b0aa4533cf6a83a518",
-    "definition_mapping": "d59e9d179106321d9342bb15ebdca0cf5ba027f1fba6e0f567205dec7e2b148f"
+    "public_metadata": "a38181b4bb235412b93049475a1d16edc82c26e207aabb53bfc2f7463cb74369"
   },
   "product_validation_status": "independent",
   "runtime_support_status": "not_asserted",
-  "definition_digest": "049a85a15ad165007036d1a9733357a1c991c16ea132874c719637aa22c9df61"
+  "definition_digest": "bd03716cce77e5b69704b70134321cae7acf9d8a26deb6953881cc6f3bf6e584"
 }
