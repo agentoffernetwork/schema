@@ -45,15 +45,14 @@ define category semantics independently of product admission. Earlier candidate
 records remain deferred in their evidence history; that status does not make
 the corresponding ids unusable in the expanded definition release.
 
-Generated candidate source outputs are the
-[definition manifest](v1.0/taxonomy/aon-taxonomy-definition.json),
-[definition crosswalk](v1.0/taxonomy/source-mappings/warehouse-aon-definition.json),
-and [comparison table](v1.0/taxonomy/source-mappings/warehouse-aon-definition.md).
+The public [definition manifest](v1.0/taxonomy/aon-taxonomy-definition.json)
+binds the AON baseline, canonical tree, and public metadata. Source-system
+crosswalks and migration tables are implementation assets maintained separately.
 These links identify release target paths, not proof of completed public
 publication. The ordinary protected protocol release publishes committed
 definitions independently of downstream product validation. Pin the matching
 immutable release
-manifest when consuming the tree, metadata, resolver, and definition mappings.
+manifest when consuming the tree, metadata, resolver, and definition manifest.
 `definition_status=defined` describes semantic definitions; the definition
 digest and source commit bound by the outer protected release establish release
 identity. The status itself does not assert publication or runtime support.
