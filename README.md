@@ -70,7 +70,7 @@ for the classification and downstream boundaries.
 
 The canonical Offer and Partner/Provider supply carriers may include the
 optional closed `offer_info.details` registry envelope for `flight` and
-`hotel_rate`, plus observed commercial supply facts. Public and Generic Query
+`hotel_rate`, plus observed commercial supply facts. Public, typed Flight Query and Generic Query
 Offers may include one optional closed
 `offer_info.commercial.display_price` object containing only `amount` and
 `currency`; Partner Offers and OfferProvider success Offers reject it. The
@@ -124,3 +124,23 @@ Earlier releases remain available from immutable refs for audit and recovery.
 They are not alternate current schema paths.
 
 Licensed under [Apache License 2.0](LICENSE).
+
+## Typed Flight Query validation
+
+Current canonical sources include `offer-query-flight-profile-v1.0.json`,
+`offer-query-flight-projection-v1.0.json`, and `offer-query-error-v1.0.json`.
+The existing Query/Provider schemas select closed Generic or typed Flight
+branches. Validate complete requests and successful responses with JSON Schema
+first, then the matching pure semantic helper with the complete paired request
+and trusted `evidence.airportCityCodes` when city endpoints are used. Validate
+portable protocol errors against the error schema and corresponding error semantics; do not
+submit failures to a success schema. Pure semantic helpers do not replace AJV
+structural validation and do not fetch directory data. Hosted deployment-specific
+errors retain their deployment-owned schemas, codes and payloads; the portable
+Query error entry is not an exhaustive schema for all hosted errors.
+
+Flight reference prices omit travelers and may omit unknown quote observation;
+traveler_quote requires complete requested age/seat composition and whole-trip
+price. Generic exclusions remain. Source validation is not proof of actual
+upstream calls, inventory, independent directory truth, public release or
+runtime support. Deployments must explicitly declare this revision's capability.
