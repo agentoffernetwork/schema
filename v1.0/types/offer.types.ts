@@ -197,17 +197,10 @@ export interface GenericOfferV10 extends Omit<OfferV10, "offer_info"> {
   offer_info: GenericOfferInfoV10
 }
 
-export interface GenericOfferInfoV10 extends Omit<OfferInfoV10, "commercial" | "details"> {
-  commercial?: GenericCommercialInfoV10
-  details?: never
-}
-
-export interface GenericCommercialInfoV10 extends Omit<CommercialInfoV10, "price" | "quote"> {
-  price?: GenericCommercialPriceV10
-  quote?: never
-}
-
-export type GenericCommercialPriceV10 = Omit<CommercialPriceV10, "tax_status"> & { tax_status?: never }
+/** Query details and commercial facts follow the same registered profiles as public Offers. */
+export type GenericOfferInfoV10 = OfferInfoV10
+export type GenericCommercialInfoV10 = CommercialInfoV10
+export type GenericCommercialPriceV10 = CommercialPriceV10
 
 export interface ConversionGoalV10 {
   event: GoalEventNameV10

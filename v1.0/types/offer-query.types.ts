@@ -54,7 +54,6 @@ export interface GenericOfferQueryResponseV10 {
   protocol_version: "1.0"
   language: string
   offers: GenericOfferV10[]
-  flight_search?: never
   alternative_offers?: AlternativeOfferV10[]
   engagement?: EngagementV10
   hooks?: HookV10[]
@@ -197,9 +196,8 @@ export type FlightQueryPartnerOfferV10 = Omit<PartnerOfferV10, "offer_info"> & {
   match_reason?: never
   offer_info: FlightQueryOfferInfoV10 & { commercial: { display_price?: never } }
 }
-export type FlightOfferQueryResponseV10 = Omit<GenericOfferQueryResponseV10, "offers" | "flight_search" | "alternative_offers" | "empty_reason"> & {
+export type FlightOfferQueryResponseV10 = Omit<GenericOfferQueryResponseV10, "offers" | "alternative_offers" | "empty_reason"> & {
   offers: FlightQueryOfferV10[]
-  flight_search: FlightSearchV10
   alternative_offers?: never
   empty_reason?: never
 }

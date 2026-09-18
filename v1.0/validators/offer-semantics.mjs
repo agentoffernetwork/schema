@@ -531,12 +531,13 @@ export function validateOfferQueryV10Semantics(request) {
 export function validateOfferQueryResponseV10Semantics(response, request = {}, evidence = {}) {
   if (!isPlainObject(response)) return { valid: false, errors: ["Query response root must be a plain object"] }
   const errors = []
-  const typed = Object.hasOwn(response, "flight_search") || Object.hasOwn(request?.intent ?? {}, "details")
+  const typed = Object.hasOwn(request?.intent ?? {}, "details")
   if (typed) {
     validateFlightResponse(response, request, evidence, false, errors)
     if (!Array.isArray(response.offers) || !isPlainObject(request)) return { valid: false, errors }
   }
   if (request.request_id !== undefined && response.request_id !== request.request_id) errors.push("request_id must match the paired request")
+  if (Object.hasOwn(response, "flight_search")) errors.push("flight_search is not defined in public Query responses")
   const thinkingMode = request.response_options?.thinking_mode ?? true
   if (!thinkingMode && (response.offers ?? []).some((offer) => Object.hasOwn(offer, "match_reason"))) {
     errors.push("match_reason must be omitted when thinking_mode is false")
@@ -613,22 +614,7 @@ export function validateOfferQueryResponseV10Semantics(response, request = {}, e
 }
 
 export function validateQueryGenericOfferV10Semantics(offer) {
-  const rootError = validateOfferRoot(offer)
-  if (rootError) return { valid: false, errors: [rootError] }
-  const errors = []
-  validateDisplayPriceSemantics(offer, errors)
-  const offerInfo = offer.offer_info
-  if (isPlainObject(offerInfo) && Object.hasOwn(offerInfo, "details")) {
-    errors.push(semanticError("query_projection_supply_extension", "/offer_info/details", "current Query Generic projection must not include offer_info.details"))
-  }
-  const commercial = offerInfo?.commercial
-  if (isPlainObject(commercial) && Object.hasOwn(commercial, "quote")) {
-    errors.push(semanticError("query_projection_supply_extension", "/offer_info/commercial/quote", "current Query Generic projection must not include commercial.quote"))
-  }
-  if (isPlainObject(commercial?.price) && Object.hasOwn(commercial.price, "tax_status")) {
-    errors.push(semanticError("query_projection_supply_extension", "/offer_info/commercial/price/tax_status", "current Query Generic projection must not include commercial.price.tax_status"))
-  }
-  return { valid: errors.length === 0, errors }
+  return validatePublicOfferV10Semantics(offer)
 }
 
 export function validateQueryHelperPatch(patch) {
@@ -731,14 +717,14 @@ function flightTravelerComposition(travelers) {
 function validateFlightResponse(response, request, evidence, partner, errors) {
   const details = request?.intent?.details
   if (!isPlainObject(request) || !isPlainObject(request.context) || !isPlainObject(request.intent) || !Array.isArray(request.intent.content) || request.intent.content.length === 0 || !["user_expressed", "inferred_context"].includes(request.intent.provenance)) errors.push("typed Flight validation requires a complete paired request validated against JSON Schema")
-  if (!isPlainObject(details) || !Object.hasOwn(response, "flight_search")) { errors.push("typed request details and response flight_search must be present together"); return }
+  if (!isPlainObject(details) || (partner && !Object.hasOwn(response, "flight_search"))) { errors.push("typed Flight validation requires request details and Provider execution metadata when validating a Provider response"); return }
   const requestResult = validateOfferQueryV10Semantics(request)
   errors.push(...requestResult.errors)
   if (!requestResult.valid) return
   const query = details.data
   const execution = response.flight_search
   if (!isPlainObject(query) || !Array.isArray(query.legs)) return
-  if (!isPlainObject(execution) || execution.query_kind !== query.query_kind || !["complete", "partial"].includes(execution.status) || typeof execution.fetched_at !== "string" || !Number.isFinite(Date.parse(execution.fetched_at))) errors.push("flight_search must contain matching query_kind, complete/partial status, and fetched_at")
+  if (partner && (!isPlainObject(execution) || execution.query_kind !== query.query_kind || !["complete", "partial"].includes(execution.status) || typeof execution.fetched_at !== "string" || !Number.isFinite(Date.parse(execution.fetched_at)))) errors.push("flight_search must contain matching query_kind, complete/partial status, and fetched_at")
   if (Object.hasOwn(response, "empty_reason") || Object.hasOwn(response, "alternative_offers")) errors.push("typed Flight responses forbid empty_reason and alternative_offers")
   if (!Array.isArray(response.offers)) { errors.push("typed Flight responses require an offers array"); return }
   for (const [index, offer] of response.offers.entries()) {
