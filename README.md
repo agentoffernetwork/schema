@@ -75,7 +75,9 @@ Offers may include one optional closed
 `offer_info.commercial.display_price` object containing only `amount` and
 `currency`; Partner Offers and OfferProvider success Offers reject it. The
 Generic Query projection allows that response-scoped presentation field and
-continues to reject `details`, `price.tax_status`, and `commercial.quote`.
+permits optional registered Flight/Hotel `details` with profile-valid
+`price.tax_status` and `commercial.quote`, including on non-real-time queries.
+Details do not imply a live lookup.
 
 `display_price` is presentation data for the response that created it. It
 requires an original `price`, uses a different currency, preserves the source
@@ -129,9 +131,11 @@ Licensed under [Apache License 2.0](LICENSE).
 
 Current canonical sources include `offer-query-flight-profile-v1.0.json`,
 `offer-query-flight-projection-v1.0.json`, and `offer-query-error-v1.0.json`.
-The existing Query/Provider schemas select closed Generic or typed Flight
-branches. Validate complete requests and successful responses with JSON Schema
-first, then the matching pure semantic helper with the complete paired request
+Public Query Schema validates Offer structure without an execution-metadata
+discriminator. The paired-request semantic helper selects strict typed Flight
+matching; Provider Schema retains its Generic/typed Flight branches. Validate
+complete requests and successful responses with JSON Schema first, then the
+matching pure semantic helper with the complete paired request
 and trusted `evidence.airportCityCodes` when city endpoints are used. Validate
 portable protocol errors against the error schema and corresponding error semantics; do not
 submit failures to a success schema. Pure semantic helpers do not replace AJV
@@ -141,6 +145,8 @@ Query error entry is not an exhaustive schema for all hosted errors.
 
 Flight reference prices omit travelers and may omit unknown quote observation;
 traveler_quote requires complete requested age/seat composition and whole-trip
-price. Generic exclusions remain. Source validation is not proof of actual
+price. Ordinary Query details are optional and validated by their registered
+Offer profile. Public Query success omits flight_search; Provider metadata
+remains unchanged. Source validation is not proof of actual
 upstream calls, inventory, independent directory truth, public release or
 runtime support. Deployments must explicitly declare this revision's capability.
