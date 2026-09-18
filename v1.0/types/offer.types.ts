@@ -48,16 +48,31 @@ export interface FlightOfferDetailsV10 {
   data: FlightOfferDataV10
 }
 
-export interface FlightOfferDataV10 {
+export type FlightOfferDataV10 = FlightItineraryV10 & (
+  | { price_basis: "reference"; travelers?: never }
+  | { price_basis?: "itinerary_total"; travelers: FlightTravelerV10[] }
+)
+
+export type FlightTravelerV10 =
+  | { type: "adult" | "child"; count: number; ages?: number[]; infant_seat_required?: never }
+  | { type: "infant"; count: number; ages?: number[]; infant_seat_required?: boolean[] }
+
+export type FlightStopV10 = { duration_minutes?: number } & (
+  | { name: string; airport_code?: string }
+  | { name?: string; airport_code: string }
+)
+
+export interface FlightItineraryV10 {
   trip_type: "one_way" | "round_trip" | "multi_city"
-  travelers: Array<{ type: "adult" | "child" | "infant"; count: number }>
   legs: Array<{
+    duration_minutes?: number
     segments: Array<{
       departure: FlightEndpointV10
       arrival: FlightEndpointV10
       duration_minutes: number
       marketing_carrier: { code: string }
       flight_number: string
+      stops?: FlightStopV10[]
       cabin_class: "economy" | "premium_economy" | "business" | "first"
     }>
   }>

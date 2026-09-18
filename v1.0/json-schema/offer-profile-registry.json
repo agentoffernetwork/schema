@@ -7,11 +7,17 @@
     "supplyDetails": {
       "type": "object",
       "description": "Closed supply-profile envelope. profile selects exactly one registered closed data shape.",
-      "required": ["profile", "data"],
+      "required": [
+        "profile",
+        "data"
+      ],
       "properties": {
         "profile": {
           "type": "string",
-          "enum": ["flight", "hotel_rate"],
+          "enum": [
+            "flight",
+            "hotel_rate"
+          ],
           "description": "Registered supply Offer profile identifier in the stable v1.0 registry."
         },
         "data": {
@@ -22,69 +28,204 @@
       "additionalProperties": false,
       "allOf": [
         {
-          "if": {"properties": {"profile": {"const": "flight"}}, "required": ["profile"]},
-          "then": {"properties": {"data": {"$ref": "#/$defs/flightData"}}}
+          "if": {
+            "properties": {
+              "profile": {
+                "const": "flight"
+              }
+            },
+            "required": [
+              "profile"
+            ],
+            "type": "object"
+          },
+          "then": {
+            "properties": {
+              "data": {
+                "$ref": "#/$defs/flightData"
+              }
+            },
+            "type": "object"
+          }
         },
         {
-          "if": {"properties": {"profile": {"const": "hotel_rate"}}, "required": ["profile"]},
-          "then": {"properties": {"data": {"$ref": "#/$defs/hotelRateData"}}}
+          "if": {
+            "properties": {
+              "profile": {
+                "const": "hotel_rate"
+              }
+            },
+            "required": [
+              "profile"
+            ],
+            "type": "object"
+          },
+          "then": {
+            "properties": {
+              "data": {
+                "$ref": "#/$defs/hotelRateData"
+              }
+            },
+            "type": "object"
+          }
         }
       ]
     },
     "flightData": {
       "type": "object",
       "description": "Closed public facts for one priced air itinerary and its traveller composition.",
-      "required": ["trip_type", "travelers", "legs"],
+      "required": [
+        "trip_type",
+        "legs"
+      ],
       "properties": {
         "trip_type": {
           "type": "string",
-          "enum": ["one_way", "round_trip", "multi_city"],
+          "enum": [
+            "one_way",
+            "round_trip",
+            "multi_city"
+          ],
           "description": "Declared itinerary topology; semantic validation binds it to the number of legs."
         },
         "travelers": {
           "type": "array",
           "minItems": 1,
           "maxItems": 3,
-          "items": {"$ref": "#/$defs/traveler"},
+          "items": {
+            "$ref": "#/$defs/traveler"
+          },
           "description": "Non-empty traveller counts grouped by traveller type. Each type may occur at most once under semantic validation."
         },
         "legs": {
           "type": "array",
           "minItems": 1,
-          "items": {"$ref": "#/$defs/flightLeg"},
+          "items": {
+            "$ref": "#/$defs/flightLeg"
+          },
           "description": "Ordered itinerary legs. Each leg contains one or more ordered flight segments."
+        },
+        "price_basis": {
+          "type": "string",
+          "description": "Price nature: a reference amount without traveler composition or a complete itinerary total.",
+          "enum": [
+            "reference",
+            "itinerary_total"
+          ]
         }
       },
-      "additionalProperties": false
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "price_basis": {
+                "const": "reference",
+                "description": "Select the reference-price branch."
+              }
+            },
+            "required": [
+              "price_basis"
+            ],
+            "type": "object"
+          },
+          "then": {
+            "not": {
+              "required": [
+                "travelers"
+              ],
+              "type": "object"
+            }
+          },
+          "else": {
+            "required": [
+              "travelers"
+            ],
+            "type": "object"
+          }
+        }
+      ]
     },
     "traveler": {
       "type": "object",
-      "description": "A positive count for one traveller type; individual identity and age are not public profile facts.",
-      "required": ["type", "count"],
+      "description": "Traveler counts and optional age and infant seat facts; typed quotes require sufficient age and seat information.",
+      "required": [
+        "type",
+        "count"
+      ],
       "properties": {
         "type": {
           "type": "string",
-          "enum": ["adult", "child", "infant"],
+          "enum": [
+            "adult",
+            "child",
+            "infant"
+          ],
           "description": "Traveller type used to state the priced traveller composition."
         },
         "count": {
           "type": "integer",
           "minimum": 1,
           "description": "Positive number of travellers of this type included in the stated itinerary price."
+        },
+        "ages": {
+          "type": "array",
+          "description": "Completed years of age on the first local departure date, in traveler order.",
+          "items": {
+            "type": "integer",
+            "minimum": 0
+          }
+        },
+        "infant_seat_required": {
+          "type": "array",
+          "description": "Seat requirement for each infant at the same index as ages.",
+          "items": {
+            "type": "boolean"
+          }
         }
       },
-      "additionalProperties": false
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "type": {
+                "const": "infant",
+                "description": "Select infant seat facts."
+              }
+            },
+            "type": "object"
+          },
+          "else": {
+            "not": {
+              "required": [
+                "infant_seat_required"
+              ],
+              "type": "object"
+            }
+          }
+        }
+      ]
     },
     "flightLeg": {
       "type": "object",
       "description": "One ordered flight leg made up of one or more contiguous flight segments.",
-      "required": ["segments"],
+      "required": [
+        "segments"
+      ],
       "properties": {
         "segments": {
           "type": "array",
           "minItems": 1,
-          "items": {"$ref": "#/$defs/flightSegment"},
+          "items": {
+            "$ref": "#/$defs/flightSegment"
+          },
           "description": "Ordered segments for this leg. Semantic validation requires adjacent arrival and departure continuity."
+        },
+        "duration_minutes": {
+          "type": "integer",
+          "description": "Source-provided total leg duration including connection waiting, at least the sum of segment durations.",
+          "minimum": 1
         }
       },
       "additionalProperties": false
@@ -92,10 +233,23 @@
     "flightSegment": {
       "type": "object",
       "description": "Closed public facts for one marketed flight segment.",
-      "required": ["departure", "arrival", "duration_minutes", "marketing_carrier", "flight_number", "cabin_class"],
+      "required": [
+        "departure",
+        "arrival",
+        "duration_minutes",
+        "marketing_carrier",
+        "flight_number",
+        "cabin_class"
+      ],
       "properties": {
-        "departure": {"$ref": "#/$defs/flightEndpoint", "description": "Scheduled departure airport and airport-local date-time for this segment."},
-        "arrival": {"$ref": "#/$defs/flightEndpoint", "description": "Scheduled arrival airport and airport-local date-time for this segment."},
+        "departure": {
+          "$ref": "#/$defs/flightEndpoint",
+          "description": "Scheduled departure airport and airport-local date-time for this segment."
+        },
+        "arrival": {
+          "$ref": "#/$defs/flightEndpoint",
+          "description": "Scheduled arrival airport and airport-local date-time for this segment."
+        },
         "duration_minutes": {
           "type": "integer",
           "minimum": 1,
@@ -104,7 +258,9 @@
         "marketing_carrier": {
           "type": "object",
           "description": "Carrier marketing this flight under the displayed flight number.",
-          "required": ["code"],
+          "required": [
+            "code"
+          ],
           "properties": {
             "code": {
               "type": "string",
@@ -121,8 +277,20 @@
         },
         "cabin_class": {
           "type": "string",
-          "enum": ["economy", "premium_economy", "business", "first"],
+          "enum": [
+            "economy",
+            "premium_economy",
+            "business",
+            "first"
+          ],
           "description": "Public cabin class for this segment."
+        },
+        "stops": {
+          "type": "array",
+          "description": "Source-reported stops within this segment. Omission means unknown; an empty array explicitly means no stops.",
+          "items": {
+            "$ref": "#/$defs/flightStop"
+          }
         }
       },
       "additionalProperties": false
@@ -130,7 +298,10 @@
     "flightEndpoint": {
       "type": "object",
       "description": "Airport and airport-local scheduled date-time at one end of a flight segment.",
-      "required": ["airport_code", "local_at"],
+      "required": [
+        "airport_code",
+        "local_at"
+      ],
       "properties": {
         "airport_code": {
           "type": "string",
@@ -148,12 +319,17 @@
     "hotelRateData": {
       "type": "object",
       "description": "Closed public facts for a hotel reference starting nightly price. This profile never asserts a confirmed inventory allocation or total-stay price.",
-      "required": ["rate", "property"],
+      "required": [
+        "rate",
+        "property"
+      ],
       "properties": {
         "rate": {
           "type": "object",
           "description": "Closed price-nature declaration for the hotel rate profile.",
-          "required": ["kind"],
+          "required": [
+            "kind"
+          ],
           "properties": {
             "kind": {
               "const": "reference_starting_nightly",
@@ -165,36 +341,103 @@
         "property": {
           "type": "object",
           "description": "Identified hotel property and its public location facts.",
-          "required": ["name", "location"],
+          "required": [
+            "name",
+            "location"
+          ],
           "properties": {
-            "name": {"type": "string", "minLength": 1, "maxLength": 300, "description": "Non-empty source-provided hotel property name."},
-            "location": {"$ref": "#/$defs/hotelLocation", "description": "Public AON location reference, country, and optional source-provided display facts for the property."},
-            "property_type": {"type": "string", "minLength": 1, "maxLength": 80, "description": "Optional source-provided property type when known."},
-            "star_rating": {"type": ["string", "number"], "minLength": 1, "maximum": 5, "description": "Optional source-provided property star rating when known. String values preserve existing source formatting; numeric values must be from 1 through 5."}
+            "name": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 300,
+              "description": "Non-empty source-provided hotel property name."
+            },
+            "location": {
+              "$ref": "#/$defs/hotelLocation",
+              "description": "Public AON location reference, country, and optional source-provided display facts for the property."
+            },
+            "property_type": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 80,
+              "description": "Optional source-provided property type when known."
+            },
+            "star_rating": {
+              "type": [
+                "string",
+                "number"
+              ],
+              "minLength": 1,
+              "maximum": 5,
+              "description": "Optional source-provided property star rating when known. String values preserve existing source formatting; numeric values must be from 1 through 5."
+            }
           },
           "additionalProperties": false
         },
         "stay": {
           "type": "object",
           "description": "Optional stay facts. Omit the entire object when dates are unknown; when supplied both dates are required.",
-          "required": ["check_in", "check_out"],
+          "required": [
+            "check_in",
+            "check_out"
+          ],
           "properties": {
-            "check_in": {"type": "string", "format": "date", "description": "Known local check-in calendar date; never a default or inferred placeholder."},
-            "check_out": {"type": "string", "format": "date", "description": "Known local check-out calendar date; semantic validation requires it to be after check_in."},
-            "occupancy": {"$ref": "#/$defs/hotelOccupancy", "description": "Optional known search or booking occupancy. Omit it instead of inventing room or guest counts."}
+            "check_in": {
+              "type": "string",
+              "format": "date",
+              "description": "Known local check-in calendar date; never a default or inferred placeholder."
+            },
+            "check_out": {
+              "type": "string",
+              "format": "date",
+              "description": "Known local check-out calendar date; semantic validation requires it to be after check_in."
+            },
+            "occupancy": {
+              "$ref": "#/$defs/hotelOccupancy",
+              "description": "Optional known search or booking occupancy. Omit it instead of inventing room or guest counts."
+            }
           },
           "additionalProperties": false
         },
         "room": {
           "type": "object",
           "description": "Optional room facts. Omit the entire object when the room type is unknown.",
-          "required": ["name"],
+          "required": [
+            "name"
+          ],
           "properties": {
-            "name": {"type": "string", "minLength": 1, "maxLength": 300, "description": "Non-empty source-provided room name when the room is known."},
-            "room_id": {"type": "string", "minLength": 1, "maxLength": 256, "description": "Optional opaque source room identifier when it is safe to disclose."},
-            "bedding": {"type": "array", "minItems": 1, "maxItems": 8, "items": {"type": "string", "minLength": 1, "maxLength": 100}, "description": "Optional non-empty source-provided bedding descriptions."},
-            "max_occupancy": {"type": "integer", "minimum": 1, "description": "Optional maximum room occupancy when known."},
-            "room_type_guaranteed": {"type": "boolean", "description": "Optional source assertion that the named room type is guaranteed."}
+            "name": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 300,
+              "description": "Non-empty source-provided room name when the room is known."
+            },
+            "room_id": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256,
+              "description": "Optional opaque source room identifier when it is safe to disclose."
+            },
+            "bedding": {
+              "type": "array",
+              "minItems": 1,
+              "maxItems": 8,
+              "items": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 100
+              },
+              "description": "Optional non-empty source-provided bedding descriptions."
+            },
+            "max_occupancy": {
+              "type": "integer",
+              "minimum": 1,
+              "description": "Optional maximum room occupancy when known."
+            },
+            "room_type_guaranteed": {
+              "type": "boolean",
+              "description": "Optional source assertion that the named room type is guaranteed."
+            }
           },
           "additionalProperties": false
         }
@@ -204,28 +447,129 @@
     "hotelLocation": {
       "type": "object",
       "description": "Public hotel-property location. location_id is an AON Full Location Catalog v1 string identifier checked semantically; country_code is independently supplied rather than inferred. Source display facts remain nested under location to match existing supply adapters.",
-      "required": ["location_id", "country_code"],
+      "required": [
+        "location_id",
+        "country_code"
+      ],
       "properties": {
-        "location_id": {"type": "string", "pattern": "^[0-9]+$", "description": "Numeric-string identifier that must be an active AON Full Location Catalog v1 member under semantic validation."},
-        "country_code": {"type": "string", "pattern": "^[A-Z]{2}$", "description": "Uppercase two-letter ISO 3166-1 alpha-2 country or territory code supplied by the source."},
-        "city": {"type": "string", "minLength": 1, "maxLength": 200, "description": "Optional source-provided city display name when known."},
-        "address": {"type": "string", "minLength": 1, "maxLength": 500, "description": "Optional source-provided property address when known."},
-        "latitude": {"type": ["string", "number"], "minimum": -90, "maximum": 90, "description": "Optional WGS-84 latitude when supplied by the source. String values preserve existing adapter payloads; numeric values must be from -90 through 90."},
-        "longitude": {"type": ["string", "number"], "minimum": -180, "maximum": 180, "description": "Optional WGS-84 longitude when supplied by the source. String values preserve existing adapter payloads; numeric values must be from -180 through 180."},
-        "timezone": {"type": "string", "minLength": 1, "maxLength": 64, "description": "Optional source-provided IANA-style property timezone when known."}
+        "location_id": {
+          "type": "string",
+          "pattern": "^[0-9]+$",
+          "description": "Numeric-string identifier that must be an active AON Full Location Catalog v1 member under semantic validation."
+        },
+        "country_code": {
+          "type": "string",
+          "pattern": "^[A-Z]{2}$",
+          "description": "Uppercase two-letter ISO 3166-1 alpha-2 country or territory code supplied by the source."
+        },
+        "city": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 200,
+          "description": "Optional source-provided city display name when known."
+        },
+        "address": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 500,
+          "description": "Optional source-provided property address when known."
+        },
+        "latitude": {
+          "type": [
+            "string",
+            "number"
+          ],
+          "minimum": -90,
+          "maximum": 90,
+          "description": "Optional WGS-84 latitude when supplied by the source. String values preserve existing adapter payloads; numeric values must be from -90 through 90."
+        },
+        "longitude": {
+          "type": [
+            "string",
+            "number"
+          ],
+          "minimum": -180,
+          "maximum": 180,
+          "description": "Optional WGS-84 longitude when supplied by the source. String values preserve existing adapter payloads; numeric values must be from -180 through 180."
+        },
+        "timezone": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 64,
+          "description": "Optional source-provided IANA-style property timezone when known."
+        }
       },
       "additionalProperties": false
     },
     "hotelOccupancy": {
       "type": "object",
       "description": "Known aggregate occupancy for a hotel stay. It does not imply a per-room allocation.",
-      "required": ["rooms", "adults"],
+      "required": [
+        "rooms",
+        "adults"
+      ],
       "properties": {
-        "rooms": {"type": "integer", "minimum": 1, "description": "Positive number of rooms when known."},
-        "adults": {"type": "integer", "minimum": 1, "description": "Positive number of adult guests when known."},
-        "children_ages": {"type": "array", "minItems": 1, "maxItems": 12, "items": {"type": "integer", "minimum": 0, "maximum": 17}, "description": "Optional ages of known child guests. Omit when there are no children or their ages are unknown."}
+        "rooms": {
+          "type": "integer",
+          "minimum": 1,
+          "description": "Positive number of rooms when known."
+        },
+        "adults": {
+          "type": "integer",
+          "minimum": 1,
+          "description": "Positive number of adult guests when known."
+        },
+        "children_ages": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 12,
+          "items": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 17
+          },
+          "description": "Optional ages of known child guests. Omit when there are no children or their ages are unknown."
+        }
       },
       "additionalProperties": false
+    },
+    "flightStop": {
+      "type": "object",
+      "description": "A source-reported stop with a location label or airport code.",
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "Source-provided nonblank location label, which may identify a city rather than an airport.",
+          "minLength": 1,
+          "pattern": "\\S"
+        },
+        "airport_code": {
+          "type": "string",
+          "description": "Source-provided uppercase airport code; do not infer it from a location name.",
+          "pattern": "^[A-Z]{3}$"
+        },
+        "duration_minutes": {
+          "type": "integer",
+          "description": "Positive source-provided stop duration in minutes.",
+          "minimum": 1
+        }
+      },
+      "required": [],
+      "additionalProperties": false,
+      "anyOf": [
+        {
+          "required": [
+            "name"
+          ],
+          "type": "object"
+        },
+        {
+          "required": [
+            "airport_code"
+          ],
+          "type": "object"
+        }
+      ]
     }
   }
 }

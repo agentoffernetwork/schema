@@ -1,4 +1,4 @@
-import type { GenericOfferV10 } from "./offer.types"
+import type { GenericOfferV10, OfferV10, OfferInfoV10, FlightItineraryV10, CommercialInfoV10, CommercialPriceV10, CommercialQuoteV10 } from "./offer.types"
 import type { PartnerOfferV10 } from "./offer-partner.types"
 
 type AtLeastOne<T, Keys extends keyof T = keyof T> = Keys extends keyof T
@@ -30,6 +30,7 @@ export interface IntentV10 {
   confidence?: number
   origin?: OriginV10[]
   signals?: QuerySignalsV10
+  details?: FlightQueryProfileV10
 }
 
 export interface OriginV10 {
@@ -48,11 +49,12 @@ export interface QueryConstraintsV10 {
   excluded_category_ids?: string[]
 }
 
-export interface OfferQueryResponseV10 {
+export interface GenericOfferQueryResponseV10 {
   request_id: string
   protocol_version: "1.0"
   language: string
   offers: GenericOfferV10[]
+  flight_search?: never
   alternative_offers?: AlternativeOfferV10[]
   engagement?: EngagementV10
   hooks?: HookV10[]
@@ -118,19 +120,94 @@ export interface FeedbackWatchesEnvelopeV10 {
   feedback?: "dismissed" | "not_interested"
 }
 
-export interface ProtocolErrorV10 {
-  code: "BAD_REQUEST" | "UNAUTHORIZED" | "FORBIDDEN" | "RATE_LIMITED" | "INTERNAL_ERROR"
+interface ProtocolErrorBaseV10 {
   message: string
   data: Record<string, never>
-  extra: Record<string, unknown>
 }
+export type ProtocolErrorV10 = ProtocolErrorBaseV10 & (
+  | { code: "BAD_REQUEST"; extra: Record<string, unknown> & { flight_search_error?: { kind: "invalid_query" | "unsupported_capability"; fields?: string[] } } }
+  | { code: "INTERNAL_ERROR"; extra: Record<string, unknown> & { flight_search_error?: { kind: "upstream_failure"; fields?: string[] } } }
+  | { code: "UNAUTHORIZED" | "FORBIDDEN" | "RATE_LIMITED"; extra: Record<string, unknown> & { flight_search_error?: never } }
+)
 
 export type OfferProviderRequestV10 = OfferQueryRequestV10 & { request_id: string }
-export interface OfferProviderSuccessV10 {
+export interface GenericOfferProviderSuccessV10 {
   request_id: string
   protocol_version: "1.0"
   language: string
   offers: PartnerOfferV10[]
+  flight_search?: never
 }
 
 export type OfferProviderResponseV10 = OfferProviderSuccessV10 | ProtocolErrorV10
+
+
+export type FlightQueryKindV10 = "reference_search" | "traveler_quote"
+export type FlightQuoteTravelerV10 =
+  | { type: "adult"; count: number; ages?: number[]; infant_seat_required?: never }
+  | { type: "child"; count: number; ages: number[]; infant_seat_required?: never }
+  | { type: "infant"; count: number; ages: number[]; infant_seat_required: boolean[] }
+
+export interface FlightQueryLocationV10 {
+  kind: "airport" | "city"
+  code: string
+}
+export interface FlightQueryConstraintsV10 {
+  legs: Array<{ origin: FlightQueryLocationV10; destination: FlightQueryLocationV10; departure_date: string }>
+  cabin_class?: "economy" | "premium_economy" | "business" | "first"
+  max_connections?: number
+  nonstop_only?: boolean
+}
+export type FlightQueryProfileV10 = {
+  profile: "flight"
+  data: FlightQueryConstraintsV10 & (
+    | { query_kind: "reference_search"; travelers?: never }
+    | { query_kind: "traveler_quote"; travelers: FlightQuoteTravelerV10[] }
+  )
+}
+export interface FlightSearchV10 {
+  query_kind: FlightQueryKindV10
+  status: "complete" | "partial"
+  fetched_at: string
+}
+export type FlightSearchErrorV10 = {
+  kind: "invalid_query" | "unsupported_capability" | "upstream_failure"
+  fields?: string[]
+}
+
+type FlightQueryPriceV10 = Omit<CommercialPriceV10, "unit" | "tax_status"> & {
+  unit?: "one_time"
+  tax_status: NonNullable<CommercialPriceV10["tax_status"]>
+}
+type FlightQueryCommercialV10 = Omit<CommercialInfoV10, "price" | "quote"> & { price: FlightQueryPriceV10 }
+type FlightQueryOfferInfoV10 = Omit<OfferInfoV10, "details" | "commercial"> & (
+  | {
+    details: { profile: "flight"; data: FlightItineraryV10 & { price_basis: "reference"; travelers?: never } }
+    commercial: FlightQueryCommercialV10 & { quote?: CommercialQuoteV10 }
+  }
+  | {
+    details: { profile: "flight"; data: FlightItineraryV10 & { price_basis: "itinerary_total"; travelers: FlightQuoteTravelerV10[] } }
+    commercial: FlightQueryCommercialV10 & { quote: CommercialQuoteV10 }
+  }
+)
+export type FlightQueryOfferV10 = Omit<OfferV10, "offer_info"> & { offer_info: FlightQueryOfferInfoV10 }
+export type FlightQueryPartnerOfferV10 = Omit<PartnerOfferV10, "offer_info"> & {
+  offer_id?: never
+  offer_instance_id?: never
+  match_reason?: never
+  offer_info: FlightQueryOfferInfoV10 & { commercial: { display_price?: never } }
+}
+export type FlightOfferQueryResponseV10 = Omit<GenericOfferQueryResponseV10, "offers" | "flight_search" | "alternative_offers" | "empty_reason"> & {
+  offers: FlightQueryOfferV10[]
+  flight_search: FlightSearchV10
+  alternative_offers?: never
+  empty_reason?: never
+}
+export type OfferQueryResponseV10 = GenericOfferQueryResponseV10 | FlightOfferQueryResponseV10
+export type FlightOfferProviderSuccessV10 = Omit<GenericOfferProviderSuccessV10, "offers" | "flight_search"> & {
+  offers: FlightQueryPartnerOfferV10[]
+  flight_search: FlightSearchV10
+}
+export type OfferProviderSuccessV10 = GenericOfferProviderSuccessV10 | FlightOfferProviderSuccessV10
+/** Portable protocol errors only; deployment-specific hosted errors use the deployment contract. */
+export type OfferQueryErrorV10 = ProtocolErrorV10

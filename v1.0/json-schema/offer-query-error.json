@@ -1,0 +1,7 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://agentoffernetwork.org/schema/offer-query-error/v1.0",
+  "title": "AgentOffer Portable Query Error v1.0",
+  "description": "Portable Query protocol errors use the shared channel envelope and Flight code-kind constraints. Deployment-specific hosted errors retain their own contracts and are outside this schema.",
+  "$ref": "https://agentoffernetwork.org/schema/offer-provider-response/v1.0#/$defs/errorEnvelope"
+}

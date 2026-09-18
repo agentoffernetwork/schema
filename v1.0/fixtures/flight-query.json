@@ -1,0 +1,66 @@
+{
+  "reference_search": {
+    "request_id": "019f5f65-dbc1-7c3c-9ef9-9d6d2d8af001",
+    "context": {},
+    "intent": {
+      "content": [{"type": "input_text", "text": "Find a nonstop economy flight from San Francisco to Tokyo on 2026-10-12."}],
+      "provenance": "user_expressed",
+      "details": {
+        "profile": "flight",
+        "data": {
+          "query_kind": "reference_search",
+          "legs": [{"origin": {"kind": "city", "code": "SFO"}, "destination": {"kind": "city", "code": "TYO"}, "departure_date": "2026-10-12"}],
+          "cabin_class": "economy",
+          "max_connections": 0,
+          "nonstop_only": true
+        }
+      }
+    }
+  },
+  "traveler_quote": {
+    "request_id": "019f5f65-dbc1-7c3c-9ef9-9d6d2d8af002",
+    "context": {},
+    "intent": {
+      "content": [{"type": "input_text", "text": "Price one adult, one child, and one seated infant from SFO to NRT."}],
+      "provenance": "user_expressed",
+      "details": {
+        "profile": "flight",
+        "data": {
+          "query_kind": "traveler_quote",
+          "legs": [{"origin": {"kind": "airport", "code": "SFO"}, "destination": {"kind": "airport", "code": "NRT"}, "departure_date": "2026-10-12"}],
+          "travelers": [
+            {"type": "adult", "count": 1},
+            {"type": "child", "count": 1, "ages": [7]},
+            {"type": "infant", "count": 1, "ages": [1], "infant_seat_required": [true]}
+          ],
+          "cabin_class": "economy"
+        }
+      }
+    }
+  },
+  "round_trip": {
+    "request_id": "019f5f65-dbc1-7c3c-9ef9-9d6d2d8af003",
+    "context": {},
+    "intent": {
+      "content": [{"type": "input_text", "text": "Round trip from SFO to NRT."}],
+      "provenance": "user_expressed",
+      "details": {"profile": "flight", "data": {"query_kind": "reference_search", "legs": [
+        {"origin": {"kind": "airport", "code": "SFO"}, "destination": {"kind": "airport", "code": "NRT"}, "departure_date": "2026-10-12"},
+        {"origin": {"kind": "airport", "code": "NRT"}, "destination": {"kind": "airport", "code": "SFO"}, "departure_date": "2026-10-20"}
+      ]}}
+    }
+  },
+  "multi_city": {
+    "request_id": "019f5f65-dbc1-7c3c-9ef9-9d6d2d8af004",
+    "context": {},
+    "intent": {
+      "content": [{"type": "input_text", "text": "Fly SFO to NRT then KIX to SFO."}],
+      "provenance": "user_expressed",
+      "details": {"profile": "flight", "data": {"query_kind": "reference_search", "legs": [
+        {"origin": {"kind": "airport", "code": "SFO"}, "destination": {"kind": "airport", "code": "NRT"}, "departure_date": "2026-10-12"},
+        {"origin": {"kind": "airport", "code": "KIX"}, "destination": {"kind": "airport", "code": "SFO"}, "departure_date": "2026-10-20"}
+      ]}}
+    }
+  },
+  "airport_city_codes": {"SFO": ["SFO"], "NRT": ["TYO"], "HND": ["TYO"], "KIX": ["OSA"]}
+}

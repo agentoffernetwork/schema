@@ -1,0 +1,352 @@
+{
+  "type": "object",
+  "description": "Explicit opt-in Flight search constraints.",
+  "properties": {
+    "profile": {
+      "const": "flight",
+      "description": "Registered Query profile identifier."
+    },
+    "data": {
+      "type": "object",
+      "description": "Closed hard constraints for a typed Flight search.",
+      "properties": {
+        "query_kind": {
+          "type": "string",
+          "description": "Explicit reference search or traveler-specific full itinerary quote; no inferred default.",
+          "enum": [
+            "reference_search",
+            "traveler_quote"
+          ]
+        },
+        "legs": {
+          "type": "array",
+          "description": "Nonempty itinerary legs in request order.",
+          "minItems": 1,
+          "items": {
+            "$ref": "#/$defs/leg"
+          }
+        },
+        "travelers": {
+          "type": "array",
+          "description": "Traveler groups, required for a quote and forbidden for a reference search.",
+          "minItems": 1,
+          "maxItems": 3,
+          "items": {
+            "$ref": "#/$defs/traveler"
+          }
+        },
+        "cabin_class": {
+          "type": "string",
+          "description": "Exact cabin required on every returned segment.",
+          "enum": [
+            "economy",
+            "premium_economy",
+            "business",
+            "first"
+          ]
+        },
+        "max_connections": {
+          "type": "integer",
+          "description": "Maximum segment changes within each leg.",
+          "minimum": 0
+        },
+        "nonstop_only": {
+          "type": "boolean",
+          "description": "When true, each leg must contain one segment with explicitly empty stops."
+        }
+      },
+      "required": [
+        "query_kind",
+        "legs"
+      ],
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "query_kind": {
+                "const": "reference_search",
+                "description": "Select a reference search."
+              }
+            },
+            "type": "object"
+          },
+          "then": {
+            "not": {
+              "required": [
+                "travelers"
+              ],
+              "type": "object"
+            }
+          },
+          "else": {
+            "required": [
+              "travelers"
+            ],
+            "type": "object"
+          }
+        }
+      ]
+    }
+  },
+  "required": [
+    "profile",
+    "data"
+  ],
+  "additionalProperties": false,
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://agentoffernetwork.org/schema/offer-query-flight-profile/v1.0",
+  "title": "AgentOffer Flight Query Profile v1.0",
+  "$defs": {
+    "location": {
+      "type": "object",
+      "description": "An explicitly selected airport or city. City matching requires trusted external airport membership evidence.",
+      "properties": {
+        "kind": {
+          "type": "string",
+          "description": "Whether the requested code denotes an airport or city.",
+          "enum": [
+            "airport",
+            "city"
+          ]
+        },
+        "code": {
+          "type": "string",
+          "description": "Three-letter uppercase location code; spelling alone does not prove registry membership.",
+          "pattern": "^[A-Z]{3}$"
+        }
+      },
+      "required": [
+        "kind",
+        "code"
+      ],
+      "additionalProperties": false
+    },
+    "leg": {
+      "type": "object",
+      "description": "One requested leg in itinerary order.",
+      "properties": {
+        "origin": {
+          "$ref": "#/$defs/location",
+          "description": "Requested departure airport or city."
+        },
+        "destination": {
+          "$ref": "#/$defs/location",
+          "description": "Requested arrival airport or city."
+        },
+        "departure_date": {
+          "type": "string",
+          "description": "Actual calendar date at the departure location in YYYY-MM-DD form.",
+          "format": "date",
+          "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}$"
+        }
+      },
+      "required": [
+        "origin",
+        "destination",
+        "departure_date"
+      ],
+      "additionalProperties": false
+    },
+    "traveler": {
+      "allOf": [
+        {
+          "$ref": "https://agentoffernetwork.org/schema/offer-profile-registry/v1.0#/$defs/traveler",
+          "description": "Base traveler group facts."
+        },
+        {
+          "if": {
+            "properties": {
+              "type": {
+                "enum": [
+                  "child",
+                  "infant"
+                ],
+                "description": "Select travelers that require ages."
+              }
+            },
+            "required": [
+              "type"
+            ],
+            "type": "object"
+          },
+          "then": {
+            "required": [
+              "ages"
+            ],
+            "type": "object"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "type": {
+                "const": "infant",
+                "description": "Select infant travelers."
+              }
+            },
+            "required": [
+              "type"
+            ],
+            "type": "object"
+          },
+          "then": {
+            "required": [
+              "infant_seat_required"
+            ],
+            "type": "object"
+          }
+        }
+      ]
+    },
+    "flightSearch": {
+      "type": "object",
+      "description": "Execution metadata; producer responsibility establishes actual source execution.",
+      "properties": {
+        "query_kind": {
+          "type": "string",
+          "description": "Query kind of the paired request.",
+          "enum": [
+            "reference_search",
+            "traveler_quote"
+          ]
+        },
+        "status": {
+          "type": "string",
+          "description": "Complete means all selected capable sources completed; partial means at least one completed and at least one failed.",
+          "enum": [
+            "complete",
+            "partial"
+          ]
+        },
+        "fetched_at": {
+          "type": "string",
+          "description": "RFC3339 time when this search batch finished collecting results; not quote generation or expiry time.",
+          "format": "date-time"
+        }
+      },
+      "required": [
+        "query_kind",
+        "status",
+        "fetched_at"
+      ],
+      "additionalProperties": false
+    },
+    "flightSearchError": {
+      "type": "object",
+      "description": "Closed Flight error diagnosis using the existing error envelope.",
+      "properties": {
+        "kind": {
+          "type": "string",
+          "description": "Typed Flight rejection or execution failure class.",
+          "enum": [
+            "invalid_query",
+            "unsupported_capability",
+            "upstream_failure"
+          ]
+        },
+        "fields": {
+          "type": "array",
+          "description": "Optional nonempty JSON Pointer references to offending request constraints.",
+          "minItems": 1,
+          "items": {
+            "type": "string",
+            "pattern": "^(?:/(?:[^~/]|~[01])*)*$"
+          }
+        }
+      },
+      "required": [
+        "kind"
+      ],
+      "additionalProperties": false
+    },
+    "typedOffer": {
+      "type": "object",
+      "required": [
+        "offer_info"
+      ],
+      "properties": {
+        "offer_info": {
+          "type": "object",
+          "description": "Flight information and commercial facts required for a typed result.",
+          "required": [
+            "details",
+            "commercial"
+          ],
+          "properties": {
+            "details": {
+              "type": "object",
+              "description": "Explicit Flight profile and price nature.",
+              "required": [
+                "profile",
+                "data"
+              ],
+              "properties": {
+                "profile": {
+                  "const": "flight",
+                  "description": "Typed results use the Flight profile."
+                },
+                "data": {
+                  "type": "object",
+                  "description": "Typed Flight data requires explicit price nature.",
+                  "required": [
+                    "price_basis"
+                  ],
+                  "allOf": [
+                    {
+                      "if": {
+                        "properties": {
+                          "price_basis": {
+                            "const": "itinerary_total",
+                            "description": "Select a traveler quote."
+                          }
+                        },
+                        "type": "object"
+                      },
+                      "then": {
+                        "properties": {
+                          "travelers": {
+                            "type": "array",
+                            "description": "Quote travelers with sufficient age and seat facts.",
+                            "items": {
+                              "$ref": "#/$defs/traveler"
+                            }
+                          }
+                        },
+                        "type": "object"
+                      }
+                    }
+                  ]
+                }
+              }
+            },
+            "commercial": {
+              "type": "object",
+              "description": "Source price and any quote observation.",
+              "required": [
+                "price"
+              ],
+              "properties": {
+                "price": {
+                  "type": "object",
+                  "description": "Typed itinerary price, never a recurring period price.",
+                  "required": [
+                    "amount",
+                    "currency",
+                    "tax_status"
+                  ],
+                  "properties": {
+                    "unit": {
+                      "const": "one_time",
+                      "description": "Optional nonrecurring itinerary price unit."
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

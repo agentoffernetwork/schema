@@ -249,7 +249,7 @@ function validateProfileCommercial(offer, profile, errors) {
   if (!isPlainObject(price) || !Object.hasOwn(price, "tax_status")) {
     errors.push(semanticError("profile_tax_status_required", "/offer_info/commercial/price/tax_status", `${profile} requires commercial.price.tax_status`))
   }
-  if (!isPlainObject(quote) || !Object.hasOwn(quote, "observed_at")) {
+  if (!(profile === "flight" && offer?.offer_info?.details?.data?.price_basis === "reference" && quote === undefined) && (!isPlainObject(quote) || !Object.hasOwn(quote, "observed_at"))) {
     errors.push(semanticError("profile_quote_required", "/offer_info/commercial/quote/observed_at", `${profile} requires commercial.quote.observed_at`))
   }
 }
@@ -271,6 +271,8 @@ function validateFlightProfile(offer, data, errors) {
   validateProfileBaseOffer(offer, "flight", "travel_tourism.air_travel.airline_tickets_fares_flights", errors)
   if (!isPlainObject(data)) return
 
+  validateFlightTravelers(data.travelers, false, "/offer_info/details/data/travelers", errors)
+  if (data.price_basis === "reference" && Object.hasOwn(data, "travelers")) errors.push(semanticError("flight_reference_travelers", "/offer_info/details/data/travelers", "reference prices must not declare travelers"))
   const legs = data.legs
   const expectedLegCount = data.trip_type === "one_way" ? 1 : data.trip_type === "round_trip" ? 2 : undefined
   if (expectedLegCount !== undefined && Array.isArray(legs) && legs.length !== expectedLegCount) {
@@ -293,6 +295,7 @@ function validateFlightProfile(offer, data, errors) {
   legs.forEach((leg, legIndex) => {
     const segments = leg?.segments
     if (!Array.isArray(segments)) return
+    if (leg.duration_minutes !== undefined && leg.duration_minutes < segments.reduce((total, segment) => total + segment.duration_minutes, 0)) errors.push(semanticError("flight_leg_duration", `/offer_info/details/data/legs/${legIndex}/duration_minutes`, "leg duration must be at least the sum of segment durations"))
     segments.forEach((segment, segmentIndex) => {
       const path = `/offer_info/details/data/legs/${legIndex}/segments/${segmentIndex}`
       for (const endpointName of ["departure", "arrival"]) {
@@ -521,12 +524,19 @@ export function validateOfferQueryV10Semantics(request) {
   if (origins.length > 0 && request.intent?.provenance !== "user_expressed") errors.push("intent.origin requires user_expressed provenance")
   if (Object.hasOwn(request.constraints ?? {}, "features")) errors.push("constraints.features is not defined in v1.0")
   validateBudgetSignal(request.intent?.signals?.budget, "intent.signals.budget", errors)
+  if (Object.hasOwn(request.intent ?? {}, "details")) validateFlightQueryDetails(request.intent.details, errors)
   return { valid: errors.length === 0, errors }
 }
 
-export function validateOfferQueryResponseV10Semantics(response, request = {}) {
+export function validateOfferQueryResponseV10Semantics(response, request = {}, evidence = {}) {
   if (!isPlainObject(response)) return { valid: false, errors: ["Query response root must be a plain object"] }
   const errors = []
+  const typed = Object.hasOwn(response, "flight_search") || Object.hasOwn(request?.intent ?? {}, "details")
+  if (typed) {
+    validateFlightResponse(response, request, evidence, false, errors)
+    if (!Array.isArray(response.offers) || !isPlainObject(request)) return { valid: false, errors }
+  }
+  if (request.request_id !== undefined && response.request_id !== request.request_id) errors.push("request_id must match the paired request")
   const thinkingMode = request.response_options?.thinking_mode ?? true
   if (!thinkingMode && (response.offers ?? []).some((offer) => Object.hasOwn(offer, "match_reason"))) {
     errors.push("match_reason must be omitted when thinking_mode is false")
@@ -534,14 +544,14 @@ export function validateOfferQueryResponseV10Semantics(response, request = {}) {
   if (response.offers?.length && Object.hasOwn(response, "empty_reason")) {
     errors.push("empty_reason must be omitted when offers are present")
   }
-  if (!response.offers?.length && !EMPTY_REASONS.has(response.empty_reason)) {
+  if (!typed && !response.offers?.length && !EMPTY_REASONS.has(response.empty_reason)) {
     errors.push("empty_reason is required and must be a v1.0 enum value when offers are empty")
   }
   if (Object.hasOwn(response, "decision_factors")) errors.push("decision_factors is not defined in v1.0")
   if (response.engagement && Object.hasOwn(response.engagement, "query_helper")) errors.push("query_helper is item-level only")
   if (response.language !== undefined && (typeof response.language !== "string" || !BCP_47_LANGUAGE_TAG.test(response.language) || !hasUniqueLanguageExtensionSingletons(response.language))) errors.push("language must use the stable-v1.0 language-tag profile")
   for (const [index, offer] of (response.offers ?? []).entries()) {
-    const projection = validateQueryGenericOfferV10Semantics(offer)
+    const projection = typed ? validatePublicOfferV10Semantics(offer) : validateQueryGenericOfferV10Semantics(offer)
     for (const error of projection.errors) errors.push(`offers.${index}${error.instancePath}: ${error.message}`)
   }
   if (Object.hasOwn(response, "alternative_offers")) {
@@ -666,3 +676,126 @@ export function validateListingSourceV10(source, entity = {}, now = new Date()) 
 }
 
 export { EMPTY_REASONS, QUERY_HELPER_PATHS }
+
+// JSON Schema validation precedes these pure semantic helpers. Evidence is supplied
+// by the validator caller from a trusted directory, never derived from the response.
+function validateFlightTravelers(travelers, typed, path, errors) {
+  if (!Array.isArray(travelers)) {
+    if (typed) errors.push(semanticError("flight_travelers_required", path, "typed quotes require traveler groups"))
+    return
+  }
+  const types = new Set()
+  for (const [index, traveler] of travelers.entries()) {
+    const fail = (message) => errors.push(semanticError("flight_traveler_facts", `${path}/${index}`, message))
+    if (!isPlainObject(traveler)) { fail("traveler must be an object"); continue }
+    if (types.has(traveler.type)) fail("each traveler type may occur at most once")
+    types.add(traveler.type)
+    if (!["adult", "child", "infant"].includes(traveler.type) || !Number.isInteger(traveler.count) || traveler.count < 1) fail("traveler type and positive integer count are required")
+    const agesRequired = typed && traveler.type !== "adult"
+    if (agesRequired || traveler.ages !== undefined) {
+      if (!Array.isArray(traveler.ages) || traveler.ages.length !== traveler.count || traveler.ages.some((age) => !Number.isInteger(age) || age < 0)) fail("ages must contain one nonnegative integer per traveler")
+    }
+    if (traveler.type !== "infant" && traveler.infant_seat_required !== undefined) fail("only infants may declare infant_seat_required")
+    if ((typed && traveler.type === "infant") || traveler.infant_seat_required !== undefined) {
+      if (!Array.isArray(traveler.infant_seat_required) || traveler.infant_seat_required.length !== traveler.count || traveler.infant_seat_required.some((seat) => typeof seat !== "boolean")) fail("infant_seat_required must contain one boolean per infant")
+    }
+  }
+}
+
+function validateFlightQueryDetails(details, errors) {
+  const fail = (message) => errors.push(`intent.details: ${message}`)
+  if (!isPlainObject(details) || details.profile !== "flight" || !isPlainObject(details.data)) { fail("requires the Flight profile and data"); return }
+  const data = details.data
+  if (!["reference_search", "traveler_quote"].includes(data.query_kind)) fail("query_kind must be explicit")
+  if (data.query_kind === "reference_search" && Object.hasOwn(data, "travelers")) fail("reference_search forbids travelers")
+  if (data.query_kind === "traveler_quote") validateFlightTravelers(data.travelers, true, "/intent/details/data/travelers", errors)
+  if (!Array.isArray(data.legs) || data.legs.length === 0) { fail("requires nonempty legs"); return }
+  for (const [index, leg] of data.legs.entries()) {
+    if (!isPlainObject(leg)) { fail(`legs.${index} must be an object`); continue }
+    for (const endpoint of ["origin", "destination"]) {
+      if (!["airport", "city"].includes(leg[endpoint]?.kind) || !/^[A-Z]{3}$/.test(leg[endpoint]?.code ?? "")) fail(`legs.${index}.${endpoint} requires an explicit airport or city code`)
+    }
+    if (leg.origin?.kind === leg.destination?.kind && leg.origin?.code === leg.destination?.code) fail(`legs.${index} origin and destination must differ`)
+    if (typeof leg.departure_date !== "string" || !/^\d{4}-\d{2}-\d{2}$/.test(leg.departure_date) || !isValidLocalDateTime(`${leg.departure_date}T00:00:00`)) fail(`legs.${index}.departure_date must be an actual local calendar date`)
+  }
+}
+
+function flightTravelerComposition(travelers) {
+  return JSON.stringify(travelers.map((traveler) => ({
+    type: traveler.type,
+    count: traveler.count,
+    facts: traveler.ages?.map((age, index) => [age, traveler.type === "infant" ? traveler.infant_seat_required?.[index] : null]).sort((a, b) => a[0] - b[0] || Number(a[1]) - Number(b[1])),
+  })).sort((a, b) => a.type.localeCompare(b.type)))
+}
+
+function validateFlightResponse(response, request, evidence, partner, errors) {
+  const details = request?.intent?.details
+  if (!isPlainObject(request) || !isPlainObject(request.context) || !isPlainObject(request.intent) || !Array.isArray(request.intent.content) || request.intent.content.length === 0 || !["user_expressed", "inferred_context"].includes(request.intent.provenance)) errors.push("typed Flight validation requires a complete paired request validated against JSON Schema")
+  if (!isPlainObject(details) || !Object.hasOwn(response, "flight_search")) { errors.push("typed request details and response flight_search must be present together"); return }
+  const requestResult = validateOfferQueryV10Semantics(request)
+  errors.push(...requestResult.errors)
+  if (!requestResult.valid) return
+  const query = details.data
+  const execution = response.flight_search
+  if (!isPlainObject(query) || !Array.isArray(query.legs)) return
+  if (!isPlainObject(execution) || execution.query_kind !== query.query_kind || !["complete", "partial"].includes(execution.status) || typeof execution.fetched_at !== "string" || !Number.isFinite(Date.parse(execution.fetched_at))) errors.push("flight_search must contain matching query_kind, complete/partial status, and fetched_at")
+  if (Object.hasOwn(response, "empty_reason") || Object.hasOwn(response, "alternative_offers")) errors.push("typed Flight responses forbid empty_reason and alternative_offers")
+  if (!Array.isArray(response.offers)) { errors.push("typed Flight responses require an offers array"); return }
+  for (const [index, offer] of response.offers.entries()) {
+    const fail = (message) => errors.push(`offers.${index}: ${message}`)
+    const data = offer?.offer_info?.details?.data
+    if (!isPlainObject(offer) || offer.offer_info?.details?.profile !== "flight" || !isPlainObject(data)) { fail("requires a complete Flight Offer"); continue }
+    if (partner) for (const error of validatePartnerOfferV10Semantics(offer).errors) fail(error.message)
+    const price = offer.offer_info?.commercial?.price
+    if (price?.unit !== undefined && price.unit !== "one_time") fail("typed Flight price.unit must be omitted or one_time")
+    if (query.query_kind === "reference_search") {
+      if (data.price_basis !== "reference" || Object.hasOwn(data, "travelers")) fail("reference_search requires reference price_basis without travelers")
+    } else if (query.query_kind === "traveler_quote") {
+      if (data.price_basis !== "itinerary_total") fail("traveler_quote requires itinerary_total price_basis")
+      const travelerErrors = []
+      validateFlightTravelers(data.travelers, true, "/offer_info/details/data/travelers", travelerErrors)
+      errors.push(...travelerErrors)
+      if (travelerErrors.length === 0 && Array.isArray(query.travelers) && query.travelers.every(isPlainObject) && flightTravelerComposition(data.travelers) !== flightTravelerComposition(query.travelers)) fail("traveler composition, ages, and infant seat requirements must match the request")
+    }
+    if (!Array.isArray(data.legs) || data.legs.length !== query.legs.length) { fail("leg count must match the request"); continue }
+    for (const [legIndex, leg] of data.legs.entries()) {
+      const wanted = query.legs[legIndex]
+      const segments = leg?.segments
+      if (!isPlainObject(wanted) || !Array.isArray(segments) || segments.length === 0) { fail(`leg ${legIndex} requires ordered segments`); continue }
+      const matches = (location, airport) => location?.kind === "airport"
+        ? location.code === airport
+        : location?.kind === "city" && isPlainObject(evidence?.airportCityCodes) && Object.hasOwn(evidence.airportCityCodes, airport) && Array.isArray(evidence.airportCityCodes[airport]) && evidence.airportCityCodes[airport].includes(location.code)
+      if (!matches(wanted.origin, segments[0]?.departure?.airport_code) || !matches(wanted.destination, segments.at(-1)?.arrival?.airport_code)) fail(`leg ${legIndex} endpoints must match with trusted airportCityCodes evidence for cities`)
+      if (typeof segments[0]?.departure?.local_at !== "string" || segments[0].departure.local_at.slice(0, 10) !== wanted.departure_date) fail(`leg ${legIndex} local departure date must match`)
+      if (query.cabin_class !== undefined && segments.some((segment) => segment?.cabin_class !== query.cabin_class)) fail(`leg ${legIndex} cabin class must match on every segment`)
+      if (query.max_connections !== undefined && segments.length - 1 > query.max_connections) fail(`leg ${legIndex} exceeds max_connections`)
+      if (query.nonstop_only === true && (segments.length !== 1 || !Array.isArray(segments[0]?.stops) || segments[0].stops.length !== 0)) fail(`leg ${legIndex} nonstop_only requires one segment and explicitly empty stops`)
+    }
+  }
+}
+
+export function validateOfferQueryErrorV10Semantics(error, request = {}) {
+  const errors = []
+  if (!isPlainObject(error)) return { valid: false, errors: ["error envelope must be an object"] }
+  const flight = error.extra?.flight_search_error
+  const typed = Object.hasOwn(request?.intent ?? {}, "details")
+  if (typed && ["BAD_REQUEST", "INTERNAL_ERROR"].includes(error.code) && flight === undefined) errors.push("typed Flight BAD_REQUEST and INTERNAL_ERROR require extra.flight_search_error")
+  if (flight !== undefined) {
+    if (!isPlainObject(flight) || !["invalid_query", "unsupported_capability", "upstream_failure"].includes(flight.kind)) errors.push("flight_search_error requires a registered kind")
+    else if (error.code !== (flight.kind === "upstream_failure" ? "INTERNAL_ERROR" : "BAD_REQUEST")) errors.push("Flight error code and kind must match")
+  }
+  return { valid: errors.length === 0, errors }
+}
+
+export function validateOfferProviderResponseV10Semantics(response, request = {}, evidence = {}) {
+  if (!isPlainObject(response)) return { valid: false, errors: ["Provider response must be an object"] }
+  if (Object.hasOwn(response, "code")) return validateOfferQueryErrorV10Semantics(response, request)
+  const errors = []
+  if (typeof request?.request_id !== "string" || response.request_id !== request.request_id) errors.push("Provider request_id is required and must match the paired request")
+  const typed = Object.hasOwn(response, "flight_search") || Object.hasOwn(request?.intent ?? {}, "details")
+  if (typed) validateFlightResponse(response, request, evidence, true, errors)
+  else if (Array.isArray(response.offers)) {
+    for (const [index, offer] of response.offers.entries()) for (const error of validatePartnerOfferV10Semantics(offer).errors) errors.push(`offers.${index}: ${error.message}`)
+  }
+  return { valid: errors.length === 0, errors }
+}

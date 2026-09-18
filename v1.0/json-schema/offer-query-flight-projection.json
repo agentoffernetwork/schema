@@ -1,0 +1,16 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://agentoffernetwork.org/schema/offer-query-flight-projection/v1.0",
+  "title": "AgentOffer Flight Query Projection v1.0",
+  "description": "Public Flight Query result with public dispatch identity and explicit price nature.",
+  "allOf": [
+    {
+      "$ref": "https://agentoffernetwork.org/schema/offer/v1.0",
+      "description": "Complete public Offer structure."
+    },
+    {
+      "$ref": "https://agentoffernetwork.org/schema/offer-query-flight-profile/v1.0#/$defs/typedOffer",
+      "description": "Additional typed Flight constraints."
+    }
+  ]
+}
