@@ -211,12 +211,18 @@
             "name": "Radio"
           },
           {
+            "name": "Music Streaming Services"
+          },
+          {
             "name": "Musical Instruments",
             "children": [
               {
                 "name": "Musical Instrument Accessories"
               }
             ]
+          },
+          {
+            "name": "Podcast Content"
           },
           {
             "name": "Recorded Music"
@@ -247,6 +253,9 @@
                 "name": "TV Cartoons"
               }
             ]
+          },
+          {
+            "name": "Film & TV Streaming Services"
           }
         ]
       },
@@ -263,6 +272,9 @@
       {
         "name": "iGaming",
         "children": []
+      },
+      {
+        "name": "Creator Memberships"
       }
     ]
   },
@@ -748,6 +760,9 @@
                         "name": "Project Management Software"
                       }
                     ]
+                  },
+                  {
+                    "name": "Writing Assistance Software"
                   }
                 ]
               },
@@ -759,6 +774,9 @@
                 "children": [
                   {
                     "name": "Photo Software"
+                  },
+                  {
+                    "name": "Video Creation & Editing Software"
                   }
                 ]
               },
@@ -778,8 +796,14 @@
                   },
                   {
                     "name": "Web Browsers"
+                  },
+                  {
+                    "name": "Website Builder Software"
                   }
                 ]
+              },
+              {
+                "name": "Machine Learning Model Artifacts"
               }
             ]
           }
@@ -907,6 +931,12 @@
             "name": "Pizzerias & Pizza Delivery"
           }
         ]
+      },
+      {
+        "name": "Catering Services"
+      },
+      {
+        "name": "Prepared Food Delivery Platforms"
       }
     ]
   },
@@ -920,6 +950,9 @@
             "name": "B2C Marketplace"
           }
         ]
+      },
+      {
+        "name": "Shopping Savings Tools"
       }
     ]
   },
@@ -985,6 +1018,9 @@
               },
               {
                 "name": "Baby Strollers"
+              },
+              {
+                "name": "Baby Transport Accessories"
               },
               {
                 "name": "Cribs, Bassinets & Playards"
@@ -1236,6 +1272,12 @@
       },
       {
         "name": "Money Transfer & Wire Services"
+      },
+      {
+        "name": "Digital Payment Wallets"
+      },
+      {
+        "name": "Payment Processing Services"
       }
     ]
   },
@@ -1311,7 +1353,13 @@
             "name": "Dairy & Non-Dairy Alternatives",
             "children": [
               {
+                "name": "Butter & Spreadable Fat Alternatives"
+              },
+              {
                 "name": "Cheese"
+              },
+              {
+                "name": "Cream & Cream Alternatives"
               },
               {
                 "name": "Milk & Plant-Based Milk"
@@ -1905,6 +1953,9 @@
                     "name": "Video Game Consoles"
                   },
                   {
+                    "name": "Game Add-On Content"
+                  },
+                  {
                     "name": "Game Controllers"
                   }
                 ]
@@ -2297,6 +2348,15 @@
           },
           {
             "name": "Web Portals"
+          },
+          {
+            "name": "Cloud Gaming Services"
+          },
+          {
+            "name": "Creator Video Platforms"
+          },
+          {
+            "name": "Model Inference API Services"
           }
         ]
       },
@@ -2377,6 +2437,9 @@
       },
       {
         "name": "Job Listings"
+      },
+      {
+        "name": "Career Application Services"
       }
     ]
   },
@@ -2734,6 +2797,9 @@
       },
       {
         "name": "Vacation Packages"
+      },
+      {
+        "name": "Visa Assistance Services"
       }
     ]
   },

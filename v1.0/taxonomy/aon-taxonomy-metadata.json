@@ -2,8 +2,8 @@
   "schema_version": "aon-taxonomy-metadata-v1",
   "taxonomy_version": "v1",
   "baseline_digest": "c780b40af38c942b15f4ffead7106eeceb7704f6011c309725934ecd28d2d7c0",
-  "source_metadata_digest": "ce7c546975cd2e213c27c97c9a3adc733524adb218e3c4f19ec4993d573e98ad",
-  "record_count": 787,
+  "source_metadata_digest": "3197a44fb19784e97aa7d7d1391220cd3f1b739afb33077e8f69a248a6e4f195",
+  "record_count": 809,
   "records": [
     {
       "category_id": "fashion_apparel",
@@ -1753,29 +1753,35 @@
     {
       "category_id": "arts_entertainment.events_shows_cultural_attractions.ticket_sales_exchanges",
       "name": "Ticket Sales & Exchanges",
-      "definition": "Canonical AON category at level 3 in arts_entertainment > events_shows_cultural_attractions > ticket_sales_exchanges; use it only when Ticket Sales & Exchanges is the most specific supported primary subject.",
-      "aliases": [],
+      "definition": "A service for discovering, reserving, buying, reselling, exchanging or managing non-sports admission tickets.",
+      "aliases": [
+        "admission ticketing",
+        "non-sports ticket sales",
+        "ticket exchange"
+      ],
       "examples": {
         "positive": [
-          "Offers primarily about Ticket Sales & Exchanges",
-          "Ticket Sales & Exchanges content within Events, Shows & Cultural Attractions"
+          "Theatre ticket reservation service",
+          "Museum admission-ticket marketplace"
         ],
         "negative": [
-          "Offers better described by a more specific child of Ticket Sales & Exchanges",
-          "Offers whose primary subject is unrelated to Ticket Sales & Exchanges"
+          "Sports-match ticketing service",
+          "Concert schedule without admission rights"
         ]
       },
-      "subject": "physical",
+      "subject": "service",
       "boundary": {
         "include": [
-          "The primary Offer subject is Ticket Sales & Exchanges"
+          "Performance, exhibition and cultural attraction admission",
+          "Primary and secondary non-sports ticket workflows"
         ],
         "exclude": [
-          "A more specific supported descendant is evidenced",
-          "The primary subject belongs to an unrelated sibling branch"
+          "Events and venues without admission rights",
+          "Event information alone",
+          "Transport tickets and sports-event ticketing"
         ],
-        "primary_rule": "Assign the most specific evidence-supported category as primary.",
-        "residual_rule": "Do not use this node as a catch-all outside its canonical subtree."
+        "primary_rule": "Classify the ticket or admission workflow as service; paper, digital delivery, seats and resale are attributes.",
+        "residual_rule": "An event identity alone is insufficient; establish admission rights and separate sports ticketing."
       },
       "semantic_role": "exact",
       "lifecycle": {
@@ -2051,29 +2057,34 @@
     {
       "category_id": "arts_entertainment.music_audio.music_streams_downloads",
       "name": "Music Streams & Downloads",
-      "definition": "Canonical AON category at level 3 in arts_entertainment > music_audio > music_streams_downloads; use it only when Music Streams & Downloads is the most specific supported primary subject.",
-      "aliases": [],
+      "definition": "Music recordings sold or licensed as permanent digital downloads or persistent stored copies, including individual tracks, albums and EPs.",
+      "aliases": [
+        "digital music download",
+        "permanent music download"
+      ],
       "examples": {
         "positive": [
-          "Offers primarily about Music Streams & Downloads",
-          "Music Streams & Downloads content within Music & Audio"
+          "Permanent album file download",
+          "Purchased track with persistent digital-copy rights"
         ],
         "negative": [
-          "Offers better described by a more specific child of Music Streams & Downloads",
-          "Offers whose primary subject is unrelated to Music Streams & Downloads"
+          "Monthly music catalog subscription",
+          "Vinyl record"
         ]
       },
       "subject": "digital",
       "boundary": {
         "include": [
-          "The primary Offer subject is Music Streams & Downloads"
+          "Permanent track and album downloads",
+          "Persistent licensed digital music copies"
         ],
         "exclude": [
-          "A more specific supported descendant is evidenced",
-          "The primary subject belongs to an unrelated sibling branch"
+          "Time-limited music catalog streaming",
+          "Physical recordings, radio, podcasts and audiobooks",
+          "Abstract compositions or recording identities and cloud playback without a persistent copy"
         ],
-        "primary_rule": "Assign the most specific evidence-supported category as primary.",
-        "residual_rule": "Do not use this node as a catch-all outside its canonical subtree."
+        "primary_rule": "Persistent copy rights are decisive; the retained name does not extend this category to streaming catalog services.",
+        "residual_rule": "Require delivery and rights evidence for a recording or release; format, quality, DRM and territory remain attributes."
       },
       "semantic_role": "exact",
       "lifecycle": {
@@ -2107,6 +2118,43 @@
         ],
         "primary_rule": "Assign the most specific evidence-supported category as primary.",
         "residual_rule": "Do not use this node as a catch-all outside its canonical subtree."
+      },
+      "semantic_role": "exact",
+      "lifecycle": {
+        "status": "current",
+        "replacement_category_id": null
+      }
+    },
+    {
+      "category_id": "arts_entertainment.music_audio.music_streaming_services",
+      "name": "Music Streaming Services",
+      "definition": "A network service providing time-limited access to a provider-organized music recording catalog through on-demand listening or programmed channels.",
+      "aliases": [
+        "music catalog subscription",
+        "music streaming service"
+      ],
+      "examples": {
+        "positive": [
+          "Monthly on-demand music subscription",
+          "Paid provider-programmed music channel service"
+        ],
+        "negative": [
+          "Permanent album download",
+          "Vinyl record"
+        ]
+      },
+      "subject": "service",
+      "boundary": {
+        "include": [
+          "On-demand music catalog subscriptions",
+          "Provider-organized music streaming channels"
+        ],
+        "exclude": [
+          "Permanent downloads or persistent music-copy licenses",
+          "Physical recordings, podcasts and user-upload video platforms"
+        ],
+        "primary_rule": "Classify catalog access as service; permanent copies belong to Music Streams & Downloads despite its retained legacy name.",
+        "residual_rule": "Unknown access duration or content rights cannot establish this service type."
       },
       "semantic_role": "exact",
       "lifecycle": {
@@ -2177,6 +2225,45 @@
         "residual_rule": "Keep this node selectable as the documented residual fallback when exact child evidence is absent."
       },
       "semantic_role": "broad_fallback",
+      "lifecycle": {
+        "status": "current",
+        "replacement_category_id": null
+      }
+    },
+    {
+      "category_id": "arts_entertainment.music_audio.podcast_content",
+      "name": "Podcast Content",
+      "definition": "Identifiable podcast audio or audiovisual content made available to obtain, purchase or license as a series or individual episode.",
+      "aliases": [
+        "podcast content",
+        "podcast episode",
+        "podcast series"
+      ],
+      "examples": {
+        "positive": [
+          "Downloadable interview podcast episode",
+          "Purchasable documentary podcast series"
+        ],
+        "negative": [
+          "Music album download",
+          "Podcast recording software"
+        ]
+      },
+      "subject": "digital",
+      "boundary": {
+        "include": [
+          "Published podcast episode content",
+          "Obtainable or licensable podcast series content"
+        ],
+        "exclude": [
+          "Music releases, audiobooks and radio-station services",
+          "General audio-streaming services and podcast-production tools",
+          "Abstract show or episode identifiers without available content rights"
+        ],
+        "primary_rule": "Series and episode identify content granularity; require obtainable content or specific content rights, not only an abstract identifier.",
+        "residual_rule": "Leave delivery or rights unresolved when only a podcast identity is known; do not infer a content offer or streaming subscription."
+      },
+      "semantic_role": "exact",
       "lifecycle": {
         "status": "current",
         "replacement_category_id": null
@@ -2285,29 +2372,34 @@
     {
       "category_id": "arts_entertainment.sports_event_tickets_ticketing_services",
       "name": "Sports Event Tickets & Ticketing Services",
-      "definition": "Canonical AON category at level 2 in arts_entertainment > sports_event_tickets_ticketing_services; use it only when Sports Event Tickets & Ticketing Services is the most specific supported primary subject.",
-      "aliases": [],
+      "definition": "A service for discovering, reserving, buying, reselling or managing admission tickets to sports matches, races or competitive fixtures.",
+      "aliases": [
+        "sports admission ticket",
+        "sports ticketing service"
+      ],
       "examples": {
         "positive": [
-          "Offers primarily about Sports Event Tickets & Ticketing Services",
-          "Sports Event Tickets & Ticketing Services content within Arts & Entertainment"
+          "Football-match seat reservation",
+          "Race admission-ticket resale service"
         ],
         "negative": [
-          "Offers better described by a more specific child of Sports Event Tickets & Ticketing Services",
-          "Offers whose primary subject is unrelated to Sports Event Tickets & Ticketing Services"
+          "Live sports-streaming subscription",
+          "League fixture calendar"
         ]
       },
       "subject": "service",
       "boundary": {
         "include": [
-          "The primary Offer subject is Sports Event Tickets & Ticketing Services"
+          "Sports-event admission ticket offers",
+          "Sports ticket reservation, resale and management services"
         ],
         "exclude": [
-          "A more specific supported descendant is evidenced",
-          "The primary subject belongs to an unrelated sibling branch"
+          "Matches, leagues and schedules without admission rights",
+          "Sports broadcasts and streaming access",
+          "Sporting equipment and non-sports performance tickets"
         ],
-        "primary_rule": "Assign the most specific evidence-supported category as primary.",
-        "residual_rule": "Do not use this node as a catch-all outside its canonical subtree."
+        "primary_rule": "Require ticket, seat, admission or ticket-management evidence for a competitive sports event.",
+        "residual_rule": "An abstract sports-event identity cannot establish a ticketing offer; retain unresolved without admission facts."
       },
       "semantic_role": "exact",
       "lifecycle": {
@@ -2448,6 +2540,45 @@
       }
     },
     {
+      "category_id": "arts_entertainment.tv_video.film_tv_streaming_services",
+      "name": "Film & TV Streaming Services",
+      "definition": "A network service granting time-limited access to a provider-organized film, television or short-drama catalog rather than a persistent copy of an individual title.",
+      "aliases": [
+        "film streaming service",
+        "short-drama streaming service",
+        "television streaming service"
+      ],
+      "examples": {
+        "positive": [
+          "Monthly film catalog subscription",
+          "Time-limited short-drama catalog membership"
+        ],
+        "negative": [
+          "Permanent movie download",
+          "User-upload video-hosting account"
+        ]
+      },
+      "subject": "service",
+      "boundary": {
+        "include": [
+          "Provider-selected film and television catalog access",
+          "Time-limited serialized short-drama catalog access"
+        ],
+        "exclude": [
+          "Permanent downloads and individually purchased persistent content rights",
+          "Creator-upload video-hosting platforms",
+          "Cloud gaming and human video-production services"
+        ],
+        "primary_rule": "The primary object must be continuing catalog access; short drama is a content format, while single-title rights remain content.",
+        "residual_rule": "If catalog access versus individual content rights is unknown, leave unresolved; episode unlocking alone does not settle that distinction."
+      },
+      "semantic_role": "exact",
+      "lifecycle": {
+        "status": "current",
+        "replacement_category_id": null
+      }
+    },
+    {
       "category_id": "arts_entertainment.visual_art_design",
       "name": "Visual Art & Design",
       "definition": "Canonical AON category at level 2 in arts_entertainment > visual_art_design; use it only when Visual Art & Design is the most specific supported primary subject.",
@@ -2516,29 +2647,34 @@
     {
       "category_id": "arts_entertainment.short_drama",
       "name": "Short Drama",
-      "definition": "Canonical AON category at level 2 in arts_entertainment > short_drama; use it only when Short Drama is the most specific supported primary subject.",
-      "aliases": [],
+      "definition": "Specific short-drama title, series, episode or release content offered with individual digital acquisition or access rights, such as a download or episode unlock.",
+      "aliases": [
+        "digital short drama",
+        "short-drama episode content"
+      ],
       "examples": {
         "positive": [
-          "Offers primarily about Short Drama",
-          "Short Drama content within Arts & Entertainment"
+          "Purchase of a named short-drama season download",
+          "Individual paid unlock of a specified short-drama episode"
         ],
         "negative": [
-          "Offers better described by a more specific child of Short Drama",
-          "Offers whose primary subject is unrelated to Short Drama"
+          "Short-drama catalog subscription",
+          "Abstract drama title record"
         ]
       },
-      "subject": "physical",
+      "subject": "digital",
       "boundary": {
         "include": [
-          "The primary Offer subject is Short Drama"
+          "Individual short-drama digital purchases",
+          "Specified short-drama episode or season unlocks"
         ],
         "exclude": [
-          "A more specific supported descendant is evidenced",
-          "The primary subject belongs to an unrelated sibling branch"
+          "Time-limited access to a provider's drama catalog",
+          "Abstract title records without transactable content rights",
+          "Physical discs, user-video platforms and production services"
         ],
-        "primary_rule": "Assign the most specific evidence-supported category as primary.",
-        "residual_rule": "Do not use this node as a catch-all outside its canonical subtree."
+        "primary_rule": "Classify the specified content right as digital; duration, orientation, language and episode granularity are attributes. Continuing catalog access is a streaming service.",
+        "residual_rule": "When catalog access versus individual content rights is unknown, do not infer this target from a short-drama label."
       },
       "semantic_role": "exact",
       "lifecycle": {
@@ -2549,29 +2685,73 @@
     {
       "category_id": "arts_entertainment.igaming",
       "name": "iGaming",
-      "definition": "Canonical AON category at level 2 in arts_entertainment > igaming; use it only when iGaming is the most specific supported primary subject.",
-      "aliases": [],
+      "definition": "A regulated real-money online wagering access service, including online sports or event betting, casino play and online lottery entry.",
+      "aliases": [
+        "online casino service",
+        "online gambling",
+        "online wagering"
+      ],
       "examples": {
         "positive": [
-          "Offers primarily about iGaming",
-          "iGaming content within Arts & Entertainment"
+          "Licensed online sports-wagering account",
+          "Regulated online casino access"
         ],
         "negative": [
-          "Offers better described by a more specific child of iGaming",
-          "Offers whose primary subject is unrelated to iGaming"
+          "Physical casino venue admission",
+          "Free promotional sweepstakes"
         ]
       },
-      "subject": "physical",
+      "subject": "service",
       "boundary": {
         "include": [
-          "The primary Offer subject is iGaming"
+          "Online real-money betting and casino participation",
+          "Regulated online lottery-ticket access"
         ],
         "exclude": [
-          "A more specific supported descendant is evidenced",
-          "The primary subject belongs to an unrelated sibling branch"
+          "Physical gambling venues",
+          "Non-wagering video games and promotional giveaways",
+          "Ordinary random in-game items and financial spread-betting products"
         ],
-        "primary_rule": "Assign the most specific evidence-supported category as primary.",
-        "residual_rule": "Do not use this node as a catch-all outside its canonical subtree."
+        "primary_rule": "Require online channel and regulated real-money participation; select by evidenced service, not the mere mention of betting, casino or lottery.",
+        "residual_rule": "Without online-channel or participation facts leave unresolved; the exact node role does not make all gambling sources exact or comparable."
+      },
+      "semantic_role": "exact",
+      "lifecycle": {
+        "status": "current",
+        "replacement_category_id": null
+      }
+    },
+    {
+      "category_id": "arts_entertainment.creator_memberships",
+      "name": "Creator Memberships",
+      "definition": "A continuing paid service granting access to a creator, creator community or exclusive creator content and membership benefits.",
+      "aliases": [
+        "creator membership",
+        "creator subscription",
+        "fan membership"
+      ],
+      "examples": {
+        "positive": [
+          "Monthly creator community membership",
+          "Recurring membership for exclusive creator posts"
+        ],
+        "negative": [
+          "One-off ebook purchase",
+          "General social-network account"
+        ]
+      },
+      "subject": "service",
+      "boundary": {
+        "include": [
+          "Recurring creator-content access",
+          "Paid creator community participation and member benefits"
+        ],
+        "exclude": [
+          "Single-item content purchases",
+          "Ordinary social networks and general streaming catalogs"
+        ],
+        "primary_rule": "Classify the ongoing creator access relationship, not individual content formats or payment frequency alone.",
+        "residual_rule": "Do not infer membership from a creator name without evidence of continuing access or member benefits."
       },
       "semantic_role": "exact",
       "lifecycle": {
@@ -7375,6 +7555,45 @@
       }
     },
     {
+      "category_id": "computers_electronics.computers.software.business_productivity_software.writing_assistance_software",
+      "name": "Writing Assistance Software",
+      "definition": "Software primarily drafting, rewriting, proofreading, editing or improving written text.",
+      "aliases": [
+        "proofreading software",
+        "text drafting software",
+        "writing assistant"
+      ],
+      "examples": {
+        "positive": [
+          "Grammar and style correction application",
+          "AI text drafting software"
+        ],
+        "negative": [
+          "Human resume-writing service",
+          "Ebook for reading"
+        ]
+      },
+      "subject": "digital",
+      "boundary": {
+        "include": [
+          "Text drafting and rewriting applications",
+          "Grammar, proofreading and style assistance software"
+        ],
+        "exclude": [
+          "Human writing or editing services",
+          "Reading content itself",
+          "General applications with only incidental text fields"
+        ],
+        "primary_rule": "The software must primarily assist composition or improvement of text, not merely display or store it.",
+        "residual_rule": "Do not select based on a text field or AI branding without primary writing functionality."
+      },
+      "semantic_role": "exact",
+      "lifecycle": {
+        "status": "current",
+        "replacement_category_id": null
+      }
+    },
+    {
       "category_id": "computers_electronics.computers.software.educational_software",
       "name": "Educational Software",
       "definition": "Canonical AON category at level 4 in computers_electronics > computers > software > educational_software; use it only when Educational Software is the most specific supported primary subject.",
@@ -7466,6 +7685,45 @@
         ],
         "primary_rule": "Assign the most specific evidence-supported category as primary.",
         "residual_rule": "Do not use this node as a catch-all outside its canonical subtree."
+      },
+      "semantic_role": "exact",
+      "lifecycle": {
+        "status": "current",
+        "replacement_category_id": null
+      }
+    },
+    {
+      "category_id": "computers_electronics.computers.software.graphics_multimedia_software.video_creation_editing_software",
+      "name": "Video Creation & Editing Software",
+      "definition": "Software primarily generating, assembling, editing or improving video from prompts, images, clips or other media inputs.",
+      "aliases": [
+        "video creation software",
+        "video editing software",
+        "video generation software"
+      ],
+      "examples": {
+        "positive": [
+          "Text-to-video generation software",
+          "Nonlinear video editing application"
+        ],
+        "negative": [
+          "Creator video-hosting subscription",
+          "Human film-production contract"
+        ]
+      },
+      "subject": "digital",
+      "boundary": {
+        "include": [
+          "Video generation and editing applications",
+          "Clip assembly, effects and video production software"
+        ],
+        "exclude": [
+          "Photography hardware",
+          "Video-hosting platforms and streaming catalogs",
+          "Human video-production services"
+        ],
+        "primary_rule": "Require software video creation or editing as the primary function; AI is a capability attribute.",
+        "residual_rule": "Video playback or storage alone is insufficient; leave unclear functionality unresolved."
       },
       "semantic_role": "exact",
       "lifecycle": {
@@ -7631,6 +7889,84 @@
         ],
         "primary_rule": "Assign the most specific evidence-supported category as primary.",
         "residual_rule": "Do not use this node as a catch-all outside its canonical subtree."
+      },
+      "semantic_role": "exact",
+      "lifecycle": {
+        "status": "current",
+        "replacement_category_id": null
+      }
+    },
+    {
+      "category_id": "computers_electronics.computers.software.internet_software_web_apps.website_builder_software",
+      "name": "Website Builder Software",
+      "definition": "Software primarily used to create, edit and publish websites or web pages, including AI-assisted generation.",
+      "aliases": [
+        "website authoring software",
+        "website builder",
+        "website generator"
+      ],
+      "examples": {
+        "positive": [
+          "AI website generator application",
+          "Visual website authoring software"
+        ],
+        "negative": [
+          "Agency website design contract",
+          "Hosting-only server plan"
+        ]
+      },
+      "subject": "digital",
+      "boundary": {
+        "include": [
+          "Website and page authoring software",
+          "Website generation and publishing tools"
+        ],
+        "exclude": [
+          "Human website design or implementation services",
+          "Generic hosting without authoring tools",
+          "Ordinary applications merely containing web forms"
+        ],
+        "primary_rule": "Classify by site creation and publishing functionality; AI capability and software access method are attributes.",
+        "residual_rule": "If authoring is incidental or the offer is a managed human service, do not select this software type."
+      },
+      "semantic_role": "exact",
+      "lifecycle": {
+        "status": "current",
+        "replacement_category_id": null
+      }
+    },
+    {
+      "category_id": "computers_electronics.computers.software.machine_learning_model_artifacts",
+      "name": "Machine Learning Model Artifacts",
+      "definition": "A versioned machine-learning model artifact offered for acquisition, licensing or deployment, such as weights or an executable model package.",
+      "aliases": [
+        "machine learning model artifact",
+        "model weights",
+        "trained model package"
+      ],
+      "examples": {
+        "positive": [
+          "Licensed language-model weights",
+          "Downloadable image-model deployment package"
+        ],
+        "negative": [
+          "Hosted model inference API subscription",
+          "Paper proposing a model architecture"
+        ]
+      },
+      "subject": "digital",
+      "boundary": {
+        "include": [
+          "Downloadable or deployable trained model packages",
+          "Licensed versioned model weights"
+        ],
+        "exclude": [
+          "Research concepts without an obtainable artifact",
+          "Hosted inference APIs",
+          "Complete end-user applications or operational systems"
+        ],
+        "primary_rule": "Require an identifiable versioned artifact and acquisition, license or deployment rights.",
+        "residual_rule": "A model name or evaluation claim without artifact availability does not establish an artifact offer."
       },
       "semantic_role": "exact",
       "lifecycle": {
@@ -8617,29 +8953,35 @@
     {
       "category_id": "dining_nightlife.dining_nightlife_reviews_guides_listings",
       "name": "Dining & Nightlife Reviews, Guides & Listings",
-      "definition": "Canonical AON category at level 2 in dining_nightlife > dining_nightlife_reviews_guides_listings; use it only when Dining & Nightlife Reviews, Guides & Listings is the most specific supported primary subject.",
-      "aliases": [],
+      "definition": "A service primarily helping users discover, compare, review, locate, reserve or join waitlists for dining or nightlife venues, including associated dining offers.",
+      "aliases": [
+        "dining guide",
+        "restaurant discovery",
+        "restaurant reservation service"
+      ],
       "examples": {
         "positive": [
-          "Offers primarily about Dining & Nightlife Reviews, Guides & Listings",
-          "Dining & Nightlife Reviews, Guides & Listings content within Dining & Nightlife"
+          "Restaurant reservation and discovery service",
+          "Nightlife review and venue guide service"
         ],
         "negative": [
-          "Offers better described by a more specific child of Dining & Nightlife Reviews, Guides & Listings",
-          "Offers whose primary subject is unrelated to Dining & Nightlife Reviews, Guides & Listings"
+          "Multi-restaurant delivery-first platform",
+          "Individual restaurant meal"
         ]
       },
-      "subject": "physical",
+      "subject": "service",
       "boundary": {
         "include": [
-          "The primary Offer subject is Dining & Nightlife Reviews, Guides & Listings"
+          "Restaurant and nightlife reviews, guides and directories",
+          "Reservation, waitlist and discovery-centered dining services"
         ],
         "exclude": [
-          "A more specific supported descendant is evidenced",
-          "The primary subject belongs to an unrelated sibling branch"
+          "Individual restaurant establishments",
+          "Delivery-first prepared-food platforms",
+          "Grocery retail and general merchandise marketplaces"
         ],
-        "primary_rule": "Assign the most specific evidence-supported category as primary.",
-        "residual_rule": "Do not use this node as a catch-all outside its canonical subtree."
+        "primary_rule": "Use the primary customer workflow to distinguish discovery and reservations from prepared-food delivery; app channel and membership are attributes.",
+        "residual_rule": "For multifunction platforms establish the primary transaction workflow rather than infer it from a restaurant label."
       },
       "semantic_role": "exact",
       "lifecycle": {
@@ -8813,6 +9155,84 @@
       }
     },
     {
+      "category_id": "dining_nightlife.catering_services",
+      "name": "Catering Services",
+      "definition": "A service preparing and supplying meals or drinks for a prearranged event, workplace, group or occasion.",
+      "aliases": [
+        "corporate catering",
+        "event catering",
+        "group catering"
+      ],
+      "examples": {
+        "positive": [
+          "Staffed wedding meal service",
+          "Prearranged office buffet catering"
+        ],
+        "negative": [
+          "Individual restaurant table order",
+          "Buffet equipment rental without food"
+        ]
+      },
+      "subject": "service",
+      "boundary": {
+        "include": [
+          "Drop-off, buffet and plated group catering",
+          "Staffed corporate or event catering"
+        ],
+        "exclude": [
+          "Ordinary individual restaurant dining",
+          "Retail grocery ingredients",
+          "Equipment-only rental and platforms delivering individual restaurant orders"
+        ],
+        "primary_rule": "Require arranged group or occasion supply; staffing and serving style are service attributes.",
+        "residual_rule": "If the primary model is ordinary restaurant ordering or delivery aggregation, use that evidenced type instead."
+      },
+      "semantic_role": "exact",
+      "lifecycle": {
+        "status": "current",
+        "replacement_category_id": null
+      }
+    },
+    {
+      "category_id": "dining_nightlife.prepared_food_delivery_platforms",
+      "name": "Prepared Food Delivery Platforms",
+      "definition": "A multi-merchant platform that lets consumers order prepared meals or drinks and arranges delivery from restaurants or other prepared-food merchants.",
+      "aliases": [
+        "food delivery platform",
+        "meal delivery marketplace",
+        "multi-restaurant delivery"
+      ],
+      "examples": {
+        "positive": [
+          "Multi-restaurant meal delivery application",
+          "Multi-merchant prepared-drink delivery platform"
+        ],
+        "negative": [
+          "Supermarket grocery delivery",
+          "Restaurant delivering only its own meals"
+        ]
+      },
+      "subject": "platform",
+      "boundary": {
+        "include": [
+          "Multi-restaurant prepared-meal ordering and delivery",
+          "Multi-merchant prepared-drink delivery aggregation"
+        ],
+        "exclude": [
+          "Restaurants delivering only their own orders",
+          "Grocery and retail-goods delivery",
+          "Reservation-first restaurant platforms and parcel logistics"
+        ],
+        "primary_rule": "Require multiple prepared-food merchants with ordering and arranged delivery as the primary platform function.",
+        "residual_rule": "Delivery alone is insufficient without prepared-food and multi-merchant facts."
+      },
+      "semantic_role": "exact",
+      "lifecycle": {
+        "status": "current",
+        "replacement_category_id": null
+      }
+    },
+    {
       "category_id": "e_commerce_marketplace",
       "name": "E-commerce & Marketplace",
       "definition": "Canonical AON category at level 1 in e_commerce_marketplace; use it only when E-commerce & Marketplace is the most specific supported primary subject.",
@@ -8906,6 +9326,48 @@
         "residual_rule": "Do not use this node as a catch-all outside its canonical subtree."
       },
       "semantic_role": "platform",
+      "lifecycle": {
+        "status": "current",
+        "replacement_category_id": null
+      }
+    },
+    {
+      "category_id": "e_commerce_marketplace.shopping_savings_tools",
+      "name": "Shopping Savings Tools",
+      "definition": "A shopping assistance service whose primary function is reducing goods purchase costs through coupons, shopping cashback, seller-price comparison, price tracking, or deal alerts without primarily completing the underlying purchase.",
+      "aliases": [
+        "coupon finder",
+        "deal alerts",
+        "price tracker",
+        "shopping cashback service",
+        "shopping price comparison",
+        "shopping savings tool"
+      ],
+      "examples": {
+        "positive": [
+          "Cross-seller price-drop alert subscription",
+          "Independent shopping cashback membership"
+        ],
+        "negative": [
+          "Coupon-bearing transaction marketplace",
+          "Cashback credit-card account"
+        ]
+      },
+      "subject": "service",
+      "boundary": {
+        "include": [
+          "Coupon discovery and shopping cashback services",
+          "Seller-price comparison, price tracking and deal alerts"
+        ],
+        "exclude": [
+          "Sellers and marketplaces completing purchases",
+          "Promotional goods, gift-card value, payment, credit, deposit or investment products",
+          "General software development tools"
+        ],
+        "primary_rule": "Classify by the primary savings assistance function, not software delivery or incidental discounts. Compare services by their principal capabilities.",
+        "residual_rule": "If savings assistance is not evidenced as the primary function, leave unresolved; do not default to a comprehensive marketplace."
+      },
+      "semantic_role": "exact",
       "lifecycle": {
         "status": "current",
         "replacement_category_id": null
@@ -9383,30 +9845,33 @@
     {
       "category_id": "family_community.baby_parenting_family.baby.baby_carriers",
       "name": "Baby Carriers",
-      "definition": "Baby Carriers products distinguished by their primary product form, function, and comparison model within Baby And Toddler.",
-      "aliases": [],
+      "definition": "A complete wearable baby or toddler carrying device whose own structure supports the child on a caregiver.",
+      "aliases": [
+        "baby carrier",
+        "baby carrying sling"
+      ],
       "examples": {
         "positive": [
-          "A product whose primary type is Baby Carriers",
-          "Baby Carriers sold as the main Offer item"
+          "Complete structured baby carrier",
+          "Baby carrying wrap"
         ],
         "negative": [
-          "A service related to Baby Carriers",
-          "A product that only shares a brand, model, material, or compatibility attribute with Baby Carriers"
+          "Carrier strap replacement accessory",
+          "Diaper bag"
         ]
       },
       "subject": "physical",
       "boundary": {
         "include": [
-          "stable care, feeding, sleeping, monitoring, transport, and safety product types are categories. Age band, child size, material, color, gender positioning, and vehicle fitment remain attributes.",
-          "Products whose primary comparison model is Baby Carriers"
+          "Complete structured baby carriers",
+          "Complete carrying wraps and slings"
         ],
         "exclude": [
-          "Services, rentals, installation, and repair",
-          "Brand, model, fitment, size, color, material, capacity, ingredient, protocol, and other SKU attributes"
+          "Separately sold carrier accessories",
+          "Strollers, car seats and general bags"
         ],
-        "primary_rule": "Use as primary only when the stable product type is the most specific evidence-supported match.",
-        "residual_rule": "Fall back to the nearest existing or admitted broad parent when this exact product boundary is not proven."
+        "primary_rule": "Require the product itself to support the child as a carrier; material, fit and age are attributes.",
+        "residual_rule": "Dedicated parts without complete carrying functionality use the accessory boundary; unknown function remains unresolved."
       },
       "semantic_role": "exact",
       "lifecycle": {
@@ -9417,30 +9882,34 @@
     {
       "category_id": "family_community.baby_parenting_family.baby.baby_child_car_seats",
       "name": "Baby & Child Car Seats",
-      "definition": "Baby & Child Car Seats products distinguished by their primary product form, function, and comparison model within Baby And Toddler.",
-      "aliases": [],
+      "definition": "A complete child car-seat restraint product capable of supporting and restraining a baby or child in a vehicle under its intended installation.",
+      "aliases": [
+        "child car seat",
+        "infant car seat"
+      ],
       "examples": {
         "positive": [
-          "A product whose primary type is Baby & Child Car Seats",
-          "Baby & Child Car Seats sold as the main Offer item"
+          "Complete infant car seat",
+          "Complete convertible child restraint seat"
         ],
         "negative": [
-          "A service related to Baby & Child Car Seats",
-          "A product that only shares a brand, model, material, or compatibility attribute with Baby & Child Car Seats"
+          "Standalone car-seat base",
+          "Replacement car-seat cover"
         ]
       },
       "subject": "physical",
       "boundary": {
         "include": [
-          "stable care, feeding, sleeping, monitoring, transport, and safety product types are categories. Age band, child size, material, color, gender positioning, and vehicle fitment remain attributes.",
-          "Products whose primary comparison model is Baby & Child Car Seats"
+          "Complete infant vehicle seats",
+          "Complete convertible child car seats"
         ],
         "exclude": [
-          "Services, rentals, installation, and repair",
-          "Brand, model, fitment, size, color, material, capacity, ingredient, protocol, and other SKU attributes"
+          "Standalone bases unable to restrain a child",
+          "Replacement parts and separately sold accessories",
+          "General vehicle accessories and non-seat safety harnesses"
         ],
-        "primary_rule": "Use as primary only when the stable product type is the most specific evidence-supported match.",
-        "residual_rule": "Fall back to the nearest existing or admitted broad parent when this exact product boundary is not proven."
+        "primary_rule": "Classify the complete seat product, not fitment compatibility; installation requirements do not turn a base or cover into a complete seat.",
+        "residual_rule": "Use dedicated accessory or independent-restraint types when evidenced; classification does not certify installation or safety."
       },
       "semantic_role": "exact",
       "lifecycle": {
@@ -9451,30 +9920,35 @@
     {
       "category_id": "family_community.baby_parenting_family.baby.baby_monitors",
       "name": "Baby Monitors",
-      "definition": "Baby Monitors products distinguished by their primary product form, function, and comparison model within Baby And Toddler.",
-      "aliases": [],
+      "definition": "A device primarily enabling a caregiver to remotely observe or listen to a baby or toddler through audio, video or non-health activity notifications.",
+      "aliases": [
+        "baby audio monitor",
+        "baby video monitor",
+        "caregiving monitor"
+      ],
       "examples": {
         "positive": [
-          "A product whose primary type is Baby Monitors",
-          "Baby Monitors sold as the main Offer item"
+          "Baby audio intercom monitor",
+          "Nursery video monitor with room-temperature alerts"
         ],
         "negative": [
-          "A service related to Baby Monitors",
-          "A product that only shares a brand, model, material, or compatibility attribute with Baby Monitors"
+          "Infant pulse-oximetry sock",
+          "General home security camera"
         ]
       },
       "subject": "physical",
       "boundary": {
         "include": [
-          "stable care, feeding, sleeping, monitoring, transport, and safety product types are categories. Age band, child size, material, color, gender positioning, and vehicle fitment remain attributes.",
-          "Products whose primary comparison model is Baby Monitors"
+          "Baby audio and video observation devices",
+          "Caregiving monitors with incidental room-temperature, crying or ordinary movement notifications"
         ],
         "exclude": [
-          "Services, rentals, installation, and repair",
-          "Brand, model, fitment, size, color, material, capacity, ingredient, protocol, and other SKU attributes"
+          "Devices primarily measuring blood oxygen, heart rate, breathing or body temperature",
+          "General security cameras",
+          "Standalone monitoring subscriptions, mounts or power accessories"
         ],
-        "primary_rule": "Use as primary only when the stable product type is the most specific evidence-supported match.",
-        "residual_rule": "Fall back to the nearest existing or admitted broad parent when this exact product boundary is not proven."
+        "primary_rule": "Classify the primary function and measurement object, not age branding or camera presence; health measurements use the applicable Health type.",
+        "residual_rule": "If observation versus human-health measurement is unknown, leave unresolved. Travel-source eligibility additionally requires travel or movement use."
       },
       "semantic_role": "exact",
       "lifecycle": {
@@ -9485,30 +9959,35 @@
     {
       "category_id": "family_community.baby_parenting_family.baby.baby_safety_childproofing_products",
       "name": "Baby Safety & Childproofing Products",
-      "definition": "Baby Safety & Childproofing Products products distinguished by their primary product form, function, and comparison model within Baby And Toddler.",
-      "aliases": [],
+      "definition": "Products primarily preventing baby or toddler access to hazards or independently providing child-safety restraint, rather than transporting the child as a complete stroller, carrier or car seat.",
+      "aliases": [
+        "baby safety product",
+        "child safety harness",
+        "childproofing product"
+      ],
       "examples": {
         "positive": [
-          "A product whose primary type is Baby Safety & Childproofing Products",
-          "Baby Safety & Childproofing Products sold as the main Offer item"
+          "Childproof cabinet lock",
+          "Independent child anti-loss safety harness"
         ],
         "negative": [
-          "A service related to Baby Safety & Childproofing Products",
-          "A product that only shares a brand, model, material, or compatibility attribute with Baby Safety & Childproofing Products"
+          "Complete child car seat",
+          "Stroller replacement wheel"
         ]
       },
       "subject": "physical",
       "boundary": {
         "include": [
-          "stable care, feeding, sleeping, monitoring, transport, and safety product types are categories. Age band, child size, material, color, gender positioning, and vehicle fitment remain attributes.",
-          "Products whose primary comparison model is Baby Safety & Childproofing Products"
+          "Childproof locks, gates and hazard barriers",
+          "Independent anti-loss or child-safety harnesses"
         ],
         "exclude": [
-          "Services, rentals, installation, and repair",
-          "Brand, model, fitment, size, color, material, capacity, ingredient, protocol, and other SKU attributes"
+          "Complete strollers, carriers and car seats",
+          "Transport accessories unable to provide independent restraint",
+          "Health-monitoring devices and generic vehicle accessories"
         ],
-        "primary_rule": "Use as primary only when the stable product type is the most specific evidence-supported match.",
-        "residual_rule": "Fall back to the nearest existing or admitted broad parent when this exact product boundary is not proven."
+        "primary_rule": "Distinguish independent protection or restraint from complete transport devices and dependent parts; travel-source use additionally requires travel or movement facts.",
+        "residual_rule": "Group safety products by function when no supported specific type exists; unclear safety function remains unresolved and classification implies no certification."
       },
       "semantic_role": "exact",
       "lifecycle": {
@@ -9519,32 +9998,75 @@
     {
       "category_id": "family_community.baby_parenting_family.baby.baby_strollers",
       "name": "Baby Strollers",
-      "definition": "Baby Strollers products distinguished by their primary product form, function, and comparison model within Baby And Toddler.",
-      "aliases": [],
+      "definition": "A complete wheeled baby or toddler transport device capable of supporting and carrying the child as a stroller.",
+      "aliases": [
+        "baby stroller",
+        "pushchair"
+      ],
       "examples": {
         "positive": [
-          "A product whose primary type is Baby Strollers",
-          "Baby Strollers sold as the main Offer item"
+          "Complete folding stroller",
+          "Complete twin pushchair"
         ],
         "negative": [
-          "A service related to Baby Strollers",
-          "A product that only shares a brand, model, material, or compatibility attribute with Baby Strollers"
+          "Replacement stroller wheel",
+          "Fitted stroller rain cover"
         ]
       },
       "subject": "physical",
       "boundary": {
         "include": [
-          "stable care, feeding, sleeping, monitoring, transport, and safety product types are categories. Age band, child size, material, color, gender positioning, and vehicle fitment remain attributes.",
-          "Products whose primary comparison model is Baby Strollers"
+          "Complete single-child strollers",
+          "Complete multi-child pushchairs"
         ],
         "exclude": [
-          "Services, rentals, installation, and repair",
-          "Brand, model, fitment, size, color, material, capacity, ingredient, protocol, and other SKU attributes"
+          "Separately sold rain covers, adapters, replacement wheels and other accessories",
+          "Baby carriers, car seats and nursery furniture"
         ],
-        "primary_rule": "Use as primary only when the stable product type is the most specific evidence-supported match.",
-        "residual_rule": "Fall back to the nearest existing or admitted broad parent when this exact product boundary is not proven."
+        "primary_rule": "Require the complete child-carrying stroller function; compatible accessories do not become strollers.",
+        "residual_rule": "Use Baby Transport Accessories for qualifying standalone parts; unclear completeness remains unresolved."
       },
       "semantic_role": "exact",
+      "lifecycle": {
+        "status": "current",
+        "replacement_category_id": null
+      }
+    },
+    {
+      "category_id": "family_community.baby_parenting_family.baby.baby_transport_accessories",
+      "name": "Baby Transport Accessories",
+      "definition": "A separately sold accessory or replacement part designed specifically for baby or toddler transport equipment that cannot independently function as a complete transport or restraint product. This is a broad grouping of accessory types without a more specific supported target.",
+      "aliases": [
+        "baby carrier accessories",
+        "baby travel accessories",
+        "child car seat accessories",
+        "stroller accessories"
+      ],
+      "examples": {
+        "positive": [
+          "Separately sold fitted stroller rain cover",
+          "Dedicated car-seat base unable to restrain a child independently"
+        ],
+        "negative": [
+          "Complete child car seat",
+          "General travel suitcase"
+        ]
+      },
+      "subject": "physical",
+      "boundary": {
+        "include": [
+          "Dedicated stroller rain covers, canopies, adapters and replacement wheels",
+          "Dedicated carrier accessories and car-seat bases that cannot independently restrain a child"
+        ],
+        "exclude": [
+          "Complete strollers, carriers, car seats and independently functional child restraints",
+          "General vehicle accessories, diaper bags, luggage, nursery furniture and monitoring devices",
+          "Generic power supplies, rental, repair and installation services"
+        ],
+        "primary_rule": "Require separate sale and dedicated transport-equipment fitment; prefer a supported specific type and compare by accessory function and equipment. Classification does not certify fitment or safety.",
+        "residual_rule": "Retain qualifying accessories here when no specific type exists; use Baby only for evidenced in-scope baby products and leave unclear function unresolved. Exclusions cannot enter through fallback."
+      },
+      "semantic_role": "broad_fallback",
       "lifecycle": {
         "status": "current",
         "replacement_category_id": null
@@ -10379,29 +10901,34 @@
     {
       "category_id": "finance.banking.fixed_deposit_accounts_certificates",
       "name": "Fixed Deposit Accounts & Certificates",
-      "definition": "Canonical AON category at level 3 in finance > banking > fixed_deposit_accounts_certificates; use it only when Fixed Deposit Accounts & Certificates is the most specific supported primary subject.",
-      "aliases": [],
+      "definition": "A deposit account or deposit-certificate contract holding funds for an agreed term at a stated or determinable return, with contractual early-withdrawal terms.",
+      "aliases": [
+        "fixed deposit",
+        "term deposit"
+      ],
       "examples": {
         "positive": [
-          "Offers primarily about Fixed Deposit Accounts & Certificates",
-          "Fixed Deposit Accounts & Certificates content within Banking"
+          "Twelve-month fixed deposit account",
+          "Bank term-deposit certificate"
         ],
         "negative": [
-          "Offers better described by a more specific child of Fixed Deposit Accounts & Certificates",
-          "Offers whose primary subject is unrelated to Fixed Deposit Accounts & Certificates"
+          "Ordinary savings account",
+          "Government bond"
         ]
       },
-      "subject": "physical",
+      "subject": "service",
       "boundary": {
         "include": [
-          "The primary Offer subject is Fixed Deposit Accounts & Certificates"
+          "Fixed-term interest-bearing deposits",
+          "Deposit certificates subject to maturity and early-withdrawal rules"
         ],
         "exclude": [
-          "A more specific supported descendant is evidenced",
-          "The primary subject belongs to an unrelated sibling branch"
+          "Ordinary freely accessible current or savings accounts",
+          "Money-market investment funds",
+          "Bonds or tradable securities not constituting a deposit contract"
         ],
-        "primary_rule": "Assign the most specific evidence-supported category as primary.",
-        "residual_rule": "Do not use this node as a catch-all outside its canonical subtree."
+        "primary_rule": "Require a deposit contract rather than infer one from a certificate label; term, currency and yield are attributes.",
+        "residual_rule": "If the certificate could be a tradable security, require contract evidence before selecting this deposit type."
       },
       "semantic_role": "exact",
       "lifecycle": {
@@ -10577,29 +11104,35 @@
     {
       "category_id": "finance.credit_lending.credit_cards",
       "name": "Credit Cards",
-      "definition": "Canonical AON category at level 3 in finance > credit_lending > credit_cards; use it only when Credit Cards is the most specific supported primary subject.",
-      "aliases": [],
+      "definition": "An issuer-provided credit-card account and repayment contract for purchase or transaction credit, including personal and business accounts and physical or virtual credentials.",
+      "aliases": [
+        "business credit card",
+        "consumer credit card",
+        "credit card account"
+      ],
       "examples": {
         "positive": [
-          "Offers primarily about Credit Cards",
-          "Credit Cards content within Credit & Lending"
+          "Personal revolving credit-card account",
+          "Business credit-card account"
         ],
         "negative": [
-          "Offers better described by a more specific child of Credit Cards",
-          "Offers whose primary subject is unrelated to Credit Cards"
+          "Debit-card credential",
+          "Prepaid payment card"
         ]
       },
-      "subject": "physical",
+      "subject": "service",
       "boundary": {
         "include": [
-          "The primary Offer subject is Credit Cards"
+          "Credit-card limits, rates, fees, rewards and repayment terms",
+          "Consumer and business card accounts"
         ],
         "exclude": [
-          "A more specific supported descendant is evidenced",
-          "The primary subject belongs to an unrelated sibling branch"
+          "Debit cards drawing directly on deposits",
+          "Prepaid stored-value cards",
+          "Cardless general loans and merchant payment processing"
         ],
-        "primary_rule": "Assign the most specific evidence-supported category as primary.",
-        "residual_rule": "Do not use this node as a catch-all outside its canonical subtree."
+        "primary_rule": "The account and repayment contract are primary; card material, network, rewards and virtual form are attributes.",
+        "residual_rule": "Determine revolving, charge-card or secured terms from the actual offer; do not infer a specific contract structure from its card label."
       },
       "semantic_role": "exact",
       "lifecycle": {
@@ -11237,29 +11770,34 @@
     {
       "category_id": "finance.grants_scholarships_financial_aid.student_loans",
       "name": "Student Loans",
-      "definition": "Canonical AON category at level 3 in finance > grants_scholarships_financial_aid > student_loans; use it only when Student Loans is the most specific supported primary subject.",
-      "aliases": [],
+      "definition": "A repayable loan contract financing eligible education expenses with eligibility and repayment terms linked to study.",
+      "aliases": [
+        "education loan",
+        "student loan"
+      ],
       "examples": {
         "positive": [
-          "Offers primarily about Student Loans",
-          "Student Loans content within Grants, Scholarships & Financial Aid"
+          "Student tuition loan",
+          "Parent loan for eligible education costs"
         ],
         "negative": [
-          "Offers better described by a more specific child of Student Loans",
-          "Offers whose primary subject is unrelated to Student Loans"
+          "Merit scholarship",
+          "General personal cash loan"
         ]
       },
-      "subject": "physical",
+      "subject": "service",
       "boundary": {
         "include": [
-          "The primary Offer subject is Student Loans"
+          "Tuition and qualifying education expense loans",
+          "Student or parent education borrowing contracts"
         ],
         "exclude": [
-          "A more specific supported descendant is evidenced",
-          "The primary subject belongs to an unrelated sibling branch"
+          "Non-repayable scholarships and grants",
+          "General-purpose personal loans",
+          "Courses and education services themselves"
         ],
-        "primary_rule": "Assign the most specific evidence-supported category as primary.",
-        "residual_rule": "Do not use this node as a catch-all outside its canonical subtree."
+        "primary_rule": "Classify the education-linked debt contract; lender type, rate structure and borrower role are attributes.",
+        "residual_rule": "Refinancing enters only when education financing remains the primary evidenced contract purpose."
       },
       "semantic_role": "exact",
       "lifecycle": {
@@ -11303,29 +11841,34 @@
     {
       "category_id": "finance.insurance.health_insurance",
       "name": "Health Insurance",
-      "definition": "Canonical AON category at level 3 in finance > insurance > health_insurance; use it only when Health Insurance is the most specific supported primary subject.",
-      "aliases": [],
+      "definition": "An insurance policy contract covering eligible medical and healthcare costs under stated premiums, coverage, deductibles, networks and claims terms.",
+      "aliases": [
+        "health insurance policy",
+        "medical insurance"
+      ],
       "examples": {
         "positive": [
-          "Offers primarily about Health Insurance",
-          "Health Insurance content within Insurance"
+          "Individual medical-expense policy",
+          "Employer group health policy"
         ],
         "negative": [
-          "Offers better described by a more specific child of Health Insurance",
-          "Offers whose primary subject is unrelated to Health Insurance"
+          "Gym wellness membership",
+          "Medical discount card"
         ]
       },
-      "subject": "physical",
+      "subject": "service",
       "boundary": {
         "include": [
-          "The primary Offer subject is Health Insurance"
+          "Individual or group medical insurance",
+          "Reimbursement or direct-payment health policies"
         ],
         "exclude": [
-          "A more specific supported descendant is evidenced",
-          "The primary subject belongs to an unrelated sibling branch"
+          "Healthcare treatment itself",
+          "Non-insurance wellness memberships and discount cards",
+          "Life insurance"
         ],
-        "primary_rule": "Assign the most specific evidence-supported category as primary.",
-        "residual_rule": "Do not use this node as a catch-all outside its canonical subtree."
+        "primary_rule": "Require an insurance risk-transfer contract, not merely health-related benefits.",
+        "residual_rule": "When insurance status is unknown, do not infer it from health-plan branding."
       },
       "semantic_role": "exact",
       "lifecycle": {
@@ -11336,29 +11879,35 @@
     {
       "category_id": "finance.insurance.life_insurance",
       "name": "Life Insurance",
-      "definition": "Canonical AON category at level 3 in finance > insurance > life_insurance; use it only when Life Insurance is the most specific supported primary subject.",
-      "aliases": [],
+      "definition": "An insurance policy contract paying a benefit on the insured person's death or other specified life-policy conditions.",
+      "aliases": [
+        "life insurance policy",
+        "term life insurance",
+        "whole-life insurance"
+      ],
       "examples": {
         "positive": [
-          "Offers primarily about Life Insurance",
-          "Life Insurance content within Insurance"
+          "Term life policy",
+          "Whole-life insurance contract"
         ],
         "negative": [
-          "Offers better described by a more specific child of Life Insurance",
-          "Offers whose primary subject is unrelated to Life Insurance"
+          "Investment brokerage account",
+          "Funeral arrangement service"
         ]
       },
-      "subject": "physical",
+      "subject": "service",
       "boundary": {
         "include": [
-          "The primary Offer subject is Life Insurance"
+          "Term and whole-life coverage",
+          "Life policies with contractual cash value"
         ],
         "exclude": [
-          "A more specific supported descendant is evidenced",
-          "The primary subject belongs to an unrelated sibling branch"
+          "Ordinary investment accounts and annuities",
+          "Health insurance",
+          "Funeral services"
         ],
-        "primary_rule": "Assign the most specific evidence-supported category as primary.",
-        "residual_rule": "Do not use this node as a catch-all outside its canonical subtree."
+        "primary_rule": "Classify the principal life-insurance protection contract; term, beneficiary, cash value and riders are attributes.",
+        "residual_rule": "For investment-heavy mixed products require evidence that life coverage is the primary comparison object."
       },
       "semantic_role": "exact",
       "lifecycle": {
@@ -11369,29 +11918,33 @@
     {
       "category_id": "finance.insurance.property_insurance",
       "name": "Property Insurance",
-      "definition": "Canonical AON category at level 3 in finance > insurance > property_insurance; use it only when Property Insurance is the most specific supported primary subject.",
-      "aliases": [],
+      "definition": "An insurance policy contract covering loss or damage to homes, buildings, contents or other property.",
+      "aliases": [
+        "contents insurance",
+        "property insurance policy"
+      ],
       "examples": {
         "positive": [
-          "Offers primarily about Property Insurance",
-          "Property Insurance content within Insurance"
+          "Tenant contents insurance",
+          "Building fire insurance"
         ],
         "negative": [
-          "Offers better described by a more specific child of Property Insurance",
-          "Offers whose primary subject is unrelated to Property Insurance"
+          "Vehicle collision insurance",
+          "Appliance warranty"
         ]
       },
-      "subject": "physical",
+      "subject": "service",
       "boundary": {
         "include": [
-          "The primary Offer subject is Property Insurance"
+          "Homeowner and tenant contents policies",
+          "Building and property-damage coverage"
         ],
         "exclude": [
-          "A more specific supported descendant is evidenced",
-          "The primary subject belongs to an unrelated sibling branch"
+          "Vehicle, travel, health and life insurance",
+          "Product warranties attached to purchased goods"
         ],
-        "primary_rule": "Assign the most specific evidence-supported category as primary.",
-        "residual_rule": "Do not use this node as a catch-all outside its canonical subtree."
+        "primary_rule": "Classify by the principal insured property risk; peril, valuation and liability riders are attributes.",
+        "residual_rule": "Mixed commercial policies require primary-coverage evidence; otherwise retain a defensible broader insurance assignment."
       },
       "semantic_role": "exact",
       "lifecycle": {
@@ -11402,29 +11955,34 @@
     {
       "category_id": "finance.insurance.vehicle_insurance",
       "name": "Vehicle Insurance",
-      "definition": "Canonical AON category at level 3 in finance > insurance > vehicle_insurance; use it only when Vehicle Insurance is the most specific supported primary subject.",
-      "aliases": [],
+      "definition": "An insurance policy contract covering vehicle-related damage, driver liability or other insured vehicle losses.",
+      "aliases": [
+        "motor insurance",
+        "vehicle insurance policy"
+      ],
       "examples": {
         "positive": [
-          "Offers primarily about Vehicle Insurance",
-          "Vehicle Insurance content within Insurance"
+          "Motor liability policy",
+          "Commercial fleet collision policy"
         ],
         "negative": [
-          "Offers better described by a more specific child of Vehicle Insurance",
-          "Offers whose primary subject is unrelated to Vehicle Insurance"
+          "Car extended warranty",
+          "Roadside towing membership"
         ]
       },
-      "subject": "physical",
+      "subject": "service",
       "boundary": {
         "include": [
-          "The primary Offer subject is Vehicle Insurance"
+          "Liability, collision and comprehensive vehicle policies",
+          "Commercial vehicle insurance"
         ],
         "exclude": [
-          "A more specific supported descendant is evidenced",
-          "The primary subject belongs to an unrelated sibling branch"
+          "Vehicle warranties and roadside assistance",
+          "Vehicles themselves",
+          "Travel insurance"
         ],
-        "primary_rule": "Assign the most specific evidence-supported category as primary.",
-        "residual_rule": "Do not use this node as a catch-all outside its canonical subtree."
+        "primary_rule": "Require insured vehicle risk; vehicle use, driver, mileage and deductible are policy attributes.",
+        "residual_rule": "Mechanical-breakdown products require contract and regulatory evidence distinguishing insurance from warranty."
       },
       "semantic_role": "exact",
       "lifecycle": {
@@ -11468,29 +12026,34 @@
     {
       "category_id": "finance.investing.brokerages_day_trading",
       "name": "Brokerages & Day Trading",
-      "definition": "Canonical AON category at level 3 in finance > investing > brokerages_day_trading; use it only when Brokerages & Day Trading is the most specific supported primary subject.",
-      "aliases": [],
+      "definition": "A brokerage or trading service through which customers open accounts and buy, sell, hold, research or transfer securities and investments.",
+      "aliases": [
+        "brokerage service",
+        "investment trading platform"
+      ],
       "examples": {
         "positive": [
-          "Offers primarily about Brokerages & Day Trading",
-          "Brokerages & Day Trading content within Investing"
+          "Self-directed stock brokerage account",
+          "Multi-asset day-trading service"
         ],
         "negative": [
-          "Offers better described by a more specific child of Brokerages & Day Trading",
-          "Offers whose primary subject is unrelated to Brokerages & Day Trading"
+          "Single ETF share offer",
+          "Robo-advised managed portfolio"
         ]
       },
-      "subject": "physical",
+      "subject": "service",
       "boundary": {
         "include": [
-          "The primary Offer subject is Brokerages & Day Trading"
+          "Self-directed securities brokerage",
+          "Multi-asset and day-trading account services"
         ],
         "exclude": [
-          "A more specific supported descendant is evidenced",
-          "The primary subject belongs to an unrelated sibling branch"
+          "Individual securities or funds",
+          "Automated or advised portfolio management as the primary service",
+          "Standalone market-data software and payment wallets"
         ],
-        "primary_rule": "Assign the most specific evidence-supported category as primary.",
-        "residual_rule": "Do not use this node as a catch-all outside its canonical subtree."
+        "primary_rule": "Require brokerage execution or account access as the primary model; asset range, commissions, research and custody are attributes.",
+        "residual_rule": "For mixed trading, advice and data tools require evidence of the principal service before choosing this target."
       },
       "semantic_role": "exact",
       "lifecycle": {
@@ -11501,29 +12064,35 @@
     {
       "category_id": "finance.investing.currencies_foreign_exchange",
       "name": "Currencies & Foreign Exchange",
-      "definition": "Canonical AON category at level 3 in finance > investing > currencies_foreign_exchange; use it only when Currencies & Foreign Exchange is the most specific supported primary subject.",
-      "aliases": [],
+      "definition": "A service primarily buying, selling, exchanging or trading fiat currencies or currency pairs, including regulated spot and investment or speculative foreign-exchange access.",
+      "aliases": [
+        "currency exchange service",
+        "foreign exchange trading",
+        "forex service"
+      ],
       "examples": {
         "positive": [
-          "Offers primarily about Currencies & Foreign Exchange",
-          "Currencies & Foreign Exchange content within Investing"
+          "Standalone foreign-currency exchange service",
+          "Regulated currency-pair trading account"
         ],
         "negative": [
-          "Offers better described by a more specific child of Currencies & Foreign Exchange",
-          "Offers whose primary subject is unrelated to Currencies & Foreign Exchange"
+          "Card payment with incidental conversion",
+          "Collectible coin set"
         ]
       },
-      "subject": "physical",
+      "subject": "service",
       "boundary": {
         "include": [
-          "The primary Offer subject is Currencies & Foreign Exchange"
+          "Standalone fiat currency exchange services",
+          "Regulated currency-pair trading access"
         ],
         "exclude": [
-          "A more specific supported descendant is evidenced",
-          "The primary subject belongs to an unrelated sibling branch"
+          "Conversion incidental to remittance or card purchase",
+          "Crypto-asset trading",
+          "Collectible currency merchandise"
         ],
-        "primary_rule": "Assign the most specific evidence-supported category as primary.",
-        "residual_rule": "Do not use this node as a catch-all outside its canonical subtree."
+        "primary_rule": "Classify the principal fiat-currency service; instruments, leverage, settlement, spreads and jurisdiction are attributes.",
+        "residual_rule": "Require actual contract evidence for spot, CFD or derivative structure; taxonomy does not establish regulatory status."
       },
       "semantic_role": "exact",
       "lifecycle": {
@@ -11887,6 +12456,83 @@
         ],
         "primary_rule": "Assign the most specific evidence-supported category as primary.",
         "residual_rule": "Do not use this node as a catch-all outside its canonical subtree."
+      },
+      "semantic_role": "exact",
+      "lifecycle": {
+        "status": "current",
+        "replacement_category_id": null
+      }
+    },
+    {
+      "category_id": "finance.digital_payment_wallets",
+      "name": "Digital Payment Wallets",
+      "definition": "A payment wallet service that manages payment credentials or regulated stored value and enables users to pay, receive or transfer money.",
+      "aliases": [
+        "digital payment wallet",
+        "mobile payment wallet",
+        "stored-value wallet"
+      ],
+      "examples": {
+        "positive": [
+          "Mobile wallet for merchant payments",
+          "Stored-value wallet for person-to-person payments"
+        ],
+        "negative": [
+          "Hardware crypto wallet",
+          "Standalone current account"
+        ]
+      },
+      "subject": "service",
+      "boundary": {
+        "include": [
+          "Mobile payment-credential wallets",
+          "Regulated stored-value wallets supporting payments"
+        ],
+        "exclude": [
+          "Crypto-key wallets",
+          "Standalone credit, debit or prepaid cards",
+          "Ordinary bank deposit accounts"
+        ],
+        "primary_rule": "The primary comparison object is wallet payment access, not the phone, credential or funding account.",
+        "residual_rule": "If the offer does not establish wallet payment functionality, retain unresolved rather than infer it from an app or balance."
+      },
+      "semantic_role": "exact",
+      "lifecycle": {
+        "status": "current",
+        "replacement_category_id": null
+      }
+    },
+    {
+      "category_id": "finance.payment_processing_services",
+      "name": "Payment Processing Services",
+      "definition": "A merchant or platform service for accepting, routing, processing and settling customer payment transactions.",
+      "aliases": [
+        "merchant payment processing",
+        "payment processor",
+        "transaction processing service"
+      ],
+      "examples": {
+        "positive": [
+          "Merchant checkout payment processing contract",
+          "Marketplace payment acceptance and settlement service"
+        ],
+        "negative": [
+          "Consumer remittance transfer",
+          "Standalone mobile wallet"
+        ]
+      },
+      "subject": "service",
+      "boundary": {
+        "include": [
+          "Merchant payment acceptance and transaction processing",
+          "Platform payment routing and settlement"
+        ],
+        "exclude": [
+          "Standalone consumer wallets and deposit accounts",
+          "Consumer remittance products and payment cards"
+        ],
+        "primary_rule": "Require merchant or platform transaction-processing capability as the primary service.",
+        "residual_rule": "A generic payment reference without the processing role remains unresolved."
       },
       "semantic_role": "exact",
       "lifecycle": {
@@ -12589,32 +13235,120 @@
       }
     },
     {
-      "category_id": "food_grocery.food.dairy_non_dairy_alternatives.cheese",
-      "name": "Cheese",
-      "definition": "Cheese products distinguished by their primary product form, function, and comparison model within Grocery And Food.",
-      "aliases": [],
+      "category_id": "food_grocery.food.dairy_non_dairy_alternatives.butter_spreadable_fat_alternatives",
+      "name": "Butter & Spreadable Fat Alternatives",
+      "definition": "An edible fat sold as butter or a direct butter substitute for spreading, cooking or baking, including dairy butter, clarified butter, ghee, margarine and explicitly marketed plant-based butter.",
+      "aliases": [
+        "butter",
+        "butter alternative",
+        "clarified butter",
+        "ghee",
+        "margarine",
+        "plant-based butter"
+      ],
       "examples": {
         "positive": [
-          "A product whose primary type is Cheese",
-          "Cheese sold as the main Offer item"
+          "Unsalted dairy butter",
+          "Plant-based butter block"
         ],
         "negative": [
-          "A service related to Cheese",
-          "A product that only shares a brand, model, material, or compatibility attribute with Cheese"
+          "Peanut butter",
+          "Butter cookies"
         ]
       },
       "subject": "physical",
       "boundary": {
         "include": [
-          "primary edible product type determines the category. Flavor, ingredient, dietary claim, package format, net weight, preparation state, and merchant positioning remain attributes.",
-          "Products whose primary comparison model is Cheese"
+          "Dairy butter, clarified butter and ghee",
+          "Margarine and fats explicitly sold as direct butter alternatives"
         ],
         "exclude": [
-          "Services, rentals, installation, and repair",
-          "Brand, model, fitment, size, color, material, capacity, ingredient, protocol, and other SKU attributes"
+          "Ordinary cooking oils and generic baking fats without butter-substitute positioning",
+          "Nut spreads, jam, cream cheese and cream",
+          "Prepared pastries containing butter and medicinal or supplement fats"
         ],
-        "primary_rule": "Use as primary only when the stable product type is the most specific evidence-supported match.",
-        "residual_rule": "Fall back to the nearest existing or admitted broad parent when this exact product boundary is not proven."
+        "primary_rule": "The marketed butter product type takes priority over spreadability, plant ingredients, refrigeration or baking use.",
+        "residual_rule": "Use Dairy & Non-Dairy Alternatives only for evidenced dairy or direct dairy alternatives lacking a subtype; an unspecified edible fat is insufficient."
+      },
+      "semantic_role": "exact",
+      "lifecycle": {
+        "status": "current",
+        "replacement_category_id": null
+      }
+    },
+    {
+      "category_id": "food_grocery.food.dairy_non_dairy_alternatives.cheese",
+      "name": "Cheese",
+      "definition": "Food sold as cheese or a direct cheese alternative, including cream cheese regardless of spreadable texture or its cream-related name.",
+      "aliases": [
+        "cheese",
+        "cream cheese"
+      ],
+      "examples": {
+        "positive": [
+          "Cheddar cheese",
+          "Cream cheese"
+        ],
+        "negative": [
+          "Whipping cream",
+          "Cheese-filled pastry"
+        ]
+      },
+      "subject": "physical",
+      "boundary": {
+        "include": [
+          "Hard, soft and fresh cheeses",
+          "Cream cheese and direct cheese alternatives"
+        ],
+        "exclude": [
+          "Cream, sour cream and other cream alternatives",
+          "Butter and yogurt",
+          "Prepared foods merely containing cheese"
+        ],
+        "primary_rule": "Classify the primary cheese identity; cream cheese remains Cheese rather than Cream & Cream Alternatives.",
+        "residual_rule": "Unspecified dairy belongs only to a defensible dairy parent; the word cream or spreadable texture is not sufficient to reclassify it."
+      },
+      "semantic_role": "exact",
+      "lifecycle": {
+        "status": "current",
+        "replacement_category_id": null
+      }
+    },
+    {
+      "category_id": "food_grocery.food.dairy_non_dairy_alternatives.cream_cream_alternatives",
+      "name": "Cream & Cream Alternatives",
+      "definition": "A food sold as cream or a direct cream substitute for cooking, whipping, pouring or topping, including dairy cream, cultured cream and plant-based cream alternatives.",
+      "aliases": [
+        "cooking cream",
+        "crème fraîche",
+        "dairy cream",
+        "plant-based cream",
+        "sour cream",
+        "whipping cream"
+      ],
+      "examples": {
+        "positive": [
+          "Cooking cream",
+          "Sour cream sold as cultured cream"
+        ],
+        "negative": [
+          "Cream cheese",
+          "Cream-filled cake"
+        ]
+      },
+      "subject": "physical",
+      "boundary": {
+        "include": [
+          "Whipping, pouring and cooking cream",
+          "Sour cream, creme fraiche and direct plant-based cream alternatives"
+        ],
+        "exclude": [
+          "Milk, yogurt, cheese including cream cheese, and butter",
+          "Ice cream, prepared cream cakes and ordinary plant drinks",
+          "Cosmetic creams and creamers without evidence of a cream product type"
+        ],
+        "primary_rule": "Cream product type takes priority over fermentation, whipping, fat content and ingredients; cream cheese remains Cheese.",
+        "residual_rule": "Use the dairy parent only for evidenced dairy or direct alternatives lacking a subtype, never merely for foods containing cream."
       },
       "semantic_role": "exact",
       "lifecycle": {
@@ -12659,30 +13393,35 @@
     {
       "category_id": "food_grocery.food.dairy_non_dairy_alternatives.yogurt_cultured_dairy",
       "name": "Yogurt & Cultured Dairy",
-      "definition": "Yogurt & Cultured Dairy products distinguished by their primary product form, function, and comparison model within Grocery And Food.",
-      "aliases": [],
+      "definition": "Yogurt and qualifying cultured dairy or direct alternatives whose primary food type is yogurt or cultured dairy other than a separately defined cream or cheese product.",
+      "aliases": [
+        "cultured dairy",
+        "yogurt",
+        "yogurt alternative"
+      ],
       "examples": {
         "positive": [
-          "A product whose primary type is Yogurt & Cultured Dairy",
-          "Yogurt & Cultured Dairy sold as the main Offer item"
+          "Plain dairy yogurt",
+          "Plant-based yogurt alternative"
         ],
         "negative": [
-          "A service related to Yogurt & Cultured Dairy",
-          "A product that only shares a brand, model, material, or compatibility attribute with Yogurt & Cultured Dairy"
+          "Sour cream",
+          "Creme fraiche"
         ]
       },
       "subject": "physical",
       "boundary": {
         "include": [
-          "primary edible product type determines the category. Flavor, ingredient, dietary claim, package format, net weight, preparation state, and merchant positioning remain attributes.",
-          "Products whose primary comparison model is Yogurt & Cultured Dairy"
+          "Plain and flavored yogurt",
+          "Direct plant-based yogurt alternatives and qualifying non-cream cultured dairy"
         ],
         "exclude": [
-          "Services, rentals, installation, and repair",
-          "Brand, model, fitment, size, color, material, capacity, ingredient, protocol, and other SKU attributes"
+          "Sour cream, creme fraiche and other cultured cream",
+          "Cheese including cream cheese",
+          "Prepared desserts merely containing yogurt"
         ],
-        "primary_rule": "Use as primary only when the stable product type is the most specific evidence-supported match.",
-        "residual_rule": "Fall back to the nearest existing or admitted broad parent when this exact product boundary is not proven."
+        "primary_rule": "Product type takes priority over fermentation: cultured cream belongs to Cream & Cream Alternatives and cheese remains Cheese.",
+        "residual_rule": "If dairy or direct-alternative status is established but product type is not, use the dairy parent; fermentation alone is insufficient."
       },
       "semantic_role": "exact",
       "lifecycle": {
@@ -12994,30 +13733,34 @@
     {
       "category_id": "food_grocery.food.food_spreads",
       "name": "Food Spreads",
-      "definition": "Food Spreads products distinguished by their primary product form, function, and comparison model within Grocery And Food.",
-      "aliases": [],
+      "definition": "Edible spreads whose primary marketed food type is a spread without a more specific supported product identity, such as nut spreads or preserves.",
+      "aliases": [
+        "edible spread",
+        "food spread"
+      ],
       "examples": {
         "positive": [
-          "A product whose primary type is Food Spreads",
-          "Food Spreads sold as the main Offer item"
+          "Peanut spread",
+          "Fruit jam"
         ],
         "negative": [
-          "A service related to Food Spreads",
-          "A product that only shares a brand, model, material, or compatibility attribute with Food Spreads"
+          "Dairy butter",
+          "Cream cheese"
         ]
       },
       "subject": "physical",
       "boundary": {
         "include": [
-          "primary edible product type determines the category. Flavor, ingredient, dietary claim, package format, net weight, preparation state, and merchant positioning remain attributes.",
-          "Products whose primary comparison model is Food Spreads"
+          "Nut and seed spreads",
+          "Jam and other qualifying food spreads without a dedicated type"
         ],
         "exclude": [
-          "Services, rentals, installation, and repair",
-          "Brand, model, fitment, size, color, material, capacity, ingredient, protocol, and other SKU attributes"
+          "Butter, margarine and direct butter alternatives",
+          "Cream, cream cheese and other dedicated dairy product types",
+          "Prepared foods merely containing a spread"
         ],
-        "primary_rule": "Use as primary only when the stable product type is the most specific evidence-supported match.",
-        "residual_rule": "Fall back to the nearest existing or admitted broad parent when this exact product boundary is not proven."
+        "primary_rule": "Dedicated food type takes precedence over spreadability; butter and direct substitutes belong to Butter & Spreadable Fat Alternatives.",
+        "residual_rule": "Use this category only with evidence of a qualifying spread type, never to bypass dedicated dairy boundaries."
       },
       "semantic_role": "exact",
       "lifecycle": {
@@ -17951,29 +18694,35 @@
     {
       "category_id": "hobbies_games_leisure.toys_games.games.video_games_consoles_accessories.computer_video_games",
       "name": "Computer & Video Games",
-      "definition": "Canonical AON category at level 5 in hobbies_games_leisure > toys_games > games > video_games_consoles_accessories > computer_video_games; use it only when Computer & Video Games is the most specific supported primary subject.",
-      "aliases": [],
+      "definition": "Playable computer, console or mobile base-game software and its persistent license, used as a container when no supported primary genre is evidenced.",
+      "aliases": [
+        "base video game",
+        "computer game software",
+        "video game software"
+      ],
       "examples": {
         "positive": [
-          "Offers primarily about Computer & Video Games",
-          "Computer & Video Games content within Video Games, Consoles & Accessories"
+          "Playable base game with unknown primary genre",
+          "Persistent base-game license delivered by a verified redemption key"
         ],
         "negative": [
-          "Offers better described by a more specific child of Computer & Video Games",
-          "Offers whose primary subject is unrelated to Computer & Video Games"
+          "Cloud gaming subscription",
+          "Standalone expansion pack"
         ]
       },
-      "subject": "physical",
+      "subject": "digital",
       "boundary": {
         "include": [
-          "The primary Offer subject is Computer & Video Games"
+          "Base video-game software without a supported genre target",
+          "Keys demonstrably granting persistent rights to a specific base game and bundles whose primary object is that game"
         ],
         "exclude": [
-          "A more specific supported descendant is evidenced",
-          "The primary subject belongs to an unrelated sibling branch"
+          "Consoles, accessories, tabletop games and store-value cards",
+          "Digital stores, cloud gaming and subscriptions",
+          "Standalone DLC, game items and virtual currency"
         ],
-        "primary_rule": "Assign the most specific evidence-supported category as primary.",
-        "residual_rule": "Do not use this node as a catch-all outside its canonical subtree."
+        "primary_rule": "Prefer an evidenced supported genre leaf; platform, edition, delivery medium and redemption key are attributes. Bundles follow a base game only when it is the proven primary object.",
+        "residual_rule": "Unknown key rights remain unresolved; unknown bundle composition or primacy remains broad or unresolved. Missing digital puzzle, RPG or strategy leaves do not justify tabletop targets."
       },
       "semantic_role": "container",
       "lifecycle": {
@@ -17984,29 +18733,34 @@
     {
       "category_id": "hobbies_games_leisure.toys_games.games.video_games_consoles_accessories.computer_video_games.action_platform_games",
       "name": "Action & Platform Games",
-      "definition": "Canonical AON category at level 6 in hobbies_games_leisure > toys_games > games > video_games_consoles_accessories > computer_video_games > action_platform_games; use it only when Action & Platform Games is the most specific supported primary subject.",
-      "aliases": [],
+      "definition": "Base video-game software whose primary play centers on real-time action, reflexes, movement, close combat or platform jumping.",
+      "aliases": [
+        "action video game",
+        "platform video game"
+      ],
       "examples": {
         "positive": [
-          "Offers primarily about Action & Platform Games",
-          "Action & Platform Games content within Computer & Video Games"
+          "Persistent platform-jumping base-game license",
+          "Close-combat action base game"
         ],
         "negative": [
-          "Offers better described by a more specific child of Action & Platform Games",
-          "Offers whose primary subject is unrelated to Action & Platform Games"
+          "Ranged-combat shooter base game",
+          "Standalone action-game DLC"
         ]
       },
-      "subject": "physical",
+      "subject": "digital",
       "boundary": {
         "include": [
-          "The primary Offer subject is Action & Platform Games"
+          "Action games dominated by movement or close combat",
+          "Platform-jumping base games"
         ],
         "exclude": [
-          "A more specific supported descendant is evidenced",
-          "The primary subject belongs to an unrelated sibling branch"
+          "Shooter-, racing-, sports- or strategy-primary games",
+          "Hardware and standalone add-ons",
+          "Codes with unknown rights or granting DLC or a term service"
         ],
-        "primary_rule": "Assign the most specific evidence-supported category as primary.",
-        "residual_rule": "Do not use this node as a catch-all outside its canonical subtree."
+        "primary_rule": "Choose the dominant gameplay loop; view, platform, edition and secondary adventure mechanics are attributes.",
+        "residual_rule": "Known persistent base-game keys follow the game; unknown rights or bundle primacy remain unresolved, and genre ambiguity stays at the digital game container."
       },
       "semantic_role": "exact",
       "lifecycle": {
@@ -18017,29 +18771,34 @@
     {
       "category_id": "hobbies_games_leisure.toys_games.games.video_games_consoles_accessories.computer_video_games.adventure_games",
       "name": "Adventure Games",
-      "definition": "Canonical AON category at level 6 in hobbies_games_leisure > toys_games > games > video_games_consoles_accessories > computer_video_games > adventure_games; use it only when Adventure Games is the most specific supported primary subject.",
-      "aliases": [],
+      "definition": "Base video-game software primarily advancing through exploration, narrative, dialogue or environmental problem solving.",
+      "aliases": [
+        "adventure video game",
+        "narrative exploration game"
+      ],
       "examples": {
         "positive": [
-          "Offers primarily about Adventure Games",
-          "Adventure Games content within Computer & Video Games"
+          "Narrative exploration adventure game",
+          "Dialogue-led mystery adventure game"
         ],
         "negative": [
-          "Offers better described by a more specific child of Adventure Games",
-          "Offers whose primary subject is unrelated to Adventure Games"
+          "Combat-primary action game",
+          "Tabletop adventure board game"
         ]
       },
-      "subject": "physical",
+      "subject": "digital",
       "boundary": {
         "include": [
-          "The primary Offer subject is Adventure Games"
+          "Narrative exploration base games",
+          "Dialogue and environment-led adventure games"
         ],
         "exclude": [
-          "A more specific supported descendant is evidenced",
-          "The primary subject belongs to an unrelated sibling branch"
+          "Action or shooter games merely having a rich story",
+          "Character-build progression as the dominant system",
+          "Tabletop adventures and standalone add-ons"
         ],
-        "primary_rule": "Assign the most specific evidence-supported category as primary.",
-        "residual_rule": "Do not use this node as a catch-all outside its canonical subtree."
+        "primary_rule": "Choose the primary gameplay loop, not storytelling alone; environmental puzzles do not by themselves establish a puzzle-primary game.",
+        "residual_rule": "Verified persistent base-game keys follow the game; unknown rights or bundle primacy remain unresolved and unclear genre stays in the digital game container."
       },
       "semantic_role": "exact",
       "lifecycle": {
@@ -18050,29 +18809,33 @@
     {
       "category_id": "hobbies_games_leisure.toys_games.games.video_games_consoles_accessories.computer_video_games.casual_games",
       "name": "Casual Games",
-      "definition": "Canonical AON category at level 6 in hobbies_games_leisure > toys_games > games > video_games_consoles_accessories > computer_video_games > casual_games; use it only when Casual Games is the most specific supported primary subject.",
-      "aliases": [],
+      "definition": "Base video-game software primarily designed around low-barrier entry, flexible short sessions and limited mechanical complexity.",
+      "aliases": [
+        "casual video game",
+        "short-session casual game"
+      ],
       "examples": {
         "positive": [
-          "Offers primarily about Casual Games",
-          "Casual Games content within Computer & Video Games"
+          "Simple short-session arcade tapping game",
+          "Low-complexity pick-up-and-play base game"
         ],
         "negative": [
-          "Offers better described by a more specific child of Casual Games",
-          "Offers whose primary subject is unrelated to Casual Games"
+          "Logic-puzzle-primary game",
+          "Complex strategy game on a phone"
         ]
       },
-      "subject": "physical",
+      "subject": "digital",
       "boundary": {
         "include": [
-          "The primary Offer subject is Casual Games"
+          "Low-complexity short-session base games",
+          "Flexible accessible play as the dominant experience"
         ],
         "exclude": [
-          "A more specific supported descendant is evidenced",
-          "The primary subject belongs to an unrelated sibling branch"
+          "Structured puzzle solving as the main progression challenge",
+          "Other genres labeled casual solely because of mobile platform, free pricing or easy difficulty"
         ],
-        "primary_rule": "Assign the most specific evidence-supported category as primary.",
-        "residual_rule": "Do not use this node as a catch-all outside its canonical subtree."
+        "primary_rule": "Require casual experience as the principal model; platform, pricing, social functions and difficulty alone are insufficient.",
+        "residual_rule": "Puzzle-primary games without a digital leaf stay broad in Computer & Video Games, not Casual Games; unproven keys and bundles remain unresolved."
       },
       "semantic_role": "exact",
       "lifecycle": {
@@ -18083,29 +18846,34 @@
     {
       "category_id": "hobbies_games_leisure.toys_games.games.video_games_consoles_accessories.computer_video_games.driving_racing_games",
       "name": "Driving & Racing Games",
-      "definition": "Canonical AON category at level 6 in hobbies_games_leisure > toys_games > games > video_games_consoles_accessories > computer_video_games > driving_racing_games; use it only when Driving & Racing Games is the most specific supported primary subject.",
-      "aliases": [],
+      "definition": "Base video-game software primarily organized around timed or competitive racing with vehicles, mounts or other controllable racers.",
+      "aliases": [
+        "driving racing video game",
+        "racing video game"
+      ],
       "examples": {
         "positive": [
-          "Offers primarily about Driving & Racing Games",
-          "Driving & Racing Games content within Computer & Video Games"
+          "Circuit-racing base game",
+          "Timed kart-racing game"
         ],
         "negative": [
-          "Offers better described by a more specific child of Driving & Racing Games",
-          "Offers whose primary subject is unrelated to Driving & Racing Games"
+          "City-bus operation simulator without racing",
+          "Steering-wheel controller"
         ]
       },
-      "subject": "physical",
+      "subject": "digital",
       "boundary": {
         "include": [
-          "The primary Offer subject is Driving & Racing Games"
+          "Competitive vehicle-racing games",
+          "Timed racing base games"
         ],
         "exclude": [
-          "A more specific supported descendant is evidenced",
-          "The primary subject belongs to an unrelated sibling branch"
+          "General sports games",
+          "Non-racing transport or driving simulation",
+          "Real driving services and controller hardware"
         ],
-        "primary_rule": "Assign the most specific evidence-supported category as primary.",
-        "residual_rule": "Do not use this node as a catch-all outside its canonical subtree."
+        "primary_rule": "The racing objective takes priority over vehicle type, realism or controller support.",
+        "residual_rule": "Use actual gameplay evidence to distinguish racing from simulation; unknown genre stays in the digital game container and unproven keys or bundles remain unresolved."
       },
       "semantic_role": "exact",
       "lifecycle": {
@@ -18116,29 +18884,33 @@
     {
       "category_id": "hobbies_games_leisure.toys_games.games.video_games_consoles_accessories.computer_video_games.family_children_s_games",
       "name": "Family & Children's Games",
-      "definition": "Canonical AON category at level 6 in hobbies_games_leisure > toys_games > games > video_games_consoles_accessories > computer_video_games > family_children_s_games; use it only when Family & Children's Games is the most specific supported primary subject.",
-      "aliases": [],
+      "definition": "Base video-game software primarily designed and compared for children's or shared family play through suitable content and difficulty, when no stronger supported primary genre applies.",
+      "aliases": [
+        "children video game",
+        "family video game"
+      ],
       "examples": {
         "positive": [
-          "Offers primarily about Family & Children's Games",
-          "Family & Children's Games content within Computer & Video Games"
+          "Children-focused cooperative digital play game",
+          "Family shared-play base video game"
         ],
         "negative": [
-          "Offers better described by a more specific child of Family & Children's Games",
-          "Offers whose primary subject is unrelated to Family & Children's Games"
+          "Physical children's board game",
+          "Shooter game merely carrying an age rating"
         ]
       },
-      "subject": "physical",
+      "subject": "digital",
       "boundary": {
         "include": [
-          "The primary Offer subject is Family & Children's Games"
+          "Children-focused base video games",
+          "Shared family play as the principal game design model"
         ],
         "exclude": [
-          "A more specific supported descendant is evidenced",
-          "The primary subject belongs to an unrelated sibling branch"
+          "Games merely carrying an age rating while primarily comparable by another genre",
+          "Physical children's toys and tabletop games"
         ],
-        "primary_rule": "Assign the most specific evidence-supported category as primary.",
-        "residual_rule": "Do not use this node as a catch-all outside its canonical subtree."
+        "primary_rule": "Prefer a more clearly evidenced primary genre; age guidance, parental controls, multiplayer and educational features are attributes.",
+        "residual_rule": "Do not infer a new educational game type or family classification from age alone; unproven keys or bundle primacy remain unresolved."
       },
       "semantic_role": "exact",
       "lifecycle": {
@@ -18149,29 +18921,35 @@
     {
       "category_id": "hobbies_games_leisure.toys_games.games.video_games_consoles_accessories.computer_video_games.music_dance_games",
       "name": "Music & Dance Games",
-      "definition": "Canonical AON category at level 6 in hobbies_games_leisure > toys_games > games > video_games_consoles_accessories > computer_video_games > music_dance_games; use it only when Music & Dance Games is the most specific supported primary subject.",
-      "aliases": [],
+      "definition": "Base video-game software whose principal play consists of rhythm, musical performance, singing or dance interaction.",
+      "aliases": [
+        "dance video game",
+        "music video game",
+        "rhythm game"
+      ],
       "examples": {
         "positive": [
-          "Offers primarily about Music & Dance Games",
-          "Music & Dance Games content within Computer & Video Games"
+          "Rhythm-matching base game",
+          "Interactive dance-performance game"
         ],
         "negative": [
-          "Offers better described by a more specific child of Music & Dance Games",
-          "Offers whose primary subject is unrelated to Music & Dance Games"
+          "Music album download",
+          "Dance-controller peripheral"
         ]
       },
-      "subject": "physical",
+      "subject": "digital",
       "boundary": {
         "include": [
-          "The primary Offer subject is Music & Dance Games"
+          "Rhythm and singing base games",
+          "Interactive dance video games"
         ],
         "exclude": [
-          "A more specific supported descendant is evidenced",
-          "The primary subject belongs to an unrelated sibling branch"
+          "Music downloads and streaming services",
+          "Instruments, dance lessons and controller hardware",
+          "Games merely using a musical soundtrack"
         ],
-        "primary_rule": "Assign the most specific evidence-supported category as primary.",
-        "residual_rule": "Do not use this node as a catch-all outside its canonical subtree."
+        "primary_rule": "Require musical or dance interaction as the primary gameplay, not background music; input, catalog and peripheral compatibility are attributes.",
+        "residual_rule": "Unclear genre stays in the digital game container; verified base-game keys follow the game and unproven keys or bundles remain unresolved."
       },
       "semantic_role": "exact",
       "lifecycle": {
@@ -18182,29 +18960,33 @@
     {
       "category_id": "hobbies_games_leisure.toys_games.games.video_games_consoles_accessories.computer_video_games.shooter_games",
       "name": "Shooter Games",
-      "definition": "Canonical AON category at level 6 in hobbies_games_leisure > toys_games > games > video_games_consoles_accessories > computer_video_games > shooter_games; use it only when Shooter Games is the most specific supported primary subject.",
-      "aliases": [],
+      "definition": "Base video-game software whose principal challenge is aiming and ranged-weapon combat.",
+      "aliases": [
+        "shooter video game"
+      ],
       "examples": {
         "positive": [
-          "Offers primarily about Shooter Games",
-          "Shooter Games content within Computer & Video Games"
+          "First-person ranged-combat base game",
+          "Top-down aiming-focused shooter game"
         ],
         "negative": [
-          "Offers better described by a more specific child of Shooter Games",
-          "Offers whose primary subject is unrelated to Shooter Games"
+          "Exploration adventure with occasional shooting",
+          "Toy dart blaster"
         ]
       },
-      "subject": "physical",
+      "subject": "digital",
       "boundary": {
         "include": [
-          "The primary Offer subject is Shooter Games"
+          "First- or third-person shooter base games",
+          "Top-down or similar ranged-combat games"
         ],
         "exclude": [
-          "A more specific supported descendant is evidenced",
-          "The primary subject belongs to an unrelated sibling branch"
+          "Action or adventure games with merely incidental shooting",
+          "Physical shooting toys",
+          "Standalone add-on content"
         ],
-        "primary_rule": "Assign the most specific evidence-supported category as primary.",
-        "residual_rule": "Do not use this node as a catch-all outside its canonical subtree."
+        "primary_rule": "Select the dominant aiming and ranged-combat loop; perspective, tactics, multiplayer and weapon theme are attributes.",
+        "residual_rule": "Unclear mixed genre stays in the digital game container; verified base-game keys follow the game and unproven keys or bundles remain unresolved."
       },
       "semantic_role": "exact",
       "lifecycle": {
@@ -18215,29 +18997,33 @@
     {
       "category_id": "hobbies_games_leisure.toys_games.games.video_games_consoles_accessories.computer_video_games.simulation_games",
       "name": "Simulation Games",
-      "definition": "Canonical AON category at level 6 in hobbies_games_leisure > toys_games > games > video_games_consoles_accessories > computer_video_games > simulation_games; use it only when Simulation Games is the most specific supported primary subject.",
-      "aliases": [],
+      "definition": "Base video-game software primarily modeling the operation, behavior or management of a real or imagined system, activity, profession or environment.",
+      "aliases": [
+        "simulation video game",
+        "system simulation game"
+      ],
       "examples": {
         "positive": [
-          "Offers primarily about Simulation Games",
-          "Simulation Games content within Computer & Video Games"
+          "Life-simulation base game",
+          "Non-racing transport-operation simulation game"
         ],
         "negative": [
-          "Offers better described by a more specific child of Simulation Games",
-          "Offers whose primary subject is unrelated to Simulation Games"
+          "Strategic-command war game",
+          "Professional aircraft training simulator"
         ]
       },
-      "subject": "physical",
+      "subject": "digital",
       "boundary": {
         "include": [
-          "The primary Offer subject is Simulation Games"
+          "Life and operational simulation games",
+          "Management simulations whose primary loop is system modeling"
         ],
         "exclude": [
-          "A more specific supported descendant is evidenced",
-          "The primary subject belongs to an unrelated sibling branch"
+          "Racing-, direct sport-play- or strategic-command-primary games",
+          "Professional simulation software and equipment"
         ],
-        "primary_rule": "Assign the most specific evidence-supported category as primary.",
-        "residual_rule": "Do not use this node as a catch-all outside its canonical subtree."
+        "primary_rule": "Classify the primary modeled activity; realism, sandbox mode and controller support are attributes.",
+        "residual_rule": "Management and strategy overlap requires gameplay evidence; the missing digital Strategy leaf does not justify simulation classification. Unknown keys or bundle primacy remain unresolved."
       },
       "semantic_role": "exact",
       "lifecycle": {
@@ -18248,29 +19034,34 @@
     {
       "category_id": "hobbies_games_leisure.toys_games.games.video_games_consoles_accessories.computer_video_games.sports_games",
       "name": "Sports Games",
-      "definition": "Canonical AON category at level 6 in hobbies_games_leisure > toys_games > games > video_games_consoles_accessories > computer_video_games > sports_games; use it only when Sports Games is the most specific supported primary subject.",
-      "aliases": [],
+      "definition": "Base video-game software whose primary play recreates or adapts direct participation in a recognized sport.",
+      "aliases": [
+        "sport simulation game",
+        "sports video game"
+      ],
       "examples": {
         "positive": [
-          "Offers primarily about Sports Games",
-          "Sports Games content within Computer & Video Games"
+          "Playable football-match video game",
+          "Tennis-match base video game"
         ],
         "negative": [
-          "Offers better described by a more specific child of Sports Games",
-          "Offers whose primary subject is unrelated to Sports Games"
+          "Team roster-management simulator",
+          "Live stadium admission ticket"
         ]
       },
-      "subject": "physical",
+      "subject": "digital",
       "boundary": {
         "include": [
-          "The primary Offer subject is Sports Games"
+          "Match-based recognized-sport video games",
+          "Games directly playing sport rules and competitive actions"
         ],
         "exclude": [
-          "A more specific supported descendant is evidenced",
-          "The primary subject belongs to an unrelated sibling branch"
+          "Racing games",
+          "Team-management simulations without direct sport play",
+          "Real sports tickets, broadcasts and equipment"
         ],
-        "primary_rule": "Assign the most specific evidence-supported category as primary.",
-        "residual_rule": "Do not use this node as a catch-all outside its canonical subtree."
+        "primary_rule": "Direct sport play must dominate; sport, team licenses, controls, platform and online modes are attributes.",
+        "residual_rule": "Management-primary games require simulation evidence; unknown genre stays broad and unproven keys or bundle primacy remain unresolved."
       },
       "semantic_role": "exact",
       "lifecycle": {
@@ -18306,6 +19097,46 @@
         "residual_rule": "Do not use this node as a catch-all outside its canonical subtree."
       },
       "semantic_role": "exact",
+      "lifecycle": {
+        "status": "current",
+        "replacement_category_id": null
+      }
+    },
+    {
+      "category_id": "hobbies_games_leisure.toys_games.games.video_games_consoles_accessories.game_add_on_content",
+      "name": "Game Add-On Content",
+      "definition": "Separately identifiable digital content that adds to or modifies a base video game, grouped broadly by add-on type when no more specific supported target exists.",
+      "aliases": [
+        "downloadable game content",
+        "game add-on",
+        "game expansion",
+        "in-game currency"
+      ],
+      "examples": {
+        "positive": [
+          "Standalone expansion campaign",
+          "Game-specific cosmetic character skin"
+        ],
+        "negative": [
+          "Complete base-game bundle",
+          "General game-store gift card"
+        ]
+      },
+      "subject": "digital",
+      "boundary": {
+        "include": [
+          "Standalone expansions, DLC and add-on season passes",
+          "Game-specific cosmetic items, characters, maps and virtual currency"
+        ],
+        "exclude": [
+          "Complete base games and bundles primarily selling a base game",
+          "Gaming hardware and general store-value cards",
+          "Subscriptions whose main value is ongoing service access"
+        ],
+        "primary_rule": "Require a separately offered addition to an identified game and compare within content type; DLC, cosmetics and currency are not one exact comparison model.",
+        "residual_rule": "Keep proven add-ons here if no specific type exists; unknown base-game versus add-on or subscription rights remain unresolved."
+      },
+      "semantic_role": "broad_fallback",
       "lifecycle": {
         "status": "current",
         "replacement_category_id": null
@@ -22210,6 +23041,122 @@
       }
     },
     {
+      "category_id": "internet_telecom.internet_online_services.cloud_gaming_services",
+      "name": "Cloud Gaming Services",
+      "definition": "An access service running interactive video games on remote computing infrastructure and streaming gameplay to the user's device.",
+      "aliases": [
+        "cloud gaming",
+        "game streaming service",
+        "remote gaming service"
+      ],
+      "examples": {
+        "positive": [
+          "Monthly cloud gaming access",
+          "Hourly remote interactive game-play service"
+        ],
+        "negative": [
+          "Game download store",
+          "Recorded gameplay video subscription"
+        ]
+      },
+      "subject": "service",
+      "boundary": {
+        "include": [
+          "Remote game execution subscriptions",
+          "Time-limited access to remotely rendered interactive play"
+        ],
+        "exclude": [
+          "Passive video streaming",
+          "Download-only game stores and local game-file licenses",
+          "Game hardware sold independently"
+        ],
+        "primary_rule": "Require remote execution with interactive player input, not merely game-related video or downloads.",
+        "residual_rule": "Without remote execution evidence, leave unresolved or select the evidenced underlying product type."
+      },
+      "semantic_role": "exact",
+      "lifecycle": {
+        "status": "current",
+        "replacement_category_id": null
+      }
+    },
+    {
+      "category_id": "internet_telecom.internet_online_services.creator_video_platforms",
+      "name": "Creator Video Platforms",
+      "definition": "A platform primarily hosting, organizing, distributing or monetizing videos uploaded or broadcast by users, creators or publishers.",
+      "aliases": [
+        "creator video platform",
+        "user-upload video platform",
+        "video hosting platform"
+      ],
+      "examples": {
+        "positive": [
+          "Creator video-hosting platform subscription",
+          "User live-video distribution platform"
+        ],
+        "negative": [
+          "Provider-curated movie streaming subscription",
+          "Video editing application"
+        ]
+      },
+      "subject": "platform",
+      "boundary": {
+        "include": [
+          "Creator-upload video hosting and distribution",
+          "User video broadcasts and creator monetization platforms"
+        ],
+        "exclude": [
+          "Provider-selected film, television, music or short-drama catalogs",
+          "Standalone video editing tools and human production services"
+        ],
+        "primary_rule": "Require user or creator uploads and distribution to be the primary platform function.",
+        "residual_rule": "Do not select from a video label alone when hosting versus catalog access or editing is unknown."
+      },
+      "semantic_role": "exact",
+      "lifecycle": {
+        "status": "current",
+        "replacement_category_id": null
+      }
+    },
+    {
+      "category_id": "internet_telecom.internet_online_services.model_inference_api_services",
+      "name": "Model Inference API Services",
+      "definition": "A hosted API or managed inference service allowing developers or other systems to invoke machine-learning model capabilities.",
+      "aliases": [
+        "hosted inference service",
+        "model inference API",
+        "prediction API"
+      ],
+      "examples": {
+        "positive": [
+          "Metered language-model inference API",
+          "Managed image-model prediction endpoint"
+        ],
+        "negative": [
+          "Downloadable model weights",
+          "Generic virtual machine rental"
+        ]
+      },
+      "subject": "service",
+      "boundary": {
+        "include": [
+          "Developer model-inference APIs",
+          "Managed hosted prediction and generation endpoints"
+        ],
+        "exclude": [
+          "Downloadable model files",
+          "Complete end-user applications or operational solutions",
+          "Generic compute or storage without managed inference"
+        ],
+        "primary_rule": "Require hosted inference callable by software or systems as the primary service.",
+        "residual_rule": "AI branding or generic cloud resources alone do not justify this target."
+      },
+      "semantic_role": "exact",
+      "lifecycle": {
+        "status": "current",
+        "replacement_category_id": null
+      }
+    },
+    {
       "category_id": "internet_telecom.satellite_tv",
       "name": "Satellite TV",
       "definition": "Canonical AON category at level 2 in internet_telecom > satellite_tv; use it only when Satellite TV is the most specific supported primary subject.",
@@ -22513,29 +23460,35 @@
     {
       "category_id": "internet_telecom.telephony.phone_plans.mobile_phone_plans",
       "name": "Mobile Phone Plans",
-      "definition": "Canonical AON category at level 4 in internet_telecom > telephony > phone_plans > mobile_phone_plans; use it only when Mobile Phone Plans is the most specific supported primary subject.",
-      "aliases": [],
+      "definition": "A mobile-network voice, messaging or data-connectivity service plan delivered through a physical SIM or eSIM profile.",
+      "aliases": [
+        "eSIM data plan",
+        "mobile connectivity plan",
+        "mobile phone plan"
+      ],
       "examples": {
         "positive": [
-          "Offers primarily about Mobile Phone Plans",
-          "Mobile Phone Plans content within Phone Plans"
+          "Traveler eSIM data plan",
+          "Monthly mobile voice and data plan"
         ],
         "negative": [
-          "Offers better described by a more specific child of Mobile Phone Plans",
-          "Offers whose primary subject is unrelated to Mobile Phone Plans"
+          "SIM tray accessory",
+          "Mobile phone handset"
         ]
       },
-      "subject": "physical",
+      "subject": "service",
       "boundary": {
         "include": [
-          "The primary Offer subject is Mobile Phone Plans"
+          "Prepaid and postpaid mobile connectivity",
+          "Domestic, roaming and traveler data plans"
         ],
         "exclude": [
-          "A more specific supported descendant is evidenced",
-          "The primary subject belongs to an unrelated sibling branch"
+          "Handset hardware and SIM accessories",
+          "Standalone recharge gift cards without a plan",
+          "Fixed broadband and travel insurance"
         ],
-        "primary_rule": "Assign the most specific evidence-supported category as primary.",
-        "residual_rule": "Do not use this node as a catch-all outside its canonical subtree."
+        "primary_rule": "Connectivity is the service subject; physical SIM, eSIM, coverage, allowance, duration and operator are attributes.",
+        "residual_rule": "A bare activation code or profile enters only when it demonstrably grants mobile connectivity."
       },
       "semantic_role": "exact",
       "lifecycle": {
@@ -22810,29 +23763,35 @@
     {
       "category_id": "jobs_education.education_training.training_certification",
       "name": "Training & Certification",
-      "definition": "Canonical AON category at level 3 in jobs_education > education_training > training_certification; use it only when Training & Certification is the most specific supported primary subject.",
-      "aliases": [],
+      "definition": "A service primarily providing vocational or skills training, or certification examination, assessment, issuance or renewal.",
+      "aliases": [
+        "certification assessment",
+        "certification service",
+        "skills training"
+      ],
       "examples": {
         "positive": [
-          "Offers primarily about Training & Certification",
-          "Training & Certification content within Education & Training"
+          "Professional certification examination service",
+          "Vocational skills certification training"
         ],
         "negative": [
-          "Offers better described by a more specific child of Training & Certification",
-          "Offers whose primary subject is unrelated to Training & Certification"
+          "Historical degree credential record",
+          "General self-paced literature course"
         ]
       },
       "subject": "service",
       "boundary": {
         "include": [
-          "The primary Offer subject is Training & Certification"
+          "Vocational skills training services",
+          "Certification exams, assessments and credential issuance or renewal"
         ],
         "exclude": [
-          "A more specific supported descendant is evidenced",
-          "The primary subject belongs to an unrelated sibling branch"
+          "Abstract previously awarded credentials",
+          "Complete degree programs",
+          "General course content and tutoring without this training or certification model"
         ],
-        "primary_rule": "Assign the most specific evidence-supported category as primary.",
-        "residual_rule": "Do not use this node as a catch-all outside its canonical subtree."
+        "primary_rule": "Require a tradable training or certification service, not merely a certificate name; completion conditions and badges are attributes.",
+        "residual_rule": "A credential label alone cannot distinguish service, degree program or historical award; retain unresolved until its offer form is known."
       },
       "semantic_role": "exact",
       "lifecycle": {
@@ -22909,31 +23868,77 @@
     {
       "category_id": "jobs_education.job_listings",
       "name": "Job Listings",
-      "definition": "Canonical AON category at level 2 in jobs_education > job_listings; use it only when Job Listings is the most specific supported primary subject.",
-      "aliases": [],
+      "definition": "Access to published notices for specific open positions, or a job-board service primarily finding, comparing, alerting on or applying to those vacancies.",
+      "aliases": [
+        "job board",
+        "job listing",
+        "job search service",
+        "vacancy notice"
+      ],
       "examples": {
         "positive": [
-          "Offers primarily about Job Listings",
-          "Job Listings content within Jobs & Education"
+          "Published software-engineer vacancy",
+          "Job-board search and vacancy-alert access"
         ],
         "negative": [
-          "Offers better described by a more specific child of Job Listings",
-          "Offers whose primary subject is unrelated to Job Listings"
+          "Career coaching package",
+          "Applicant-tracking administration software"
         ]
       },
       "subject": "service",
       "boundary": {
         "include": [
-          "The primary Offer subject is Job Listings"
+          "Published employer or recruiter vacancy notices",
+          "Job search, vacancy alerts and applications through job boards"
         ],
         "exclude": [
-          "A more specific supported descendant is evidenced",
-          "The primary subject belongs to an unrelated sibling branch"
+          "Career coaching and resume assistance",
+          "Recruitment management software",
+          "Abstract occupations and unpublished staffing needs"
         ],
-        "primary_rule": "Assign the most specific evidence-supported category as primary.",
-        "residual_rule": "Do not use this node as a catch-all outside its canonical subtree."
+        "primary_rule": "The primary object is access to published vacancies; location, industry, seniority and platform are attributes.",
+        "residual_rule": "For mixed career platforms require vacancy-access primacy; coaching and managed resume offers use Career Application Services."
       },
       "semantic_role": "exact",
+      "lifecycle": {
+        "status": "current",
+        "replacement_category_id": null
+      }
+    },
+    {
+      "category_id": "jobs_education.career_application_services",
+      "name": "Career Application Services",
+      "definition": "Human-led or managed services assisting career planning, interviews, job applications or resume documents, grouped broadly by service type.",
+      "aliases": [
+        "career coaching",
+        "interview preparation",
+        "resume writing service"
+      ],
+      "examples": {
+        "positive": [
+          "Human interview coaching package",
+          "Managed resume writing service"
+        ],
+        "negative": [
+          "Job vacancy listing",
+          "Self-service resume builder software"
+        ]
+      },
+      "subject": "service",
+      "boundary": {
+        "include": [
+          "Career coaching, interview preparation and application strategy",
+          "Managed resume writing, review, formatting and optimization"
+        ],
+        "exclude": [
+          "Published vacancies and job-search platforms",
+          "Self-service software tools",
+          "Recruitment management software and abstract occupations"
+        ],
+        "primary_rule": "Require human-led or managed assistance; compare coaching and document services separately, and classify self-service tools as software.",
+        "residual_rule": "Keep a proven assistance service here when no narrower type exists; unknown service versus software delivery remains unresolved."
+      },
+      "semantic_role": "broad_fallback",
       "lifecycle": {
         "status": "current",
         "replacement_category_id": null
@@ -24640,7 +25645,7 @@
           "Offers whose primary subject is unrelated to Gyms & Gym Memberships"
         ]
       },
-      "subject": "physical",
+      "subject": "service",
       "boundary": {
         "include": [
           "The primary Offer subject is Gyms & Gym Memberships"
@@ -24673,7 +25678,7 @@
           "Offers whose primary subject is unrelated to Personal Training"
         ]
       },
-      "subject": "physical",
+      "subject": "service",
       "boundary": {
         "include": [
           "The primary Offer subject is Personal Training"
@@ -25656,29 +26661,35 @@
     {
       "category_id": "travel_tourism.air_travel.airline_tickets_fares_flights",
       "name": "Airline Tickets, Fares & Flights",
-      "definition": "Canonical AON category at level 3 in travel_tourism > air_travel > airline_tickets_fares_flights; use it only when Airline Tickets, Fares & Flights is the most specific supported primary subject.",
-      "aliases": [],
+      "definition": "A bookable passenger air-travel itinerary service with a specified route, schedule, cabin, fare or itinerary combination.",
+      "aliases": [
+        "airline fare",
+        "flight booking",
+        "passenger air itinerary"
+      ],
       "examples": {
         "positive": [
-          "Offers primarily about Airline Tickets, Fares & Flights",
-          "Airline Tickets, Fares & Flights content within Air Travel"
+          "Bookable return passenger itinerary",
+          "One-way economy airline fare"
         ],
         "negative": [
-          "Offers better described by a more specific child of Airline Tickets, Fares & Flights",
-          "Offers whose primary subject is unrelated to Airline Tickets, Fares & Flights"
+          "Flight-search subscription without itinerary",
+          "Air cargo shipment"
         ]
       },
-      "subject": "physical",
+      "subject": "service",
       "boundary": {
         "include": [
-          "The primary Offer subject is Airline Tickets, Fares & Flights"
+          "One-way, return and multi-segment passenger flights",
+          "Contractual fares and itinerary booking rights"
         ],
         "exclude": [
-          "A more specific supported descendant is evidenced",
-          "The primary subject belongs to an unrelated sibling branch"
+          "Standalone flight search or price-comparison platforms",
+          "Air cargo and airport ground transfers",
+          "Aircraft merchandise and flight-status information alone"
         ],
-        "primary_rule": "Assign the most specific evidence-supported category as primary.",
-        "residual_rule": "Do not use this node as a catch-all outside its canonical subtree."
+        "primary_rule": "The itinerary service is primary; carrier, codeshare, baggage and change conditions are attributes.",
+        "residual_rule": "Require booking or carriage rights rather than infer them from search links or flight status."
       },
       "semantic_role": "exact",
       "lifecycle": {
@@ -26185,29 +27196,73 @@
     {
       "category_id": "travel_tourism.vacation_packages",
       "name": "Vacation Packages",
-      "definition": "Canonical AON category at level 2 in travel_tourism > vacation_packages; use it only when Vacation Packages is the most specific supported primary subject.",
-      "aliases": [],
+      "definition": "A single travel offer selling at least two trip components together as one package service.",
+      "aliases": [
+        "travel package",
+        "vacation package"
+      ],
       "examples": {
         "positive": [
-          "Offers primarily about Vacation Packages",
-          "Vacation Packages content within Travel & Tourism"
+          "Single-contract flight and hotel package",
+          "Accommodation and excursion package"
         ],
         "negative": [
-          "Offers better described by a more specific child of Vacation Packages",
-          "Offers whose primary subject is unrelated to Vacation Packages"
+          "Separate hotel and flight recommendations",
+          "Standalone hotel booking"
         ]
       },
-      "subject": "physical",
+      "subject": "service",
       "boundary": {
         "include": [
-          "The primary Offer subject is Vacation Packages"
+          "Combined transport and accommodation offers",
+          "Accommodation with activities or itinerary services sold as one package"
         ],
         "exclude": [
-          "A more specific supported descendant is evidenced",
-          "The primary subject belongs to an unrelated sibling branch"
+          "Separately transacted search results",
+          "Standalone flights or lodging",
+          "General trip-planning tools"
         ],
-        "primary_rule": "Assign the most specific evidence-supported category as primary.",
-        "residual_rule": "Do not use this node as a catch-all outside its canonical subtree."
+        "primary_rule": "Require one offer or contract combining multiple components; destination, duration and dynamic assembly are attributes.",
+        "residual_rule": "If joint pricing or contractual bundling is unproven, do not infer a package from cross-recommendations."
+      },
+      "semantic_role": "exact",
+      "lifecycle": {
+        "status": "current",
+        "replacement_category_id": null
+      }
+    },
+    {
+      "category_id": "travel_tourism.visa_assistance_services",
+      "name": "Visa Assistance Services",
+      "definition": "A service helping travelers determine visa requirements, prepare documents, submit applications or track processing without itself constituting a visa or guaranteed approval.",
+      "aliases": [
+        "visa application assistance",
+        "visa document assistance",
+        "visa support service"
+      ],
+      "examples": {
+        "positive": [
+          "Travel visa document-preparation service",
+          "Visa application submission and tracking assistance"
+        ],
+        "negative": [
+          "Airline booking",
+          "Sale of purported guaranteed visa approval"
+        ]
+      },
+      "subject": "service",
+      "boundary": {
+        "include": [
+          "Visa requirement and document preparation assistance",
+          "Application submission and status tracking assistance"
+        ],
+        "exclude": [
+          "The visa or entry permission itself",
+          "Guaranteed-approval promises",
+          "Travel bookings and legal representation not explicitly established by the offer"
+        ],
+        "primary_rule": "Classify the assistance actually provided; immigration decisions remain with the relevant authority.",
+        "residual_rule": "Do not infer legal representation, entry permission or an approval guarantee from generic visa support."
       },
       "semantic_role": "exact",
       "lifecycle": {
@@ -26249,5 +27304,5 @@
       }
     }
   ],
-  "metadata_digest": "a38181b4bb235412b93049475a1d16edc82c26e207aabb53bfc2f7463cb74369"
+  "metadata_digest": "9947bd750a52f64374f3df7e83ffe75ac6c4fba36f2eec45f166ce72c34913ba"
 }

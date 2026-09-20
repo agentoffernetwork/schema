@@ -9,9 +9,9 @@
     "taxonomy_version": {"const": "v1"},
     "baseline_digest": {"$ref": "#/$defs/sha256"},
     "source_metadata_digest": {"$ref": "#/$defs/sha256"},
-    "record_count": {"type": "integer", "minimum": 515, "maximum": 787},
+    "record_count": {"type": "integer", "minimum": 515},
     "metadata_digest": {"$ref": "#/$defs/sha256"},
-    "records": {"type": "array", "minItems": 515, "maxItems": 787, "items": {"$ref": "#/$defs/record"}}
+    "records": {"type": "array", "minItems": 515, "items": {"$ref": "#/$defs/record"}}
   },
   "additionalProperties": false,
   "$defs": {
