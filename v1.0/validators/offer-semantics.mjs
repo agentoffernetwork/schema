@@ -303,6 +303,16 @@ function validateFlightProfile(offer, data, errors) {
           errors.push(semanticError("flight_local_time_invalid", `${path}/${endpointName}/local_at`, `flight segment ${endpointName}.local_at must be a real airport-local calendar date-time in YYYY-MM-DDTHH:mm:ss form`))
         }
       }
+      for (const [owner, field, fieldPath] of [
+        [segment?.departure, "city_name", `${path}/departure/city_name`],
+        [segment?.arrival, "city_name", `${path}/arrival/city_name`],
+        [segment?.marketing_carrier, "name", `${path}/marketing_carrier/name`],
+      ]) {
+        if (isPlainObject(owner) && Object.hasOwn(owner, field)
+          && (typeof owner[field] !== "string" || !/[^\u0009-\u000D\u0020\u0085\u00A0\u1680\u2000-\u200A\u2028\u2029\u202F\u205F\u3000\uFEFF]/u.test(owner[field]))) {
+          errors.push(semanticError("flight_display_name_invalid", fieldPath, "flight display names must contain a character outside Unicode White_Space plus U+FEFF"))
+        }
+      }
       if (segmentIndex === 0) return
       const previous = segments[segmentIndex - 1]
       const sameConnectingAirport = previous?.arrival?.airport_code === segment?.departure?.airport_code

@@ -70,7 +70,7 @@ export interface FlightItineraryV10 {
       departure: FlightEndpointV10
       arrival: FlightEndpointV10
       duration_minutes: number
-      marketing_carrier: { code: string }
+      marketing_carrier: { code: string; name?: string }
       flight_number: string
       stops?: FlightStopV10[]
       cabin_class: "economy" | "premium_economy" | "business" | "first"
@@ -79,6 +79,9 @@ export interface FlightItineraryV10 {
 }
 
 export interface FlightEndpointV10 {
+  /** City identity and localized display name; independent of airport identity. */
+  city_code?: string
+  city_name?: string
   airport_code: string
   local_at: string
 }
