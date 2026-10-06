@@ -78,13 +78,31 @@
       "covers": ["postback.agent.current", "postback.agent.signature", "postback.agent.retry"]
     },
     {
-      "id": "postback-agent-v10-cpa-without-revenue",
+      "id": "postback-agent-v10-missing-revenue",
       "schema_id": "https://agentoffernetwork.org/schema/postback-agent-payload/v1.0",
       "fixture": "../examples/http/postback/agent/basic-conversion-v1.0.json",
       "mutation": {"remove": ["amount", "currency"]},
+      "expected": "invalid",
+      "source_refs": ["json-schema/postback-agent-payload-v1.0.json"],
+      "covers": ["postback.agent.required-usd-revenue"]
+    },
+    {
+      "id": "postback-agent-v10-legacy-hyphenated-click-id",
+      "schema_id": "https://agentoffernetwork.org/schema/postback-agent-payload/v1.0",
+      "fixture": "../examples/http/postback/agent/basic-conversion-v1.0.json",
+      "mutation": {"set": {"aon_click_id": "aci_019e30f2-1b35-7b58-b47d-2cc086ace710"}},
       "expected": "valid",
       "source_refs": ["json-schema/postback-agent-payload-v1.0.json"],
-      "covers": ["postback.agent.cpa-optional-revenue"]
+      "covers": ["postback.agent.click-id-legacy-form"]
+    },
+    {
+      "id": "postback-agent-v10-non-aci-click-id",
+      "schema_id": "https://agentoffernetwork.org/schema/postback-agent-payload/v1.0",
+      "fixture": "../examples/http/postback/agent/basic-conversion-v1.0.json",
+      "mutation": {"set": {"aon_click_id": "trk_01_click_abc"}},
+      "expected": "invalid",
+      "source_refs": ["json-schema/postback-agent-payload-v1.0.json"],
+      "covers": ["postback.agent.click-id-format"]
     }
   ]
 }

@@ -13,6 +13,8 @@ const QUERY_HELPER_PATHS = new Set([
   "intent.signals",
   "constraints.category_ids",
   "constraints.excluded_category_ids",
+  "constraints.offer_types",
+  "constraints.listing_source_names",
 ])
 
 const BCP_47_LANGUAGE_TAG = /^[A-Za-z]{2,3}(?:-[A-Za-z]{3}){0,3}(?:-[A-Za-z]{4})?(?:-(?:[A-Za-z]{2}|[0-9]{3}))?(?:-(?:[A-Za-z0-9]{5,8}|[0-9][A-Za-z0-9]{3}))*(?:-[0-9A-WY-Za-wy-z](?:-[A-Za-z0-9]{2,8})+)*(?:-[Xx](?:-[A-Za-z0-9]{1,8})+)?$/
@@ -511,6 +513,31 @@ function validateBudgetSignal(budget, path, errors) {
   }
 }
 
+const QUERY_OFFER_TYPES = new Set(["physical_product", "digital_goods", "content", "online_service", "offline_service"])
+
+function validateQueryConstraintFilters(constraints, path, errors) {
+  if (!isPlainObject(constraints)) return
+  if (Object.hasOwn(constraints, "listing_source_kinds")) errors.push(`${path}.listing_source_kinds is not defined in v1.0`)
+  for (const field of ["offer_types", "listing_source_names"]) {
+    if (!Object.hasOwn(constraints, field)) continue
+    const values = constraints[field]
+    const fieldPath = `${path}.${field}`
+    if (!Array.isArray(values)) {
+      errors.push(`${fieldPath} must be an array`)
+      continue
+    }
+    // Uniqueness is checked before any matching normalization.
+    if (new Set(values).size !== values.length) errors.push(`${fieldPath} entries must be unique`)
+    for (const [index, value] of values.entries()) {
+      if (field === "offer_types") {
+        if (!QUERY_OFFER_TYPES.has(value)) errors.push(`${fieldPath}.${index} must be a public OfferType`)
+      } else if (typeof value !== "string" || [...value].length < 1 || [...value].length > 160 || !/[^\u0009-\u000D\u0020]/u.test(value)) {
+        errors.push(`${fieldPath}.${index} must be a string of 1–160 Unicode code points containing a non-ASCII-whitespace character`)
+      }
+    }
+  }
+}
+
 export function validateOfferQueryV10Semantics(request) {
   if (!isPlainObject(request)) return { valid: false, errors: ["Query request root must be a plain object"] }
   const errors = []
@@ -533,6 +560,7 @@ export function validateOfferQueryV10Semantics(request) {
   if (origins.length > 3) errors.push("intent.origin must contain at most three entries")
   if (origins.length > 0 && request.intent?.provenance !== "user_expressed") errors.push("intent.origin requires user_expressed provenance")
   if (Object.hasOwn(request.constraints ?? {}, "features")) errors.push("constraints.features is not defined in v1.0")
+  validateQueryConstraintFilters(request.constraints, "constraints", errors)
   validateBudgetSignal(request.intent?.signals?.budget, "intent.signals.budget", errors)
   if (Object.hasOwn(request.intent ?? {}, "details")) validateFlightQueryDetails(request.intent.details, errors)
   return { valid: errors.length === 0, errors }
@@ -649,6 +677,7 @@ export function validateQueryHelperPatch(patch) {
     }
   }
   visit(patch)
+  validateQueryConstraintFilters(patch.constraints, "request_patch.constraints", errors)
   validateBudgetSignal(patch?.intent?.signals?.budget, "request_patch.intent.signals.budget", errors)
   return { valid: errors.length === 0, errors }
 }

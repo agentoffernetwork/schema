@@ -209,7 +209,7 @@
         "request_patch": {
           "type": "object",
           "minProperties": 1,
-          "description": "Non-null, non-empty partial update limited to intent.signals and category constraints. Every supplied nested object contains an actual update. Omission preserves the current value, objects merge recursively, arrays replace the prior array, and explicit current-turn user conditions win on conflict.",
+          "description": "Non-null, non-empty partial update limited to intent.signals and category_ids, excluded_category_ids, offer_types, listing_source_names constraints. Every supplied nested object contains an actual update. Omission preserves the current value, objects merge recursively, arrays replace the prior array, and explicit current-turn user conditions win on conflict.",
           "properties": {
             "intent": {
               "type": "object",
@@ -231,7 +231,7 @@
               "type": "object",
               "$ref": "https://agentoffernetwork.org/schema/offer-query/v1.0#/$defs/constraints",
               "minProperties": 1,
-              "description": "Non-empty object of non-null replacement arrays for permitted category constraints; omitted members remain unchanged. An empty supplied array is meaningful and clears that constraint list."
+              "description": "Non-empty object of non-null replacement arrays for permitted category_ids, excluded_category_ids, offer_types, and listing_source_names constraints; omitted members remain unchanged. An empty supplied array is meaningful and clears that constraint list."
             }
           },
           "additionalProperties": false

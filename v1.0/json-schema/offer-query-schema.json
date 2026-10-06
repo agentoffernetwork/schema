@@ -323,6 +323,25 @@
           "items": {
             "$ref": "#/$defs/categoryId"
           }
+        },
+        "offer_types": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "$ref": "https://agentoffernetwork.org/schema/offer/v1.0#/properties/offer_info/properties/offer_type"
+          },
+          "description": "Optional hard filter on public offer_info.offer_type. Values within this array are OR; different constraint dimensions are AND. Omission preserves existing inference; a nonempty array overrides same-dimension inference; [] clears that dimension and prevents its inference for this request. Null is invalid."
+        },
+        "listing_source_names": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 160,
+            "pattern": "[^\\u0009-\\u000D\\u0020]"
+          },
+          "description": "Optional hard filter on final public listing_source.name. Compare after trimming only U+0009-U+000D/U+0020 at both ends and folding ASCII A-Z to a-z; other characters are exact. No aliases or substring matching. Original duplicate strings are invalid; normalized equivalents use set semantics. Values are OR and dimensions are AND. Omission preserves inference; nonempty overrides it; [] clears and suppresses same-dimension inference for this request. Null is invalid; a valid unknown name remains a filter."
         }
       },
       "additionalProperties": false

@@ -21,17 +21,23 @@ export type ProviderPostbackPayloadV10 = ProviderPostbackAttributionV10 & Revenu
 export type AgentConversionWebhookPayloadV10 = {
   event_id: string
   event_type: "conversion"
-  event_name: GoalEventNameV10
-  aon_tracking_id: string
+  /** Opaque AON click id beginning with `aci_`; omitted when the conversion has no attributed click. Treat as opaque. */
+  aon_click_id?: string
   offer_id: string
-  agent_id: string
-  timestamp: string
+  application_id: string
+  /** Omitted when the conversion has no placement. */
+  placement_id?: string
+  event_name: GoalEventNameV10
+  /** Developer expected net earning in USD (commission minus platform fee, frozen FX, 2 decimals); 0 when non-billable. */
+  amount: number
+  currency: "USD"
   sub_id?: string
   sub_id_2?: string
   sub_id_3?: string
   sub_id_4?: string
   sub_id_5?: string
-} & ({ amount: number; currency: string } | { amount?: never; currency?: never })
+  timestamp: string
+}
 
 export type ProviderPostbackResultV10 = "accepted" | "already_recorded" | "unmapped" | "rejected" | "retry"
 

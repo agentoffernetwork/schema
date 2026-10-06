@@ -1,4 +1,4 @@
-import type { GenericOfferV10, OfferV10, OfferInfoV10, FlightItineraryV10, CommercialInfoV10, CommercialPriceV10, CommercialQuoteV10 } from "./offer.types"
+import type { OfferType, GenericOfferV10, OfferV10, OfferInfoV10, FlightItineraryV10, CommercialInfoV10, CommercialPriceV10, CommercialQuoteV10 } from "./offer.types"
 import type { PartnerOfferV10 } from "./offer-partner.types"
 
 type AtLeastOne<T, Keys extends keyof T = keyof T> = Keys extends keyof T
@@ -47,6 +47,10 @@ export interface QuerySignalsV10 {
 export interface QueryConstraintsV10 {
   category_ids?: string[]
   excluded_category_ids?: string[]
+  /** OR within the array, AND across dimensions. Omitted preserves inference; nonempty overrides it; [] clears and suppresses it. */
+  offer_types?: OfferType[]
+  /** Final public source names: 1–160 code points, ASCII trim/case folding equality, no aliases. Raw duplicates invalid. Omitted preserves inference; nonempty overrides it; [] clears and suppresses it. */
+  listing_source_names?: string[]
 }
 
 export interface GenericOfferQueryResponseV10 {
