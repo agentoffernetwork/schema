@@ -207,5 +207,45 @@
         ]
       }
     ]
+  },
+  "public_game": {
+    "offer_id": "019f5f65-dbc1-7c3c-9ef9-9d6d2d8ae501",
+    "offer_instance_id": "019f5f65-dbc1-7c3c-9ef9-9d6d2d8ae502",
+    "version": "3.0",
+    "offer_info": {
+      "title": "Example Puzzle Game",
+      "offer_type": "digital_goods",
+      "category": {
+        "id": "hobbies_games_leisure.toys_games.games.online_games_puzzles"
+      },
+      "description": "A casual puzzle game with a source-reported download threshold of 1M+.",
+      "details": {
+        "profile": "game",
+        "data": {
+          "downloads": 1000000
+        }
+      }
+    },
+    "entity": {
+      "id": "example-game-studio",
+      "name": "Example Game Studio"
+    },
+    "action": {
+      "type": "open_url",
+      "consumer_action": "download",
+      "payload": {
+        "url": "https://example.com/games/puzzle"
+      }
+    },
+    "goals": [
+      {
+        "event": "install",
+        "pricing": {
+          "model": "cpa",
+          "amount": "1.5",
+          "currency": "USD"
+        }
+      }
+    ]
   }
 }
