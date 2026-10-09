@@ -46,6 +46,7 @@ function isNonEmptyObject(value) {
 function hasUniqueLanguageExtensionSingletons(value) {
   const seen = new Set()
   for (const subtag of value.toLowerCase().split("-").slice(1)) {
+    if (subtag === "x") break
     if (!/^[0-9a-wy-z]$/.test(subtag)) continue
     if (seen.has(subtag)) return false
     seen.add(subtag)
@@ -269,12 +270,27 @@ function validateProfileBaseOffer(offer, profile, categoryId, errors) {
   validateProfileCommercial(offer, profile, errors)
 }
 
+function validateFlightSourceText(sourceText, sourcePath, errors) {
+  if (sourceText === undefined) return
+  if (!isPlainObject(sourceText) || typeof sourceText.text !== "string"
+    || !/[^\u0009-\u000D\u0020\u0085\u00A0\u1680\u2000-\u200A\u2028\u2029\u202F\u205F\u3000\uFEFF]/u.test(sourceText.text)) {
+    errors.push(semanticError("flight_source_text_invalid", `${sourcePath}/text`, "flight source text must be nonblank"))
+  }
+  if (!isPlainObject(sourceText) || typeof sourceText.language !== "string"
+    || sourceText.language.length < 2 || sourceText.language.length > 64
+    || !BCP_47_LANGUAGE_TAG.test(sourceText.language)
+    || !hasUniqueLanguageExtensionSingletons(sourceText.language)) {
+    errors.push(semanticError("flight_source_language_invalid", `${sourcePath}/language`, "flight source language must use the stable-v1.0 language-tag profile"))
+  }
+}
+
 function validateFlightProfile(offer, data, errors) {
   validateProfileBaseOffer(offer, "flight", "travel_tourism.air_travel.airline_tickets_fares_flights", errors)
   if (!isPlainObject(data)) return
 
   validateFlightTravelers(data.travelers, false, "/offer_info/details/data/travelers", errors)
   if (data.price_basis === "reference" && Object.hasOwn(data, "travelers")) errors.push(semanticError("flight_reference_travelers", "/offer_info/details/data/travelers", "reference prices must not declare travelers"))
+  if (data.price_basis === "reference" && Object.hasOwn(data, "fare_details")) errors.push(semanticError("flight_reference_fare_details", "/offer_info/details/data/fare_details", "fare details require a traveler-composed itinerary quote"))
   const legs = data.legs
   const expectedLegCount = data.trip_type === "one_way" ? 1 : data.trip_type === "round_trip" ? 2 : undefined
   if (expectedLegCount !== undefined && Array.isArray(legs) && legs.length !== expectedLegCount) {
@@ -293,13 +309,58 @@ function validateFlightProfile(offer, data, errors) {
     })
   }
 
+  if (Array.isArray(data.fare_details?.components)) {
+    const seen = new Set()
+    data.fare_details.components.forEach((component, index) => {
+      const path = `/offer_info/details/data/fare_details/components/${index}`
+      if (!Array.isArray(legs) || !Array.isArray(legs[component?.leg_index]?.segments)
+        || !legs[component.leg_index].segments[component?.segment_index]) {
+        errors.push(semanticError("flight_fare_segment_reference", path, "fare component must identify an existing itinerary segment"))
+      }
+      if (!Array.isArray(data.travelers) || !data.travelers.some((traveler) => traveler?.type === component?.traveler_type)) {
+        errors.push(semanticError("flight_fare_traveler_reference", `${path}/traveler_type`, "fare component traveler type must occur in this quote"))
+      }
+      const key = `${component?.leg_index}/${component?.segment_index}/${component?.traveler_type}`
+      if (seen.has(key)) errors.push(semanticError("flight_fare_component_unique", path, "fare component scope must be unique"))
+      seen.add(key)
+      for (const field of ["carry_on_baggage", "checked_baggage"]) {
+        const allowance = component?.[field]
+        if (allowance?.pieces === 0 && (allowance.total_weight_kg !== undefined || allowance.max_weight_kg_per_piece !== undefined)) {
+          errors.push(semanticError("flight_baggage_zero_pieces", `${path}/${field}`, "zero included pieces cannot carry a positive weight allowance"))
+        }
+      }
+      for (const [sourceText, sourcePath] of [
+        [component?.brand_name, `${path}/brand_name`],
+        [component?.change_policy?.summary, `${path}/change_policy/summary`],
+        [component?.refund_policy?.summary, `${path}/refund_policy/summary`],
+      ]) validateFlightSourceText(sourceText, sourcePath, errors)
+    })
+  }
+
   if (!Array.isArray(legs)) return
   legs.forEach((leg, legIndex) => {
     const segments = leg?.segments
     if (!Array.isArray(segments)) return
     if (leg.duration_minutes !== undefined && leg.duration_minutes < segments.reduce((total, segment) => total + segment.duration_minutes, 0)) errors.push(semanticError("flight_leg_duration", `/offer_info/details/data/legs/${legIndex}/duration_minutes`, "leg duration must be at least the sum of segment durations"))
+    if (leg.connections !== undefined && (!Array.isArray(leg.connections) || leg.connections.length !== segments.length - 1)) {
+      errors.push(semanticError("flight_connections_length", `/offer_info/details/data/legs/${legIndex}/connections`, "connections must have exactly one item per adjacent segment pair"))
+    }
+    if (Array.isArray(leg.connections)) leg.connections.forEach((connection, index) => {
+      const changed = segments[index]?.arrival?.airport_code !== segments[index + 1]?.departure?.airport_code
+      if (connection?.after_segment_index !== index || connection?.airport_change !== changed) {
+        errors.push(semanticError("flight_connection_scope", `/offer_info/details/data/legs/${legIndex}/connections/${index}`, "connection index and airport_change must match adjacent segments"))
+      }
+    })
     segments.forEach((segment, segmentIndex) => {
       const path = `/offer_info/details/data/legs/${legIndex}/segments/${segmentIndex}`
+      for (const [carrier, carrierPath] of [
+        [segment?.marketing_carrier, `${path}/marketing_carrier`],
+        [segment?.operating_carrier, `${path}/operating_carrier`],
+      ]) {
+        if (carrier?.logo_url !== undefined && !isAbsoluteHttpsUrl(carrier.logo_url)) {
+          errors.push(semanticError("flight_carrier_logo_https", `${carrierPath}/logo_url`, "carrier logo must be an absolute HTTPS URL without userinfo"))
+        }
+      }
       for (const endpointName of ["departure", "arrival"]) {
         if (!isValidLocalDateTime(segment?.[endpointName]?.local_at)) {
           errors.push(semanticError("flight_local_time_invalid", `${path}/${endpointName}/local_at`, `flight segment ${endpointName}.local_at must be a real airport-local calendar date-time in YYYY-MM-DDTHH:mm:ss form`))
@@ -315,10 +376,42 @@ function validateFlightProfile(offer, data, errors) {
           errors.push(semanticError("flight_display_name_invalid", fieldPath, "flight display names must contain a character outside Unicode White_Space plus U+FEFF"))
         }
       }
+      for (const [sourceText, sourcePath] of [
+        [segment?.departure?.airport_full_name, `${path}/departure/airport_full_name`],
+        [segment?.arrival?.airport_full_name, `${path}/arrival/airport_full_name`],
+        [segment?.planned_aircraft?.name, `${path}/planned_aircraft/name`],
+        [segment?.operating_carrier?.name, `${path}/operating_carrier/name`],
+      ]) {
+        validateFlightSourceText(sourceText, sourcePath, errors)
+      }
+      if (segment?.planned_aircraft !== undefined
+        && (!isPlainObject(segment.planned_aircraft)
+          || segment.planned_aircraft.source !== "supplier_reported"
+          || !isPlainObject(segment.planned_aircraft.name))) {
+        errors.push(semanticError("flight_planned_aircraft_invalid", `${path}/planned_aircraft`, "planned aircraft requires supplier_reported source and a source-text name"))
+      }
+      for (const [endpoint, endpointName] of [[segment?.departure, "departure"], [segment?.arrival, "arrival"]]) {
+        if (isPlainObject(endpoint) && Object.hasOwn(endpoint, "terminal")
+          && (typeof endpoint.terminal !== "string"
+            || !/[^\u0009-\u000D\u0020\u0085\u00A0\u1680\u2000-\u200A\u2028\u2029\u202F\u205F\u3000\uFEFF]/u.test(endpoint.terminal))) {
+          errors.push(semanticError("flight_terminal_invalid", `${path}/${endpointName}/terminal`, "flight terminal must be nonblank"))
+        }
+      }
+      if (Array.isArray(segment?.stops)) segment.stops.forEach((stop, stopIndex) => {
+        if (!isPlainObject(stop) || !Object.hasOwn(stop, "name_language")) return
+        const stopPath = `${path}/stops/${stopIndex}`
+        if (typeof stop.name !== "string" || !/[^\u0009-\u000D\u0020\u0085\u00A0\u1680\u2000-\u200A\u2028\u2029\u202F\u205F\u3000\uFEFF]/u.test(stop.name)) {
+          errors.push(semanticError("flight_stop_name_language_requires_name", `${stopPath}/name_language`, "stop name_language requires a nonblank name"))
+        }
+        if (typeof stop.name_language !== "string" || stop.name_language.length < 2 || stop.name_language.length > 64
+          || !BCP_47_LANGUAGE_TAG.test(stop.name_language) || !hasUniqueLanguageExtensionSingletons(stop.name_language)) {
+          errors.push(semanticError("flight_stop_name_language_invalid", `${stopPath}/name_language`, "stop name_language must use the stable-v1.0 language-tag profile"))
+        }
+      })
       if (segmentIndex === 0) return
       const previous = segments[segmentIndex - 1]
       const sameConnectingAirport = previous?.arrival?.airport_code === segment?.departure?.airport_code
-      if (!sameConnectingAirport) {
+      if (!sameConnectingAirport && !Array.isArray(leg.connections)) {
         errors.push(semanticError("flight_segment_airport_continuity", `${path}/departure/airport_code`, "each flight segment departure airport must equal the preceding segment arrival airport"))
       } else if (isLocalAfter(previous?.arrival?.local_at, segment?.departure?.local_at)) {
         errors.push(semanticError("flight_segment_time_continuity", `${path}/departure/local_at`, "at a connecting airport, each flight segment departure.local_at must not be earlier than the preceding segment arrival.local_at"))
@@ -356,6 +449,19 @@ function validateHotelRateProfile(offer, data, errors) {
   }
 }
 
+const GAME_CATEGORY_PREFIX = "hobbies_games_leisure.toys_games.games"
+
+function validateGameProfile(offer, data, errors) {
+  const categoryId = offer?.offer_info?.category?.id
+  if (typeof categoryId !== "string" || (categoryId !== GAME_CATEGORY_PREFIX && !categoryId.startsWith(`${GAME_CATEGORY_PREFIX}.`))) {
+    errors.push(semanticError("profile_category", "/offer_info/category/id", `game requires a category within ${GAME_CATEGORY_PREFIX}`))
+  }
+  if (!isPlainObject(data)) return
+  if (!Number.isSafeInteger(data.downloads) || data.downloads < 1) {
+    errors.push(semanticError("game_downloads", "/offer_info/details/data/downloads", "game downloads must be a positive safe integer"))
+  }
+}
+
 function validateSupplyOfferProfile(offer, errors) {
   const details = offer?.offer_info?.details
   if (details === undefined) return
@@ -369,6 +475,10 @@ function validateSupplyOfferProfile(offer, errors) {
   }
   if (details.profile === "hotel_rate") {
     validateHotelRateProfile(offer, details.data, errors)
+    return
+  }
+  if (details.profile === "game") {
+    validateGameProfile(offer, details.data, errors)
     return
   }
   errors.push(semanticError("profile_registry", "/offer_info/details/profile", "details.profile must be registered in the v1.0 supply profile registry"))

@@ -41,7 +41,7 @@ export interface OfferInfoV10 {
   expire_at?: string
 }
 
-export type SupplyOfferDetailsV10 = FlightOfferDetailsV10 | HotelRateOfferDetailsV10
+export type SupplyOfferDetailsV10 = FlightOfferDetailsV10 | HotelRateOfferDetailsV10 | GameOfferDetailsV10
 
 export interface FlightOfferDetailsV10 {
   profile: "flight"
@@ -49,7 +49,7 @@ export interface FlightOfferDetailsV10 {
 }
 
 export type FlightOfferDataV10 = FlightItineraryV10 & (
-  | { price_basis: "reference"; travelers?: never }
+  | { price_basis: "reference"; travelers?: never; fare_details?: never }
   | { price_basis?: "itinerary_total"; travelers: FlightTravelerV10[] }
 )
 
@@ -57,22 +57,97 @@ export type FlightTravelerV10 =
   | { type: "adult" | "child"; count: number; ages?: number[]; infant_seat_required?: never }
   | { type: "infant"; count: number; ages?: number[]; infant_seat_required?: boolean[] }
 
+export interface FlightSourceTextV10 {
+  text: string
+  /** BCP 47 language tag; und means the source language is unverified. */
+  language: string
+}
+
+export interface FlightPlannedAircraftV10 {
+  name: FlightSourceTextV10
+  source: "supplier_reported"
+}
+
+export interface FlightConnectionV10 {
+  after_segment_index: number
+  airport_change: boolean
+  duration_minutes?: number
+}
+
+export interface FlightMoneyV10 {
+  amount: string
+  currency: string
+}
+
+export interface FlightBaggageAllowanceV10 {
+  pieces?: number
+  total_weight_kg?: number
+  max_weight_kg_per_piece?: number
+}
+
+export interface FlightFarePolicyV10 {
+  summary: FlightSourceTextV10
+  permitted?: boolean
+  fee?: FlightMoneyV10
+}
+
+export interface FlightFareComponentV10 {
+  leg_index: number
+  segment_index: number
+  traveler_type: "adult" | "child" | "infant"
+  brand_name?: FlightSourceTextV10
+  booking_class?: string
+  carry_on_baggage?: FlightBaggageAllowanceV10
+  checked_baggage?: FlightBaggageAllowanceV10
+  change_policy?: FlightFarePolicyV10
+  refund_policy?: FlightFarePolicyV10
+  seat_selection?: { included?: boolean; starting_fee?: FlightMoneyV10 }
+}
+
+export interface FlightFareDetailsV10 {
+  components?: FlightFareComponentV10[]
+  self_transfer?: boolean
+  separate_tickets?: boolean
+  baggage_recheck_required?: boolean
+}
+
+export interface FlightEmissionsV10 {
+  estimated_kg_co2e: number
+  relative_to_typical_percent?: number
+  methodology: string
+  calculated_at: string
+}
+
 export type FlightStopV10 = { duration_minutes?: number } & (
-  | { name: string; airport_code?: string }
-  | { name?: string; airport_code: string }
+  | { name: string; airport_code?: string; name_language?: string }
+  | { name?: never; airport_code: string; name_language?: never }
 )
 
 export interface FlightItineraryV10 {
   trip_type: "one_way" | "round_trip" | "multi_city"
+  fare_details?: FlightFareDetailsV10
+  emissions?: FlightEmissionsV10
   legs: Array<{
     duration_minutes?: number
+    connections?: FlightConnectionV10[]
     segments: Array<{
       departure: FlightEndpointV10
       arrival: FlightEndpointV10
       duration_minutes: number
-      marketing_carrier: { code: string; name?: string }
+      marketing_carrier: { code: string; name?: string; logo_url?: string }
+      operating_carrier?: { code: string; name?: FlightSourceTextV10; logo_url?: string }
+      operating_flight_number?: string
       flight_number: string
       stops?: FlightStopV10[]
+      planned_aircraft?: FlightPlannedAircraftV10
+      standard_aircraft_type?: { iata_code?: string; icao_code?: string }
+      cabin_amenities?: {
+        wifi?: boolean
+        power_outlet?: boolean
+        inflight_entertainment?: boolean
+        meal_included?: boolean
+        seat_pitch_inches?: number
+      }
       cabin_class: "economy" | "premium_economy" | "business" | "first"
     }>
   }>
@@ -84,6 +159,19 @@ export interface FlightEndpointV10 {
   city_name?: string
   airport_code: string
   local_at: string
+  airport_full_name?: FlightSourceTextV10
+  terminal?: string
+  timezone?: string
+}
+
+export interface GameOfferDetailsV10 {
+  profile: "game"
+  data: GameOfferDataV10
+}
+
+export interface GameOfferDataV10 {
+  /** Source-reported cumulative downloads/installs; a published range such as 1M+ uses its lower bound. Positive integer. */
+  downloads: number
 }
 
 export interface HotelRateOfferDetailsV10 {

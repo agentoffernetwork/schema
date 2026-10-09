@@ -57,6 +57,9 @@
             "string",
             "number"
           ]
+        },
+        "user_profile": {
+          "$ref": "#/$defs/userProfile"
         }
       },
       "additionalProperties": false
@@ -234,6 +237,37 @@
             "minLength": 1,
             "maxLength": 50
           }
+        }
+      },
+      "additionalProperties": false
+    },
+    "userProfile": {
+      "type": "object",
+      "description": "Optional viewer context for Offer targeting: current location and a verified minimum-age assertion. Other profile attributes remain out of scope.",
+      "properties": {
+        "location_ids": {
+          "type": "array",
+          "description": "AON Location Registry ids (Google Ads Criteria IDs) for the viewer's current location, most specific first. Takes precedence over country when resolvable.",
+          "minItems": 1,
+          "maxItems": 10,
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 20,
+            "pattern": "^[0-9]+$"
+          }
+        },
+        "country": {
+          "type": "string",
+          "description": "Viewer country as an uppercase ISO 3166-1 alpha-2 code. Fallback when location_ids is absent or unresolvable.",
+          "pattern": "^[A-Z]{2}$"
+        },
+        "verified_age_over": {
+          "type": "integer",
+          "minimum": 13,
+          "maximum": 120,
+          "description": "Optional assertion that the integrator has verified the viewer is at least this many years old. It is an age threshold, not the viewer's actual age or date of birth, and must come from a real verification process rather than inference. An Offer targeting rule with eligibility.min_age fails when this value is below min_age; when omitted, age is not evaluated and min_age does not restrict the request."
         }
       },
       "additionalProperties": false

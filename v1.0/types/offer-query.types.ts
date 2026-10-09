@@ -22,6 +22,17 @@ export interface QueryContextV10 {
   session?: { previous_request_id?: string; recent_topics?: string[] }
   session_id?: string
   conversation_id?: string | number
+  user_profile?: QueryUserProfileV10
+}
+
+/** Optional viewer context for Offer targeting; `location_ids` wins over `country` when resolvable. */
+export interface QueryUserProfileV10 {
+  /** AON Location Registry ids, most specific first (1–10, numeric strings). */
+  location_ids?: string[]
+  /** Uppercase ISO 3166-1 alpha-2 country code. */
+  country?: string
+  /** Verified minimum viewer age (integer 13–120); a `min_age` rule fails only when this is below it. Omitted means age is not evaluated. */
+  verified_age_over?: number
 }
 
 export interface IntentV10 {
