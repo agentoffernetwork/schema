@@ -69,8 +69,8 @@ for the classification and downstream boundaries.
 ## Supply and Query boundaries
 
 The canonical Offer and Partner/Provider supply carriers may include the
-optional closed `offer_info.details` registry envelope for `flight` and
-`hotel_rate`, plus observed commercial supply facts. Public, typed Flight Query and Generic Query
+optional closed `offer_info.details` registry envelope for `flight`,
+`hotel_rate`, and `game`, plus observed commercial supply facts. Public, typed Flight Query and Generic Query
 Offers may include one optional closed
 `offer_info.commercial.display_price` object containing only `amount` and
 `currency`; Partner Offers and OfferProvider success Offers reject it. The
