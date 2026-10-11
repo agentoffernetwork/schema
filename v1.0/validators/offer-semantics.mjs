@@ -257,12 +257,9 @@ function validateProfileCommercial(offer, profile, errors) {
   }
 }
 
-function validateProfileBaseOffer(offer, profile, categoryId, errors) {
+function validateProfileBaseOffer(offer, profile, errors) {
   if (offer?.offer_info?.offer_type !== "offline_service") {
     errors.push(semanticError("profile_offer_type", "/offer_info/offer_type", `${profile} requires offer_type offline_service`))
-  }
-  if (offer?.offer_info?.category?.id !== categoryId) {
-    errors.push(semanticError("profile_category", "/offer_info/category/id", `${profile} requires exact category ${categoryId}`))
   }
   if (offer?.action?.consumer_action !== "book") {
     errors.push(semanticError("profile_book_action", "/action/consumer_action", `${profile} requires action.consumer_action book`))
@@ -285,7 +282,7 @@ function validateFlightSourceText(sourceText, sourcePath, errors) {
 }
 
 function validateFlightProfile(offer, data, errors) {
-  validateProfileBaseOffer(offer, "flight", "travel_tourism.air_travel.airline_tickets_fares_flights", errors)
+  validateProfileBaseOffer(offer, "flight", errors)
   if (!isPlainObject(data)) return
 
   validateFlightTravelers(data.travelers, false, "/offer_info/details/data/travelers", errors)
@@ -421,7 +418,7 @@ function validateFlightProfile(offer, data, errors) {
 }
 
 function validateHotelRateProfile(offer, data, errors) {
-  validateProfileBaseOffer(offer, "hotel_rate", "travel_tourism.accommodations.hotels_motels_resorts.hotels", errors)
+  validateProfileBaseOffer(offer, "hotel_rate", errors)
   const price = offer?.offer_info?.commercial?.price
   if (price?.unit !== "night") {
     errors.push(semanticError("hotel_rate_price_unit", "/offer_info/commercial/price/unit", "hotel_rate requires commercial.price.unit night"))
@@ -449,13 +446,7 @@ function validateHotelRateProfile(offer, data, errors) {
   }
 }
 
-const GAME_CATEGORY_PREFIX = "hobbies_games_leisure.toys_games.games"
-
-function validateGameProfile(offer, data, errors) {
-  const categoryId = offer?.offer_info?.category?.id
-  if (typeof categoryId !== "string" || (categoryId !== GAME_CATEGORY_PREFIX && !categoryId.startsWith(`${GAME_CATEGORY_PREFIX}.`))) {
-    errors.push(semanticError("profile_category", "/offer_info/category/id", `game requires a category within ${GAME_CATEGORY_PREFIX}`))
-  }
+function validateGameProfile(data, errors) {
   if (!isPlainObject(data)) return
   if (!Number.isSafeInteger(data.downloads) || data.downloads < 1) {
     errors.push(semanticError("game_downloads", "/offer_info/details/data/downloads", "game downloads must be a positive safe integer"))
@@ -478,7 +469,7 @@ function validateSupplyOfferProfile(offer, errors) {
     return
   }
   if (details.profile === "game") {
-    validateGameProfile(offer, details.data, errors)
+    validateGameProfile(details.data, errors)
     return
   }
   errors.push(semanticError("profile_registry", "/offer_info/details/profile", "details.profile must be registered in the v1.0 supply profile registry"))

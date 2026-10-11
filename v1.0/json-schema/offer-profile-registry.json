@@ -2,7 +2,7 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://agentoffernetwork.org/schema/offer-profile-registry/v1.0",
   "title": "AgentOffer Supply Offer Profile Registry v1.0",
-  "description": "Closed registry for stable v1.0 supply Offer profiles. Generic Offers omit offer_info.details; registered profiles carry their domain facts only in details.data.",
+  "description": "Closed registry for stable v1.0 supply Offer profiles. Generic Offers omit offer_info.details; registered profiles carry their domain facts only in details.data. Registered profiles are independent of category.id.",
   "$defs": {
     "supplyDetails": {
       "type": "object",

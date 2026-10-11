@@ -50,3 +50,17 @@ export function validatePostbackV10Semantics(postback, context) {
 }
 
 export default validatePostbackV10Semantics;
+
+/** Validate Agent payload semantics after the closed oneOf JSON Schema succeeds. */
+export function validateAgentWebhookV10Semantics(payload) {
+  if (!isPlainObject(payload)) return result([error('payload_invalid', '', 'payload must be an object')]);
+  if (payload.event_type === 'conversion') return result([]);
+  if (!['earning_confirmed', 'earning_available', 'earning_paid_out', 'earning_rejected'].includes(payload.event_type)) {
+    return result([error('event_type_invalid', '/event_type', 'unknown Agent event type')]);
+  }
+  const errors = [];
+  if (!Number.isInteger(payload.sequence) || payload.sequence < 1) {
+    errors.push(error('sequence_invalid', '/sequence', 'sequence must be a positive integer'));
+  }
+  return result(errors);
+}

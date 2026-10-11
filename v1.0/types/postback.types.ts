@@ -56,3 +56,29 @@ export interface ProviderPostbackErrorExtraV10 {
   retryable: boolean
   event_logged: boolean
 }
+
+/** Rejection codes never contain operator free text. */
+export type EarningRejectionReasonV10 = "merchant_cancelled" | "duplicate" | "invalid_order" | "fraud" | "returned" | "reversed" | "refund"
+
+export type AgentEarningWebhookPayloadV10 = {
+  /** earning: followed by the immutable outbox UUID. */
+  event_id: string
+  /** Settlement UUID, identical to the Earnings API id. */
+  earning_id: string
+  /** Positive integer; compare only within one earning_id, never by timestamp. */
+  sequence: number
+  conversion_event_id: string
+  offer_id: string
+  application_id: string
+  placement_id?: string
+  amount: number
+  currency: "USD"
+  timestamp: string
+} & (
+  | { event_type: "earning_confirmed"; reason?: never }
+  | { event_type: "earning_available"; reason?: never }
+  | { event_type: "earning_paid_out"; reason?: never }
+  | { event_type: "earning_rejected"; reason: EarningRejectionReasonV10 }
+)
+
+export type AgentWebhookPayloadV10 = AgentConversionWebhookPayloadV10 | AgentEarningWebhookPayloadV10

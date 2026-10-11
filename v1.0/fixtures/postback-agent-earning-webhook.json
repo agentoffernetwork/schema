@@ -1,0 +1,87 @@
+{
+  "version": "postback-agent-earning-webhook-v1.0",
+  "provenance": "Synthetic conformance samples based on TECH v0.4 wire contract; no production customer data. Core rendering tests consume inputs and compare raw_body byte for byte.",
+  "request": {
+    "method": "POST",
+    "request_target": "/webhook/aon/conversion?source=aon&delivery=conversion",
+    "now_epoch": 1776450600,
+    "current_key_id": "aon_cb_v2",
+    "keys": {
+      "aon_cb_v2": "aon-postback-secret-demo-current"
+    }
+  },
+  "events": [
+    {
+      "name": "earning_confirmed",
+      "input": {
+        "event_id": "earning:019ca111-1111-4111-8111-000000000001",
+        "event_type": "earning_confirmed",
+        "earning_id": "019ca222-2222-4222-8222-222222222222",
+        "sequence": 1,
+        "conversion_event_id": "evt_01J0AONCONVERSION000001",
+        "offer_id": "ao_01HX2B3C4D5E6F7G8H9J0KABCD",
+        "application_id": "app_demoApplication1",
+        "placement_id": "plc_demoPlacement001",
+        "amount": 5,
+        "currency": "USD",
+        "timestamp": "2026-04-17T03:10:00Z"
+      },
+      "raw_body": "{\"event_id\":\"earning:019ca111-1111-4111-8111-000000000001\",\"event_type\":\"earning_confirmed\",\"earning_id\":\"019ca222-2222-4222-8222-222222222222\",\"sequence\":1,\"conversion_event_id\":\"evt_01J0AONCONVERSION000001\",\"offer_id\":\"ao_01HX2B3C4D5E6F7G8H9J0KABCD\",\"application_id\":\"app_demoApplication1\",\"placement_id\":\"plc_demoPlacement001\",\"amount\":5,\"currency\":\"USD\",\"timestamp\":\"2026-04-17T03:10:00Z\"}",
+      "signature": "0c30c14ea17722fc202a7a85cd6b3623ae3f3ab1fea8e5a20c2ce5784b295908"
+    },
+    {
+      "name": "earning_available",
+      "input": {
+        "event_id": "earning:019ca111-1111-4111-8111-000000000002",
+        "event_type": "earning_available",
+        "earning_id": "019ca222-2222-4222-8222-222222222222",
+        "sequence": 2,
+        "conversion_event_id": "evt_01J0AONCONVERSION000001",
+        "offer_id": "ao_01HX2B3C4D5E6F7G8H9J0KABCD",
+        "application_id": "app_demoApplication1",
+        "amount": 5,
+        "currency": "USD",
+        "timestamp": "2026-04-18T03:10:00Z"
+      },
+      "raw_body": "{\"event_id\":\"earning:019ca111-1111-4111-8111-000000000002\",\"event_type\":\"earning_available\",\"earning_id\":\"019ca222-2222-4222-8222-222222222222\",\"sequence\":2,\"conversion_event_id\":\"evt_01J0AONCONVERSION000001\",\"offer_id\":\"ao_01HX2B3C4D5E6F7G8H9J0KABCD\",\"application_id\":\"app_demoApplication1\",\"amount\":5,\"currency\":\"USD\",\"timestamp\":\"2026-04-18T03:10:00Z\"}",
+      "signature": "04dc85feb3c877c76b6824512752ac4b071f96bd9d3e01db7e23f7c0e2469bd2"
+    },
+    {
+      "name": "earning_paid_out",
+      "input": {
+        "event_id": "earning:019ca111-1111-4111-8111-000000000003",
+        "event_type": "earning_paid_out",
+        "earning_id": "019ca222-2222-4222-8222-222222222222",
+        "sequence": 3,
+        "conversion_event_id": "evt_01J0AONCONVERSION000001",
+        "offer_id": "ao_01HX2B3C4D5E6F7G8H9J0KABCD",
+        "application_id": "app_demoApplication1",
+        "placement_id": "plc_demoPlacement001",
+        "amount": 5,
+        "currency": "USD",
+        "timestamp": "2026-04-19T03:10:00Z"
+      },
+      "raw_body": "{\"event_id\":\"earning:019ca111-1111-4111-8111-000000000003\",\"event_type\":\"earning_paid_out\",\"earning_id\":\"019ca222-2222-4222-8222-222222222222\",\"sequence\":3,\"conversion_event_id\":\"evt_01J0AONCONVERSION000001\",\"offer_id\":\"ao_01HX2B3C4D5E6F7G8H9J0KABCD\",\"application_id\":\"app_demoApplication1\",\"placement_id\":\"plc_demoPlacement001\",\"amount\":5,\"currency\":\"USD\",\"timestamp\":\"2026-04-19T03:10:00Z\"}",
+      "signature": "15efb9caf6f2ec0ea54d9bb98c4dc7f7517dfa39f92c7144dbee0b5208438bc6"
+    },
+    {
+      "name": "earning_rejected",
+      "input": {
+        "event_id": "earning:019ca111-1111-4111-8111-000000000004",
+        "event_type": "earning_rejected",
+        "earning_id": "019ca222-2222-4222-8222-222222222222",
+        "sequence": 4,
+        "conversion_event_id": "evt_01J0AONCONVERSION000001",
+        "offer_id": "ao_01HX2B3C4D5E6F7G8H9J0KABCD",
+        "application_id": "app_demoApplication1",
+        "placement_id": "plc_demoPlacement001",
+        "amount": 4.2,
+        "currency": "USD",
+        "reason": "refund",
+        "timestamp": "2026-04-20T03:10:00Z"
+      },
+      "raw_body": "{\"event_id\":\"earning:019ca111-1111-4111-8111-000000000004\",\"event_type\":\"earning_rejected\",\"earning_id\":\"019ca222-2222-4222-8222-222222222222\",\"sequence\":4,\"conversion_event_id\":\"evt_01J0AONCONVERSION000001\",\"offer_id\":\"ao_01HX2B3C4D5E6F7G8H9J0KABCD\",\"application_id\":\"app_demoApplication1\",\"placement_id\":\"plc_demoPlacement001\",\"amount\":4.2,\"currency\":\"USD\",\"reason\":\"refund\",\"timestamp\":\"2026-04-20T03:10:00Z\"}",
+      "signature": "6358f397dcd82420b4fb39fe6f792c705049c52afa8d2532cb1456c05310ddff"
+    }
+  ]
+}
