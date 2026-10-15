@@ -33,6 +33,8 @@ export interface OfferInfoV10 {
   description: string
   tags?: string[]
   rating?: { value: number; count?: number; source?: string }
+  /** AON-derived minimum audience age (integer 1–120) projected from Partner `targeting[].eligibility.min_age`; omitted when no applicable minimum is declared. A Partner declaration, not an AON age rating. */
+  min_age?: number
   properties?: DisplayPropertyV10[]
   recommendation_reason?: string
   commercial?: CommercialInfoV10

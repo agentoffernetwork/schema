@@ -1,8 +1,9 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://agentoffernetwork.org/schema/postback-partner-payload/v1.0",
-  "title": "AgentOffer Provider-to-AON Postback Payload v1.0",
-  "description": "Canonical JSON-only current Provider conversion payload. Protocol selection is the AON-Protocol-Version HTTP header, never a payload field.",
+  "title": "AgentOffer Provider-to-AON Postback Payload v1.0 (retired JSON body lane)",
+  "description": "RETIRED (2026-10-08 in-place revision of postback v1.0). Describes the former JSON body lane selected by the AON-Protocol-Version request header; such requests now receive HTTP 410 postback_json_lane_retired. The only current Provider binding is GET /v1/postback/{partner_id} with query parameters, defined by the authoritative query parameter table in protocol/specs/postback-v1.0.md section 2.3. Retained for history and as the value-grammar reference for the shared field names.",
+  "deprecated": true,
   "type": "object",
   "required": ["event_name"],
   "properties": {

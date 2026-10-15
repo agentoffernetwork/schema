@@ -564,6 +564,9 @@ export function validatePartnerOfferV10Semantics(offer) {
   if (isPlainObject(offer?.offer_info?.commercial) && Object.hasOwn(offer.offer_info.commercial, "display_price")) {
     errors.push(semanticError("aon_projection_field", "/offer_info/commercial/display_price", "display_price is authored only by AON for a public Query response"))
   }
+  if (isPlainObject(offer?.offer_info) && Object.hasOwn(offer.offer_info, "min_age")) {
+    errors.push(semanticError("aon_projection_field", "/offer_info/min_age", "min_age is derived by AON from targeting[].eligibility.min_age; declare audience age there"))
+  }
   if (Object.hasOwn(offer ?? {}, "targeting")) {
     if (!Array.isArray(offer.targeting) || offer.targeting.length === 0) {
       errors.push(semanticError("targeting_nonempty", "/targeting", "targeting must contain at least one non-empty rule when supplied"))

@@ -13,7 +13,7 @@ export interface PartnerOfferV10 extends Omit<OfferV10, "offer_id" | "offer_inst
   conversion_rule?: ConversionRuleV10
 }
 
-export interface PartnerOfferInfoV10 extends Omit<OfferInfoV10, "commercial"> {
+export interface PartnerOfferInfoV10 extends Omit<OfferInfoV10, "commercial" | "min_age"> {
   commercial?: PartnerCommercialInfoV10
 }
 
@@ -21,6 +21,7 @@ export type PartnerCommercialInfoV10 = Omit<CommercialInfoV10, "display_price">
 
 export type TargetingRuleV10 = AtLeastOne<{
   geo: AtLeastOne<{ include: NonEmptyArray<LocationTargetV10>; exclude: NonEmptyArray<LocationTargetV10> }>
+  /** `min_age` is an integer 1–120; values 1–13 never fail evaluation because Query `verified_age_over` is at least 13. */
   eligibility: { min_age: number }
   language: string
   device_type: NonEmptyArray<"mobile" | "desktop" | "tablet" | "smart_tv">

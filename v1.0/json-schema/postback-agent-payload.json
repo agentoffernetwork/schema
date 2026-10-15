@@ -1,7 +1,7 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://agentoffernetwork.org/schema/postback-agent-payload/v1.0",
-  "description": "Frozen canonical webhook body. The protocol version is carried only by the HTTP header.",
+  "description": "Frozen canonical webhook body. The protocol version is carried only by the HTTP header. Branches are closed as AON's producer contract; receivers ignore unknown top-level members (postback-v1.0.md section 5.3).",
   "title": "AgentOffer AON-to-Agent Webhook Payload v1.0",
   "oneOf": [
     {
@@ -31,6 +31,9 @@
           "type": "string",
           "pattern": "^aci_(?:[0-9a-f]{32}|[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12})$"
         },
+        "offer_instance_id": {
+          "type": "string"
+        },
         "offer_id": {
           "type": "string",
           "minLength": 1
@@ -44,7 +47,8 @@
           "minLength": 1
         },
         "amount": {
-          "type": "number"
+          "type": "string",
+          "pattern": "^-?(?:0|[1-9][0-9]*)\\.[0-9]{6}(?![\\s\\S])"
         },
         "currency": {
           "const": "USD"
@@ -107,6 +111,9 @@
           "type": "string",
           "minLength": 1
         },
+        "offer_instance_id": {
+          "type": "string"
+        },
         "offer_id": {
           "type": "string",
           "minLength": 1
@@ -120,10 +127,26 @@
           "minLength": 1
         },
         "amount": {
-          "type": "number"
+          "type": "string",
+          "pattern": "^-?(?:0|[1-9][0-9]*)\\.[0-9]{6}(?![\\s\\S])"
         },
         "currency": {
           "const": "USD"
+        },
+        "sub_id": {
+          "type": "string"
+        },
+        "sub_id_2": {
+          "type": "string"
+        },
+        "sub_id_3": {
+          "type": "string"
+        },
+        "sub_id_4": {
+          "type": "string"
+        },
+        "sub_id_5": {
+          "type": "string"
         },
         "timestamp": {
           "type": "string",
@@ -168,6 +191,9 @@
           "type": "string",
           "minLength": 1
         },
+        "offer_instance_id": {
+          "type": "string"
+        },
         "offer_id": {
           "type": "string",
           "minLength": 1
@@ -181,10 +207,26 @@
           "minLength": 1
         },
         "amount": {
-          "type": "number"
+          "type": "string",
+          "pattern": "^-?(?:0|[1-9][0-9]*)\\.[0-9]{6}(?![\\s\\S])"
         },
         "currency": {
           "const": "USD"
+        },
+        "sub_id": {
+          "type": "string"
+        },
+        "sub_id_2": {
+          "type": "string"
+        },
+        "sub_id_3": {
+          "type": "string"
+        },
+        "sub_id_4": {
+          "type": "string"
+        },
+        "sub_id_5": {
+          "type": "string"
         },
         "timestamp": {
           "type": "string",
@@ -229,6 +271,9 @@
           "type": "string",
           "minLength": 1
         },
+        "offer_instance_id": {
+          "type": "string"
+        },
         "offer_id": {
           "type": "string",
           "minLength": 1
@@ -242,10 +287,26 @@
           "minLength": 1
         },
         "amount": {
-          "type": "number"
+          "type": "string",
+          "pattern": "^-?(?:0|[1-9][0-9]*)\\.[0-9]{6}(?![\\s\\S])"
         },
         "currency": {
           "const": "USD"
+        },
+        "sub_id": {
+          "type": "string"
+        },
+        "sub_id_2": {
+          "type": "string"
+        },
+        "sub_id_3": {
+          "type": "string"
+        },
+        "sub_id_4": {
+          "type": "string"
+        },
+        "sub_id_5": {
+          "type": "string"
         },
         "timestamp": {
           "type": "string",
@@ -291,6 +352,9 @@
           "type": "string",
           "minLength": 1
         },
+        "offer_instance_id": {
+          "type": "string"
+        },
         "offer_id": {
           "type": "string",
           "minLength": 1
@@ -304,7 +368,8 @@
           "minLength": 1
         },
         "amount": {
-          "type": "number"
+          "type": "string",
+          "pattern": "^-?(?:0|[1-9][0-9]*)\\.[0-9]{6}(?![\\s\\S])"
         },
         "currency": {
           "const": "USD"
@@ -319,6 +384,21 @@
             "reversed",
             "refund"
           ]
+        },
+        "sub_id": {
+          "type": "string"
+        },
+        "sub_id_2": {
+          "type": "string"
+        },
+        "sub_id_3": {
+          "type": "string"
+        },
+        "sub_id_4": {
+          "type": "string"
+        },
+        "sub_id_5": {
+          "type": "string"
         },
         "timestamp": {
           "type": "string",

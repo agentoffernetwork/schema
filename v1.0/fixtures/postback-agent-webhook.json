@@ -3,7 +3,7 @@
   "request": {
     "method": "POST",
     "request_target": "/webhook/aon/conversion?source=aon&delivery=conversion",
-    "raw_body": "{\"event_id\":\"evt_01J0AONCONVERSION000001\",\"event_type\":\"conversion\",\"aon_click_id\":\"aci_0192f3a4b5c67d8e9f0a1b2c3d4e5f60\",\"offer_id\":\"ao_01HX2B3C4D5E6F7G8H9J0KABCD\",\"application_id\":\"app_demoApplication1\",\"placement_id\":\"plc_demoPlacement001\",\"event_name\":\"subscription\",\"amount\":96,\"currency\":\"USD\",\"sub_id\":\"homepage_widget\",\"sub_id_2\":\"cohort_a\",\"timestamp\":\"2026-03-21T03:10:00Z\"}",
+    "raw_body": "{\"event_id\":\"evt_01J0AONCONVERSION000001\",\"event_type\":\"conversion\",\"aon_click_id\":\"aci_0192f3a4b5c67d8e9f0a1b2c3d4e5f60\",\"offer_instance_id\":\"0192f3a5-6b7c-7d8e-9f01-23456789abcd\",\"offer_id\":\"ao_01HX2B3C4D5E6F7G8H9J0KABCD\",\"application_id\":\"app_demoApplication1\",\"placement_id\":\"plc_demoPlacement001\",\"event_name\":\"subscription\",\"amount\":\"96.000000\",\"currency\":\"USD\",\"sub_id\":\"homepage_widget\",\"sub_id_2\":\"cohort_a\",\"timestamp\":\"2026-03-21T03:10:00Z\"}",
     "now_epoch": 1776450600,
     "current_key_id": "aon_cb_v2",
     "grace_key_id": "aon_cb_v1",
@@ -14,27 +14,66 @@
     }
   },
   "fixed_signatures": {
-    "current": "db15214df1d52c4d28ce6910aa4d99590eaa58ea3b8b85a1cb7921e8291017ef",
-    "grace": "ea5e7ed887e226d1969603d4d3bbcb698da0704f4ed59e890a83a8f96cfe0e4b",
+    "current": "5c510855b73275a995bd95a858336f33684671792d368025f53c027cab129440",
+    "grace": "e499c2154197800eeb1051f506859edf90f288b81f363bc01cbe74dc5ec2f5e7",
     "tampered": "0000000000000000000000000000000000000000000000000000000000000000"
   },
   "timestamp_cases": [
-    {"name": "exactly-300-seconds-older", "timestamp": "1776450300", "expected": "accepted"},
-    {"name": "exactly-300-seconds-newer", "timestamp": "1776450900", "expected": "accepted"},
-    {"name": "301-seconds-older", "timestamp": "1776450299", "expected": "timestamp_outside_allowed_skew"},
-    {"name": "301-seconds-newer", "timestamp": "1776450901", "expected": "timestamp_outside_allowed_skew"}
+    {
+      "name": "exactly-300-seconds-older",
+      "timestamp": "1776450300",
+      "expected": "accepted"
+    },
+    {
+      "name": "exactly-300-seconds-newer",
+      "timestamp": "1776450900",
+      "expected": "accepted"
+    },
+    {
+      "name": "301-seconds-older",
+      "timestamp": "1776450299",
+      "expected": "timestamp_outside_allowed_skew"
+    },
+    {
+      "name": "301-seconds-newer",
+      "timestamp": "1776450901",
+      "expected": "timestamp_outside_allowed_skew"
+    }
   ],
   "retry_vectors": [
-    {"attempt": 1, "timestamp": "1776450600", "signature": "db15214df1d52c4d28ce6910aa4d99590eaa58ea3b8b85a1cb7921e8291017ef"},
-    {"attempt": 2, "timestamp": "1776450660", "signature": "d382c0715c4ee3485dca9c1da1ae0a2708f133f52e652efdad3db8cedc9c2441"},
-    {"attempt": 3, "timestamp": "1776450960", "signature": "0164b81cc44c619f1b0eeb4cf52ea3b1f0c751d821384a295d2a88d9f5155d16"},
-    {"attempt": 4, "timestamp": "1776452760", "signature": "bdfe33c7702a0e372bf8115decaceb68c829d8b77c4c80ef2b58911be5a8b90e"},
-    {"attempt": 5, "timestamp": "1776459960", "signature": "74eaff56303917acb2bf6eccfba03f8a800e1a1735c1823bffc5714acf475eea"}
+    {
+      "attempt": 1,
+      "timestamp": "1776450600",
+      "signature": "5c510855b73275a995bd95a858336f33684671792d368025f53c027cab129440"
+    },
+    {
+      "attempt": 2,
+      "timestamp": "1776450660",
+      "signature": "d49f684e115ee3863029488f8337500565a353442ef8e8844bb0cbc5a3048759"
+    },
+    {
+      "attempt": 3,
+      "timestamp": "1776450960",
+      "signature": "8545c79c9010591dcdc9791bc1f075bc10f79a9f9b1fb2d64e25d050a6b32915"
+    },
+    {
+      "attempt": 4,
+      "timestamp": "1776452760",
+      "signature": "a7823196c658dab49f8f29ac743e50c415a6ba3f659a703cbb2659e74f135d98"
+    },
+    {
+      "attempt": 5,
+      "timestamp": "1776459960",
+      "signature": "9ae4c0ee585fa21d9e53db1a693c5debfa767b312856519262d2fe049c2f40ee"
+    }
   ],
   "idempotency": {
     "application_id": "app_demoApplication1",
     "event_id": "evt_01J0AONCONVERSION000001",
-    "same_body_statuses": [200, 204],
+    "same_body_statuses": [
+      200,
+      204
+    ],
     "different_body_status": 409,
     "minimum_retention_hours": 24
   }
