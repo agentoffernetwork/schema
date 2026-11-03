@@ -304,6 +304,8 @@ export const childSlugOverrides = new Map([
   ['retail_goods.electronics_appliances|Phones, Tablets & Mobile Accessories', 'phones_tablets'],
   ['retail_goods.electronics_appliances.phones_tablets|Feature Phones, Landlines & Two-Way Radios', 'basic_phones_radios'],
   ['retail_goods.electronics_appliances.phones_tablets|Mobile Gadgets & Holders', 'mobile_gadgets'],
+  ['retail_goods.electronics_appliances.phones_tablets|Phone Holders, Selfie Sticks & Add-ons', 'mobile_gadgets'],
+  ['retail_goods.electronics_appliances.phones_tablets|Phone & Tablet Replacement Parts', 'phone_tablet_parts'],
   ['retail_goods.electronics_appliances.phones_tablets|Tablets & E-readers', 'tablets_ereaders'],
   ['retail_goods.electronics_appliances|Chargers, Cables & Power', 'power_charging'],
   ['retail_goods.electronics_appliances|Printers & Printer Supplies', 'printing'],

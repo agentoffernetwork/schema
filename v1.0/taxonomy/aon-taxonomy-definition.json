@@ -4,8 +4,8 @@
   "definition_status": "defined",
   "publication_binding": "committed_protocol_release",
   "baseline_node_count": 515,
-  "added_definition_count": 1221,
-  "node_count": 1736,
+  "added_definition_count": 1222,
+  "node_count": 1737,
   "added_category_ids": [
     "ai_software_services",
     "ai_software_services.ai_assistant",
@@ -785,6 +785,7 @@
     "retail_goods.electronics_appliances.phones_tablets.basic_phones_radios",
     "retail_goods.electronics_appliances.phones_tablets.cases_screen_protectors",
     "retail_goods.electronics_appliances.phones_tablets.mobile_gadgets",
+    "retail_goods.electronics_appliances.phones_tablets.phone_tablet_parts",
     "retail_goods.electronics_appliances.phones_tablets.smartphones",
     "retail_goods.electronics_appliances.phones_tablets.tablets_ereaders",
     "retail_goods.electronics_appliances.power_charging",
@@ -1231,10 +1232,10 @@
   ],
   "component_digests": {
     "baseline": "c780b40af38c942b15f4ffead7106eeceb7704f6011c309725934ecd28d2d7c0",
-    "taxonomy": "412caedee0ccb3425aceee6903a872ff52c9c0d1993cdfecf92c5d4a8fa3e6fc",
-    "public_metadata": "3da20b9e9f909b2d1975011f654d9b35f558d3012c7ed46f420d9a14010cab23"
+    "taxonomy": "c7f792950b8bf0fb0143e066756bcaea8de4d7871c4185b6426411878e54a8d3",
+    "public_metadata": "ac59e3a7d0e334f36daa51df91baa669b4e7343831cfd3af7b4bcd651db7c784"
   },
   "product_validation_status": "independent",
   "runtime_support_status": "not_asserted",
-  "definition_digest": "d6d3b95e21fd4911da10a8e1f65b1e20c7be2a300e5312422317ec074d9da0e9"
+  "definition_digest": "fbdd5b3f018ff75e5c0ac725369d2e455b73b51a4d5faa8aa0b55e81f99cb3e4"
 }

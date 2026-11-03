@@ -49,7 +49,7 @@ export type AgentConversionWebhookPayloadV10 = {
   timestamp: string
 }
 
-export type ProviderPostbackResultV10 = "accepted" | "already_recorded" | "unmapped" | "reversed" | "already_reversed" | "rejected" | "retry"
+export type ProviderPostbackResultV10 = "accepted" | "already_recorded" | "unmapped" | "reversed" | "already_reversed" | "acknowledged" | "already_acknowledged" | "disputed" | "already_disputed" | "rejected" | "retry"
 
 export interface ProviderPostbackResponseV10 {
   result: ProviderPostbackResultV10
@@ -57,7 +57,16 @@ export interface ProviderPostbackResponseV10 {
   reason: string | null
   correlation_id: string
   retryable: boolean
+  /** Present for `acknowledged` / `already_acknowledged` (RFC 3339). */
+  acknowledged_at?: string
+  /** Present for `acknowledged` / `already_acknowledged`: `postback`, `portal` or `statement`. */
+  acknowledged_source?: string
+  /** Present for `disputed` / `already_disputed`. */
+  dispute_id?: string
 }
+
+/** Provider postback `action` values; absent means `conversion`. */
+export type ProviderPostbackActionV10 = "conversion" | "reversal" | "confirm"
 
 export interface ProviderPostbackErrorExtraV10 {
   result: "rejected" | "retry"

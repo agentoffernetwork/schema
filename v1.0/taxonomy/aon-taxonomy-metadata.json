@@ -2,8 +2,8 @@
   "schema_version": "aon-taxonomy-metadata-v1",
   "taxonomy_version": "v1",
   "baseline_digest": "c780b40af38c942b15f4ffead7106eeceb7704f6011c309725934ecd28d2d7c0",
-  "source_metadata_digest": "eb2b3149ec2223af8082298ee6a3309946c55aca17b6eb722ae8006504b28528",
-  "record_count": 1736,
+  "source_metadata_digest": "3cddcfdd9287eb050c572efc7b32dd75c7121cb641b14c7054bfb709c6c72341",
+  "record_count": 1737,
   "records": [
     {
       "category_id": "fashion_apparel",
@@ -43759,7 +43759,7 @@
     {
       "category_id": "retail_goods.electronics_appliances.phones_tablets",
       "name": "Phones, Tablets & Mobile Accessories",
-      "definition": "Phones, tablets and e-readers and the accessories made for them (in-car phone mounts and car chargers → automotive_vehicles; chargers, cables and power banks → power_charging).",
+      "definition": "Phones, tablets and e-readers, the accessories made for them and their replacement parts (in-car phone mounts and car chargers → automotive_vehicles; chargers, cables and power banks → power_charging).",
       "aliases": [],
       "examples": {
         "positive": [
@@ -43774,7 +43774,7 @@
       "subject": "physical",
       "boundary": {
         "include": [
-          "Phones, tablets and e-readers and the accessories made for them (in-car phone mounts and car chargers → automotive_vehicles; chargers, cables and power banks → power_charging)."
+          "Phones, tablets and e-readers, the accessories made for them and their replacement parts (in-car phone mounts and car chargers → automotive_vehicles; chargers, cables and power banks → power_charging)."
         ],
         "exclude": [
           "A more specific supported descendant is evidenced",
@@ -43857,7 +43857,7 @@
     },
     {
       "category_id": "retail_goods.electronics_appliances.phones_tablets.mobile_gadgets",
-      "name": "Mobile Gadgets & Holders",
+      "name": "Phone Holders, Selfie Sticks & Add-ons",
       "definition": "Desk and bed phone holders, selfie sticks and phone tripods, styluses, phone lanyards, phone grips, phone lens kits, SIM tools.",
       "aliases": [],
       "examples": {
@@ -43889,9 +43889,45 @@
       }
     },
     {
+      "category_id": "retail_goods.electronics_appliances.phones_tablets.phone_tablet_parts",
+      "name": "Phone & Tablet Replacement Parts",
+      "definition": "Replacement parts for phones and tablets that are installed into the device by repair: screen and display assemblies, digitizers, batteries, flex cables, back glass, housings and frames, camera modules and camera lens glass, charging ports, buttons, SIM trays.",
+      "aliases": [],
+      "examples": {
+        "positive": [
+          "iPhone 13 OLED screen replacement",
+          "Battery for Samsung Galaxy S21",
+          "Rear camera glass lens for Moto Edge 60"
+        ],
+        "negative": [
+          "Offers better described by the sibling category Cases & Screen Protectors",
+          "Offers better described by the sibling category Smartphones"
+        ]
+      },
+      "subject": "physical",
+      "boundary": {
+        "include": [
+          "Replacement parts for phones and tablets that are installed into the device by repair: screen and display assemblies, digitizers, batteries, flex cables, back glass, housings and frames, camera modules and camera lens glass, charging ports, buttons, SIM trays."
+        ],
+        "exclude": [
+          "Cases, bumpers, skins, screen and camera-lens protectors → retail_goods.electronics_appliances.phones_tablets.cases_screen_protectors",
+          "Universal chargers, cables and batteries → retail_goods.electronics_appliances.power_charging",
+          "Repair tools and repair consumables → retail_goods.tools_home_improvement_industrial",
+          "Laptop replacement parts → retail_goods.electronics_appliances.computers.pc_components"
+        ],
+        "primary_rule": "Classify by what the offer actually buys and assign the deepest evidence-supported category as primary; platform, channel, price, audience, gating and region are facets, not nodes.",
+        "residual_rule": "Do not infer this category from title keywords alone; when the evidence is insufficient, stop at the parent and mark needs_enrichment."
+      },
+      "semantic_role": "exact",
+      "lifecycle": {
+        "status": "current",
+        "replacement_category_id": null
+      }
+    },
+    {
       "category_id": "retail_goods.electronics_appliances.phones_tablets.smartphones",
       "name": "Smartphones",
-      "definition": "Smartphones of any brand, new or refurbished, unlocked (contract phones see B16), and phone replacement parts (screens, flex cables, batteries).",
+      "definition": "Complete smartphones of any brand, new or refurbished, unlocked (contract phones see B16).",
       "aliases": [],
       "examples": {
         "positive": [
@@ -43907,10 +43943,11 @@
       "subject": "physical",
       "boundary": {
         "include": [
-          "Smartphones of any brand, new or refurbished, unlocked (contract phones see B16), and phone replacement parts (screens, flex cables, batteries)."
+          "Complete smartphones of any brand, new or refurbished, unlocked (contract phones see B16)."
         ],
         "exclude": [
-          "The primary subject belongs to an unrelated sibling branch"
+          "The primary subject belongs to an unrelated sibling branch",
+          "Replacement parts for phones (screens, batteries, flex cables, back glass, camera modules) → retail_goods.electronics_appliances.phones_tablets.phone_tablet_parts"
         ],
         "primary_rule": "Classify by what the offer actually buys and assign the deepest evidence-supported category as primary; platform, channel, price, audience, gating and region are facets, not nodes.",
         "residual_rule": "Do not infer this category from title keywords alone; when the evidence is insufficient, stop at the parent and mark needs_enrichment."
@@ -58316,5 +58353,5 @@
       }
     }
   ],
-  "metadata_digest": "3da20b9e9f909b2d1975011f654d9b35f558d3012c7ed46f420d9a14010cab23"
+  "metadata_digest": "ac59e3a7d0e334f36daa51df91baa669b4e7343831cfd3af7b4bcd651db7c784"
 }
