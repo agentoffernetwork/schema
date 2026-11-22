@@ -80,11 +80,11 @@ permits optional registered Flight/Hotel `details` with profile-valid
 Details do not imply a live lookup.
 
 `display_price` is presentation data for the response that created it. It
-requires an original `price`, uses a different currency, preserves the source
+requires a current `price`, uses a different currency, preserves the source
 price's zero/non-zero class, and never becomes checkout, settlement, or
 transaction-authoritative data. Run structural validation before the v1.0
 semantic validator; a present invalid object is a contract error, not a signal
-to fall back to the original price.
+to fall back to the current price.
 
 Flight Profile schedules preserve source facts: endpoints use airport-local
 `local_at` values in `YYYY-MM-DDTHH:mm:ss` form without offsets, and every
