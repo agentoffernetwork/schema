@@ -74,7 +74,28 @@
         "content": {
           "type": "array",
           "minItems": 1,
-          "maxItems": 1,
+          "allOf": [
+            {
+              "type": "array",
+              "contains": {
+                "type": "object",
+                "required": ["type"],
+                "properties": { "type": { "const": "input_text" } }
+              },
+              "minContains": 0,
+              "maxContains": 1
+            },
+            {
+              "type": "array",
+              "contains": {
+                "type": "object",
+                "required": ["type"],
+                "properties": { "type": { "const": "input_image" } }
+              },
+              "minContains": 0,
+              "maxContains": 4
+            }
+          ],
           "items": {
             "oneOf": [
               {
@@ -108,7 +129,8 @@
                   },
                   "image_url": {
                     "type": "string",
-                    "format": "uri"
+                    "format": "uri",
+                    "description": "Image input as an HTTP(S) URL or data:image/<subtype>;base64,<data> URL. Each base64 data payload supports at most 524288 characters (512 x 1024), excluding the data URL prefix."
                   }
                 },
                 "additionalProperties": false
@@ -159,6 +181,25 @@
         "thinking_mode": {
           "type": "boolean",
           "default": true
+        }
+      },
+      "additionalProperties": false
+    },
+    "pagination": {
+      "type": "object",
+      "description": "Optional page control. Sending this object opts the caller into response has_more and, when more results exist, next_cursor. Omit cursor for the first page; to continue, send the previous response's next_cursor unchanged. There is no public offset member.",
+      "properties": {
+        "limit": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 50,
+          "description": "Requested page size, an integer from 1 through 50. When omitted, the deployment chooses its default page size."
+        },
+        "cursor": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 2048,
+          "description": "Opaque continuation token copied unchanged from the previous response's next_cursor for the same Query. Clients must not parse, construct, modify, or concatenate it."
         }
       },
       "additionalProperties": false

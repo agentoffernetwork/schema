@@ -3,6 +3,9 @@
   "status": "canonical",
   "taxonomy_version": "aon-taxonomy-v1",
   "cases": [
+    {"id": "original-price-query-valid", "artifact": "query_offer", "fixture": "examples/http/offer-query-v1.0.json", "fixture_pointer": "/response/offers/0", "expected": "valid"},
+    {"id": "original-price-partner-valid", "artifact": "partner_offer", "fixture": "examples/http/offer-partner-v1.0.json", "expected": "valid"},
+    {"id": "original-price-invalid-decimal", "artifact": "public_offer", "fixture": "schema/fixtures/protocol-v1.0-query-example.json", "fixture_pointer": "/response/offers/0", "mutations": [{"op": "set", "path": "/offer_info/commercial/original_price", "value": {"amount": "-10", "currency": "USD"}}], "expected": "reject", "error_codes": ["price_decimal"], "error_paths": ["/offer_info/commercial/original_price/amount"]},
     {"id": "public-valid", "artifact": "public_offer", "fixture": "schema/fixtures/protocol-v1.0-query-example.json", "fixture_pointer": "/response/offers/0", "expected": "valid"},
     {"id": "public-display-price-paid-with-unit", "artifact": "public_offer", "fixture": "schema/fixtures/protocol-v1.0-query-example.json", "fixture_pointer": "/response/offers/0", "expected": "valid"},
     {"id": "public-display-price-paid-with-tax-status", "artifact": "public_offer", "fixture": "schema/fixtures/protocol-v1.0-query-example.json", "fixture_pointer": "/response/offers/0", "mutations": [{"op": "set", "path": "/offer_info/commercial/price/tax_status", "value": "included"}], "expected": "valid"},

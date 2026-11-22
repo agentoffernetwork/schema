@@ -127,6 +127,8 @@ export type FlightStopV10 = { duration_minutes?: number } & (
 
 export interface FlightItineraryV10 {
   trip_type: "one_way" | "round_trip" | "multi_city"
+  /** Source-reported inclusion for this displayed fare; omit when unknown. No baggage type, weight, or pieces implied. */
+  free_baggage_included?: boolean
   fare_details?: FlightFareDetailsV10
   emissions?: FlightEmissionsV10
   legs: Array<{
@@ -229,7 +231,8 @@ export interface EntityV10 {
 export interface ListingSourceV10 {
   kind: "platform" | "marketplace" | "merchant_site" | "official_site" | "other"
   name: string
-  observed_at: string
+  /** @deprecated Accepted from producers but never returned by AON. Do not read or display. */
+  observed_at?: string
   logo?: string
 }
 
@@ -263,7 +266,10 @@ export interface DisplayPropertyV10 {
 }
 
 export interface CommercialInfoV10 {
+  /** Current selling price. */
   price?: CommercialPriceV10
+  /** Price before discounts, when supplied by the source. */
+  original_price?: CommercialPriceV10
   display_price?: DisplayPriceV10
   quote?: CommercialQuoteV10
   fulfillment_note?: string

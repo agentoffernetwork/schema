@@ -224,9 +224,9 @@ function validateDisplayPriceSemantics(offer, errors) {
   const sourceIsZero = ZERO_DECIMAL_AMOUNT.test(price.amount)
   const displayIsZero = ZERO_DECIMAL_AMOUNT.test(amount)
   if (sourceIsZero && !displayIsZero) {
-    errors.push(semanticError("display_price_zero_mismatch", `${path}/amount`, "a zero original price requires a zero display_price amount"))
+    errors.push(semanticError("display_price_zero_mismatch", `${path}/amount`, "a zero current price requires a zero display_price amount"))
   } else if (!sourceIsZero && displayIsZero) {
-    errors.push(semanticError("display_price_paid_zero", `${path}/amount`, "a positive original price requires a positive display_price amount"))
+    errors.push(semanticError("display_price_paid_zero", `${path}/amount`, "a positive current price requires a positive display_price amount"))
   }
 }
 
@@ -511,9 +511,11 @@ function validateOfferCommonV10Semantics(offer, errors) {
     errors.push(semanticError("offer_window_order", "/offer_info/expire_at", "expire_at must not be earlier than start_at"))
   }
 
-  const price = offer?.offer_info?.commercial?.price
-  if (price?.amount !== undefined && (typeof price.amount !== "string" || !DECIMAL_AMOUNT.test(price.amount))) {
-    errors.push(semanticError("price_decimal", "/offer_info/commercial/price/amount", "price amount must be a canonical decimal string"))
+  for (const field of ["price", "original_price"]) {
+    const amount = offer?.offer_info?.commercial?.[field]?.amount
+    if (amount !== undefined && (typeof amount !== "string" || !DECIMAL_AMOUNT.test(amount))) {
+      errors.push(semanticError("price_decimal", `/offer_info/commercial/${field}/amount`, `${field} amount must be a canonical decimal string`))
+    }
   }
   validateDisplayPriceSemantics(offer, errors)
   validateQuoteSemantics(offer?.offer_info?.commercial, errors)
@@ -793,14 +795,13 @@ export function isAbsoluteHttpsListingSourceLogo(value) {
 export function validateListingSourceV10(source, entity = {}, now = new Date()) {
   const errors = []
   if (!source || typeof source !== "object") return { valid: false, action: "omit", errors: ["listing_source must be an object"] }
-  for (const field of ["kind", "name", "observed_at"]) {
+  for (const field of ["kind", "name"]) {
     if (typeof source[field] !== "string" || source[field].length === 0) errors.push(`listing_source.${field} is required`)
   }
   if (Object.hasOwn(source, "url")) errors.push("listing_source.url is not a v1.0 public field")
   if (Object.hasOwn(source, "logo") && !isAbsoluteHttpsListingSourceLogo(source.logo)) errors.push("listing_source.logo must be an absolute HTTPS URL up to 2048 characters")
   if (source.observed_at && (!source.observed_at.endsWith("Z") || Number.isNaN(Date.parse(source.observed_at)))) errors.push("listing_source.observed_at must be UTC")
   if (entity.name && source.name === entity.name) errors.push("listing_source must remain distinct from entity")
-  if (source.observed_at && !Number.isNaN(Date.parse(source.observed_at)) && Date.parse(source.observed_at) < now.getTime() - 1000 * 60 * 60 * 24 * 30) errors.push("listing_source is stale")
   return { valid: errors.length === 0, action: errors.length === 0 ? "keep" : "omit", errors }
 }
 
@@ -836,6 +837,7 @@ function validateFlightQueryDetails(details, errors) {
   if (!isPlainObject(details) || details.profile !== "flight" || !isPlainObject(details.data)) { fail("requires the Flight profile and data"); return }
   const data = details.data
   if (!["reference_search", "traveler_quote"].includes(data.query_kind)) fail("query_kind must be explicit")
+  if (data.airLine !== undefined && (typeof data.airLine !== "string" || data.airLine.length !== 2 || !/^[A-Z0-9]{2}$/.test(data.airLine))) fail("airLine must be a two-character uppercase IATA marketing airline code")
   if (data.query_kind === "reference_search" && Object.hasOwn(data, "travelers")) fail("reference_search forbids travelers")
   if (data.query_kind === "traveler_quote") validateFlightTravelers(data.travelers, true, "/intent/details/data/travelers", errors)
   if (!Array.isArray(data.legs) || data.legs.length === 0) { fail("requires nonempty legs"); return }
@@ -897,8 +899,9 @@ function validateFlightResponse(response, request, evidence, partner, errors) {
       if (!matches(wanted.origin, segments[0]?.departure?.airport_code) || !matches(wanted.destination, segments.at(-1)?.arrival?.airport_code)) fail(`leg ${legIndex} endpoints must match with trusted airportCityCodes evidence for cities`)
       if (typeof segments[0]?.departure?.local_at !== "string" || segments[0].departure.local_at.slice(0, 10) !== wanted.departure_date) fail(`leg ${legIndex} local departure date must match`)
       if (query.cabin_class !== undefined && segments.some((segment) => segment?.cabin_class !== query.cabin_class)) fail(`leg ${legIndex} cabin class must match on every segment`)
+      if (query.airLine !== undefined && segments.some((segment) => segment?.marketing_carrier?.code !== query.airLine)) fail(`leg ${legIndex} airLine must match the marketing carrier on every segment`)
       if (query.max_connections !== undefined && segments.length - 1 > query.max_connections) fail(`leg ${legIndex} exceeds max_connections`)
-      if (query.nonstop_only === true && (segments.length !== 1 || !Array.isArray(segments[0]?.stops) || segments[0].stops.length !== 0)) fail(`leg ${legIndex} nonstop_only requires one segment and explicitly empty stops`)
+      if (query.nonstop_only === true && segments.length !== 1) fail(`leg ${legIndex} nonstop_only requires exactly one segment`)
     }
   }
 }

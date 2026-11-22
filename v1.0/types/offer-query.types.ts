@@ -15,7 +15,22 @@ export interface OfferQueryRequestV10 {
   constraints?: QueryConstraintsV10
   force_offer?: boolean
   response_options?: { thinking_mode?: boolean }
+  /** Opt-in page control; there is no public `offset`. Sending it opts the response into `has_more` / `next_cursor`. */
+  pagination?: QueryPaginationV10
 }
+
+export interface QueryPaginationV10 {
+  /** Requested page size, integer 1–50; omitted selects the deployment default. */
+  limit?: number
+  /** Opaque token (1–2048 chars) copied unchanged from the previous response's `next_cursor`. Do not parse, construct, or concatenate it. */
+  cursor?: string
+}
+
+/** Present only when the paired request carried `pagination`. `next_cursor` is required exactly when `has_more` is true. */
+export type QueryPageStateV10 =
+  | { has_more?: never; next_cursor?: never }
+  | { has_more: true; next_cursor: string }
+  | { has_more: false; next_cursor?: never }
 
 export interface QueryContextV10 {
   platform?: { name?: string; version?: string; channel?: string }
@@ -36,6 +51,10 @@ export interface QueryUserProfileV10 {
 }
 
 export interface IntentV10 {
+  /** Non-empty array with at most one input_text item and four input_image items.
+   * image_url accepts HTTP(S) URLs or data:image/<subtype>;base64,<data> URLs;
+   * each base64 data payload supports at most 524288 characters, excluding the prefix.
+   */
   content: Array<{ type: "input_text"; text: string } | { type: "input_image"; image_url: string }>
   provenance: "user_expressed" | "inferred_context"
   confidence?: number
@@ -64,7 +83,9 @@ export interface QueryConstraintsV10 {
   listing_source_names?: string[]
 }
 
-export interface GenericOfferQueryResponseV10 {
+export type GenericOfferQueryResponseV10 = GenericOfferQueryResponseBodyV10 & QueryPageStateV10
+
+export interface GenericOfferQueryResponseBodyV10 {
   request_id: string
   protocol_version: "1.0"
   language: string
@@ -144,7 +165,8 @@ export type ProtocolErrorV10 = ProtocolErrorBaseV10 & (
   | { code: "UNAUTHORIZED" | "FORBIDDEN" | "RATE_LIMITED"; extra: Record<string, unknown> & { flight_search_error?: never } }
 )
 
-export type OfferProviderRequestV10 = OfferQueryRequestV10 & { request_id: string }
+/** Provider requests never carry Query pagination; AON owns paging across Provider results. */
+export type OfferProviderRequestV10 = Omit<OfferQueryRequestV10, "pagination"> & { request_id: string; pagination?: never }
 export interface GenericOfferProviderSuccessV10 {
   request_id: string
   protocol_version: "1.0"
@@ -168,8 +190,11 @@ export interface FlightQueryLocationV10 {
 }
 export interface FlightQueryConstraintsV10 {
   legs: Array<{ origin: FlightQueryLocationV10; destination: FlightQueryLocationV10; departure_date: string }>
+  /** Two-character uppercase IATA marketing airline code required on every segment across all legs. */
+  airLine?: string
   cabin_class?: "economy" | "premium_economy" | "business" | "first"
   max_connections?: number
+  /** When true, each leg must contain exactly one segment, regardless of stops. */
   nonstop_only?: boolean
 }
 export type FlightQueryProfileV10 = {
@@ -211,7 +236,7 @@ export type FlightQueryPartnerOfferV10 = Omit<PartnerOfferV10, "offer_info"> & {
   match_reason?: never
   offer_info: FlightQueryOfferInfoV10 & { commercial: { display_price?: never } }
 }
-export type FlightOfferQueryResponseV10 = Omit<GenericOfferQueryResponseV10, "offers" | "alternative_offers" | "empty_reason"> & {
+export type FlightOfferQueryResponseV10 = Omit<GenericOfferQueryResponseBodyV10, "offers" | "alternative_offers" | "empty_reason"> & QueryPageStateV10 & {
   offers: FlightQueryOfferV10[]
   alternative_offers?: never
   empty_reason?: never

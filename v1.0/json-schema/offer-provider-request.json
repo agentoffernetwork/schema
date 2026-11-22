@@ -2,10 +2,11 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://agentoffernetwork.org/schema/offer-provider-request/v1.0",
   "title": "AgentOffer OfferProvider Request Schema v1.0",
-  "description": "Adopted AON-to-Provider request. It uses the v1.0 Query business request, requires request_id, and never carries the viewer's context.user_profile.",
+  "description": "Adopted AON-to-Provider request. It uses the v1.0 Query business request, requires request_id, never carries the viewer's context.user_profile, and never carries Query pagination; AON owns paging across Provider results.",
   "allOf": [
     {"$ref": "https://agentoffernetwork.org/schema/offer-query/v1.0"},
     {"type": "object", "required": ["request_id"]},
-    {"type": "object", "properties": {"context": {"type": "object", "properties": {"user_profile": false}}}}
+    {"type": "object", "properties": {"context": {"type": "object", "properties": {"user_profile": false}}}},
+    {"type": "object", "properties": {"pagination": false}}
   ]
 }

@@ -74,7 +74,117 @@
       200,
       204
     ],
-    "different_body_status": 409,
     "minimum_retention_hours": 24
+  },
+  "envelopes": {
+    "description": "Signed Agent callback bodies as sent on the wire: {\"delivery_id\":...,\"events\":[...]}. Each `events` entry is the exact frozen byte sequence of one event object; `raw_body` is the envelope built from them without re-serialization. `request.raw_body`, `fixed_signatures` and the top-level `retry_vectors` above are event-object vectors kept for byte-level rendering tests; they are not complete callback bodies.",
+    "vectors": [
+      {
+        "name": "single-event",
+        "method": "POST",
+        "request_target": "/webhook/aon/conversion?source=aon&delivery=conversion",
+        "key_id": "aon_cb_v2",
+        "secret": "aon-postback-secret-demo-current",
+        "timestamp": "1776450600",
+        "delivery_id": "dlv_0192f3a4b5c67d8e9f0a1b2c3d4e5f71",
+        "events": [
+          "{\"event_id\":\"evt_01J0AONCONVERSION000001\",\"event_type\":\"conversion\",\"aon_click_id\":\"aci_0192f3a4b5c67d8e9f0a1b2c3d4e5f60\",\"offer_instance_id\":\"0192f3a5-6b7c-7d8e-9f01-23456789abcd\",\"offer_id\":\"ao_01HX2B3C4D5E6F7G8H9J0KABCD\",\"application_id\":\"app_demoApplication1\",\"placement_id\":\"plc_demoPlacement001\",\"event_name\":\"subscription\",\"amount\":\"96.000000\",\"currency\":\"USD\",\"sub_id\":\"homepage_widget\",\"sub_id_2\":\"cohort_a\",\"timestamp\":\"2026-03-21T03:10:00Z\"}"
+        ],
+        "raw_body": "{\"delivery_id\":\"dlv_0192f3a4b5c67d8e9f0a1b2c3d4e5f71\",\"events\":[{\"event_id\":\"evt_01J0AONCONVERSION000001\",\"event_type\":\"conversion\",\"aon_click_id\":\"aci_0192f3a4b5c67d8e9f0a1b2c3d4e5f60\",\"offer_instance_id\":\"0192f3a5-6b7c-7d8e-9f01-23456789abcd\",\"offer_id\":\"ao_01HX2B3C4D5E6F7G8H9J0KABCD\",\"application_id\":\"app_demoApplication1\",\"placement_id\":\"plc_demoPlacement001\",\"event_name\":\"subscription\",\"amount\":\"96.000000\",\"currency\":\"USD\",\"sub_id\":\"homepage_widget\",\"sub_id_2\":\"cohort_a\",\"timestamp\":\"2026-03-21T03:10:00Z\"}]}",
+        "signature": "94d92eda1f030a8afef3b623bc3b3eb0bcf1aeefb299f2f7296293ef8b06d87d"
+      },
+      {
+        "name": "multi-event",
+        "method": "POST",
+        "request_target": "/webhook/aon/conversion?source=aon&delivery=conversion",
+        "key_id": "aon_cb_v2",
+        "secret": "aon-postback-secret-demo-current",
+        "timestamp": "1776450600",
+        "delivery_id": "dlv_7c1e4b0a9d3f4e2685a1c0b9d8e7f601",
+        "events": [
+          "{\"event_id\":\"evt_01J0AONCONVERSION000001\",\"event_type\":\"conversion\",\"aon_click_id\":\"aci_0192f3a4b5c67d8e9f0a1b2c3d4e5f60\",\"offer_instance_id\":\"0192f3a5-6b7c-7d8e-9f01-23456789abcd\",\"offer_id\":\"ao_01HX2B3C4D5E6F7G8H9J0KABCD\",\"application_id\":\"app_demoApplication1\",\"placement_id\":\"plc_demoPlacement001\",\"event_name\":\"subscription\",\"amount\":\"96.000000\",\"currency\":\"USD\",\"sub_id\":\"homepage_widget\",\"sub_id_2\":\"cohort_a\",\"timestamp\":\"2026-03-21T03:10:00Z\"}",
+          "{\"event_id\":\"evt_01J0AONCONVERSION000002\",\"event_type\":\"conversion\",\"aon_click_id\":\"aci_0192f3a4b5c67d8e9f0a1b2c3d4e5f61\",\"offer_id\":\"ao_01HX2B3C4D5E6F7G8H9J0KABCD\",\"application_id\":\"app_demoApplication1\",\"placement_id\":\"plc_demoPlacement001\",\"event_name\":\"lead\",\"amount\":\"12.500000\",\"currency\":\"USD\",\"sub_id\":\"user_8f3k2\",\"timestamp\":\"2026-03-21T03:10:05Z\"}",
+          "{\"event_id\":\"evt_01J0AONCONVERSION000003\",\"event_type\":\"conversion\",\"offer_id\":\"ao_01HX2B3C4D5E6F7G8H9J0KWXYZ\",\"application_id\":\"app_demoApplication1\",\"event_name\":\"subscription\",\"amount\":\"0.000000\",\"currency\":\"USD\",\"timestamp\":\"2026-03-21T03:10:09Z\"}"
+        ],
+        "raw_body": "{\"delivery_id\":\"dlv_7c1e4b0a9d3f4e2685a1c0b9d8e7f601\",\"events\":[{\"event_id\":\"evt_01J0AONCONVERSION000001\",\"event_type\":\"conversion\",\"aon_click_id\":\"aci_0192f3a4b5c67d8e9f0a1b2c3d4e5f60\",\"offer_instance_id\":\"0192f3a5-6b7c-7d8e-9f01-23456789abcd\",\"offer_id\":\"ao_01HX2B3C4D5E6F7G8H9J0KABCD\",\"application_id\":\"app_demoApplication1\",\"placement_id\":\"plc_demoPlacement001\",\"event_name\":\"subscription\",\"amount\":\"96.000000\",\"currency\":\"USD\",\"sub_id\":\"homepage_widget\",\"sub_id_2\":\"cohort_a\",\"timestamp\":\"2026-03-21T03:10:00Z\"},{\"event_id\":\"evt_01J0AONCONVERSION000002\",\"event_type\":\"conversion\",\"aon_click_id\":\"aci_0192f3a4b5c67d8e9f0a1b2c3d4e5f61\",\"offer_id\":\"ao_01HX2B3C4D5E6F7G8H9J0KABCD\",\"application_id\":\"app_demoApplication1\",\"placement_id\":\"plc_demoPlacement001\",\"event_name\":\"lead\",\"amount\":\"12.500000\",\"currency\":\"USD\",\"sub_id\":\"user_8f3k2\",\"timestamp\":\"2026-03-21T03:10:05Z\"},{\"event_id\":\"evt_01J0AONCONVERSION000003\",\"event_type\":\"conversion\",\"offer_id\":\"ao_01HX2B3C4D5E6F7G8H9J0KWXYZ\",\"application_id\":\"app_demoApplication1\",\"event_name\":\"subscription\",\"amount\":\"0.000000\",\"currency\":\"USD\",\"timestamp\":\"2026-03-21T03:10:09Z\"}]}",
+        "signature": "2905acaf3b3e990372783e7842f6fcfa2b5960e116bd653d1a8b67a9d636e7cb",
+        "grace": {
+          "key_id": "aon_cb_v1",
+          "secret": "aon-postback-secret-demo-previous",
+          "signature": "9102216996c780d67cc7c0920706367e719a9f8f0e521eccfc798310ec95bd2c"
+        }
+      },
+      {
+        "name": "multi-event-retry",
+        "method": "POST",
+        "request_target": "/webhook/aon/conversion?source=aon&delivery=conversion",
+        "key_id": "aon_cb_v2",
+        "secret": "aon-postback-secret-demo-current",
+        "timestamp": "1776450660",
+        "delivery_id": "dlv_7c1e4b0a9d3f4e2685a1c0b9d8e7f602",
+        "events": [
+          "{\"event_id\":\"evt_01J0AONCONVERSION000001\",\"event_type\":\"conversion\",\"aon_click_id\":\"aci_0192f3a4b5c67d8e9f0a1b2c3d4e5f60\",\"offer_instance_id\":\"0192f3a5-6b7c-7d8e-9f01-23456789abcd\",\"offer_id\":\"ao_01HX2B3C4D5E6F7G8H9J0KABCD\",\"application_id\":\"app_demoApplication1\",\"placement_id\":\"plc_demoPlacement001\",\"event_name\":\"subscription\",\"amount\":\"96.000000\",\"currency\":\"USD\",\"sub_id\":\"homepage_widget\",\"sub_id_2\":\"cohort_a\",\"timestamp\":\"2026-03-21T03:10:00Z\"}",
+          "{\"event_id\":\"evt_01J0AONCONVERSION000002\",\"event_type\":\"conversion\",\"aon_click_id\":\"aci_0192f3a4b5c67d8e9f0a1b2c3d4e5f61\",\"offer_id\":\"ao_01HX2B3C4D5E6F7G8H9J0KABCD\",\"application_id\":\"app_demoApplication1\",\"placement_id\":\"plc_demoPlacement001\",\"event_name\":\"lead\",\"amount\":\"12.500000\",\"currency\":\"USD\",\"sub_id\":\"user_8f3k2\",\"timestamp\":\"2026-03-21T03:10:05Z\"}",
+          "{\"event_id\":\"evt_01J0AONCONVERSION000003\",\"event_type\":\"conversion\",\"offer_id\":\"ao_01HX2B3C4D5E6F7G8H9J0KWXYZ\",\"application_id\":\"app_demoApplication1\",\"event_name\":\"subscription\",\"amount\":\"0.000000\",\"currency\":\"USD\",\"timestamp\":\"2026-03-21T03:10:09Z\"}"
+        ],
+        "raw_body": "{\"delivery_id\":\"dlv_7c1e4b0a9d3f4e2685a1c0b9d8e7f602\",\"events\":[{\"event_id\":\"evt_01J0AONCONVERSION000001\",\"event_type\":\"conversion\",\"aon_click_id\":\"aci_0192f3a4b5c67d8e9f0a1b2c3d4e5f60\",\"offer_instance_id\":\"0192f3a5-6b7c-7d8e-9f01-23456789abcd\",\"offer_id\":\"ao_01HX2B3C4D5E6F7G8H9J0KABCD\",\"application_id\":\"app_demoApplication1\",\"placement_id\":\"plc_demoPlacement001\",\"event_name\":\"subscription\",\"amount\":\"96.000000\",\"currency\":\"USD\",\"sub_id\":\"homepage_widget\",\"sub_id_2\":\"cohort_a\",\"timestamp\":\"2026-03-21T03:10:00Z\"},{\"event_id\":\"evt_01J0AONCONVERSION000002\",\"event_type\":\"conversion\",\"aon_click_id\":\"aci_0192f3a4b5c67d8e9f0a1b2c3d4e5f61\",\"offer_id\":\"ao_01HX2B3C4D5E6F7G8H9J0KABCD\",\"application_id\":\"app_demoApplication1\",\"placement_id\":\"plc_demoPlacement001\",\"event_name\":\"lead\",\"amount\":\"12.500000\",\"currency\":\"USD\",\"sub_id\":\"user_8f3k2\",\"timestamp\":\"2026-03-21T03:10:05Z\"},{\"event_id\":\"evt_01J0AONCONVERSION000003\",\"event_type\":\"conversion\",\"offer_id\":\"ao_01HX2B3C4D5E6F7G8H9J0KWXYZ\",\"application_id\":\"app_demoApplication1\",\"event_name\":\"subscription\",\"amount\":\"0.000000\",\"currency\":\"USD\",\"timestamp\":\"2026-03-21T03:10:09Z\"}]}",
+        "signature": "b2afc180c0bd6e03e770ff13fea76c44efe6e998504ba300ccccc85d1124be08",
+        "retry_of": "multi-event"
+      },
+      {
+        "name": "test-delivery",
+        "method": "POST",
+        "request_target": "/webhook/aon/conversion?source=aon&delivery=conversion",
+        "key_id": "aon_cb_v2",
+        "secret": "aon-postback-secret-demo-current",
+        "timestamp": "1776450600",
+        "delivery_id": "dlv_5e5e5e5e5e5e4e5e8e5e5e5e5e5e5e01",
+        "events": [
+          "{\"event_id\":\"evt_01J0AONCONVERSION000001\",\"event_type\":\"conversion\",\"aon_click_id\":\"aci_0192f3a4b5c67d8e9f0a1b2c3d4e5f60\",\"offer_instance_id\":\"0192f3a5-6b7c-7d8e-9f01-23456789abcd\",\"offer_id\":\"ao_01HX2B3C4D5E6F7G8H9J0KABCD\",\"application_id\":\"app_demoApplication1\",\"placement_id\":\"plc_demoPlacement001\",\"event_name\":\"subscription\",\"amount\":\"96.000000\",\"currency\":\"USD\",\"sub_id\":\"homepage_widget\",\"sub_id_2\":\"cohort_a\",\"timestamp\":\"2026-03-21T03:10:00Z\"}"
+        ],
+        "raw_body": "{\"delivery_id\":\"dlv_5e5e5e5e5e5e4e5e8e5e5e5e5e5e5e01\",\"events\":[{\"event_id\":\"evt_01J0AONCONVERSION000001\",\"event_type\":\"conversion\",\"aon_click_id\":\"aci_0192f3a4b5c67d8e9f0a1b2c3d4e5f60\",\"offer_instance_id\":\"0192f3a5-6b7c-7d8e-9f01-23456789abcd\",\"offer_id\":\"ao_01HX2B3C4D5E6F7G8H9J0KABCD\",\"application_id\":\"app_demoApplication1\",\"placement_id\":\"plc_demoPlacement001\",\"event_name\":\"subscription\",\"amount\":\"96.000000\",\"currency\":\"USD\",\"sub_id\":\"homepage_widget\",\"sub_id_2\":\"cohort_a\",\"timestamp\":\"2026-03-21T03:10:00Z\"}]}",
+        "signature": "f7bf07bab6e7a29e345c15476388ffa7d352dabfbf826509c097056ca216fdc7",
+        "extra_headers": {
+          "X-AON-Test": "true"
+        }
+      }
+    ],
+    "retry_vectors": [
+      {
+        "attempt": 1,
+        "timestamp": "1776450600",
+        "delivery_id": "dlv_0192f3a4b5c67d8e9f0a1b2c3d4e5f71",
+        "raw_body": "{\"delivery_id\":\"dlv_0192f3a4b5c67d8e9f0a1b2c3d4e5f71\",\"events\":[{\"event_id\":\"evt_01J0AONCONVERSION000001\",\"event_type\":\"conversion\",\"aon_click_id\":\"aci_0192f3a4b5c67d8e9f0a1b2c3d4e5f60\",\"offer_instance_id\":\"0192f3a5-6b7c-7d8e-9f01-23456789abcd\",\"offer_id\":\"ao_01HX2B3C4D5E6F7G8H9J0KABCD\",\"application_id\":\"app_demoApplication1\",\"placement_id\":\"plc_demoPlacement001\",\"event_name\":\"subscription\",\"amount\":\"96.000000\",\"currency\":\"USD\",\"sub_id\":\"homepage_widget\",\"sub_id_2\":\"cohort_a\",\"timestamp\":\"2026-03-21T03:10:00Z\"}]}",
+        "signature": "94d92eda1f030a8afef3b623bc3b3eb0bcf1aeefb299f2f7296293ef8b06d87d"
+      },
+      {
+        "attempt": 2,
+        "timestamp": "1776450660",
+        "delivery_id": "dlv_0192f3a4b5c67d8e9f0a1b2c3d4e5f72",
+        "raw_body": "{\"delivery_id\":\"dlv_0192f3a4b5c67d8e9f0a1b2c3d4e5f72\",\"events\":[{\"event_id\":\"evt_01J0AONCONVERSION000001\",\"event_type\":\"conversion\",\"aon_click_id\":\"aci_0192f3a4b5c67d8e9f0a1b2c3d4e5f60\",\"offer_instance_id\":\"0192f3a5-6b7c-7d8e-9f01-23456789abcd\",\"offer_id\":\"ao_01HX2B3C4D5E6F7G8H9J0KABCD\",\"application_id\":\"app_demoApplication1\",\"placement_id\":\"plc_demoPlacement001\",\"event_name\":\"subscription\",\"amount\":\"96.000000\",\"currency\":\"USD\",\"sub_id\":\"homepage_widget\",\"sub_id_2\":\"cohort_a\",\"timestamp\":\"2026-03-21T03:10:00Z\"}]}",
+        "signature": "0335bae8e9beaa6fe40c6cae53638379cbbdabf319619a71616c57753a3a515b"
+      },
+      {
+        "attempt": 3,
+        "timestamp": "1776450960",
+        "delivery_id": "dlv_0192f3a4b5c67d8e9f0a1b2c3d4e5f73",
+        "raw_body": "{\"delivery_id\":\"dlv_0192f3a4b5c67d8e9f0a1b2c3d4e5f73\",\"events\":[{\"event_id\":\"evt_01J0AONCONVERSION000001\",\"event_type\":\"conversion\",\"aon_click_id\":\"aci_0192f3a4b5c67d8e9f0a1b2c3d4e5f60\",\"offer_instance_id\":\"0192f3a5-6b7c-7d8e-9f01-23456789abcd\",\"offer_id\":\"ao_01HX2B3C4D5E6F7G8H9J0KABCD\",\"application_id\":\"app_demoApplication1\",\"placement_id\":\"plc_demoPlacement001\",\"event_name\":\"subscription\",\"amount\":\"96.000000\",\"currency\":\"USD\",\"sub_id\":\"homepage_widget\",\"sub_id_2\":\"cohort_a\",\"timestamp\":\"2026-03-21T03:10:00Z\"}]}",
+        "signature": "d4c4126af95a2bb88cd541201bba07f2e3e1d969dd45eee38102ab9fbe80b220"
+      },
+      {
+        "attempt": 4,
+        "timestamp": "1776452760",
+        "delivery_id": "dlv_0192f3a4b5c67d8e9f0a1b2c3d4e5f74",
+        "raw_body": "{\"delivery_id\":\"dlv_0192f3a4b5c67d8e9f0a1b2c3d4e5f74\",\"events\":[{\"event_id\":\"evt_01J0AONCONVERSION000001\",\"event_type\":\"conversion\",\"aon_click_id\":\"aci_0192f3a4b5c67d8e9f0a1b2c3d4e5f60\",\"offer_instance_id\":\"0192f3a5-6b7c-7d8e-9f01-23456789abcd\",\"offer_id\":\"ao_01HX2B3C4D5E6F7G8H9J0KABCD\",\"application_id\":\"app_demoApplication1\",\"placement_id\":\"plc_demoPlacement001\",\"event_name\":\"subscription\",\"amount\":\"96.000000\",\"currency\":\"USD\",\"sub_id\":\"homepage_widget\",\"sub_id_2\":\"cohort_a\",\"timestamp\":\"2026-03-21T03:10:00Z\"}]}",
+        "signature": "4cdee4490816535c90124bbce5b790a0f73a8e363c7e6148a98fa190ff548f6b"
+      },
+      {
+        "attempt": 5,
+        "timestamp": "1776459960",
+        "delivery_id": "dlv_0192f3a4b5c67d8e9f0a1b2c3d4e5f75",
+        "raw_body": "{\"delivery_id\":\"dlv_0192f3a4b5c67d8e9f0a1b2c3d4e5f75\",\"events\":[{\"event_id\":\"evt_01J0AONCONVERSION000001\",\"event_type\":\"conversion\",\"aon_click_id\":\"aci_0192f3a4b5c67d8e9f0a1b2c3d4e5f60\",\"offer_instance_id\":\"0192f3a5-6b7c-7d8e-9f01-23456789abcd\",\"offer_id\":\"ao_01HX2B3C4D5E6F7G8H9J0KABCD\",\"application_id\":\"app_demoApplication1\",\"placement_id\":\"plc_demoPlacement001\",\"event_name\":\"subscription\",\"amount\":\"96.000000\",\"currency\":\"USD\",\"sub_id\":\"homepage_widget\",\"sub_id_2\":\"cohort_a\",\"timestamp\":\"2026-03-21T03:10:00Z\"}]}",
+        "signature": "b03520480524338c17729d1a9bfef4d07442b9db7a6e7a182fee77346d1afd44"
+      }
+    ]
   }
 }

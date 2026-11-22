@@ -1,412 +1,441 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://agentoffernetwork.org/schema/postback-agent-payload/v1.0",
-  "description": "Frozen canonical webhook body. The protocol version is carried only by the HTTP header. Branches are closed as AON's producer contract; receivers ignore unknown top-level members (postback-v1.0.md section 5.3).",
+  "description": "Exact AON-to-Agent webhook request body: a delivery envelope carrying 1 to 100 event objects. The protocol version is carried only by the HTTP header. The envelope and every event branch are closed as AON's producer contract; receivers ignore unknown top-level members of the envelope and of each event (postback-v1.0.md section 5.3). To validate one event object on its own, reference #/$defs/event.",
   "title": "AgentOffer AON-to-Agent Webhook Payload v1.0",
-  "oneOf": [
-    {
-      "type": "object",
-      "required": [
-        "event_id",
-        "event_type",
-        "event_name",
-        "offer_id",
-        "application_id",
-        "amount",
-        "currency",
-        "timestamp"
-      ],
-      "properties": {
-        "event_id": {
-          "type": "string",
-          "minLength": 1
-        },
-        "event_type": {
-          "const": "conversion"
-        },
-        "event_name": {
-          "$ref": "https://agentoffernetwork.org/schema/goal-event-name/v1.0"
-        },
-        "aon_click_id": {
-          "type": "string",
-          "pattern": "^aci_(?:[0-9a-f]{32}|[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12})$"
-        },
-        "offer_instance_id": {
-          "type": "string"
-        },
-        "offer_id": {
-          "type": "string",
-          "minLength": 1
-        },
-        "application_id": {
-          "type": "string",
-          "minLength": 1
-        },
-        "placement_id": {
-          "type": "string",
-          "minLength": 1
-        },
-        "amount": {
-          "type": "string",
-          "pattern": "^-?(?:0|[1-9][0-9]*)\\.[0-9]{6}(?![\\s\\S])"
-        },
-        "currency": {
-          "const": "USD"
-        },
-        "sub_id": {
-          "type": "string"
-        },
-        "sub_id_2": {
-          "type": "string"
-        },
-        "sub_id_3": {
-          "type": "string"
-        },
-        "sub_id_4": {
-          "type": "string"
-        },
-        "sub_id_5": {
-          "type": "string"
-        },
-        "timestamp": {
-          "type": "string",
-          "format": "date-time",
-          "pattern": "^[0-9]{4}-(?:0[1-9]|1[0-2])-(?:0[1-9]|[12][0-9]|3[01])[Tt](?:[01][0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9](?:\\.[0-9]+)?(?:[Zz]|\\+00:00)$"
-        }
-      },
-      "additionalProperties": false
+  "type": "object",
+  "required": [
+    "delivery_id",
+    "events"
+  ],
+  "properties": {
+    "delivery_id": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 64,
+      "pattern": "^[A-Za-z0-9_-]+$",
+      "description": "Opaque identifier of this HTTP request. AON generates a new value for every request, including every retry. For troubleshooting only; it is not an idempotency key."
     },
-    {
-      "type": "object",
-      "required": [
-        "event_id",
-        "event_type",
-        "earning_id",
-        "sequence",
-        "conversion_event_id",
-        "offer_id",
-        "application_id",
-        "amount",
-        "currency",
-        "timestamp"
-      ],
-      "properties": {
-        "event_id": {
-          "type": "string",
-          "pattern": "^earning:[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
-        },
-        "event_type": {
-          "const": "earning_confirmed"
-        },
-        "earning_id": {
-          "type": "string",
-          "format": "uuid",
-          "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
-        },
-        "sequence": {
-          "type": "integer",
-          "minimum": 1
-        },
-        "conversion_event_id": {
-          "type": "string",
-          "minLength": 1
-        },
-        "offer_instance_id": {
-          "type": "string"
-        },
-        "offer_id": {
-          "type": "string",
-          "minLength": 1
-        },
-        "application_id": {
-          "type": "string",
-          "minLength": 1
-        },
-        "placement_id": {
-          "type": "string",
-          "minLength": 1
-        },
-        "amount": {
-          "type": "string",
-          "pattern": "^-?(?:0|[1-9][0-9]*)\\.[0-9]{6}(?![\\s\\S])"
-        },
-        "currency": {
-          "const": "USD"
-        },
-        "sub_id": {
-          "type": "string"
-        },
-        "sub_id_2": {
-          "type": "string"
-        },
-        "sub_id_3": {
-          "type": "string"
-        },
-        "sub_id_4": {
-          "type": "string"
-        },
-        "sub_id_5": {
-          "type": "string"
-        },
-        "timestamp": {
-          "type": "string",
-          "format": "date-time",
-          "pattern": "^[0-9]{4}-(?:0[1-9]|1[0-2])-(?:0[1-9]|[12][0-9]|3[01])T(?:[01][0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9]Z$"
-        }
+    "events": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 100,
+      "items": {
+        "$ref": "#/$defs/event"
       },
-      "additionalProperties": false
-    },
-    {
-      "type": "object",
-      "required": [
-        "event_id",
-        "event_type",
-        "earning_id",
-        "sequence",
-        "conversion_event_id",
-        "offer_id",
-        "application_id",
-        "amount",
-        "currency",
-        "timestamp"
-      ],
-      "properties": {
-        "event_id": {
-          "type": "string",
-          "pattern": "^earning:[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
-        },
-        "event_type": {
-          "const": "earning_available"
-        },
-        "earning_id": {
-          "type": "string",
-          "format": "uuid",
-          "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
-        },
-        "sequence": {
-          "type": "integer",
-          "minimum": 1
-        },
-        "conversion_event_id": {
-          "type": "string",
-          "minLength": 1
-        },
-        "offer_instance_id": {
-          "type": "string"
-        },
-        "offer_id": {
-          "type": "string",
-          "minLength": 1
-        },
-        "application_id": {
-          "type": "string",
-          "minLength": 1
-        },
-        "placement_id": {
-          "type": "string",
-          "minLength": 1
-        },
-        "amount": {
-          "type": "string",
-          "pattern": "^-?(?:0|[1-9][0-9]*)\\.[0-9]{6}(?![\\s\\S])"
-        },
-        "currency": {
-          "const": "USD"
-        },
-        "sub_id": {
-          "type": "string"
-        },
-        "sub_id_2": {
-          "type": "string"
-        },
-        "sub_id_3": {
-          "type": "string"
-        },
-        "sub_id_4": {
-          "type": "string"
-        },
-        "sub_id_5": {
-          "type": "string"
-        },
-        "timestamp": {
-          "type": "string",
-          "format": "date-time",
-          "pattern": "^[0-9]{4}-(?:0[1-9]|1[0-2])-(?:0[1-9]|[12][0-9]|3[01])T(?:[01][0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9]Z$"
-        }
-      },
-      "additionalProperties": false
-    },
-    {
-      "type": "object",
-      "required": [
-        "event_id",
-        "event_type",
-        "earning_id",
-        "sequence",
-        "conversion_event_id",
-        "offer_id",
-        "application_id",
-        "amount",
-        "currency",
-        "timestamp"
-      ],
-      "properties": {
-        "event_id": {
-          "type": "string",
-          "pattern": "^earning:[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
-        },
-        "event_type": {
-          "const": "earning_paid_out"
-        },
-        "earning_id": {
-          "type": "string",
-          "format": "uuid",
-          "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
-        },
-        "sequence": {
-          "type": "integer",
-          "minimum": 1
-        },
-        "conversion_event_id": {
-          "type": "string",
-          "minLength": 1
-        },
-        "offer_instance_id": {
-          "type": "string"
-        },
-        "offer_id": {
-          "type": "string",
-          "minLength": 1
-        },
-        "application_id": {
-          "type": "string",
-          "minLength": 1
-        },
-        "placement_id": {
-          "type": "string",
-          "minLength": 1
-        },
-        "amount": {
-          "type": "string",
-          "pattern": "^-?(?:0|[1-9][0-9]*)\\.[0-9]{6}(?![\\s\\S])"
-        },
-        "currency": {
-          "const": "USD"
-        },
-        "sub_id": {
-          "type": "string"
-        },
-        "sub_id_2": {
-          "type": "string"
-        },
-        "sub_id_3": {
-          "type": "string"
-        },
-        "sub_id_4": {
-          "type": "string"
-        },
-        "sub_id_5": {
-          "type": "string"
-        },
-        "timestamp": {
-          "type": "string",
-          "format": "date-time",
-          "pattern": "^[0-9]{4}-(?:0[1-9]|1[0-2])-(?:0[1-9]|[12][0-9]|3[01])T(?:[01][0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9]Z$"
-        }
-      },
-      "additionalProperties": false
-    },
-    {
-      "type": "object",
-      "required": [
-        "event_id",
-        "event_type",
-        "earning_id",
-        "sequence",
-        "conversion_event_id",
-        "offer_id",
-        "application_id",
-        "amount",
-        "currency",
-        "reason",
-        "timestamp"
-      ],
-      "properties": {
-        "event_id": {
-          "type": "string",
-          "pattern": "^earning:[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
-        },
-        "event_type": {
-          "const": "earning_rejected"
-        },
-        "earning_id": {
-          "type": "string",
-          "format": "uuid",
-          "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
-        },
-        "sequence": {
-          "type": "integer",
-          "minimum": 1
-        },
-        "conversion_event_id": {
-          "type": "string",
-          "minLength": 1
-        },
-        "offer_instance_id": {
-          "type": "string"
-        },
-        "offer_id": {
-          "type": "string",
-          "minLength": 1
-        },
-        "application_id": {
-          "type": "string",
-          "minLength": 1
-        },
-        "placement_id": {
-          "type": "string",
-          "minLength": 1
-        },
-        "amount": {
-          "type": "string",
-          "pattern": "^-?(?:0|[1-9][0-9]*)\\.[0-9]{6}(?![\\s\\S])"
-        },
-        "currency": {
-          "const": "USD"
-        },
-        "reason": {
-          "enum": [
-            "merchant_cancelled",
-            "duplicate",
-            "invalid_order",
-            "fraud",
-            "returned",
-            "reversed",
-            "refund"
-          ]
-        },
-        "sub_id": {
-          "type": "string"
-        },
-        "sub_id_2": {
-          "type": "string"
-        },
-        "sub_id_3": {
-          "type": "string"
-        },
-        "sub_id_4": {
-          "type": "string"
-        },
-        "sub_id_5": {
-          "type": "string"
-        },
-        "timestamp": {
-          "type": "string",
-          "format": "date-time",
-          "pattern": "^[0-9]{4}-(?:0[1-9]|1[0-2])-(?:0[1-9]|[12][0-9]|3[01])T(?:[01][0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9]Z$"
-        }
-      },
-      "additionalProperties": false
+      "description": "Event objects delivered by this request, all for one Developer Application. Each element is handled by its own event_type; elements may differ in event_type and carry no ordering guarantee."
     }
-  ]
+  },
+  "additionalProperties": false,
+  "$defs": {
+    "event": {
+      "description": "One frozen event object. Branches are closed as AON's producer contract; receivers ignore unknown top-level members (postback-v1.0.md section 5.3).",
+      "oneOf": [
+        {
+          "type": "object",
+          "required": [
+            "event_id",
+            "event_type",
+            "event_name",
+            "offer_id",
+            "application_id",
+            "amount",
+            "currency",
+            "timestamp"
+          ],
+          "properties": {
+            "event_id": {
+              "type": "string",
+              "minLength": 1
+            },
+            "event_type": {
+              "const": "conversion"
+            },
+            "event_name": {
+              "$ref": "https://agentoffernetwork.org/schema/goal-event-name/v1.0"
+            },
+            "aon_click_id": {
+              "type": "string",
+              "pattern": "^aci_(?:[0-9a-f]{32}|[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12})$"
+            },
+            "offer_instance_id": {
+              "type": "string"
+            },
+            "offer_id": {
+              "type": "string",
+              "minLength": 1
+            },
+            "application_id": {
+              "type": "string",
+              "minLength": 1
+            },
+            "placement_id": {
+              "type": "string",
+              "minLength": 1
+            },
+            "amount": {
+              "type": "string",
+              "pattern": "^-?(?:0|[1-9][0-9]*)\\.[0-9]{6}(?![\\s\\S])"
+            },
+            "currency": {
+              "const": "USD"
+            },
+            "sub_id": {
+              "type": "string"
+            },
+            "sub_id_2": {
+              "type": "string"
+            },
+            "sub_id_3": {
+              "type": "string"
+            },
+            "sub_id_4": {
+              "type": "string"
+            },
+            "sub_id_5": {
+              "type": "string"
+            },
+            "timestamp": {
+              "type": "string",
+              "format": "date-time",
+              "pattern": "^[0-9]{4}-(?:0[1-9]|1[0-2])-(?:0[1-9]|[12][0-9]|3[01])[Tt](?:[01][0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9](?:\\.[0-9]+)?(?:[Zz]|\\+00:00)$"
+            }
+          },
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "required": [
+            "event_id",
+            "event_type",
+            "earning_id",
+            "sequence",
+            "conversion_event_id",
+            "offer_id",
+            "application_id",
+            "amount",
+            "currency",
+            "timestamp"
+          ],
+          "properties": {
+            "event_id": {
+              "type": "string",
+              "pattern": "^earning:[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
+            },
+            "event_type": {
+              "const": "earning_confirmed"
+            },
+            "earning_id": {
+              "type": "string",
+              "format": "uuid",
+              "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
+            },
+            "sequence": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "conversion_event_id": {
+              "type": "string",
+              "minLength": 1
+            },
+            "offer_instance_id": {
+              "type": "string"
+            },
+            "offer_id": {
+              "type": "string",
+              "minLength": 1
+            },
+            "application_id": {
+              "type": "string",
+              "minLength": 1
+            },
+            "placement_id": {
+              "type": "string",
+              "minLength": 1
+            },
+            "amount": {
+              "type": "string",
+              "pattern": "^-?(?:0|[1-9][0-9]*)\\.[0-9]{6}(?![\\s\\S])"
+            },
+            "currency": {
+              "const": "USD"
+            },
+            "sub_id": {
+              "type": "string"
+            },
+            "sub_id_2": {
+              "type": "string"
+            },
+            "sub_id_3": {
+              "type": "string"
+            },
+            "sub_id_4": {
+              "type": "string"
+            },
+            "sub_id_5": {
+              "type": "string"
+            },
+            "timestamp": {
+              "type": "string",
+              "format": "date-time",
+              "pattern": "^[0-9]{4}-(?:0[1-9]|1[0-2])-(?:0[1-9]|[12][0-9]|3[01])T(?:[01][0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9]Z$"
+            }
+          },
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "required": [
+            "event_id",
+            "event_type",
+            "earning_id",
+            "sequence",
+            "conversion_event_id",
+            "offer_id",
+            "application_id",
+            "amount",
+            "currency",
+            "timestamp"
+          ],
+          "properties": {
+            "event_id": {
+              "type": "string",
+              "pattern": "^earning:[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
+            },
+            "event_type": {
+              "const": "earning_available"
+            },
+            "earning_id": {
+              "type": "string",
+              "format": "uuid",
+              "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
+            },
+            "sequence": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "conversion_event_id": {
+              "type": "string",
+              "minLength": 1
+            },
+            "offer_instance_id": {
+              "type": "string"
+            },
+            "offer_id": {
+              "type": "string",
+              "minLength": 1
+            },
+            "application_id": {
+              "type": "string",
+              "minLength": 1
+            },
+            "placement_id": {
+              "type": "string",
+              "minLength": 1
+            },
+            "amount": {
+              "type": "string",
+              "pattern": "^-?(?:0|[1-9][0-9]*)\\.[0-9]{6}(?![\\s\\S])"
+            },
+            "currency": {
+              "const": "USD"
+            },
+            "sub_id": {
+              "type": "string"
+            },
+            "sub_id_2": {
+              "type": "string"
+            },
+            "sub_id_3": {
+              "type": "string"
+            },
+            "sub_id_4": {
+              "type": "string"
+            },
+            "sub_id_5": {
+              "type": "string"
+            },
+            "timestamp": {
+              "type": "string",
+              "format": "date-time",
+              "pattern": "^[0-9]{4}-(?:0[1-9]|1[0-2])-(?:0[1-9]|[12][0-9]|3[01])T(?:[01][0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9]Z$"
+            }
+          },
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "required": [
+            "event_id",
+            "event_type",
+            "earning_id",
+            "sequence",
+            "conversion_event_id",
+            "offer_id",
+            "application_id",
+            "amount",
+            "currency",
+            "timestamp"
+          ],
+          "properties": {
+            "event_id": {
+              "type": "string",
+              "pattern": "^earning:[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
+            },
+            "event_type": {
+              "const": "earning_paid_out"
+            },
+            "earning_id": {
+              "type": "string",
+              "format": "uuid",
+              "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
+            },
+            "sequence": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "conversion_event_id": {
+              "type": "string",
+              "minLength": 1
+            },
+            "offer_instance_id": {
+              "type": "string"
+            },
+            "offer_id": {
+              "type": "string",
+              "minLength": 1
+            },
+            "application_id": {
+              "type": "string",
+              "minLength": 1
+            },
+            "placement_id": {
+              "type": "string",
+              "minLength": 1
+            },
+            "amount": {
+              "type": "string",
+              "pattern": "^-?(?:0|[1-9][0-9]*)\\.[0-9]{6}(?![\\s\\S])"
+            },
+            "currency": {
+              "const": "USD"
+            },
+            "sub_id": {
+              "type": "string"
+            },
+            "sub_id_2": {
+              "type": "string"
+            },
+            "sub_id_3": {
+              "type": "string"
+            },
+            "sub_id_4": {
+              "type": "string"
+            },
+            "sub_id_5": {
+              "type": "string"
+            },
+            "timestamp": {
+              "type": "string",
+              "format": "date-time",
+              "pattern": "^[0-9]{4}-(?:0[1-9]|1[0-2])-(?:0[1-9]|[12][0-9]|3[01])T(?:[01][0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9]Z$"
+            }
+          },
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "required": [
+            "event_id",
+            "event_type",
+            "earning_id",
+            "sequence",
+            "conversion_event_id",
+            "offer_id",
+            "application_id",
+            "amount",
+            "currency",
+            "reason",
+            "timestamp"
+          ],
+          "properties": {
+            "event_id": {
+              "type": "string",
+              "pattern": "^earning:[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
+            },
+            "event_type": {
+              "const": "earning_rejected"
+            },
+            "earning_id": {
+              "type": "string",
+              "format": "uuid",
+              "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
+            },
+            "sequence": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "conversion_event_id": {
+              "type": "string",
+              "minLength": 1
+            },
+            "offer_instance_id": {
+              "type": "string"
+            },
+            "offer_id": {
+              "type": "string",
+              "minLength": 1
+            },
+            "application_id": {
+              "type": "string",
+              "minLength": 1
+            },
+            "placement_id": {
+              "type": "string",
+              "minLength": 1
+            },
+            "amount": {
+              "type": "string",
+              "pattern": "^-?(?:0|[1-9][0-9]*)\\.[0-9]{6}(?![\\s\\S])"
+            },
+            "currency": {
+              "const": "USD"
+            },
+            "reason": {
+              "enum": [
+                "merchant_cancelled",
+                "duplicate",
+                "invalid_order",
+                "fraud",
+                "returned",
+                "reversed",
+                "refund"
+              ]
+            },
+            "sub_id": {
+              "type": "string"
+            },
+            "sub_id_2": {
+              "type": "string"
+            },
+            "sub_id_3": {
+              "type": "string"
+            },
+            "sub_id_4": {
+              "type": "string"
+            },
+            "sub_id_5": {
+              "type": "string"
+            },
+            "timestamp": {
+              "type": "string",
+              "format": "date-time",
+              "pattern": "^[0-9]{4}-(?:0[1-9]|1[0-2])-(?:0[1-9]|[12][0-9]|3[01])T(?:[01][0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9]Z$"
+            }
+          },
+          "additionalProperties": false
+        }
+      ]
+    }
+  }
 }

@@ -135,6 +135,10 @@
             "itinerary_total"
           ]
         },
+        "free_baggage_included": {
+          "type": "boolean",
+          "description": "Source-reported free baggage inclusion for the same displayed fare, including a reference fare. Preserve explicit true or false; omit when unknown. Does not specify baggage type, weight, or pieces."
+        },
         "fare_details": {
           "$ref": "#/$defs/flightFareDetails",
           "description": "Optional facts tied to this exact traveler-composed itinerary quote; invalid for a reference price."

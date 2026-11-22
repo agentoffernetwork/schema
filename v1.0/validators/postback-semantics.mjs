@@ -21,6 +21,12 @@ export function validatePostbackV10Semantics(postback, context) {
   const hasAmount = Object.hasOwn(postback, 'amount');
   const hasCurrency = Object.hasOwn(postback, 'currency');
   if (hasAmount !== hasCurrency) errors.push(error('revenue_pair_invalid', '', 'amount and currency must be supplied together'));
+  const hasCommission = Object.hasOwn(postback, 'commission_amount');
+  const hasCommissionCurrency = Object.hasOwn(postback, 'commission_currency');
+  if (hasCommission !== hasCommissionCurrency) errors.push(error('invalid_commission_pair', '', 'actual commission amount and currency must be supplied together'));
+  if (hasCommission && (typeof postback.commission_amount !== 'string' || !/^[0-9]{1,12}(?:\.[0-9]{1,6})?$/.test(postback.commission_amount) || typeof postback.commission_currency !== 'string' || !/^[A-Z]{3}$/.test(postback.commission_currency))) errors.push(error('invalid_commission_pair', '', 'invalid actual commission pair'));
+  const action = (postback.action ?? 'conversion').toLowerCase();
+  if ((hasCommission || hasCommissionCurrency) && action !== 'conversion') errors.push(error('commission_not_allowed_for_action', '', 'confirm and reversal do not carry money'));
   for (const field of identityFields) {
     if (!Object.hasOwn(postback, field)) continue;
     const value = postback[field];
@@ -44,14 +50,15 @@ export function validatePostbackV10Semantics(postback, context) {
   if (context.dedup_strategy === 'all' && !identityFields.some((field) => Object.hasOwn(postback, field))) {
     errors.push(error('identity_required', '', 'dedup_strategy all requires an explicit identity'));
   }
-  if (context.pricing_model === 'cps' && !hasAmount) errors.push(error('revenue_required', '', 'cps goals require amount and currency'));
+  if (action === 'conversion' && context.pricing_model === 'cps' && !hasAmount && !hasCommission) errors.push(error('revenue_required', '', 'cps goals require amount and currency'));
+  if (hasCommission && context.pricing_model !== 'cps') errors.push(error('invalid_goal_pricing', '', 'actual commissions require a CPS Goal'));
   if (context.pricing_model !== undefined && !['cpa', 'cps'].includes(context.pricing_model)) errors.push(error('pricing_model_invalid', '/context/pricing_model', 'pricing_model must be cpa or cps'));
   return result(errors);
 }
 
 export default validatePostbackV10Semantics;
 
-/** Validate Agent payload semantics after the closed oneOf JSON Schema succeeds. */
+/** Validate the semantics of one Agent event object after the closed `$defs.event` JSON Schema branch succeeds. */
 export function validateAgentWebhookV10Semantics(payload) {
   if (!isPlainObject(payload)) return result([error('payload_invalid', '', 'payload must be an object')]);
   if (payload.event_type === 'conversion') return result([]);
@@ -62,5 +69,28 @@ export function validateAgentWebhookV10Semantics(payload) {
   if (!Number.isInteger(payload.sequence) || payload.sequence < 1) {
     errors.push(error('sequence_invalid', '/sequence', 'sequence must be a positive integer'));
   }
+  return result(errors);
+}
+
+/**
+ * Validate an Agent webhook delivery envelope (the request body) after the root JSON Schema
+ * succeeds: checks the envelope shape and applies `validateAgentWebhookV10Semantics` to every
+ * element of `events`. Unknown top-level envelope members are ignored (specification section 5.3).
+ */
+export function validateAgentWebhookEnvelopeV10Semantics(envelope) {
+  if (!isPlainObject(envelope)) return result([error('envelope_invalid', '', 'request body must be a delivery envelope object')]);
+  const errors = [];
+  if (typeof envelope.delivery_id !== 'string' || !/^[A-Za-z0-9_-]{1,64}$/.test(envelope.delivery_id)) {
+    errors.push(error('delivery_id_invalid', '/delivery_id', 'delivery_id must be 1 to 64 characters of [A-Za-z0-9_-]'));
+  }
+  if (!Array.isArray(envelope.events) || envelope.events.length < 1 || envelope.events.length > 100) {
+    errors.push(error('events_invalid', '/events', 'events must be an array of 1 to 100 event objects'));
+    return result(errors);
+  }
+  envelope.events.forEach((event, index) => {
+    for (const item of validateAgentWebhookV10Semantics(event).errors) {
+      errors.push(error(item.code, `/events/${index}${item.instancePath}`, item.message));
+    }
+  });
   return result(errors);
 }

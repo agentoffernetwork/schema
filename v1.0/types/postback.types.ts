@@ -18,6 +18,21 @@ export type RevenueFactsV10 =
   | { amount: string; currency: string }
   | { amount?: never; currency?: never }
 
+/** Current GET query: actual publisher commission is independent of sales revenue. */
+export type ActualCommissionFactsV10 =
+  | { commission_amount: string; commission_currency: string }
+  | { commission_amount?: never; commission_currency?: never }
+
+export type ProviderPostbackQueryV10 = ProviderPostbackAttributionV10 & RevenueFactsV10 & ActualCommissionFactsV10 & {
+  event_name: GoalEventNameV10
+  event_time?: string
+  event_id?: string
+  order_id?: string
+  partner_txn_id?: string
+  action?: "conversion" | "confirm" | "reversal"
+  reason?: string
+}
+
 /** @deprecated Retired JSON body lane; see ProviderPostbackAttributionV10. */
 export type ProviderPostbackPayloadV10 = ProviderPostbackAttributionV10 & RevenueFactsV10 & {
   event_name: GoalEventNameV10
@@ -109,3 +124,21 @@ export type AgentEarningWebhookPayloadV10 = {
 )
 
 export type AgentWebhookPayloadV10 = AgentConversionWebhookPayloadV10 | AgentEarningWebhookPayloadV10
+
+/**
+ * Exact AON-to-Agent webhook request body: one delivery envelope per HTTP request.
+ * `AgentWebhookPayloadV10` above is one element of `events`, not the request body.
+ */
+export type AgentWebhookEnvelopeV10 = {
+  /**
+   * Opaque identifier of this HTTP request (1-64 characters of `[A-Za-z0-9_-]`). AON generates a
+   * new value for every request, including every retry. For troubleshooting only: never an
+   * idempotency key. Deduplicate each event by `(application_id, event_id)`.
+   */
+  delivery_id: string
+  /**
+   * 1 to 100 event objects for one Developer Application. Handle each element by its own
+   * `event_type`; elements may differ in `event_type` and carry no ordering guarantee.
+   */
+  events: AgentWebhookPayloadV10[]
+}

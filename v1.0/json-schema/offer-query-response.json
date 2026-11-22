@@ -66,6 +66,16 @@
         "consent_missing"
       ],
       "description": "Required for an empty offers array in ordinary Query results and omitted for nonempty results and explicit Flight queries. The paired request determines this requirement. When several causes apply, precedence is consent_missing, scene_suppressed, frequency_capped, no_material, then below_relevance_threshold."
+    },
+    "has_more": {
+      "type": "boolean",
+      "description": "Present only when the paired request carried pagination. True means a further page can be requested with next_cursor; false means this is the final page for the current Query."
+    },
+    "next_cursor": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 2048,
+      "description": "Opaque continuation token for the next page, required when has_more is true and omitted otherwise. Send it back unchanged as pagination.cursor with the same Query; do not parse, construct, modify, or concatenate it."
     }
   },
   "additionalProperties": false,
@@ -347,6 +357,35 @@
           }
         },
         "type": "object"
+      }
+    },
+    {
+      "if": {
+        "type": "object",
+        "required": [
+          "has_more"
+        ],
+        "properties": {
+          "has_more": {
+            "const": true,
+            "description": "Conditional branch that identifies a page with further results."
+          }
+        }
+      },
+      "then": {
+        "type": "object",
+        "required": [
+          "next_cursor"
+        ]
+      },
+      "else": {
+        "type": "object",
+        "not": {
+          "type": "object",
+          "required": [
+            "next_cursor"
+          ]
+        }
       }
     }
   ]

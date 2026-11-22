@@ -120,13 +120,15 @@
       "covers": [
         "postback.agent.current",
         "postback.agent.signature",
-        "postback.agent.retry"
+        "postback.agent.retry",
+        "postback.agent.envelope.single-event"
       ]
     },
     {
       "id": "postback-agent-v10-missing-revenue",
-      "schema_id": "https://agentoffernetwork.org/schema/postback-agent-payload/v1.0",
+      "schema_id": "https://agentoffernetwork.org/schema/postback-agent-payload/v1.0#/$defs/event",
       "fixture": "../examples/http/postback/agent/basic-conversion-v1.0.json",
+      "fixture_pointer": "/events/0",
       "mutation": {
         "remove": [
           "amount",
@@ -143,8 +145,9 @@
     },
     {
       "id": "postback-agent-v10-legacy-hyphenated-click-id",
-      "schema_id": "https://agentoffernetwork.org/schema/postback-agent-payload/v1.0",
+      "schema_id": "https://agentoffernetwork.org/schema/postback-agent-payload/v1.0#/$defs/event",
       "fixture": "../examples/http/postback/agent/basic-conversion-v1.0.json",
+      "fixture_pointer": "/events/0",
       "mutation": {
         "set": {
           "aon_click_id": "aci_019e30f2-1b35-7b58-b47d-2cc086ace710"
@@ -160,8 +163,9 @@
     },
     {
       "id": "postback-agent-v10-non-aci-click-id",
-      "schema_id": "https://agentoffernetwork.org/schema/postback-agent-payload/v1.0",
+      "schema_id": "https://agentoffernetwork.org/schema/postback-agent-payload/v1.0#/$defs/event",
       "fixture": "../examples/http/postback/agent/basic-conversion-v1.0.json",
+      "fixture_pointer": "/events/0",
       "mutation": {
         "set": {
           "aon_click_id": "trk_01_click_abc"
@@ -177,7 +181,7 @@
     },
     {
       "id": "postback-agent-v10-earning_confirmed",
-      "schema_id": "https://agentoffernetwork.org/schema/postback-agent-payload/v1.0",
+      "schema_id": "https://agentoffernetwork.org/schema/postback-agent-payload/v1.0#/$defs/event",
       "fixture": "fixtures/postback-agent-earning-webhook-v1.0.json",
       "fixture_pointer": "/events/0/input",
       "expected": "valid",
@@ -192,7 +196,7 @@
     },
     {
       "id": "postback-agent-v10-earning_available",
-      "schema_id": "https://agentoffernetwork.org/schema/postback-agent-payload/v1.0",
+      "schema_id": "https://agentoffernetwork.org/schema/postback-agent-payload/v1.0#/$defs/event",
       "fixture": "fixtures/postback-agent-earning-webhook-v1.0.json",
       "fixture_pointer": "/events/1/input",
       "expected": "valid",
@@ -207,7 +211,7 @@
     },
     {
       "id": "postback-agent-v10-earning_paid_out",
-      "schema_id": "https://agentoffernetwork.org/schema/postback-agent-payload/v1.0",
+      "schema_id": "https://agentoffernetwork.org/schema/postback-agent-payload/v1.0#/$defs/event",
       "fixture": "fixtures/postback-agent-earning-webhook-v1.0.json",
       "fixture_pointer": "/events/2/input",
       "expected": "valid",
@@ -222,7 +226,7 @@
     },
     {
       "id": "postback-agent-v10-earning_rejected",
-      "schema_id": "https://agentoffernetwork.org/schema/postback-agent-payload/v1.0",
+      "schema_id": "https://agentoffernetwork.org/schema/postback-agent-payload/v1.0#/$defs/event",
       "fixture": "fixtures/postback-agent-earning-webhook-v1.0.json",
       "fixture_pointer": "/events/3/input",
       "expected": "valid",
@@ -233,6 +237,342 @@
       "covers": [
         "postback.agent.earning",
         "postback.agent.earning_rejected"
+      ]
+    },
+    {
+      "id": "postback-agent-v10-envelope-multi-event",
+      "schema_id": "https://agentoffernetwork.org/schema/postback-agent-payload/v1.0",
+      "fixture": "fixtures/postback-agent-webhook-v1.0.json",
+      "fixture_pointer": "/envelopes/vectors/1/raw_body",
+      "fixture_json": true,
+      "source_refs": [
+        "json-schema/postback-agent-payload-v1.0.json",
+        "types/postback-v1.0.types.ts",
+        "validators/postback-v1.0-semantics.mjs"
+      ],
+      "expected": "valid",
+      "covers": [
+        "postback.agent.envelope.multi-event"
+      ]
+    },
+    {
+      "id": "postback-agent-v10-envelope-multi-event-retry",
+      "schema_id": "https://agentoffernetwork.org/schema/postback-agent-payload/v1.0",
+      "fixture": "fixtures/postback-agent-webhook-v1.0.json",
+      "fixture_pointer": "/envelopes/vectors/2/raw_body",
+      "fixture_json": true,
+      "source_refs": [
+        "json-schema/postback-agent-payload-v1.0.json",
+        "types/postback-v1.0.types.ts",
+        "validators/postback-v1.0-semantics.mjs"
+      ],
+      "expected": "valid",
+      "covers": [
+        "postback.agent.envelope.retry"
+      ]
+    },
+    {
+      "id": "postback-agent-v10-envelope-test-delivery",
+      "schema_id": "https://agentoffernetwork.org/schema/postback-agent-payload/v1.0",
+      "fixture": "fixtures/postback-agent-webhook-v1.0.json",
+      "fixture_pointer": "/envelopes/vectors/3/raw_body",
+      "fixture_json": true,
+      "source_refs": [
+        "json-schema/postback-agent-payload-v1.0.json",
+        "types/postback-v1.0.types.ts",
+        "validators/postback-v1.0-semantics.mjs"
+      ],
+      "expected": "valid",
+      "covers": [
+        "postback.agent.envelope.test-delivery"
+      ]
+    },
+    {
+      "id": "postback-agent-v10-envelope-earning-batch",
+      "schema_id": "https://agentoffernetwork.org/schema/postback-agent-payload/v1.0",
+      "fixture": "fixtures/postback-agent-earning-webhook-v1.0.json",
+      "fixture_pointer": "/envelopes/vectors/0/raw_body",
+      "fixture_json": true,
+      "source_refs": [
+        "json-schema/postback-agent-payload-v1.0.json",
+        "types/postback-v1.0.types.ts",
+        "validators/postback-v1.0-semantics.mjs"
+      ],
+      "expected": "valid",
+      "covers": [
+        "postback.agent.envelope.earning"
+      ]
+    },
+    {
+      "id": "postback-agent-v10-envelope-mixed-event-types",
+      "schema_id": "https://agentoffernetwork.org/schema/postback-agent-payload/v1.0",
+      "fixture": "fixtures/postback-agent-earning-webhook-v1.0.json",
+      "fixture_pointer": "/envelopes/vectors/1/raw_body",
+      "fixture_json": true,
+      "source_refs": [
+        "json-schema/postback-agent-payload-v1.0.json",
+        "types/postback-v1.0.types.ts",
+        "validators/postback-v1.0-semantics.mjs"
+      ],
+      "expected": "valid",
+      "covers": [
+        "postback.agent.envelope.mixed-event-types"
+      ]
+    },
+    {
+      "id": "postback-agent-v10-envelope-100-events",
+      "schema_id": "https://agentoffernetwork.org/schema/postback-agent-payload/v1.0",
+      "fixture": "../examples/http/postback/agent/basic-conversion-v1.0.json",
+      "mutation": {
+        "repeat_first_event": 100
+      },
+      "expected": "valid",
+      "source_refs": [
+        "json-schema/postback-agent-payload-v1.0.json"
+      ],
+      "covers": [
+        "postback.agent.envelope.max-events"
+      ]
+    },
+    {
+      "id": "postback-agent-v10-envelope-101-events",
+      "schema_id": "https://agentoffernetwork.org/schema/postback-agent-payload/v1.0",
+      "fixture": "../examples/http/postback/agent/basic-conversion-v1.0.json",
+      "mutation": {
+        "repeat_first_event": 101
+      },
+      "expected": "invalid",
+      "source_refs": [
+        "json-schema/postback-agent-payload-v1.0.json"
+      ],
+      "covers": [
+        "postback.agent.envelope.max-events"
+      ]
+    },
+    {
+      "id": "postback-agent-v10-envelope-missing-delivery-id",
+      "schema_id": "https://agentoffernetwork.org/schema/postback-agent-payload/v1.0",
+      "fixture": "../examples/http/postback/agent/basic-conversion-v1.0.json",
+      "mutation": {
+        "remove": [
+          "delivery_id"
+        ]
+      },
+      "expected": "invalid",
+      "source_refs": [
+        "json-schema/postback-agent-payload-v1.0.json"
+      ],
+      "covers": [
+        "postback.agent.envelope.delivery-id-required"
+      ]
+    },
+    {
+      "id": "postback-agent-v10-envelope-empty-delivery-id",
+      "schema_id": "https://agentoffernetwork.org/schema/postback-agent-payload/v1.0",
+      "fixture": "../examples/http/postback/agent/basic-conversion-v1.0.json",
+      "mutation": {
+        "set": {
+          "delivery_id": ""
+        }
+      },
+      "expected": "invalid",
+      "source_refs": [
+        "json-schema/postback-agent-payload-v1.0.json"
+      ],
+      "covers": [
+        "postback.agent.envelope.delivery-id-grammar"
+      ]
+    },
+    {
+      "id": "postback-agent-v10-envelope-non-string-delivery-id",
+      "schema_id": "https://agentoffernetwork.org/schema/postback-agent-payload/v1.0",
+      "fixture": "../examples/http/postback/agent/basic-conversion-v1.0.json",
+      "mutation": {
+        "set": {
+          "delivery_id": 12345
+        }
+      },
+      "expected": "invalid",
+      "source_refs": [
+        "json-schema/postback-agent-payload-v1.0.json"
+      ],
+      "covers": [
+        "postback.agent.envelope.delivery-id-grammar"
+      ]
+    },
+    {
+      "id": "postback-agent-v10-envelope-delivery-id-64-characters",
+      "schema_id": "https://agentoffernetwork.org/schema/postback-agent-payload/v1.0",
+      "fixture": "../examples/http/postback/agent/basic-conversion-v1.0.json",
+      "mutation": {
+        "set": {
+          "delivery_id": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd"
+        }
+      },
+      "expected": "valid",
+      "source_refs": [
+        "json-schema/postback-agent-payload-v1.0.json"
+      ],
+      "covers": [
+        "postback.agent.envelope.delivery-id-grammar"
+      ]
+    },
+    {
+      "id": "postback-agent-v10-envelope-delivery-id-65-characters",
+      "schema_id": "https://agentoffernetwork.org/schema/postback-agent-payload/v1.0",
+      "fixture": "../examples/http/postback/agent/basic-conversion-v1.0.json",
+      "mutation": {
+        "set": {
+          "delivery_id": "ddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd"
+        }
+      },
+      "expected": "invalid",
+      "source_refs": [
+        "json-schema/postback-agent-payload-v1.0.json"
+      ],
+      "covers": [
+        "postback.agent.envelope.delivery-id-grammar"
+      ]
+    },
+    {
+      "id": "postback-agent-v10-envelope-delivery-id-outside-character-set",
+      "schema_id": "https://agentoffernetwork.org/schema/postback-agent-payload/v1.0",
+      "fixture": "../examples/http/postback/agent/basic-conversion-v1.0.json",
+      "mutation": {
+        "set": {
+          "delivery_id": "dlv 0192f3a4.b5c6"
+        }
+      },
+      "expected": "invalid",
+      "source_refs": [
+        "json-schema/postback-agent-payload-v1.0.json"
+      ],
+      "covers": [
+        "postback.agent.envelope.delivery-id-grammar"
+      ]
+    },
+    {
+      "id": "postback-agent-v10-envelope-missing-events",
+      "schema_id": "https://agentoffernetwork.org/schema/postback-agent-payload/v1.0",
+      "fixture": "../examples/http/postback/agent/basic-conversion-v1.0.json",
+      "mutation": {
+        "remove": [
+          "events"
+        ]
+      },
+      "expected": "invalid",
+      "source_refs": [
+        "json-schema/postback-agent-payload-v1.0.json"
+      ],
+      "covers": [
+        "postback.agent.envelope.events-required"
+      ]
+    },
+    {
+      "id": "postback-agent-v10-envelope-events-not-an-array",
+      "schema_id": "https://agentoffernetwork.org/schema/postback-agent-payload/v1.0",
+      "fixture": "../examples/http/postback/agent/basic-conversion-v1.0.json",
+      "mutation": {
+        "set": {
+          "events": {}
+        }
+      },
+      "expected": "invalid",
+      "source_refs": [
+        "json-schema/postback-agent-payload-v1.0.json"
+      ],
+      "covers": [
+        "postback.agent.envelope.events-required"
+      ]
+    },
+    {
+      "id": "postback-agent-v10-envelope-empty-events",
+      "schema_id": "https://agentoffernetwork.org/schema/postback-agent-payload/v1.0",
+      "fixture": "../examples/http/postback/agent/basic-conversion-v1.0.json",
+      "mutation": {
+        "set": {
+          "events": []
+        }
+      },
+      "expected": "invalid",
+      "source_refs": [
+        "json-schema/postback-agent-payload-v1.0.json"
+      ],
+      "covers": [
+        "postback.agent.envelope.min-events"
+      ]
+    },
+    {
+      "id": "postback-agent-v10-envelope-invalid-element",
+      "schema_id": "https://agentoffernetwork.org/schema/postback-agent-payload/v1.0",
+      "fixture": "../examples/http/postback/agent/basic-conversion-v1.0.json",
+      "mutation": {
+        "set": {
+          "events": [
+            {
+              "event_type": "conversion"
+            }
+          ]
+        }
+      },
+      "expected": "invalid",
+      "source_refs": [
+        "json-schema/postback-agent-payload-v1.0.json"
+      ],
+      "covers": [
+        "postback.agent.envelope.element-schema"
+      ]
+    },
+    {
+      "id": "postback-agent-v10-envelope-unknown-event-type-element",
+      "schema_id": "https://agentoffernetwork.org/schema/postback-agent-payload/v1.0",
+      "fixture": "../examples/http/postback/agent/basic-conversion-v1.0.json",
+      "mutation": {
+        "set": {
+          "events": [
+            {
+              "event_id": "evt_x",
+              "event_type": "unknown"
+            }
+          ]
+        }
+      },
+      "expected": "invalid",
+      "source_refs": [
+        "json-schema/postback-agent-payload-v1.0.json"
+      ],
+      "covers": [
+        "postback.agent.envelope.element-schema"
+      ]
+    },
+    {
+      "id": "postback-agent-v10-envelope-producer-closed-top-level",
+      "schema_id": "https://agentoffernetwork.org/schema/postback-agent-payload/v1.0",
+      "fixture": "../examples/http/postback/agent/basic-conversion-v1.0.json",
+      "mutation": {
+        "set": {
+          "batch_id": "not-defined"
+        }
+      },
+      "expected": "invalid",
+      "source_refs": [
+        "json-schema/postback-agent-payload-v1.0.json"
+      ],
+      "covers": [
+        "postback.agent.envelope.producer-closed"
+      ]
+    },
+    {
+      "id": "postback-agent-v10-envelope-bare-event-object-body",
+      "schema_id": "https://agentoffernetwork.org/schema/postback-agent-payload/v1.0",
+      "fixture": "../examples/http/postback/agent/basic-conversion-v1.0.json",
+      "fixture_pointer": "/events/0",
+      "expected": "invalid",
+      "source_refs": [
+        "json-schema/postback-agent-payload-v1.0.json"
+      ],
+      "covers": [
+        "postback.agent.envelope.required-for-body"
       ]
     }
   ]
